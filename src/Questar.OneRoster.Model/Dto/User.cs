@@ -9,7 +9,7 @@ namespace Questar.OneRoster.Model.Dto
     public class User<TGrade> : Base
     {
         public string Username { get; set; }
-        public IEnumerable<UserId> UserIds { get; set; }
+        public IEnumerable<UserId> UserIds { get; set; } = Enumerable.Empty<UserId>();
         public bool EnabledUser { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
