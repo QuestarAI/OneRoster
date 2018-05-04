@@ -1,0 +1,65 @@
+# Supported API Endpoints
+
+| Verb   | Endpoint                                            | Method                         | Action                                                                                                  |
+|--------|-----------------------------------------------------|--------------------------------|---------------------------------------------------------------------------------------------------------|
+| GET    | /academicSessions                                   | getAllAcademicSessions         | Return collection of all academic sessions.                                                             |
+| GET    | /academicSessions/{id}                              | getAcademicSession             | Return specific Academic Session.                                                                       |
+| GET    | /categories                                         | getAllCategories               | Return collection of grading categories.                                                                |
+| DELETE | /categories/{id}                                    | deleteCategory                 | Enable the associated SourcedId to be marked as deleted. An immediate read will result in 404 code.     |
+| GET    | /categories/{id}                                    | getCategory                    | Return specific grading category.                                                                       |
+| PUT    | /categories/{id}                                    | putCategory                    | To create a new Category record or to replace one that already exists.                                  |
+| GET    | /classes                                            | getAllClasses                  | Return collection of classes.                                                                           |
+| GET    | /classes/{class_id}/lineItems                       | getLineItemsForClass           | Return the collection of line items (Columns) in the gradebook for this class.                          |
+| GET    | /classes/{class_id}/lineItems/{li_id}/results       | getResultsForLineItemForClass  | Return the collection of results (assessed grades), for this specific lineItem (Column) for this class. |
+| GET    | /classes/{class_id}/resources                       | getResourcesForClass           | Return the collection of resources associated to this class.                                            |
+| GET    | /classes/{class_id}/results                         | getResultsForClass             | Return the collection of results (assessed grades) for this class.                                      |
+| GET    | /classes/{class_id}/students                        | getStudentsForClass            | Return the collection of students that are taking this class.                                           |
+| GET    | /classes/{class_id}/students/{student_id}/results   | getResultsForStudentForClass   | Return the collection of results (assessed grades), for this specific student, attending this class.    |
+| GET    | /classes/{class_id}/teachers                        | getTeachersForClass            | Return the collection of teachers that are teaching this class.                                         |
+| GET    | /classes/{id}                                       | getClass                       | Return specific class.                                                                                  |
+| GET    | /courses                                            | getAllCourses                  | Return collection of courses.                                                                           |
+| GET    | /courses/{course_id}/classes                        | getClassesForCourse            | Return the collection of classes that are teaching this course.                                         |
+| GET    | /courses/{course_id}/resources                      | getResourcesForCourse          | Return the collection of resources associated to this course.                                           |
+| GET    | /courses/{id}                                       | getCourse                      | Return specific course.                                                                                 |
+| GET    | /demographics                                       | getAllDemographics             | Return collection of demographics.                                                                      |
+| GET    | /demographics/{id}                                  | getDemographics                | Return specific demographics.                                                                           |
+| GET    | /enrollments                                        | getAllEnrollments              | Return collection of all enrollments.                                                                   |
+| GET    | /enrollments/{id}                                   | getEnrollment                  | Return specific enrollment.                                                                             |
+| GET    | /gradingPeriods                                     | getAllGradingPeriods           | Return collection of grading periods. A Grading Period is an instance of an AcademicSession.            |
+| GET    | /gradingPeriods/{id}                                | getGradingPeriod               | Return specific Grading Period. A Grading Period is an instance of an AcademicSession.                  |
+| GET    | /lineItems                                          | getAllLineItems                | Return collection of lineItems.                                                                         |
+| DELETE | /lineItems/{id}                                     | deleteLineItem                 | Enable the associated SourcedId to be marked as deleted. An immediate read will result in 404 code.     |
+| GET    | /lineItems/{id}                                     | getLineItem                    | Return specific lineItem.                                                                               |
+| PUT    | /lineItems/{id}                                     | putLineItem                    | To create a new LineItem record or to replace one that already exists.                                  |
+| GET    | /orgs                                               | getAllOrgs                     | Return collection of Orgs.                                                                              |
+| GET    | /orgs/{id}                                          | getOrg                         | Return Specific Org.                                                                                    |
+| GET    | /resources                                          | getAllResources                | Return collection of resources.                                                                         |
+| GET    | /resources/{id}                                     | getResource                    | Return specific resource.                                                                               |
+| GET    | /results                                            | getAllResults                  | Return collection of results.                                                                           |
+| DELETE | /results/{id}                                       | deleteResult                   | Enable the associated SourcedId to be marked as deleted. An immediate read will result in 404 code.     |
+| GET    | /results/{id}                                       | getResult                      | Return specific result.                                                                                 |
+| PUT    | /results/{id}                                       | putResult                      | To create a new Result record or to replace one that already exists.                                    |
+| GET    | /schools                                            | getAllSchools                  | Return collection of schools. A School is an instance of an Org.                                        |
+| GET    | /schools/{id}                                       | getSchool                      | Return specific school. A School is an instance of an Org.                                              |
+| GET    | /schools/{id}/courses                               | getCoursesForSchool            | Return the collection of courses taught by this school.                                                 |
+| GET    | /schools/{school_id}/classes                        | getClassesForSchool            | Return the collection of classes taught by this school.                                                 |
+| GET    | /schools/{school_id}/classes/{class_id}/enrollments | getEnrollmentsForClassInSchool | Return the collection of all enrollments into this class.                                               |
+| GET    | /schools/{school_id}/classes/{class_id}/students    | getStudentsForClassInSchool    | Return the collection of students taking this class in this school.                                     |
+| GET    | /schools/{school_id}/classes/{class_id}/teachers    | getTeachersForClassInSchool    | Return the collection of teachers taking this class in this school.                                     |
+| GET    | /schools/{school_id}/enrollments                    | getEnrollmentsForSchool        | Return the collection of all enrollments for this school.                                               |
+| GET    | /schools/{school_id}/students                       | getStudentsForSchool           | Return the collection of students attending this school.                                                |
+| GET    | /schools/{school_id}/teachers                       | getTeachersForSchool           | Return the collection of teachers teaching at this school.                                              |
+| GET    | /schools/{school_id}/terms                          | getTermsForSchool              | Return the collection of terms that are used by this school.                                            |
+| GET    | /students                                           | getAllStudents                 | Return collection of students. A Student is an instance of a User.                                      |
+| GET    | /students/{id}                                      | getStudent                     | Return specific student. A Student is an instance of a User.                                            |
+| GET    | /students/{student_id}/classes                      | getClassesForStudent           | Return the collection of classes that this student is taking.                                           |
+| GET    | /teachers                                           | getAllTeachers                 | Return collection of teachers. A Teacher is an instance of a User.                                      |
+| GET    | /teachers/{id}                                      | getTeacher                     | Return specific teacher.                                                                                |
+| GET    | /teachers/{teacher_id}/classes                      | getClassesForTeacher           | Return the collection of classes that this teacher is teaching.                                         |
+| GET    | /terms                                              | getAllTerms                    | Return collection of terms. A Term is an instance of an AcademicSession.                                |
+| GET    | /terms/{id}                                         | getTerm                        | Return specific term.                                                                                   |
+| GET    | /terms/{term_id}/classes                            | getClassesForTerm              | Return the collection of classes that are taught in this term.                                          |
+| GET    | /terms/{term_id}/gradingPeriods                     | getGradingPeriodsForTerm       | Return the collection of Grading Periods that are part of this term.                                    |
+| GET    | /users                                              | getAllUsers                    | Return collection of users                                                                              |
+| GET    | /users/{id}                                         | getUser                        | Return specific user                                                                                    |
+| GET    | /users/{user_id}/classes                            | getClassesForUser              | Return the collection of classes attended by this user.                                                 |

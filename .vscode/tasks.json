@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Questar.OneRoster.Api/Questar.OneRoster.Api.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
