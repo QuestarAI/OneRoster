@@ -8,13 +8,15 @@ namespace Questar.OneRoster.Api.Controllers
     public class GradingPeriodsController : Controller
     {
         /// <summary>
-        /// Return collection of grading periods. A Grading Period is an instance of an AcademicSession.
+        /// Returns the collection of grading periods.
+        /// A grading period is an instance of an academic session.
         /// </summary>
         [HttpGet]
         public object GetAllGradingPeriods() => throw new NotImplementedException();
 
         /// <summary>
-        /// Return specific Grading Period. A Grading Period is an instance of an AcademicSession.
+        /// Returns specific grading period by identifier.
+        /// A grading period is an instance of an academic session.
         /// </summary>
         [HttpGet("{academicSessionId}")]
         public object GetGradingPeriod(Guid academicSessionId) => throw new NotImplementedException();

@@ -8,19 +8,21 @@ namespace Questar.OneRoster.Api.Controllers
     public class StudentsController : Controller
     {
         /// <summary>
-        /// Return collection of students. A Student is an instance of a User.
+        /// Returns the collection of students.
+        /// A student is an instance of a user.
         /// </summary>
         [HttpGet]
         public object GetAllStudents() => throw new NotImplementedException();
 
         /// <summary>
-        /// Return specific student. A Student is an instance of a User.
+        /// Returns a specific student by identifier.
+        /// A student is an instance of a user.
         /// </summary>
         [HttpGet("{userId}")]
         public object GetStudent(Guid userId) => throw new NotImplementedException();
 
         /// <summary>
-        /// Return the collection of classes that this student is taking.
+        /// Returns the collection of classes this student is taking.
         /// </summary>
         [HttpGet("{userId}/classes")]
         public object GetClassesForStudent(Guid userId) => throw new NotImplementedException();

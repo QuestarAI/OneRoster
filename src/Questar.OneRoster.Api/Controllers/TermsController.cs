@@ -8,25 +8,27 @@ namespace Questar.OneRoster.Api.Controllers
     public class TermsController : Controller
     {
         /// <summary>
-        /// Return collection of terms. A Term is an instance of an AcademicSession.
+        /// Returns the collection of terms.
+        /// A term is an instance of an academic session.
         /// </summary>
         [HttpGet]
         public object GetAllTerms() => throw new NotImplementedException();
 
         /// <summary>
-        /// Return specific term.
+        /// Returns a specific term by identifier.
+        /// A term is an instance of an academic session.
         /// </summary>
         [HttpGet("{academicSessionId}")]
         public object GetTerm(Guid academicSessionId) => throw new NotImplementedException();
 
         /// <summary>
-        /// Return the collection of classes that are taught in this term.
+        /// Returns the collection of classes taught in this term.
         /// </summary>
         [HttpGet("{academicSessionId}/classes")]
         public object GetClassesForTerm(Guid academicSessionId) => throw new NotImplementedException();
 
         /// <summary>
-        /// Return the collection of Grading Periods that are part of this term.
+        /// Returns the collection of grading periods which are part of this term.
         /// </summary>
         [HttpGet("{academicSessionId}/gradingPeriods")]
         public object GetGradingPeriodsForTerm(Guid academicSessionId) => throw new NotImplementedException();

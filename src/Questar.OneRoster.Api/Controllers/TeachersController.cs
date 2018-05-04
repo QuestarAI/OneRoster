@@ -8,19 +8,21 @@ namespace Questar.OneRoster.Api.Controllers
     public class TeachersController : Controller
     {
         /// <summary>
-        /// Return collection of teachers. A Teacher is an instance of a User.
+        /// Returns the collection of teachers.
+        /// A teacher is an instance of a user.
         /// </summary>
         [HttpGet]
         public object GetAllTeachers() => throw new NotImplementedException();
 
         /// <summary>
-        /// Return specific teacher.
+        /// Returns a specific teacher by identifier.
+        /// A teacher is an instance of a user.
         /// </summary>
         [HttpGet("{userId}")]
         public object GetTeacher(Guid userId) => throw new NotImplementedException();
 
         /// <summary>
-        /// Return the collection of classes that this teacher is teaching.
+        /// Returns the collection of classes this teacher is teaching.
         /// </summary>
         [HttpGet("{userId}/classes")]
         public object GetClassesForTeacher(Guid userId) => throw new NotImplementedException();

@@ -8,25 +8,25 @@ namespace Questar.OneRoster.Api.Controllers
     public class CoursesController : Controller
     {
         /// <summary>
-        /// Return collection of courses.
+        /// Returns the collection of courses.
         /// </summary>
         [HttpGet]
         public object GetAllCourses() => throw new NotImplementedException();
 
         /// <summary>
-        /// Return the collection of classes that are teaching this course.
+        /// Returns the collection of classes teaching this course.
         /// </summary>
         [HttpGet("{courseId}/classes")]
         public object GetClassesForCourse(Guid courseId) => throw new NotImplementedException();
 
         /// <summary>
-        /// Return the collection of resources associated to this course.
+        /// Returns the collection of resources associated with this course.
         /// </summary>
         [HttpGet("{courseId}/resources")]
         public object GetResourcesForCourse(Guid courseId) => throw new NotImplementedException();
 
         /// <summary>
-        /// Return specific course.
+        /// Returns a specific course by identifier.
         /// </summary>
         [HttpGet("{courseId}")]
         public object GetCourse(Guid courseId) => throw new NotImplementedException();

@@ -8,13 +8,13 @@ namespace Questar.OneRoster.Api.Controllers
     public class EnrollmentsController : Controller
     {
         /// <summary>
-        /// Return collection of all enrollments.
+        /// Returns the collection of enrollments.
         /// </summary>
         [HttpGet]
         public object GetAllEnrollments() => throw new NotImplementedException();
 
         /// <summary>
-        /// Return specific enrollment.
+        /// Returns a specific enrollment by identifier.
         /// </summary>
         [HttpGet("{enrollmentId}")]
         public object GetEnrollment(Guid enrollmentId) => throw new NotImplementedException();

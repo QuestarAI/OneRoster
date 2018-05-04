@@ -8,13 +8,13 @@ namespace Questar.OneRoster.Api.Controllers
     public class AcademicSessionsController : Controller
     {
         /// <summary>
-        /// Return collection of all academic sessions.
+        /// Returns the collection of all academic sessions.
         /// </summary>
         [HttpGet]
         public object GetAllAcademicSessions() => throw new NotImplementedException();
 
         /// <summary>
-        /// Return specific Academic Session.
+        /// Returns a specific academic session by identifier.
         /// </summary>
         /// <param name="academicSessionId">The academic session identifier.</param>
         [HttpGet("{academicSessionId}")]

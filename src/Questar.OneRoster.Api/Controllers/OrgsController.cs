@@ -8,13 +8,13 @@ namespace Questar.OneRoster.Api.Controllers
     public class OrgsController : Controller
     {
         /// <summary>
-        /// Return collection of Orgs.
+        /// Returns the collection of organizations.
         /// </summary>
         [HttpGet]
         public object GetAllOrgs() => throw new NotImplementedException();
 
         /// <summary>
-        /// Return specific Org.
+        /// Returns a specific organization by identifier.
         /// </summary>
         [HttpGet("{orgId}")]
         public object GetOrg(Guid orgId) => throw new NotImplementedException();
