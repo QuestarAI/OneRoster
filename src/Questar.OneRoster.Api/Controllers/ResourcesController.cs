@@ -10,11 +10,13 @@ namespace Questar.OneRoster.Api.Controllers
         /// <summary>
         /// Return collection of resources.
         /// </summary>
+        [HttpGet]
         public object GetAllResources() => throw new NotImplementedException();
 
         /// <summary>
         /// Return specific resource.
         /// </summary>
+        [HttpGet("{resourceId}")]
         public object GetResource(Guid resourceId) => throw new NotImplementedException();
     }
 }

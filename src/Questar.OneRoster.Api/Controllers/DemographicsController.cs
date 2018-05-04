@@ -10,11 +10,13 @@ namespace Questar.OneRoster.Api.Controllers
         /// <summary>
         /// Return collection of demographics.
         /// </summary>
+        [HttpGet]
         public object GetAllDemographics() => throw new NotImplementedException();
 
         /// <summary>
         /// Return specific demographics.
         /// </summary>
+        [HttpGet("{demographicsId}")]
         public object GetDemographics(Guid demographicsId) => throw new NotImplementedException();
     }
 }

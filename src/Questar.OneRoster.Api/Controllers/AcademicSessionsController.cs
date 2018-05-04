@@ -10,12 +10,14 @@ namespace Questar.OneRoster.Api.Controllers
         /// <summary>
         /// Return collection of all academic sessions.
         /// </summary>
+        [HttpGet]
         public object GetAllAcademicSessions() => throw new NotImplementedException();
 
         /// <summary>
         /// Return specific Academic Session.
         /// </summary>
         /// <param name="academicSessionId">The academic session identifier.</param>
+        [HttpGet("{academicSessionId}")]
         public object GetAcademicSession(Guid academicSessionId) => throw new NotImplementedException();
     }
 }
