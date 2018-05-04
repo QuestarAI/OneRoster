@@ -1,6 +1,7 @@
-﻿namespace Questar.OneRoster.Model.Dto
+namespace Questar.OneRoster.Model.Dto
 {
     using System;
+    using Common;
 
     public class GuidRef
     {

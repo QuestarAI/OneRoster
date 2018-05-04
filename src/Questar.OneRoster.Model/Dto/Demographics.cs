@@ -5,10 +5,10 @@ namespace Questar.OneRoster.Model.Dto
     using Vocabulary;
     using Vocabulary.Ceds;
 
-    public class Demographics<TSex, TCountryCode, TStateCode, TPublicSchoolResidenceStatus> : Base
+    public class Demographics<TGender, TCountryCode, TStateCode, TPublicSchoolResidenceStatus> : Base
     {
         public DateTime BirthDate { get; set; }
-        public TSex Sex { get; set; }
+        public TGender Sex { get; set; }
         public bool AmericanIndianOrAlaskaNative { get; set; }
         public bool Asian { get; set; }
         public bool BlackOrAfricanAmerican { get; set; }

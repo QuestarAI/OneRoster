@@ -1,4 +1,4 @@
-﻿namespace Questar.OneRoster.Model.Dto
+namespace Questar.OneRoster.Model.Common
 {
     public enum GuidType
     {
@@ -13,6 +13,7 @@
         Org,
         Resource,
         Result,
+        School,
         Student,
         Teacher,
         Term,
