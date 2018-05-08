@@ -1,13 +1,13 @@
-using Questar.OneRoster.Model.Common;
-using Questar.OneRoster.Model.Vocabulary.Sced;
+using Questar.OneRoster.Common;
+using Questar.OneRoster.Vocabulary.Sced;
 
 namespace Questar.OneRoster.Client
 {
     using System;
     using System.Linq;
-    using Model.Dto;
-    using Model.Vocabulary;
-    using Model.Vocabulary.Ceds;
+    using Dto;
+    using Vocabulary;
+    using Vocabulary.Ceds;
 
     public class RecommendedClient : Client<Gender, Grade, SubjectCode, CountryCode, StateCode, PublicSchoolResidenceStatus> { }
 

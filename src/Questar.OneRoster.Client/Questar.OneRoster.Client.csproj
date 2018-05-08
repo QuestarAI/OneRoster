@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Questar.OneRoster.Model\Questar.OneRoster.Model.csproj" />
+    <ProjectReference Include="..\Questar.OneRoster\Questar.OneRoster.csproj" />
   </ItemGroup>
 
 </Project>

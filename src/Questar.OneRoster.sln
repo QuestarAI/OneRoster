@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Api", "Questar.OneRoster.Api\Questar.OneRoster.Api.csproj", "{8E07FAD9-4E9E-4E00-910B-01E846ED75F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Model", "Questar.OneRoster.Model\Questar.OneRoster.Model.csproj", "{E04ECA1C-37F6-40BC-8A71-8838D19615D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster", "Questar.OneRoster\Questar.OneRoster.csproj", "{E04ECA1C-37F6-40BC-8A71-8838D19615D3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Client", "Questar.OneRoster.Client\Questar.OneRoster.Client.csproj", "{E3E167FE-74B7-45BF-BA70-43DBD9E263F1}"
 EndProject
@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F3419DBB-B068-48B3-90D1-79C43356A349}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questar.OneRoster.Test", "Test\Questar.OneRoster.Test\Questar.OneRoster.Test.csproj", "{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +36,16 @@ Global
 		{E3E167FE-74B7-45BF-BA70-43DBD9E263F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E167FE-74B7-45BF-BA70-43DBD9E263F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E167FE-74B7-45BF-BA70-43DBD9E263F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA} = {F3419DBB-B068-48B3-90D1-79C43356A349}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6E752842-00C1-4618-8DDA-1A3908523399}
