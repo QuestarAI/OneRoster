@@ -1,10 +1,17 @@
 namespace Questar.OneRoster.Common
 {
-    using Questar.OneRoster.Dto;
     using System;
 
+    /// <summary>
+    /// A helper class for adding extensions to <see cref="GuidType"/> and <see cref="ObjectType"/>.
+    /// </summary>
     public static class TypeExtensions
     {
+        /// <summary>
+        /// Given the type of an object, returns the underlying type.
+        /// For example, a <see cref="GuidType.Student"/> is actually an <see cref="ObjectType.User"/>.
+        /// </summary>
+        /// <param name="guidType">The type of an object.</param>
         public static ObjectType ToObjectType(this GuidType guidType)
         {
             switch (guidType)
