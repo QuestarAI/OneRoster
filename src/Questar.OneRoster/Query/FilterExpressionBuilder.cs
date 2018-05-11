@@ -7,12 +7,30 @@ namespace Questar.OneRoster.Query
     using System.Linq;
     using System.Linq.Expressions;
 
+    internal class FilterExpressionBuilder
+    {
+        internal static readonly IEnumerable<BinaryOperator> NumericOnlyOperators = new List<BinaryOperator>
+        {
+            BinaryOperator.GreaterThan,
+            BinaryOperator.GreaterThanOrEqual,
+            BinaryOperator.LessThan,
+            BinaryOperator.LessThanOrEqual
+        };
+        internal static readonly IEnumerable<Type> NumericTypes = new List<Type>
+        {
+            typeof(int),
+            typeof(double),
+            typeof(DateTime)
+        };
+    }
+
     public class FilterExpressionBuilder<T>
     {
         private static readonly Type Type = typeof(T);
         private static readonly Dictionary<string, Type> PropertyTypesByName = typeof(T)
             .GetProperties(BindingFlags.Public | BindingFlags.Instance)
             .ToDictionary(p => p.Name, p => p.PropertyType, StringComparer.OrdinalIgnoreCase);
+
 
         public static Expression<Func<T, bool>> FromString(string filterString)
         {
@@ -54,19 +72,20 @@ namespace Questar.OneRoster.Query
             {
                 throw new InvalidOperationException("TODO: Custom exception.");
             }
+            if (!CanApplyOperatorToType(filter.Operator, propType))
+            {
+                throw new InvalidOperationException("TODO: Custom exception");
+            }
             Expression prop = Expression.Property(param, filter.FieldName);
             var constant = ParseConstant(filter.Value, propType);
-            if (constant.Type != typeof(InvalidEnum))
-            {
-                return BuildBinaryExpression(prop, constant, filter.Operator);
-            }
-            switch (filter.Operator)
-            {
-                case BinaryOperator.Equal: return Expression.Constant(false);
-                case BinaryOperator.NotEqual: return Expression.Constant(true);
-                default: return BuildBinaryExpression(prop, constant, filter.Operator);
-            }
+            return constant.Type == typeof(InvalidEnum)
+                ? Expression.Constant(filter.Operator == BinaryOperator.NotEqual)
+                : BuildBinaryExpression(prop, constant, filter.Operator);
         }
+
+        private static bool CanApplyOperatorToType(BinaryOperator op, Type propType)
+            => !FilterExpressionBuilder.NumericOnlyOperators.Contains(op)
+            ||  FilterExpressionBuilder.NumericTypes.Contains(propType);
 
         private static Expression BuildBinaryExpression(Expression left, Expression right, BinaryOperator op)
         {
