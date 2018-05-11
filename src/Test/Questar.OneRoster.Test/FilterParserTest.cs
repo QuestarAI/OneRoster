@@ -35,7 +35,7 @@ namespace Questar.OneRoster.Test
                 },
                 f =>
                 {
-                    Assert.Equal("AND", f.AndOr);
+                    Assert.Equal(Logical.And, f.AndOr);
                     Assert.Equal("BarInt", f.FieldName);
                     Assert.Equal("=", f.Operator);
                     Assert.Equal("9001", f.Value);

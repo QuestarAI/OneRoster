@@ -44,10 +44,10 @@ namespace Questar.OneRoster.Query
                 var groups = match.Groups;
                 var andOr = groups["AndOr"];
                 var single = groups["SingleQuotedValue"];
-                
+
                 filters.Add(new Filter
                 {
-                    AndOr = andOr.Success ? andOr.Value.ToUpperInvariant() : null,
+                    AndOr = andOr.Success ? (Logical?)Enum.Parse(typeof(Logical), andOr.Value, true) : null,
                     FieldName = groups["FieldName"].Value,
                     Operator = groups["Operator"].Value,
                     Value = single.Success ? single.Value : groups["DoubleQuotedValue"].Value,
@@ -70,7 +70,7 @@ namespace Questar.OneRoster.Query
         public string UnusedFilter { get; }
         public int StartUnused { get; }
         public int EndUnused { get; }
-        
+
         private UnusedFilterException(string filter, string unusedFilter, int startUnused, int endUnused, string message)
             : base(message)
         {

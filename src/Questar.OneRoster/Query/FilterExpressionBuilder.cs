@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Reflection;
+
 namespace Questar.OneRoster.Query
 {
     using System;
@@ -6,18 +9,74 @@ namespace Questar.OneRoster.Query
 
     public class FilterExpressionBuilder<T>
     {
+        private static readonly Type Type = typeof(T);
+        private static readonly Dictionary<string, Type> PropertyTypesByName = typeof(T)
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .ToDictionary(p => p.Name, p => p.PropertyType, StringComparer.OrdinalIgnoreCase);
 
-        public static Expression<Func<T, bool>> FromString(string filter)
+        public static Expression<Func<T, bool>> FromString(string filterString)
         {
-            if (string.IsNullOrWhiteSpace(filter)) return null;
-            var filters = FilterParser.FromString(filter);
-            var first = filters.First();
-            var param = Expression.Parameter(typeof(T), "p0");
-            var prop = Expression.Property(param, first.FieldName);
-            var constant = Expression.Constant(first.Value);
-            var equal = Expression.Equal(prop, constant);
-            var func = Expression.Lambda<Func<T, bool>>(equal, false, param);
-            return func;
+            if (string.IsNullOrWhiteSpace(filterString)) return null;
+            var parameter = Expression.Parameter(Type, "p0");
+            var tuples = FilterParser
+                .FromString(filterString)
+                .Select(filter => (filter: filter, expression: BuildFilterExpression(parameter, filter)));
+            // TODO: Can I LINQ chain this entire thing..? :-D
+            var andGroups = BuildAndGroups(tuples);
+            var body = andGroups
+                .Select(andGroup => andGroup.Aggregate(Expression.And))
+                .Aggregate(Expression.Or);
+            return BuildFunc(body, parameter);
+        }
+
+        private static List<List<Expression>> BuildAndGroups(IEnumerable<(Filter filter, Expression expression)> tuples)
+        {
+            var currentAndGroup = new List<Expression>();
+            var andGroups = new List<List<Expression>> {currentAndGroup};
+            var uninitialized = true;
+            foreach (var tuple in tuples)
+            {
+                if (uninitialized)
+                {
+                    uninitialized = false;
+                    currentAndGroup.Add(tuple.expression);
+                    continue;
+                }
+                if (tuple.filter.AndOr == Logical.Or)
+                {
+                    currentAndGroup = new List<Expression>();
+                    andGroups.Add(currentAndGroup);
+                }
+                currentAndGroup.Add(tuple.expression);
+            }
+            return andGroups;
+        }
+
+        private static Expression<Func<T, bool>> BuildFunc(Expression body, ParameterExpression parameter)
+            => Expression.Lambda<Func<T, bool>>(body, false, parameter);
+
+        private static Expression BuildBody(IList<Expression> filterExpressions)
+        {
+            var body = filterExpressions.First();
+            return body;
+        }
+
+        private static Expression BuildFilterExpression(Expression param, Filter filter)
+        {
+            if (!PropertyTypesByName.TryGetValue(filter.FieldName, out var propType))
+            {
+                throw new InvalidOperationException("TODO: Custom exception.");
+            }
+            var prop = Expression.Property(param, filter.FieldName);
+            var constant = ParseConstant(filter.Value, propType);
+            return Expression.Equal(prop, constant);
+        }
+
+        private static Expression ParseConstant(string value, Type propType)
+        {
+            if (propType == typeof(string)) return Expression.Constant(value);
+            if (propType == typeof(int)) return Expression.Constant(int.Parse(value));
+            throw new NotSupportedException($"Unable to build filter for type {propType.FullName}.");
         }
     }
 }

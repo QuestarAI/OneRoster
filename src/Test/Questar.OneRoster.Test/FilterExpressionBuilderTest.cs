@@ -20,30 +20,40 @@ namespace Questar.OneRoster.Test
 
         [Fact]
         public void CanApplyStringEqualExpression()
-        {
-            var predicate = FilterExpressionBuilder<Entity>.FromString("FooString='42'");
-            var list = new List<Entity>
+            => CanApplyFilter("FooString='42'", e => e.FooString == "42");
+
+        [Fact]
+        public void CanApplyIntEqualExpression()
+            => CanApplyFilter("BarInt='4'", e => e.BarInt == 4);
+
+        [Fact]
+        public void CanApplyLogicalAndExpression()
+            => CanApplyFilter("FooString='9001' AND BarInt='6'", e => e.FooString == "9001" && e.BarInt == 6);
+
+        [Fact]
+        public void CanApplyLogicalOrExpression()
+            => CanApplyFilter("FooString='42' OR FooString='9001'", e => e.FooString == "42" || e.FooString == "9001");
+
+        private static List<Entity> BuildEntities()
+            => new List<Entity>
             {
-                new Entity { BarInt = 1, FooString = "Nope" },
-                new Entity { BarInt = 2, FooString = "42" },
-                new Entity { BarInt = 3, FooString = "9001" },
-                new Entity { BarInt = 4, FooString = "421" },
-                new Entity { BarInt = 5, FooString = "42" },
-                new Entity { BarInt = 6, FooString = "42 " },
+                new Entity { BarInt = 1, FooString = "Nope", CorgeEnum = Count.None},
+                new Entity { BarInt = 2, FooString = "42", CorgeEnum = Count.One },
+                new Entity { BarInt = 3, FooString = "9001", CorgeEnum = Count.Two },
+                new Entity { BarInt = 4, FooString = "421", CorgeEnum = Count.None },
+                new Entity { BarInt = 5, FooString = "42", CorgeEnum = Count.One },
+                new Entity { BarInt = 6, FooString = "42 ", CorgeEnum = Count.Two },
+                new Entity { BarInt = 6, FooString = "9001", CorgeEnum = Count.Two },
+                new Entity { BarInt = 7, FooString = "9001", CorgeEnum = Count.Two },
             };
 
-            var filtered = list.Where(predicate.Compile());
-
-            Assert.Collection(
-                filtered,
-                e =>
-                {
-                    Assert.Equal(2, e.BarInt);
-                },
-                e =>
-                {
-                    Assert.Equal(5, e.BarInt);
-                });
+        private static void CanApplyFilter(string filterString, Func<Entity, bool> filterFunc)
+        {
+            var list = BuildEntities();
+            var predicate = FilterExpressionBuilder<Entity>.FromString(filterString);
+            var actual = list.Where(predicate.Compile());
+            var expected = list.Where(filterFunc);
+            Assert.Equal(expected, actual);
         }
     }
 }
