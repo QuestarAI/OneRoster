@@ -55,12 +55,6 @@ namespace Questar.OneRoster.Query
         private static Expression<Func<T, bool>> BuildFunc(Expression body, ParameterExpression parameter)
             => Expression.Lambda<Func<T, bool>>(body, false, parameter);
 
-        private static Expression BuildBody(IList<Expression> filterExpressions)
-        {
-            var body = filterExpressions.First();
-            return body;
-        }
-
         private static Expression BuildFilterExpression(Expression param, Filter filter)
         {
             if (!PropertyTypesByName.TryGetValue(filter.FieldName, out var propType))
