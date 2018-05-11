@@ -32,7 +32,7 @@ namespace Questar.OneRoster.Query
         private static List<List<Expression>> BuildAndGroups(IEnumerable<(Filter filter, Expression expression)> tuples)
         {
             var currentAndGroup = new List<Expression>();
-            var andGroups = new List<List<Expression>> {currentAndGroup};
+            var andGroups = new List<List<Expression>> { currentAndGroup };
             var uninitialized = true;
             foreach (var tuple in tuples)
             {
@@ -69,7 +69,27 @@ namespace Questar.OneRoster.Query
             }
             var prop = Expression.Property(param, filter.FieldName);
             var constant = ParseConstant(filter.Value, propType);
-            return Expression.Equal(prop, constant);
+            return BuildBinaryExpression(prop, constant, filter.Operator);
+        }
+
+        private static Expression BuildBinaryExpression(Expression left, Expression right, string op)
+        {
+            switch (op)
+            {
+                case "=": return Expression.Equal(left, right);
+                case "!=": return Expression.NotEqual(left, right);
+                case ">": return Expression.GreaterThan(left, right);
+                case ">=": return Expression.GreaterThanOrEqual(left, right);
+                case "<": return Expression.LessThan(left, right);
+                case "<=": return Expression.LessThanOrEqual(left, right);
+                case "~": return BuildContainsExpression(left, right);
+                default: throw new InvalidOperationException("TODO: Custom exception.");
+            }
+        }
+
+        private static Expression BuildContainsExpression(Expression left, Expression right)
+        {
+            throw new NotImplementedException();
         }
 
         private static Expression ParseConstant(string value, Type propType)
