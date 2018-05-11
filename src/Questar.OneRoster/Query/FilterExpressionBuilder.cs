@@ -33,21 +33,14 @@ namespace Questar.OneRoster.Query
         {
             var currentAndGroup = new List<Expression>();
             var andGroups = new List<List<Expression>> { currentAndGroup };
-            var uninitialized = true;
-            foreach (var tuple in tuples)
+            foreach (var (filter, expression) in tuples)
             {
-                if (uninitialized)
-                {
-                    uninitialized = false;
-                    currentAndGroup.Add(tuple.expression);
-                    continue;
-                }
-                if (tuple.filter.AndOr == Logical.Or)
+                if (filter.AndOr == Logical.Or)
                 {
                     currentAndGroup = new List<Expression>();
                     andGroups.Add(currentAndGroup);
                 }
-                currentAndGroup.Add(tuple.expression);
+                currentAndGroup.Add(expression);
             }
             return andGroups;
         }
