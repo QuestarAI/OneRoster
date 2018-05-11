@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Test
 {
     using Query;
+    using Query.Exceptions;
     using Xunit;
 
     public class FilterParserTest

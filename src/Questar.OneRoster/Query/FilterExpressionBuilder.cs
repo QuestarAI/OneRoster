@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Questar.OneRoster.Query.Exceptions;
 
 namespace Questar.OneRoster.Query
 {
@@ -30,6 +31,7 @@ namespace Questar.OneRoster.Query
         private static readonly Dictionary<string, Type> PropertyTypesByName = typeof(T)
             .GetProperties(BindingFlags.Public | BindingFlags.Instance)
             .ToDictionary(p => p.Name, p => p.PropertyType, StringComparer.OrdinalIgnoreCase);
+        private static readonly IList<string> PropertyNames = PropertyTypesByName.Select(pair => pair.Key).ToList();
 
 
         public static Expression<Func<T, bool>> FromString(string filterString)
@@ -70,13 +72,16 @@ namespace Questar.OneRoster.Query
         {
             if (!PropertyTypesByName.TryGetValue(filter.FieldName, out var propType))
             {
-                throw new InvalidOperationException("TODO: Custom exception.");
+                throw InvalidFieldNameException.FromArgs(filter.FieldName, PropertyNames);
             }
+            // Expression.Property actually does a case-insensitive lookup.
+            var prop = Expression.Property(param, filter.FieldName);
             if (!CanApplyOperatorToType(filter.Operator, propType))
             {
-                throw new InvalidOperationException("TODO: Custom exception");
+                // Use the properly cased member name in the exception.
+                throw InvalidBinaryOperatorException.FromArgs(filter.Operator, propType, prop.Member.Name);
             }
-            Expression prop = Expression.Property(param, filter.FieldName);
+
             var constant = ParseConstant(filter.Value, propType);
             return constant.Type == typeof(InvalidEnum)
                 ? Expression.Constant(filter.Operator == BinaryOperator.NotEqual)
@@ -98,7 +103,7 @@ namespace Questar.OneRoster.Query
                 case BinaryOperator.LessThan: return Expression.LessThan(left, right);
                 case BinaryOperator.LessThanOrEqual: return Expression.LessThanOrEqual(left, right);
                 case BinaryOperator.Contains: return BuildContainsExpression(left, right);
-                default: throw new InvalidOperationException("TODO: Custom exception.");
+                default: throw BinaryOperatorOutOfRangeException.FromArgs(op);
             }
         }
 
@@ -123,7 +128,7 @@ namespace Questar.OneRoster.Query
                 }
             }
 
-            throw new NotSupportedException($"Unable to build filter for type {propType.FullName}.");
+            throw NotSupportedTypeException.FromArgs(propType);
         }
 
         private enum InvalidEnum

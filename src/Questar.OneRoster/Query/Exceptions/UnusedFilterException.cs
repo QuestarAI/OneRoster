@@ -1,7 +1,7 @@
-using System;
-
-namespace Questar.OneRoster.Query
+namespace Questar.OneRoster.Query.Exceptions
 {
+    using System;
+
     public class UnusedFilterException : Exception
     {
         public string Filter { get; }
@@ -18,7 +18,7 @@ namespace Questar.OneRoster.Query
             EndUnused = endUnused;
         }
 
-        public static UnusedFilterException FromArgs(string filter, int startUnused, int endUnused)
+        internal static UnusedFilterException FromArgs(string filter, int startUnused, int endUnused)
         {
             var unusedFilter = filter.Substring(startUnused, endUnused - startUnused);
             var message = $"Unused portion of filter string. Unused: {unusedFilter}";

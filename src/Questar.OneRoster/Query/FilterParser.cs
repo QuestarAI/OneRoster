@@ -2,8 +2,8 @@ namespace Questar.OneRoster.Query
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using System.Text.RegularExpressions;
+    using Exceptions;
 
     public class FilterParser
     {
