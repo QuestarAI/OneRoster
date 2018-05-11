@@ -47,9 +47,9 @@ namespace Questar.OneRoster.Query
 
                 filters.Add(new Filter
                 {
-                    AndOr = andOr.Success ? (Logical?)Enum.Parse(typeof(Logical), andOr.Value, true) : null,
+                    AndOr = andOr.Success ? (LogicalOperator?)Enum.Parse(typeof(LogicalOperator), andOr.Value, true) : null,
                     FieldName = groups["FieldName"].Value,
-                    Operator = groups["Operator"].Value,
+                    Operator = ParseBinaryOperator(groups["Operator"].Value),
                     Value = single.Success ? single.Value : groups["DoubleQuotedValue"].Value,
                 });
             }
@@ -62,29 +62,19 @@ namespace Questar.OneRoster.Query
             return filters;
         }
 
-    }
-
-    public class UnusedFilterException : Exception
-    {
-        public string Filter { get; }
-        public string UnusedFilter { get; }
-        public int StartUnused { get; }
-        public int EndUnused { get; }
-
-        private UnusedFilterException(string filter, string unusedFilter, int startUnused, int endUnused, string message)
-            : base(message)
+        private static BinaryOperator ParseBinaryOperator(string op)
         {
-            Filter = filter;
-            UnusedFilter = unusedFilter;
-            StartUnused = startUnused;
-            EndUnused = endUnused;
-        }
-
-        public static UnusedFilterException FromArgs(string filter, int startUnused, int endUnused)
-        {
-            var unusedFilter = filter.Substring(startUnused, endUnused - startUnused);
-            var message = $"Unused portion of filter string. Unused: {unusedFilter}";
-            return new UnusedFilterException(filter, unusedFilter, startUnused, endUnused, message);
+            switch (op)
+            {
+                case "=": return BinaryOperator.Equal;
+                case "!=": return BinaryOperator.NotEqual;
+                case ">": return BinaryOperator.GreaterThan;
+                case ">=": return BinaryOperator.GreaterThanOrEqual;
+                case "<": return BinaryOperator.LessThan;
+                case "<=": return BinaryOperator.LessThanOrEqual;
+                case "~": return BinaryOperator.Contains;
+                default: throw new InvalidOperationException($"Could not parse binary operator {op}.");
+            }
         }
     }
 }

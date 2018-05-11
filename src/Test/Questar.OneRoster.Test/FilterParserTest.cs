@@ -15,7 +15,7 @@ namespace Questar.OneRoster.Test
                 {
                     Assert.Null(f.AndOr);
                     Assert.Equal("FooString", f.FieldName);
-                    Assert.Equal("=", f.Operator);
+                    Assert.Equal(BinaryOperator.Equal, f.Operator);
                     Assert.Equal("42", f.Value);
                 });
         }
@@ -30,14 +30,14 @@ namespace Questar.OneRoster.Test
                 {
                     Assert.Null(f.AndOr);
                     Assert.Equal("FooString", f.FieldName);
-                    Assert.Equal("=", f.Operator);
+                    Assert.Equal(BinaryOperator.Equal, f.Operator);
                     Assert.Equal("42", f.Value);
                 },
                 f =>
                 {
-                    Assert.Equal(Logical.And, f.AndOr);
+                    Assert.Equal(LogicalOperator.And, f.AndOr);
                     Assert.Equal("BarInt", f.FieldName);
-                    Assert.Equal("=", f.Operator);
+                    Assert.Equal(BinaryOperator.Equal, f.Operator);
                     Assert.Equal("9001", f.Value);
                 });
         }

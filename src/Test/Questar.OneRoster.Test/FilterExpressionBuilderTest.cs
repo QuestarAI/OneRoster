@@ -21,9 +21,26 @@ namespace Questar.OneRoster.Test
         [Fact]
         public void CanApplyStringEqualExpression()
             => CanApplyFilter("FooString='42'", e => e.FooString == "42");
+
         [Fact]
         public void CanApplyStringNotEqualExpression()
             => CanApplyFilter("FooString!='42'", e => e.FooString != "42");
+
+        [Fact]
+        public void CanApplyEnumEqualExpression()
+            => CanApplyFilter("CorgeEnum='One'", e => e.CorgeEnum == Count.One);
+
+        [Fact]
+        public void CanApplyEnumNotEqualExpression()
+            => CanApplyFilter("CorgeEnum!='One'", e => e.CorgeEnum != Count.One);
+
+        [Fact]
+        public void CanApplyEnumEqualExpressionWithInvalidValue()
+            => CanApplyFilter("CorgeEnum='OutOfRange'", e => false);
+
+        [Fact]
+        public void CanApplyEnumNotEqualExpressionWithInvalidValue()
+            => CanApplyFilter("CorgeEnum!='OutOfRange'", e => true);
 
         [Fact]
         public void CanApplyIntEqualExpression()

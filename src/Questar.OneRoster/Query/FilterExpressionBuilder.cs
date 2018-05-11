@@ -35,7 +35,7 @@ namespace Questar.OneRoster.Query
             var andGroups = new List<List<Expression>> { currentAndGroup };
             foreach (var (filter, expression) in tuples)
             {
-                if (filter.AndOr == Logical.Or)
+                if (filter.AndOr == LogicalOperator.Or)
                 {
                     currentAndGroup = new List<Expression>();
                     andGroups.Add(currentAndGroup);
@@ -54,22 +54,31 @@ namespace Questar.OneRoster.Query
             {
                 throw new InvalidOperationException("TODO: Custom exception.");
             }
-            var prop = Expression.Property(param, filter.FieldName);
+            Expression prop = Expression.Property(param, filter.FieldName);
             var constant = ParseConstant(filter.Value, propType);
-            return BuildBinaryExpression(prop, constant, filter.Operator);
+            if (constant.Type != typeof(InvalidEnum))
+            {
+                return BuildBinaryExpression(prop, constant, filter.Operator);
+            }
+            switch (filter.Operator)
+            {
+                case BinaryOperator.Equal: return Expression.Constant(false);
+                case BinaryOperator.NotEqual: return Expression.Constant(true);
+                default: return BuildBinaryExpression(prop, constant, filter.Operator);
+            }
         }
 
-        private static Expression BuildBinaryExpression(Expression left, Expression right, string op)
+        private static Expression BuildBinaryExpression(Expression left, Expression right, BinaryOperator op)
         {
             switch (op)
             {
-                case "=": return Expression.Equal(left, right);
-                case "!=": return Expression.NotEqual(left, right);
-                case ">": return Expression.GreaterThan(left, right);
-                case ">=": return Expression.GreaterThanOrEqual(left, right);
-                case "<": return Expression.LessThan(left, right);
-                case "<=": return Expression.LessThanOrEqual(left, right);
-                case "~": return BuildContainsExpression(left, right);
+                case BinaryOperator.Equal: return Expression.Equal(left, right);
+                case BinaryOperator.NotEqual: return Expression.NotEqual(left, right);
+                case BinaryOperator.GreaterThan: return Expression.GreaterThan(left, right);
+                case BinaryOperator.GreaterThanOrEqual: return Expression.GreaterThanOrEqual(left, right);
+                case BinaryOperator.LessThan: return Expression.LessThan(left, right);
+                case BinaryOperator.LessThanOrEqual: return Expression.LessThanOrEqual(left, right);
+                case BinaryOperator.Contains: return BuildContainsExpression(left, right);
                 default: throw new InvalidOperationException("TODO: Custom exception.");
             }
         }
@@ -83,7 +92,24 @@ namespace Questar.OneRoster.Query
         {
             if (propType == typeof(string)) return Expression.Constant(value);
             if (propType == typeof(int)) return Expression.Constant(int.Parse(value));
+            if (propType.IsEnum)
+            {
+                try
+                {
+                    return Expression.Constant(Enum.Parse(propType, value, true));
+                }
+                catch (Exception)
+                {
+                    return Expression.Constant(InvalidEnum.NonExistent);
+                }
+            }
+
             throw new NotSupportedException($"Unable to build filter for type {propType.FullName}.");
         }
+
+        private enum InvalidEnum
+        {
+            NonExistent
+        };
     }
 }
