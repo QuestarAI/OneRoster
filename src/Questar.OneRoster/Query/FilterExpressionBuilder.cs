@@ -118,6 +118,7 @@ namespace Questar.OneRoster.Query
             if (propType == typeof(string)) return Expression.Constant(value);
             if (propType == typeof(int)) return Expression.Constant(int.Parse(value));
             if (propType == typeof(DateTime)) return Expression.Constant(Iso8601.Parse(value));
+            if (propType == typeof(Guid)) return Expression.Constant(Guid.Parse(value));
             if (propType.IsEnum)
             {
                 try
