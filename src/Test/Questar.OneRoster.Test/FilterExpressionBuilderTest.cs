@@ -79,6 +79,42 @@ namespace Questar.OneRoster.Test
                 e => e.BarInt <= 5);
 
         [Fact]
+        public void CanApplyDateTimeEqualExpression()
+            => CanApplyFilter(
+                "BazDateTime='2018-05-21'",
+                e => e.BazDateTime == UtcDate(2018, 5, 21));
+
+        [Fact]
+        public void CanApplyDateTimeNotEqualExpression()
+            => CanApplyFilter(
+                "BazDateTime!='2018-05-21'",
+                e => e.BazDateTime != UtcDate(2018, 5, 21));
+
+        [Fact]
+        public void CanApplyDateTimeGreaterThanExpression()
+            => CanApplyFilter(
+                "BazDateTime>'2018-05-21'",
+                e => e.BazDateTime > UtcDate(2018, 5, 21));
+
+        [Fact]
+        public void CanApplyDateTimeGreaterThanOrEqualExpression()
+            => CanApplyFilter(
+                "BazDateTime>='2018-05-21'",
+                e => e.BazDateTime >= UtcDate(2018, 5, 21));
+
+        [Fact]
+        public void CanApplyDateTimeLessThanExpression()
+            => CanApplyFilter(
+                "BazDateTime<'2018-05-21'",
+                e => e.BazDateTime < UtcDate(2018, 5, 21));
+
+        [Fact]
+        public void CanApplyDateTimeLessThanOrEqualExpression()
+            => CanApplyFilter(
+                "BazDateTime<='2018-05-21'",
+                e => e.BazDateTime <= UtcDate(2018, 5, 21));
+
+        [Fact]
         public void CanApplyLogicalAndExpression()
             => CanApplyFilter(
                 "FooString='9001' AND BarInt='6'",
@@ -111,14 +147,15 @@ namespace Questar.OneRoster.Test
         private static List<Entity> BuildEntities()
             => new List<Entity>
             {
-                new Entity { BarInt = 1, FooString = "Nope", CorgeEnum = Count.None},
-                new Entity { BarInt = 2, FooString = "42", CorgeEnum = Count.One },
-                new Entity { BarInt = 3, FooString = "9001", CorgeEnum = Count.Two },
-                new Entity { BarInt = 4, FooString = "421", CorgeEnum = Count.None },
-                new Entity { BarInt = 5, FooString = "42", CorgeEnum = Count.One },
-                new Entity { BarInt = 6, FooString = "42 ", CorgeEnum = Count.Two },
-                new Entity { BarInt = 6, FooString = "9001", CorgeEnum = Count.Two },
-                new Entity { BarInt = 7, FooString = "9001", CorgeEnum = Count.Two },
+                new Entity { BarInt = 1, BazDateTime = UtcDate(2017, 5, 21), FooString = "Nope", CorgeEnum = Count.None },
+                new Entity { BarInt = 2, BazDateTime = UtcDate(2018, 5, 21), FooString = "42", CorgeEnum = Count.One },
+                new Entity { BarInt = 3, BazDateTime = UtcDate(2019, 5, 21), FooString = "9001", CorgeEnum = Count.Two },
+                new Entity { BarInt = 4, BazDateTime = UtcDate(2018, 4, 21), FooString = "421", CorgeEnum = Count.None },
+                new Entity { BarInt = 5, BazDateTime = UtcDate(2018, 5, 21), FooString = "42", CorgeEnum = Count.One },
+                new Entity { BarInt = 6, BazDateTime = UtcDate(2018, 6, 21), FooString = "42 ", CorgeEnum = Count.Two },
+                new Entity { BarInt = 6, BazDateTime = UtcDate(2018, 5, 20), FooString = "9001", CorgeEnum = Count.None },
+                new Entity { BarInt = 7, BazDateTime = UtcDate(2018, 5, 21), FooString = "9002", CorgeEnum = Count.One },
+                new Entity { BarInt = 8, BazDateTime = UtcDate(2018, 5, 22), FooString = "9003", CorgeEnum = Count.Two },
             };
 
         private static void CanApplyFilter(string filterString, Func<Entity, bool> filterFunc)
@@ -129,5 +166,8 @@ namespace Questar.OneRoster.Test
             var expected = list.Where(filterFunc);
             Assert.Equal(expected, actual);
         }
+
+        private static DateTime UtcDate(int year, int month, int day, int hour = 0, int minute = 0, int second = 0)
+            => new DateTime(year, month, day, hour, minute, second, DateTimeKind.Utc);
     }
 }

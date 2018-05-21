@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Questar.OneRoster.Common;
 using Questar.OneRoster.Query.Exceptions;
 
 namespace Questar.OneRoster.Query
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -32,7 +34,6 @@ namespace Questar.OneRoster.Query
             .GetProperties(BindingFlags.Public | BindingFlags.Instance)
             .ToDictionary(p => p.Name, p => p.PropertyType, StringComparer.OrdinalIgnoreCase);
         private static readonly IList<string> PropertyNames = PropertyTypesByName.Select(pair => pair.Key).ToList();
-
 
         public static Expression<Func<T, bool>> FromString(string filterString)
         {
@@ -116,6 +117,7 @@ namespace Questar.OneRoster.Query
         {
             if (propType == typeof(string)) return Expression.Constant(value);
             if (propType == typeof(int)) return Expression.Constant(int.Parse(value));
+            if (propType == typeof(DateTime)) return Expression.Constant(Iso8601.Parse(value));
             if (propType.IsEnum)
             {
                 try
