@@ -7,18 +7,16 @@ namespace Questar.OneRoster.Test
 
     public class ExpressionComparer
     {
-        private ScopedDictionary<ParameterExpression, ParameterExpression> _parameterScope;
-        private readonly Func<object, object, bool> _fnCompare;
+        public ScopedDictionary<ParameterExpression, ParameterExpression> ParameterScope { get; private set; }
+        protected Func<object, object, bool> FnCompare { get; }
 
         protected ExpressionComparer(
             ScopedDictionary<ParameterExpression, ParameterExpression> parameterScope,
             Func<object, object, bool> fnCompare)
         {
-            _parameterScope = parameterScope;
-            _fnCompare = fnCompare;
+            ParameterScope = parameterScope;
+            FnCompare = fnCompare;
         }
-
-        protected Func<object, object, bool> FnCompare => _fnCompare;
 
         public static bool AreEqual(Expression a, Expression b)
             => AreEqual(null, a, b);
@@ -176,12 +174,12 @@ namespace Questar.OneRoster.Test
             && Compare(a.IfFalse, b.IfFalse);
 
         protected virtual bool CompareConstant(ConstantExpression a, ConstantExpression b)
-            => _fnCompare?.Invoke(a.Value, b.Value) ?? Equals(a.Value, b.Value);
+            => FnCompare?.Invoke(a.Value, b.Value) ?? Equals(a.Value, b.Value);
 
         protected virtual bool CompareParameter(ParameterExpression a, ParameterExpression b)
         {
-            if (_parameterScope == null) return a == b;
-            if (_parameterScope.TryGetValue(a, out var mapped)) return mapped == b;
+            if (ParameterScope == null) return a == b;
+            if (ParameterScope.TryGetValue(a, out var mapped)) return mapped == b;
             return a == b;
         }
 
@@ -202,19 +200,19 @@ namespace Questar.OneRoster.Test
             {
                 if (a.Parameters[i].Type != b.Parameters[i].Type) return false;
             }
-            var save = _parameterScope;
-            _parameterScope = new ScopedDictionary<ParameterExpression, ParameterExpression>(_parameterScope);
+            var save = ParameterScope;
+            ParameterScope = new ScopedDictionary<ParameterExpression, ParameterExpression>(ParameterScope);
             try
             {
                 for (var i = 0; i < n; i++)
                 {
-                    _parameterScope.Add(a.Parameters[i], b.Parameters[i]);
+                    ParameterScope.Add(a.Parameters[i], b.Parameters[i]);
                 }
                 return Compare(a.Body, b.Body);
             }
             finally
             {
-                _parameterScope = save;
+                ParameterScope = save;
             }
         }
 

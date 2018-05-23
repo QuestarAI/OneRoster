@@ -1,39 +1,17 @@
-using System.Collections.Generic;
-using System.Reflection;
-using Questar.OneRoster.Common;
-using Questar.OneRoster.Query.Exceptions;
-
 namespace Questar.OneRoster.Query
 {
     using System;
-    using System.Globalization;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-
-    internal class FilterExpressionBuilder
-    {
-        internal static readonly IEnumerable<BinaryOperator> NumericOnlyOperators = new List<BinaryOperator>
-        {
-            BinaryOperator.GreaterThan,
-            BinaryOperator.GreaterThanOrEqual,
-            BinaryOperator.LessThan,
-            BinaryOperator.LessThanOrEqual
-        };
-        internal static readonly IEnumerable<Type> NumericTypes = new List<Type>
-        {
-            typeof(int),
-            typeof(double),
-            typeof(DateTime)
-        };
-    }
+    using Common;
+    using Exceptions;
 
     public class FilterExpressionBuilder<T>
     {
-        private static readonly Type Type = typeof(T);
-        private static readonly Dictionary<string, Type> PropertyTypesByName = typeof(T)
-            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .ToDictionary(p => p.Name, p => p.PropertyType, StringComparer.OrdinalIgnoreCase);
-        private static readonly IList<string> PropertyNames = PropertyTypesByName.Select(pair => pair.Key).ToList();
+        internal static Type Type => ReflectionCache<T>.Type;
+        internal static Dictionary<string, Type> PropertyTypesByName => ReflectionCache<T>.PropertyTypesByName;
+        internal static IList<string> PropertyNames => ReflectionCache<T>.PropertyNames;
 
         public static Expression<Func<T, bool>> FromString(string filterString)
         {
@@ -90,8 +68,8 @@ namespace Questar.OneRoster.Query
         }
 
         private static bool CanApplyOperatorToType(BinaryOperator op, Type propType)
-            => !FilterExpressionBuilder.NumericOnlyOperators.Contains(op)
-            ||  FilterExpressionBuilder.NumericTypes.Contains(propType);
+            => !FilterBuilder.NumericOnlyOperators.Contains(op)
+               ||  FilterBuilder.NumericTypes.Contains(propType);
 
         private static Expression BuildBinaryExpression(Expression left, Expression right, BinaryOperator op)
         {

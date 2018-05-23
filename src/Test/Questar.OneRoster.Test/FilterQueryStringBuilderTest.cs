@@ -2,22 +2,13 @@ namespace Questar.OneRoster.Test
 {
     using static Mock.Util;
     using System;
-    using System.Linq;
     using System.Linq.Expressions;
     using Mock;
     using Query;
     using Xunit;
 
-    public class FilterExpressionBuilderTest
+    public class FilterQueryStringBuilderTest
     {
-        [Fact]
-        public void CanParseStringEqual()
-        {
-            Expression<Func<Entity, bool>> expected = e => e.FooString == "42";
-            var actual = FilterExpressionBuilder<Entity>.FromString("FooString='42'");
-            Assert.True(ExpressionComparer.AreEqual(expected, actual));
-        }
-
         [Fact]
         public void CanApplyStringEqualExpression()
             => CanApplyFilter("FooString='42'", e => e.FooString == "42");
@@ -46,7 +37,7 @@ namespace Questar.OneRoster.Test
         public void CanApplyIntEqualExpression()
             => CanApplyFilter(
                 "BarInt='4'",
-                e => e.BarInt == 4);
+                e => (e.BarInt == 4));
 
         [Fact]
         public void CanApplyIntNotEqualExpression()
@@ -156,13 +147,10 @@ namespace Questar.OneRoster.Test
                 "BarInt = '2' OR BarInt = '4' OR BarInt = '6'",
                 e => e.BarInt == 2 || e.BarInt == 4 || e.BarInt == 6);
 
-        private static void CanApplyFilter(string filterString, Func<Entity, bool> filterFunc)
+        private static void CanApplyFilter(string expectedFilterString, Expression<Func<Entity, bool>> filterFunc)
         {
-            var list = Entity.BuildEntities();
-            var predicate = FilterExpressionBuilder<Entity>.FromString(filterString);
-            var actual = list.Where(predicate.Compile());
-            var expected = list.Where(filterFunc);
-            Assert.Equal(expected, actual);
+            var actual = FilterQueryStringBuilder<Entity>.FromExpression(filterFunc);
+            Assert.Equal(expectedFilterString, actual);
         }
     }
 }
