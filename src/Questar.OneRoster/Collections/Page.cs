@@ -1,7 +1,8 @@
-﻿namespace Questar.OneRoster.Paging
+namespace Questar.OneRoster.Paging
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Collections;
 
     public class Page<T> : IPage<T>
     {

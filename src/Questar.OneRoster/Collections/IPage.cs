@@ -1,4 +1,4 @@
-﻿namespace Questar.OneRoster.Paging
+namespace Questar.OneRoster.Collections
 {
     using System.Collections.Generic;
 
