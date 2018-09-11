@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F3419DBB-B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Test", "Test\Questar.OneRoster.Test\Questar.OneRoster.Test.csproj", "{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questar.OneRoster.Data", "Questar.OneRoster.Data\Questar.OneRoster.Data.csproj", "{10B775E0-19E7-449C-A058-61EDD664EBF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Data", "Questar.OneRoster.Data\Questar.OneRoster.Data.csproj", "{10B775E0-19E7-449C-A058-61EDD664EBF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

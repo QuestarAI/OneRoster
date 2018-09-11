@@ -26,21 +26,21 @@ namespace Questar.OneRoster.Client
         where TStateCode : struct, IConvertible, IComparable, IFormattable
         where TPublicSchoolResidenceStatus : struct, IConvertible, IComparable, IFormattable
     {
-        public IQueryable<AcademicSession> AcademicSessions { get; } = new OrderedQueryable<AcademicSession>(GuidType.AcademicSession);
-        public IQueryable<Category> Categories { get; } = new OrderedQueryable<Category>(GuidType.Category);
-        public IQueryable<Class<TGrade, TSubjectCode>> Classes { get; } = new OrderedQueryable<Class<TGrade, TSubjectCode>>(GuidType.Class);
-        public IQueryable<Course<TGrade, TSubjectCode>> Courses { get; } = new OrderedQueryable<Course<TGrade, TSubjectCode>>(GuidType.Course);
-        public IQueryable<Demographics<TGender, TCountryCode, TStateCode, TPublicSchoolResidenceStatus>> Demographics { get; } = new OrderedQueryable<Demographics<TGender, TCountryCode, TStateCode, TPublicSchoolResidenceStatus>>(GuidType.Demographics);
-        public IQueryable<Enrollment> Enrollments { get; } = new OrderedQueryable<Enrollment>(GuidType.Enrollment);
-        public IQueryable<AcademicSession> GradingPeriods { get; } = new OrderedQueryable<AcademicSession>(GuidType.GradingPeriod);
-        public IQueryable<LineItem> LineItems { get; } = new OrderedQueryable<LineItem>(GuidType.LineItem);
-        public IQueryable<Org> Orgs { get; } = new OrderedQueryable<Org>(GuidType.Org);
-        public IQueryable<Resource> Resources { get; } = new OrderedQueryable<Resource>(GuidType.Resource);
-        public IQueryable<Result> Results { get; } = new OrderedQueryable<Result>(GuidType.Result);
-        public IQueryable<Org> Schools { get; } = new OrderedQueryable<Org>(GuidType.School);
-        public IQueryable<User<TGrade>> Students { get; } = new OrderedQueryable<User<TGrade>>(GuidType.Student);
-        public IQueryable<User<TGrade>> Teachers { get; } = new OrderedQueryable<User<TGrade>>(GuidType.Teacher);
-        public IQueryable<AcademicSession> Terms { get; } = new OrderedQueryable<AcademicSession>(GuidType.Term);
-        public IQueryable<User<TGrade>> Users { get; } = new OrderedQueryable<User<TGrade>>(GuidType.User);
+        public IQueryable<AcademicSessionDto> AcademicSessions { get; } = new OrderedQueryable<AcademicSessionDto>(GuidType.AcademicSession);
+        public IQueryable<CategoryDto> Categories { get; } = new OrderedQueryable<CategoryDto>(GuidType.Category);
+        public IQueryable<ClassDto<TGrade, TSubjectCode>> Classes { get; } = new OrderedQueryable<ClassDto<TGrade, TSubjectCode>>(GuidType.Class);
+        public IQueryable<CourseDto<TGrade, TSubjectCode>> Courses { get; } = new OrderedQueryable<CourseDto<TGrade, TSubjectCode>>(GuidType.Course);
+        public IQueryable<DemographicsDto<TGender, TCountryCode, TStateCode, TPublicSchoolResidenceStatus>> Demographics { get; } = new OrderedQueryable<DemographicsDto<TGender, TCountryCode, TStateCode, TPublicSchoolResidenceStatus>>(GuidType.Demographics);
+        public IQueryable<EnrollmentDto> Enrollments { get; } = new OrderedQueryable<EnrollmentDto>(GuidType.Enrollment);
+        public IQueryable<AcademicSessionDto> GradingPeriods { get; } = new OrderedQueryable<AcademicSessionDto>(GuidType.GradingPeriod);
+        public IQueryable<LineItemDto> LineItems { get; } = new OrderedQueryable<LineItemDto>(GuidType.LineItem);
+        public IQueryable<OrgData> Orgs { get; } = new OrderedQueryable<OrgData>(GuidType.Org);
+        public IQueryable<ResourceDto> Resources { get; } = new OrderedQueryable<ResourceDto>(GuidType.Resource);
+        public IQueryable<ResultDto> Results { get; } = new OrderedQueryable<ResultDto>(GuidType.Result);
+        public IQueryable<OrgData> Schools { get; } = new OrderedQueryable<OrgData>(GuidType.School);
+        public IQueryable<UserDto<TGrade>> Students { get; } = new OrderedQueryable<UserDto<TGrade>>(GuidType.Student);
+        public IQueryable<UserDto<TGrade>> Teachers { get; } = new OrderedQueryable<UserDto<TGrade>>(GuidType.Teacher);
+        public IQueryable<AcademicSessionDto> Terms { get; } = new OrderedQueryable<AcademicSessionDto>(GuidType.Term);
+        public IQueryable<UserDto<TGrade>> Users { get; } = new OrderedQueryable<UserDto<TGrade>>(GuidType.User);
     }
 }
