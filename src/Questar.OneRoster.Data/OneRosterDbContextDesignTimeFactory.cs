@@ -9,7 +9,7 @@ namespace Questar.OneRoster.Data
         {
             var options = new DbContextOptionsBuilder<OneRosterDbContext>();
 
-            options.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=OneRoster;Integrated Security=True");
+            options.UseSqlServer(@"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True");
 
             return new OneRosterDbContext(options.Options);
         }

@@ -75,6 +75,13 @@ namespace Questar.OneRoster.Data
                 .HasForeignKey(dependent => dependent.OrganizationId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
+            builder
+                .Entity<CourseResource>()
+                .HasKey(entity => new
+                {
+                    entity.CourseId,
+                    entity.ResourceId
+                });
             // demographics
 
             builder
