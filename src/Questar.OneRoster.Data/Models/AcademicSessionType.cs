@@ -5,6 +5,6 @@ namespace Questar.OneRoster.Data.Models
         Semester,
         SchoolYear,
         GradingPeriod,
-        Term
+        Term,
     }
 }

@@ -32,6 +32,6 @@ namespace Questar.OneRoster.Data.Models
         UpdateSchool,
         UpdateStudent,
         UpdateTeacher,
-        UpdateTestingGroups
+        UpdateTestingGroups,
     }
 }

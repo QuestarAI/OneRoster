@@ -6,7 +6,7 @@ namespace Questar.OneRoster.Dto
     /// <summary>
     /// Represents a reference to an object.
     /// </summary>
-    public class GuidRef
+    public class GuidRefDto
     {
         /// <summary>
         /// Gets or sets the URI/URL to retrieve this object.

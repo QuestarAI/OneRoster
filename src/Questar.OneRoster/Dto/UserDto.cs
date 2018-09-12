@@ -19,8 +19,8 @@ namespace Questar.OneRoster.Dto
         public string Email { get; set; }
         public string Sms { get; set; }
         public string Phone { get; set; }
-        public IEnumerable<GuidRef> Agents { get; set; } = Enumerable.Empty<GuidRef>();
-        public IEnumerable<GuidRef> Orgs { get; set; } = Enumerable.Empty<GuidRef>();
+        public IEnumerable<GuidRefDto> Agents { get; set; } = Enumerable.Empty<GuidRefDto>();
+        public IEnumerable<GuidRefDto> Orgs { get; set; } = Enumerable.Empty<GuidRefDto>();
         public IEnumerable<TGrade> Grades { get; set; } = Enumerable.Empty<TGrade>();
         public string Password { get; set; }
     }

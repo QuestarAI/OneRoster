@@ -7,6 +7,6 @@ namespace Questar.OneRoster.Data.Models
         District,
         Local,
         State,
-        National
+        National,
     }
 }

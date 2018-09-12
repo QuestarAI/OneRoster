@@ -15,11 +15,11 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/academicSessions")]
     public class AcademicSessionsController : Controller
     {
-        public OneRosterDbContext Context { get; }
+        private readonly OneRosterDbContext _context;
 
         public AcademicSessionsController(OneRosterDbContext context)
         {
-            Context = context;
+            _context = context;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Questar.OneRoster.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IList<AcademicSessionDto>>> GetAllAcademicSessions()
         {
-            var academicSessions = await Context.AcademicSessions.ToListAsync();
+            var academicSessions = await _context.AcademicSessions.ToListAsync();
             var academicSessionsDtos = academicSessions.Select(academicSession => new AcademicSessionDto()); // TODO automapper
 
             return Ok(academicSessionsDtos);
@@ -41,7 +41,7 @@ namespace Questar.OneRoster.Api.Controllers
         [HttpGet("{academicSessionId}")]
         public async Task<ActionResult<AcademicSessionDto>> GetAcademicSession(Guid academicSessionId)
         {
-            var academicSession = await Context.AcademicSessions.FindAsync(academicSessionId);
+            var academicSession = await _context.AcademicSessions.FindAsync(academicSessionId);
             var academicSessionDto = new AcademicSessionDto(); // TODO automapper
 
             return Ok(academicSessionDto);

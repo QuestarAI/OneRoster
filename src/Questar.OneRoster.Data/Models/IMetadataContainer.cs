@@ -2,7 +2,7 @@ namespace Questar.OneRoster.Data.Models
 {
     using System;
 
-    public interface IHaveMetadata
+    public interface IMetadataContainer
     {
         MetadataCollection MetadataCollection { get; }
 

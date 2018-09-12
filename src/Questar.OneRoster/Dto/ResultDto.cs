@@ -6,8 +6,8 @@ namespace Questar.OneRoster.Dto
 
     public class ResultDto : Base
     {
-        public GuidRef LineItem { get; set; }
-        public GuidRef Student { get; set; }
+        public GuidRefDto LineItem { get; set; }
+        public GuidRefDto Student { get; set; }
         public ScoreStatus ScoreStatus { get; set; }
         public double Score { get; set; }
         public DateTime ScoreDate { get; set; }

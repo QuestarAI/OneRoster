@@ -4,6 +4,6 @@ namespace Questar.OneRoster.Test.Mock
     {
         None,
         One,
-        Two
+        Two,
     }
 }

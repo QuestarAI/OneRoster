@@ -114,7 +114,7 @@ namespace Questar.OneRoster.Query
 
         private enum InvalidEnum
         {
-            NonExistent
+            NonExistent,
         };
     }
 }

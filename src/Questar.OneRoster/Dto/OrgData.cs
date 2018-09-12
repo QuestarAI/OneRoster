@@ -10,7 +10,7 @@ namespace Questar.OneRoster.Dto
         public string Name { get; set; }
         public OrgType Type { get; set; }
         public string Identifier { get; set; }
-        public GuidRef Parent { get; set; }
-        public IEnumerable<GuidRef> Children { get; set; } = Enumerable.Empty<GuidRef>();
+        public GuidRefDto Parent { get; set; }
+        public IEnumerable<GuidRefDto> Children { get; set; } = Enumerable.Empty<GuidRefDto>();
     }
 }

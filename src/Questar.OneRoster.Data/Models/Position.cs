@@ -9,6 +9,6 @@ namespace Questar.OneRoster.Data.Models
         Proctor,
         Relative,
         Student,
-        Teacher
+        Teacher,
     }
 }

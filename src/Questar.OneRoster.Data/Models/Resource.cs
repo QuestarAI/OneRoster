@@ -21,5 +21,13 @@ namespace Questar.OneRoster.Data.Models
         public Guid? MetadataCollectionId { get; private set; }
 
         public DateTimeOffset Modified { get; private set; }
+
+        public Importance? Importance { get; private set; }
+
+        public string VendorResourceId { get; private set; }
+
+        public string VendorId { get; private set; }
+
+        public string ApplicationId { get; private set; }
     }
 }

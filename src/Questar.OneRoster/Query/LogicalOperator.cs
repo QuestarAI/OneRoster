@@ -1,8 +1,8 @@
-﻿namespace Questar.OneRoster.Query
+namespace Questar.OneRoster.Query
 {
     public enum LogicalOperator
     {
         And,
-        Or
+        Or,
     }
 }

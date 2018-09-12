@@ -6,6 +6,6 @@ namespace Questar.OneRoster.Data.Models
     {
         Active,
         ToBeDeleted,
-        [Obsolete] Inactive = ToBeDeleted
+        [Obsolete] Inactive = ToBeDeleted,
     }
 }

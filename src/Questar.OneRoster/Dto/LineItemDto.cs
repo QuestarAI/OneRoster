@@ -9,9 +9,9 @@ namespace Questar.OneRoster.Dto
         public string Description { get; set; }
         public DateTime AssignDate { get; set; }
         public DateTime DueDate { get; set; }
-        public GuidRef Class { get; set; }
-        public GuidRef Category { get; set; }
-        public GuidRef GradingPeriod { get; set; }
+        public GuidRefDto Class { get; set; }
+        public GuidRefDto Category { get; set; }
+        public GuidRefDto GradingPeriod { get; set; }
         public double ResultValueMin { get; set; }
         public double ResultValueMax { get; set; }
     }

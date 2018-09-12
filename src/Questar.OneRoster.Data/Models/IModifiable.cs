@@ -2,7 +2,7 @@ namespace Questar.OneRoster.Data.Models
 {
     using System;
 
-    public interface IHaveModified
+    public interface IModifiable
     {
         DateTimeOffset Modified { get; }
     }

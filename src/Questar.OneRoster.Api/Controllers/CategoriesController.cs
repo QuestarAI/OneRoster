@@ -1,5 +1,3 @@
-
-
 namespace Questar.OneRoster.Api.Controllers
 {
     using System;

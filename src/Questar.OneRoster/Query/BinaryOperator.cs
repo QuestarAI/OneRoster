@@ -8,6 +8,6 @@ namespace Questar.OneRoster.Query
         GreaterThanOrEqual,
         LessThan,
         LessThanOrEqual,
-        Contains
+        Contains,
     }
 }

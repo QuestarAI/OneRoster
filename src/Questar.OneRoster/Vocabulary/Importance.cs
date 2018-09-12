@@ -8,6 +8,6 @@ namespace Questar.OneRoster.Vocabulary
         Primary,
 
         [SerializationToken("secondary")]
-        Secondary
+        Secondary,
     }
 }

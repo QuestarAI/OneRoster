@@ -12,8 +12,8 @@ namespace Questar.OneRoster.Dto
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public SessionType Type { get; set; }
-        public GuidRef Parent { get; set; }
-        public IEnumerable<GuidRef> Children { get; set; } = Enumerable.Empty<GuidRef>();
+        public GuidRefDto Parent { get; set; }
+        public IEnumerable<GuidRefDto> Children { get; set; } = Enumerable.Empty<GuidRefDto>();
         public Year Year { get; set; }
     }
 }

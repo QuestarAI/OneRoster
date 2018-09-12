@@ -9,13 +9,13 @@ namespace Questar.OneRoster.Dto
     public class CourseDto<TGrade, TSubjectCode> : Base
     {
         public string Title { get; set; }
-        public GuidRef SchoolYear { get; set; }
+        public GuidRefDto SchoolYear { get; set; }
         public string CourseCode { get; set; }
         public IEnumerable<TGrade> Grades { get; set; } = Enumerable.Empty<TGrade>();
         public IEnumerable<string> Subjects { get; set; } = Enumerable.Empty<string>();
-        public GuidRef Org { get; set; }
+        public GuidRefDto Org { get; set; }
         public IEnumerable<TSubjectCode> SubjectCodes { get; set; } = Enumerable.Empty<TSubjectCode>();
-        public IEnumerable<GuidRef> Resources { get; set; } = Enumerable.Empty<GuidRef>();
+        public IEnumerable<GuidRefDto> Resources { get; set; } = Enumerable.Empty<GuidRefDto>();
     }
 
     public class CourseDto : CourseDto<Grade, SubjectCode> { }
