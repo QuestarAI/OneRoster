@@ -1,8 +1,10 @@
 namespace Questar.OneRoster.Api
 {
+    using Data;
     using JetBrains.Annotations;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +22,9 @@ namespace Questar.OneRoster.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            // TODO: Consolidate where this connection string comes from.
+            const string connection = @"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True";
+            services.AddDbContext<OneRosterDbContext>(options => options.UseSqlServer(connection));
         }
 
         [UsedImplicitly]
