@@ -10,6 +10,7 @@ namespace Questar.OneRoster.Api.Controllers
     using Dto;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using RequestModels;
 
     [Produces("application/json")]
     [Route("ims/oneroster/v1p1/academicSessions")]
@@ -26,7 +27,7 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of all academic sessions.
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IList<AcademicSessionDto>>> GetAllAcademicSessions()
+        public async Task<ActionResult<IList<AcademicSessionDto>>> GetAllAcademicSessions(CollectionEndpointRequest<AcademicSession> request)
         {
             var academicSessions = await _context.AcademicSessions.ToListAsync();
             var academicSessionsDtos = academicSessions.Select(academicSession => new AcademicSessionDto()); // TODO automapper
@@ -37,11 +38,10 @@ namespace Questar.OneRoster.Api.Controllers
         /// <summary>
         /// Returns a specific academic session by identifier.
         /// </summary>
-        /// <param name="academicSessionId">The academic session identifier.</param>
         [HttpGet("{academicSessionId}")]
-        public async Task<ActionResult<AcademicSessionDto>> GetAcademicSession(Guid academicSessionId)
+        public async Task<ActionResult<AcademicSessionDto>> GetAcademicSession(AcademicSessionEndpointRequest request)
         {
-            var academicSession = await _context.AcademicSessions.FindAsync(academicSessionId);
+            var academicSession = await _context.AcademicSessions.FindAsync(request.AcademicSessionId);
             var academicSessionDto = new AcademicSessionDto(); // TODO automapper
 
             return Ok(academicSessionDto);

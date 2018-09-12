@@ -11,13 +11,13 @@ namespace Questar.OneRoster.Query
             BinaryOperator.GreaterThanOrEqual,
             BinaryOperator.LessThan,
             BinaryOperator.LessThanOrEqual
-        };
+        }.AsReadOnly();
 
         internal static readonly IEnumerable<Type> NumericTypes = new List<Type>
         {
             typeof(int),
             typeof(double),
             typeof(DateTime)
-        };
+        }.AsReadOnly();
     }
 }
