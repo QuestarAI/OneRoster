@@ -30,8 +30,9 @@ namespace Questar.OneRoster.Api.Controllers
         public async Task<ActionResult<IList<AcademicSessionDto>>> GetAllAcademicSessions(CollectionEndpointRequest<AcademicSession> request)
         {
             var academicSessions = await _context.AcademicSessions.ToListAsync();
-            var academicSessionsDtos = academicSessions.Select(academicSession => new AcademicSessionDto()); // TODO automapper
-
+            // TODO: Handle mapping in a more robust manner.
+            var mapper = Mapping.BuildMapper();
+            var academicSessionsDtos = academicSessions.Select(mapper.Map<AcademicSessionDto>);
             return Ok(academicSessionsDtos);
         }
 
@@ -42,8 +43,9 @@ namespace Questar.OneRoster.Api.Controllers
         public async Task<ActionResult<AcademicSessionDto>> GetAcademicSession(AcademicSessionEndpointRequest request)
         {
             var academicSession = await _context.AcademicSessions.FindAsync(request.AcademicSessionId);
-            var academicSessionDto = new AcademicSessionDto(); // TODO automapper
-
+            // TODO: Handle mapping in a more robust manner.
+            var mapper = Mapping.BuildMapper();
+            var academicSessionDto = mapper.Map<AcademicSessionDto>(academicSession);
             return Ok(academicSessionDto);
         }
     }
