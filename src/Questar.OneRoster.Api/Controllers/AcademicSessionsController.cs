@@ -10,6 +10,8 @@ namespace Questar.OneRoster.Api.Controllers
     using Dto;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Query;
+    using Questar.OneRoster.Api.Extensions;
     using RequestModels;
 
     [Produces("application/json")]
@@ -29,7 +31,7 @@ namespace Questar.OneRoster.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IList<AcademicSessionDto>>> GetAllAcademicSessions(CollectionEndpointRequest<AcademicSession> request)
         {
-            var academicSessions = await _context.AcademicSessions.ToListAsync();
+            var academicSessions = await _context.AcademicSessions.ToListAsync(request);
             // TODO: Handle mapping in a more robust manner.
             var mapper = Mapping.BuildMapper();
             var academicSessionsDtos = academicSessions.Select(mapper.Map<AcademicSessionDto>);
