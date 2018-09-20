@@ -1,7 +1,9 @@
 namespace Questar.OneRoster.Api.Extensions
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Dynamic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -54,10 +56,27 @@ namespace Questar.OneRoster.Api.Extensions
 
             var fields = request.Fields
                 .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                .Select(field => field.Trim());
+                .Select(field => field.Trim())
+                .ToList();
 
-            return await query.Select<T>(fields).ToListAsync();
+            var projected = await query.Select<T>(fields).ToListAsync();
+            return projected.ToExpandoObjects(fields);
         }
+
+        private static IEnumerable<ExpandoObject> ToExpandoObjects<T>(this IEnumerable<T> projected, IEnumerable<string> fields) where T : class
+            => projected.Select(obj =>
+            {
+                var exp = new ExpandoObject();
+                var dict = (IDictionary<string, object>)exp;
+
+                foreach (var field in fields)
+                {
+                    // TODO: Caching...
+                    dict[field] = obj.GetType().GetProperty(field, PropFlags).GetValue(obj);
+                }
+
+                return exp;
+            });
 
         private static Expression<Func<T, object>> SelectProperty<T>(string property)
         {

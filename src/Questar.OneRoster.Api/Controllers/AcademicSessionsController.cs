@@ -37,9 +37,10 @@ namespace Questar.OneRoster.Api.Controllers
 
             var academicSessions = await _context.AcademicSessions.ToListAsync(request);
             // TODO: Handle mapping in a more robust manner.
-            var mapper = Mapping.BuildMapper();
-            var academicSessionsDtos = academicSessions.Select(mapper.Map<AcademicSessionDto>);
-            return Ok(academicSessionsDtos);
+            return Ok(academicSessions);
+            //var mapper = Mapping.BuildMapper();
+            //var academicSessionsDtos = academicSessions.Select(mapper.Map<AcademicSessionDto>);
+            //return Ok(academicSessionsDtos);
         }
 
         /// <summary>
