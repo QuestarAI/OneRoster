@@ -29,8 +29,12 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of all academic sessions.
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IList<AcademicSessionDto>>> GetAllAcademicSessions(CollectionEndpointRequest<AcademicSession> request)
+        public async Task<ActionResult<IEnumerable<dynamic>>> GetAllAcademicSessions(CollectionEndpointRequest<AcademicSession> request)
         {
+            // TODO: Field selection of invalid fields results in all fields
+            // TODO: Field selection
+            // TODO: Field selection of empty field results in invalid request and status
+
             var academicSessions = await _context.AcademicSessions.ToListAsync(request);
             // TODO: Handle mapping in a more robust manner.
             var mapper = Mapping.BuildMapper();
