@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace Questar.OneRoster.Api
 {
     using Data;
@@ -7,6 +9,8 @@ namespace Questar.OneRoster.Api
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Console;
 
     public class Startup
     {
@@ -24,7 +28,18 @@ namespace Questar.OneRoster.Api
             services.AddMvc();
             // TODO: Consolidate where this connection string comes from.
             const string connection = @"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True";
-            services.AddDbContext<OneRosterDbContext>(options => options.UseSqlServer(connection));
+
+            var myLoggerFactory = new LoggerFactory(new[] {
+                new ConsoleLoggerProvider((category, level)
+                    => category == DbLoggerCategory.Database.Command.Name
+                       && level == LogLevel.Information, true)
+            });
+            
+            services.AddDbContext<OneRosterDbContext>(options =>
+            {
+                options.UseSqlServer(connection);
+                options.UseLoggerFactory(myLoggerFactory);
+            });
         }
 
         [UsedImplicitly]
