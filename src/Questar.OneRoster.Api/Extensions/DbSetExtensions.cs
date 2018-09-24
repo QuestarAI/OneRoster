@@ -1,7 +1,6 @@
 namespace Questar.OneRoster.Api.Extensions
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Dynamic;
     using System.Linq;
@@ -16,8 +15,8 @@ namespace Questar.OneRoster.Api.Extensions
     {
         private const BindingFlags PropFlags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
 
-        public static async Task<IEnumerable<object>> ToListAsync<T>(this DbSet<T> dbSet, CollectionEndpointRequest<T> request) where T : class
-            => await dbSet
+        public static Task<IEnumerable<object>> ToListAsync<T>(this DbSet<T> dbSet, CollectionEndpointRequest<T> request) where T : class
+            => dbSet
             .HandleFilter(request)
             .HandleOrder(request)
             .HandleSkip(request)
@@ -54,29 +53,17 @@ namespace Questar.OneRoster.Api.Extensions
                 return await query.ToListAsync();
             }
 
-            var fields = request.Fields
-                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                .Select(field => field.Trim())
-                .ToList();
+            var projection = Projections<T>.FromFields(request.Fields);
 
-            var projected = await query.Select<T>(fields).ToListAsync();
-            return projected.ToExpandoObjects(fields);
-        }
-
-        private static IEnumerable<ExpandoObject> ToExpandoObjects<T>(this IEnumerable<T> projected, IEnumerable<string> fields) where T : class
-            => projected.Select(obj =>
+            // Optimization; no need for projection; OneRoster spec requires all fields returned in this case.
+            if (projection.NonexistentFields.Any())
             {
-                var exp = new ExpandoObject();
-                var dict = (IDictionary<string, object>)exp;
+                return await query.ToListAsync();
+            }
 
-                foreach (var field in fields)
-                {
-                    // TODO: Caching...
-                    dict[field] = obj.GetType().GetProperty(field, PropFlags).GetValue(obj);
-                }
-
-                return exp;
-            });
+            var incompleteObjects = await query.Select<T>(projection.ExistentFields).ToListAsync();
+            return projection.Apply(incompleteObjects);
+        }
 
         private static Expression<Func<T, object>> SelectProperty<T>(string property)
         {
@@ -99,6 +86,100 @@ namespace Questar.OneRoster.Api.Extensions
             var selector = Expression.Lambda(body, parameter);
             var call = Expression.Call(typeof(Queryable), "Select", new[] { sourceType, resultType }, source.Expression, Expression.Quote(selector));
             return source.Provider.CreateQuery<TResult>(call);
+        }
+
+        private static class Projections<T>
+        {
+            private static readonly IDictionary<string, Projection<T>> Cache = new Dictionary<string, Projection<T>>(StringComparer.OrdinalIgnoreCase);
+
+            public static Projection<T> FromFields(string fields)
+            {
+                if (Cache.TryGetValue(fields, out var projection)) return projection;
+
+                var fieldList = fields
+                    .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                    .Select(field => field.Trim())
+                    .ToList();
+                
+                Cache[fields] = projection = new Projection<T>(fieldList);
+                return projection;
+            }
+        }
+
+        private class Projection<T>
+        {
+            private static readonly Type Type = typeof(T);
+            private static readonly Dictionary<string, PropertyInfo> Properties
+                = Type.GetProperties(PropFlags).ToDictionary(p => p.Name, p => p, StringComparer.OrdinalIgnoreCase);
+
+            private static readonly IEnumerable<string> AllFields = Properties.Keys.ToList();
+            
+            public Projection(IReadOnlyList<string> fields)
+            {
+                CategorizeFields(fields);
+
+                if (NonexistentFields.Any())
+                {
+                    return;
+                }
+
+                _applyDelegate = BuildApplyDelegate();
+            }
+
+            private readonly Delegate _applyDelegate;
+
+            public IEnumerable<string> ExistentFields { get; private set; }
+            public IEnumerable<string> NonexistentFields { get; private set; }
+
+            public IEnumerable<ExpandoObject> Apply(IEnumerable<T> projected)
+            {
+                // TODO: Can delegate handle the loop itself?
+                foreach (var item in projected)
+                {
+                    var expando = new ExpandoObject();
+                    var dictionary = (IDictionary<string, object>)expando;
+                    _applyDelegate.DynamicInvoke(item, dictionary);
+                    yield return expando;
+                }
+            }
+
+            private void CategorizeFields(IEnumerable<string> fields)
+            {
+                var existentFields = new List<string>();
+                var nonexistentFields = new List<string>();
+                foreach (var field in fields)
+                {
+                    var list = Properties.ContainsKey(field)
+                        ? existentFields
+                        : nonexistentFields;
+                    list.Add(field);
+                }
+
+                ExistentFields = existentFields;
+                NonexistentFields = nonexistentFields;
+            }
+
+            private Delegate BuildApplyDelegate()
+            {
+                var itemParam = Expression.Parameter(typeof(T), "item");
+                var dictionaryParam = Expression.Parameter(typeof(IDictionary<string, object>), "dict");
+                
+                var assignments = new List<Expression>();
+                foreach (var field in ExistentFields)
+                {
+                    var dictionaryKeyProperty = Expression.Property(dictionaryParam, "Item", Expression.Constant(field));
+                    var itemProperty = Expression.Property(itemParam, field);
+                    var right = itemProperty.Type.IsValueType
+                        ? (Expression) Expression.Convert(itemProperty, typeof(object))
+                        : itemProperty;
+                    var assign = Expression.Assign(dictionaryKeyProperty, right);
+                    assignments.Add(assign);
+                }
+
+                var body = Expression.Block(assignments);
+                var func = Expression.Lambda(body, itemParam, dictionaryParam);
+                return func.Compile();
+            }
         }
     }
 }
