@@ -2,16 +2,17 @@ namespace Questar.OneRoster.Api.RequestModels
 {
     using System;
     using System.Linq.Expressions;
+    using Common;
     using Microsoft.AspNetCore.Mvc;
     using Query;
 
     public class CollectionEndpointRequest<T> : EndpointRequest<T>
     {
         [FromQuery]
-        public int Limit { get; set; } = 100;
+        public int Limit { get; set; } = Constants.DefaultLimit;
 
         [FromQuery]
-        public int Offset { get; set; } = 0;
+        public int Offset { get; set; } = Constants.DefaultOffset;
 
         [FromQuery]
         public string Sort { get; set; }

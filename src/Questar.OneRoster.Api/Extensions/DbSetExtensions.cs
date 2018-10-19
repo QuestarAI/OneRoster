@@ -23,6 +23,9 @@ namespace Questar.OneRoster.Api.Extensions
             .HandleTake(request)
             .HandleProjection(request);
 
+        public static Task<int> CountAsync<T>(this DbSet<T> dbSet, CollectionEndpointRequest<T> request) where T : class
+            => dbSet.HandleFilter(request).CountAsync();
+
         private static IQueryable<T> HandleFilter<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
         {
             var predicate = request.BuildPredicate();
@@ -39,12 +42,14 @@ namespace Questar.OneRoster.Api.Extensions
         private static IQueryable<T> HandleSkip<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
             => request.Offset > 0
                 ? query.Skip(request.Offset)
-                : query;
+                : request.Offset == 0
+                    ? query
+                    : throw new InvalidOperationException("TODO: This should probably be wrapped in the result object so the controller can handle it gracefully.");
 
         private static IQueryable<T> HandleTake<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
             => request.Limit > 0
                 ? query.Take(request.Limit)
-                : query;
+                : throw new InvalidOperationException("TODO: This should probably be wrapped in the result object so the controller can handle it gracefully.");
 
         private static async Task<IEnumerable<object>> HandleProjection<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
         {
@@ -114,7 +119,7 @@ namespace Questar.OneRoster.Api.Extensions
 
             private static readonly IEnumerable<string> AllFields = Properties.Keys.ToList();
             
-            public Projection(IReadOnlyList<string> fields)
+            public Projection(IEnumerable<string> fields)
             {
                 CategorizeFields(fields);
 

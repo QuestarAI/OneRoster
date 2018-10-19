@@ -11,6 +11,7 @@ namespace Questar.OneRoster.Api
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Console;
+    using Newtonsoft.Json.Converters;
 
     public class Startup
     {
@@ -25,7 +26,9 @@ namespace Questar.OneRoster.Api
         [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services
+                .AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
             // TODO: Consolidate where this connection string comes from.
             const string connection = @"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True";
 

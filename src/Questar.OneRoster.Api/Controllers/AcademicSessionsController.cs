@@ -6,12 +6,12 @@ namespace Questar.OneRoster.Api.Controllers
     using Data.Models;
     using Dto;
     using Microsoft.AspNetCore.Mvc;
-    using Extensions;
     using RequestModels;
+    using ResponseModels;
 
     [Produces("application/json")]
     [Route("ims/oneroster/v1p1/academicSessions")]
-    public class AcademicSessionsController : Controller
+    public class AcademicSessionsController : OneRosterController
     {
         private readonly OneRosterDbContext _context;
 
@@ -24,8 +24,8 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of all academic sessions.
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<dynamic>>> GetAllAcademicSessionsAsync(CollectionEndpointRequest<AcademicSession> request)
-            => Ok(await _context.AcademicSessions.ToListAsync(request));
+        public Task<IActionResult> GetAllAcademicSessionsAsync(CollectionEndpointRequest<AcademicSession> request)
+            => GetCollectionAsync(_context.AcademicSessions, request, (response, list) => response.AcademicSessions = list);
 
         /// <summary>
         /// Returns a specific academic session by identifier.
