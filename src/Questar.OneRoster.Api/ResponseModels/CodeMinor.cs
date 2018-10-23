@@ -1,4 +1,4 @@
-﻿namespace Questar.OneRoster.Api.ResponseModels
+namespace Questar.OneRoster.Api.ResponseModels
 {
     using System.Runtime.Serialization;
 
@@ -22,6 +22,14 @@
 
         [EnumMember(Value = "invalid_filter_field")]
         InvalidFilterField,
+
+        /// The specification does not validate these; we do.
+        [EnumMember(Value = "invalid_limit_field")]
+        InvalidLimitField,
+
+        /// The specification does not validate these; we do.
+        [EnumMember(Value = "invalid_offset_field")]
+        InvalidOffsetField,
 
         [EnumMember(Value = "invalid_ blank_selection _field")]
         InvalidBlankSelectionField,

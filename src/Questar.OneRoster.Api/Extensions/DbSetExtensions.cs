@@ -15,50 +15,52 @@ namespace Questar.OneRoster.Api.Extensions
     {
         private const BindingFlags PropFlags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
 
-        public static Task<IEnumerable<object>> ToListAsync<T>(this DbSet<T> dbSet, CollectionEndpointRequest<T> request) where T : class
+        public static Task<IEnumerable<object>> ToListAsync<T>(this DbSet<T> dbSet, CollectionEndpointContext<T> context) where T : class
             => dbSet
-            .HandleFilter(request)
-            .HandleOrder(request)
-            .HandleSkip(request)
-            .HandleTake(request)
-            .HandleProjection(request);
+            .HandleFilter(context)
+            .HandleOrder(context)
+            .HandleSkip(context)
+            .HandleTake(context)
+            .HandleProjection(context);
 
-        public static Task<int> CountAsync<T>(this DbSet<T> dbSet, CollectionEndpointRequest<T> request) where T : class
-            => dbSet.HandleFilter(request).CountAsync();
+        public static Task<int> CountAsync<T>(this DbSet<T> dbSet, CollectionEndpointContext<T> context) where T : class
+            => dbSet
+            .HandleFilter(context)
+            .CountAsync();
 
-        private static IQueryable<T> HandleFilter<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
+        private static IQueryable<T> HandleFilter<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
         {
-            var predicate = request.BuildPredicate();
+            var predicate = context.GetPredicate();
             return predicate == null ? query : query.Where(predicate);
         }
         
-        private static IQueryable<T> HandleOrder<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
-            => string.IsNullOrWhiteSpace(request.Sort)
+        private static IQueryable<T> HandleOrder<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
+            => !context.RequestSortIsValid || string.IsNullOrWhiteSpace(context.Request.Sort)
                 ? query
-                : request.OrderBy == null || request.OrderBy == SortDirection.Asc
-                    ? query.OrderBy(SelectProperty<T>(request.Sort))
-                    : query.OrderByDescending(SelectProperty<T>(request.Sort));
+                : context.Request.OrderBy == null || context.Request.OrderBy == SortDirection.Asc
+                    ? query.OrderBy(SelectProperty<T>(context.Request.Sort))
+                    : query.OrderByDescending(SelectProperty<T>(context.Request.Sort));
         
-        private static IQueryable<T> HandleSkip<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
-            => request.Offset > 0
-                ? query.Skip(request.Offset)
-                : request.Offset == 0
+        private static IQueryable<T> HandleSkip<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
+            => context.Request.Offset > 0
+                ? query.Skip(context.Request.Offset)
+                : context.Request.Offset == 0
                     ? query
-                    : throw new InvalidOperationException("TODO: This should probably be wrapped in the result object so the controller can handle it gracefully.");
+                    : throw new InvalidOperationException("Offset must be greater than or equal to 0.");
 
-        private static IQueryable<T> HandleTake<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
-            => request.Limit > 0
-                ? query.Take(request.Limit)
-                : throw new InvalidOperationException("TODO: This should probably be wrapped in the result object so the controller can handle it gracefully.");
+        private static IQueryable<T> HandleTake<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
+            => context.Request.Limit > 0
+                ? query.Take(context.Request.Limit)
+                : throw new InvalidOperationException("Limit must be greater than 0.");
 
-        private static async Task<IEnumerable<object>> HandleProjection<T>(this IQueryable<T> query, CollectionEndpointRequest<T> request) where T : class
+        private static async Task<IEnumerable<object>> HandleProjection<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
         {
-            if (string.IsNullOrWhiteSpace(request.Fields))
+            if (string.IsNullOrWhiteSpace(context.Request.Fields))
             {
                 return await query.ToListAsync();
             }
 
-            var projection = Projections<T>.FromFields(request.Fields);
+            var projection = Projections<T>.FromFields(context.Request.Fields);
 
             // Optimization; no need for projection; OneRoster spec requires all fields returned in this case.
             if (projection.NonexistentFields.Any())

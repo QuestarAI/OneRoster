@@ -1,7 +1,7 @@
 namespace Questar.OneRoster.Api.ResponseModels
 {
+    using System.Net;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
 
     /// <summary>
     /// Represents an informational status about an API request/response.
@@ -25,5 +25,8 @@ namespace Questar.OneRoster.Api.ResponseModels
 
         [JsonProperty(PropertyName = "imsx_operationRefIdentifier")]
         public string OperationRefIdentifier { get; set; }
+
+        [JsonIgnore]
+        public HttpStatusCode StatusCode { get; set; }
     }
 }

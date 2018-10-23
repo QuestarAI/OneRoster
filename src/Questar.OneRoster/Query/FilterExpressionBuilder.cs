@@ -14,17 +14,20 @@ namespace Questar.OneRoster.Query
         internal static IList<string> PropertyNames => ReflectionCache<T>.PropertyNames;
 
         public static Expression<Func<T, bool>> FromString(string filterString)
+            => string.IsNullOrWhiteSpace(filterString)
+                ? null
+                : FromFilters(FilterParser.FromString(filterString));
+
+        public static Expression<Func<T, bool>> FromFilters(IList<Filter> filters)
         {
-            if (string.IsNullOrWhiteSpace(filterString)) return null;
+            if (filters == null || !filters.Any()) return null;
             var parameter = Expression.Parameter(Type, "p0");
-            var tuples = FilterParser
-                .FromString(filterString)
-                .Select(filter => (filter: filter, expression: BuildFilterExpression(parameter, filter)));
+            var tuples = filters.Select(filter => (filter: filter, expression: BuildFilterExpression(parameter, filter)));
             // TODO: Can I LINQ chain this entire thing..? :-D
             var andGroups = BuildAndGroups(tuples);
             var body = andGroups
-                .Select(andGroup => andGroup.Aggregate(Expression.And))
-                .Aggregate(Expression.Or);
+                .Select(andGroup => andGroup.Aggregate(Expression.AndAlso))
+                .Aggregate(Expression.OrElse);
             return BuildFunc(body, parameter);
         }
 

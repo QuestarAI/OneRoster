@@ -4,6 +4,8 @@ namespace Questar.OneRoster.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
     using System.Text;
     using System.Threading.Tasks;
     using Common;
@@ -11,6 +13,7 @@ namespace Questar.OneRoster.Api.Controllers
     using Extensions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
+    using Query;
     using RequestModels;
     using ResponseModels;
 
@@ -27,15 +30,23 @@ namespace Questar.OneRoster.Api.Controllers
         protected async Task<IActionResult> GetCollectionAsync<T>(
             DbSet<T> dbSet,
             CollectionEndpointRequest<T> request,
-            Action<EndpointResponse, IEnumerable<object>> beforeResponse)
+            Action<EndpointResponse, IEnumerable<object>> beforeOkResponse)
             where T: class
         {
-            var listTask = dbSet.ToListAsync(request);
-            var countTask = dbSet.CountAsync(request);
+            var context = new CollectionEndpointContext<T>(request);
+            var response = context.Response;
+
+            Validate(context);
+
+            if (context.IsBadRequest())
+            {
+                return BadRequest(response);
+            }
+
+            var listTask = dbSet.ToListAsync(context);
+            var countTask = dbSet.CountAsync(context);
             await Task.WhenAll(listTask, countTask);
             var count = countTask.Result;
-            var response = new EndpointResponse();
-            beforeResponse(response, listTask.Result);
 
             HttpContext.Response.Headers.Add("X-Total-Count", count.ToString());
 
@@ -45,9 +56,119 @@ namespace Questar.OneRoster.Api.Controllers
                 HttpContext.Response.Headers.Add("Link", linkHeaderValues);
             }
 
-            response.StatusInfoSet.Add(SuccessStatus);
-            
+            if (!context.HasStatusInfo())
+            {
+                context.AddStatusInfo(SuccessStatus);
+            }
+
+            beforeOkResponse(response, listTask.Result);
+
             return Ok(response);
+        }
+
+        private void Validate<T>(CollectionEndpointContext<T> context) where T : class
+        {
+            var propertyNames = ReflectionCache<T>.PropertyNames;
+            ValidateFilter(context, propertyNames);
+            ValidateSort(context, propertyNames);
+            ValidateOffset(context);
+            ValidateLimit(context);
+            ValidateFieldSelection(context, propertyNames);
+        }
+
+        private static void ValidateFilter<T>(CollectionEndpointContext<T> context, IEnumerable<string> propertyNames) where T : class
+        {
+            var parsedFilters = context.GetParsedFilters();
+            if (parsedFilters == null) return;
+            var invalidNames = parsedFilters
+                .Select(filter => filter.FieldName)
+                .Where(field => !propertyNames.Contains(field, StringComparer.OrdinalIgnoreCase));
+            foreach (var name in invalidNames)
+            {
+                context.AddStatusInfo(new StatusInfo
+                {
+                    CodeMajor = CodeMajor.Success,
+                    CodeMinor = CodeMinor.InvalidFilterField,
+                    Severity = Severity.Warning,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Description = name,
+                });
+            }
+        }
+
+        private void ValidateSort<T>(CollectionEndpointContext<T> context, IEnumerable<string> propertyNames) where T : class
+        {
+            var sortPropertyName = context.Request.Sort;
+            if (string.IsNullOrWhiteSpace(sortPropertyName)) return;
+            if (propertyNames.Contains(sortPropertyName)) return;
+
+            context.RequestSortIsValid = false;
+            context.AddStatusInfo(new StatusInfo
+            {
+                CodeMajor = CodeMajor.Success,
+                CodeMinor = CodeMinor.InvalidSortField,
+                Severity = Severity.Warning,
+                StatusCode = HttpStatusCode.OK,
+                Description = sortPropertyName,
+            });
+        }
+
+        private void ValidateOffset<T>(CollectionEndpointContext<T> context) where T : class
+        {
+            if (context.Request.Offset >= 0) return;
+            context.AddStatusInfo(new StatusInfo
+            {
+                CodeMajor = CodeMajor.Failure,
+                CodeMinor = CodeMinor.InvalidOffsetField,
+                Severity = Severity.Error,
+                StatusCode = HttpStatusCode.BadRequest,
+                Description = "Offset query parameter must be greater than or equal to 0.",
+            });
+        }
+
+        private void ValidateLimit<T>(CollectionEndpointContext<T> context) where T : class
+        {
+            if (context.Request.Limit > 0) return;
+            context.AddStatusInfo(new StatusInfo
+            {
+                CodeMajor = CodeMajor.Failure,
+                CodeMinor = CodeMinor.InvalidLimitField,
+                Severity = Severity.Error,
+                StatusCode = HttpStatusCode.BadRequest,
+                Description = "Limit query parameter must be greater than 0.",
+            });
+        }
+
+        private void ValidateFieldSelection<T>(CollectionEndpointContext<T> context, IList<string> propertyNames) where T : class
+        {
+            var fields = context.Request.Fields;
+            if (fields == null) return;
+            if (string.IsNullOrWhiteSpace(fields)) // If IsWhiteSpace basically.
+            {
+                context.AddStatusInfo(new StatusInfo
+                {
+                    CodeMajor = CodeMajor.Failure,
+                    CodeMinor = CodeMinor.InvalidBlankSelectionField,
+                    Severity = Severity.Error,
+                    StatusCode = HttpStatusCode.BadRequest,
+                });
+                return;
+            }
+
+            var fieldsList = context.GetFieldsList();
+            var invalidNames = fieldsList
+                .Where(field => !propertyNames.Contains(field, StringComparer.OrdinalIgnoreCase));
+            foreach (var name in invalidNames)
+            {
+                context.AddStatusInfo(new StatusInfo
+                {
+                    CodeMajor = CodeMajor.Success,
+                    CodeMinor = CodeMinor.InvalidSelectionField,
+                    Severity = Severity.Warning,
+                    StatusCode = HttpStatusCode.OK,
+                    Description = name,
+                });
+            }
         }
 
         private string BuildLinkHeaderValues<T>(CollectionEndpointRequest<T> request, int count) where T : class

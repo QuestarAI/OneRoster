@@ -23,6 +23,8 @@ namespace Questar.OneRoster.Api.RequestModels
         [FromQuery]
         public string Filter { get; set; }
 
-        public Expression<Func<T, bool>> BuildPredicate() => FilterExpressionBuilder<T>.FromString(Filter);
+        /// Deriving classes should implement this method, returning a predicate to be &&'d together
+        /// with the predicate generated from <see cref="Filter" />.
+        public virtual Expression<Func<T, bool>> GetUrlPredicate() => null;
     }
 }
