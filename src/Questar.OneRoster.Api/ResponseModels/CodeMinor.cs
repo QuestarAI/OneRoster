@@ -31,7 +31,7 @@ namespace Questar.OneRoster.Api.ResponseModels
         [EnumMember(Value = "invalid_offset_field")]
         InvalidOffsetField,
 
-        [EnumMember(Value = "invalid_ blank_selection _field")]
+        [EnumMember(Value = "invalid_blank_selection_field")]
         InvalidBlankSelectionField,
 
         [EnumMember(Value = "unauthorized")]
