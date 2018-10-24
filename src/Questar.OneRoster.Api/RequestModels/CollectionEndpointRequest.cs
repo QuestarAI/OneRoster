@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Api.RequestModels
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq.Expressions;
     using Common;
     using Microsoft.AspNetCore.Mvc;
@@ -15,12 +16,14 @@ namespace Questar.OneRoster.Api.RequestModels
         public int Offset { get; set; } = Constants.DefaultOffset;
 
         [FromQuery]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Sort { get; set; }
 
         [FromQuery]
         public SortDirection? OrderBy { get; set; }
 
         [FromQuery]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Filter { get; set; }
 
         /// Deriving classes should implement this method, returning a predicate to be &&'d together
