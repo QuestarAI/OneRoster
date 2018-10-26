@@ -1,16 +1,12 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Data;
     using Data.Models;
     using Dto;
     using Microsoft.AspNetCore.Mvc;
     using RequestModels;
-    using ResponseModels;
 
-    [Produces("application/json")]
-    [Route("ims/oneroster/v1p1/academicSessions")]
     public class AcademicSessionsController : OneRosterController
     {
         private readonly OneRosterDbContext _context;

@@ -8,6 +8,7 @@ namespace Questar.OneRoster.Api.Controllers
     using System.Net;
     using System.Text;
     using System.Threading.Tasks;
+    using Attributes;
     using Common;
     using Microsoft.EntityFrameworkCore;
     using Extensions;
@@ -17,6 +18,9 @@ namespace Questar.OneRoster.Api.Controllers
     using RequestModels;
     using ResponseModels;
 
+    [ControllerName("")]
+    [Produces("application/json")]
+    [Route("ims/oneroster/v1p1/[controller]")]
     public abstract class OneRosterController : Controller
     {
         private static readonly StatusInfo SuccessStatus = new StatusInfo

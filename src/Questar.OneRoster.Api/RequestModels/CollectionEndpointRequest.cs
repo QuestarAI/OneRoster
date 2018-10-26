@@ -25,9 +25,5 @@ namespace Questar.OneRoster.Api.RequestModels
         [FromQuery]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Filter { get; set; }
-
-        /// Deriving classes should implement this method, returning a predicate to be &&'d together
-        /// with the predicate generated from <see cref="Filter" />.
-        public virtual Expression<Func<T, bool>> GetUrlPredicate() => null;
     }
 }
