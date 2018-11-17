@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Query
+namespace Questar.OneRoster.Reflection
 {
     using System;
     using System.Collections.Generic;

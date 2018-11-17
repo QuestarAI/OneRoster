@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Query
+namespace Questar.OneRoster.Sorting
 {
     public enum SortDirection
     {

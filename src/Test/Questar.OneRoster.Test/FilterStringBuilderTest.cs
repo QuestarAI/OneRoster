@@ -1,69 +1,71 @@
 namespace Questar.OneRoster.Test
 {
     using System;
-    using System.Linq;
+    using System.Linq.Expressions;
     using Filtering;
     using Mock;
     using Xunit;
     using static Mock.Util;
 
-    public class FilterExpressionBuilderTest
+    public class FilterStringBuilderTest
     {
-        private static void CanApplyFilter(FilterString<Entity> filterString, Func<Entity, bool> filterFunc)
+        private static void CanApplyFilter(string expected, Expression<Func<Entity, bool>> actual)
         {
-            var list = Entity.BuildEntities();
-            var predicate = filterString.ToFilterExpression();
-            var actual = list.Where(predicate.Compile()).ToList();
-            var expected = list.Where(filterFunc).ToList();
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, new FilterExpression<Entity>(actual).ToFilterString().ToString(), StringComparer.OrdinalIgnoreCase); // value parsing case sensitivity
         }
 
         [Fact]
         public void CanApplyDateTimeEqualExpression()
         {
+            var datetime = UtcDate(2018, 5, 21);
             CanApplyFilter(
                 "BazDateTime='2018-05-21'",
-                e => e.BazDateTime == UtcDate(2018, 5, 21));
+                e => e.BazDateTime == datetime);
         }
 
         [Fact]
         public void CanApplyDateTimeGreaterThanExpression()
         {
+            var datetime = UtcDate(2018, 5, 21);
             CanApplyFilter(
                 "BazDateTime>'2018-05-21'",
-                e => e.BazDateTime > UtcDate(2018, 5, 21));
+                e => e.BazDateTime > datetime);
         }
 
         [Fact]
         public void CanApplyDateTimeGreaterThanOrEqualExpression()
         {
+            var datetime = UtcDate(2018, 5, 21);
             CanApplyFilter(
                 "BazDateTime>='2018-05-21'",
-                e => e.BazDateTime >= UtcDate(2018, 5, 21));
+                e => e.BazDateTime >= datetime);
         }
 
         [Fact]
         public void CanApplyDateTimeLessThanExpression()
         {
+            var datetime = UtcDate(2018, 5, 21);
             CanApplyFilter(
                 "BazDateTime<'2018-05-21'",
-                e => e.BazDateTime < UtcDate(2018, 5, 21));
+                e => e.BazDateTime < datetime);
         }
 
         [Fact]
         public void CanApplyDateTimeLessThanOrEqualExpression()
         {
+            var datetime = UtcDate(2018, 5, 21);
             CanApplyFilter(
                 "BazDateTime<='2018-05-21'",
-                e => e.BazDateTime <= UtcDate(2018, 5, 21));
+                e => e.BazDateTime <= datetime);
         }
 
         [Fact]
         public void CanApplyDateTimeNotEqualExpression()
         {
+            var datetime = UtcDate(2018, 5, 21);
             CanApplyFilter(
                 "BazDateTime!='2018-05-21'",
-                e => e.BazDateTime != UtcDate(2018, 5, 21));
+                e => e.BazDateTime != datetime);
         }
 
         [Fact]
@@ -72,11 +74,12 @@ namespace Questar.OneRoster.Test
             CanApplyFilter("CorgeEnum='One'", e => e.CorgeEnum == Count.One);
         }
 
-        [Fact]
-        public void CanApplyEnumEqualExpressionWithInvalidValue()
-        {
-            CanApplyFilter("CorgeEnum='OutOfRange'", e => false);
-        }
+        // TODO do not explicitly support this
+        //[Fact]
+        //public void CanApplyEnumEqualExpressionWithInvalidValue()
+        //{
+        //    CanApplyFilter("CorgeEnum='OutOfRange'", e => e.CorgeEnum == Enum.Parse<Count>("OutOfRange"));
+        //}
 
         [Fact]
         public void CanApplyEnumNotEqualExpression()
@@ -84,26 +87,29 @@ namespace Questar.OneRoster.Test
             CanApplyFilter("CorgeEnum!='One'", e => e.CorgeEnum != Count.One);
         }
 
-        [Fact]
-        public void CanApplyEnumNotEqualExpressionWithInvalidValue()
-        {
-            CanApplyFilter("CorgeEnum!='OutOfRange'", e => true);
-        }
+        // TODO do not explicitly support this
+        //[Fact]
+        //public void CanApplyEnumNotEqualExpressionWithInvalidValue()
+        //{
+        //    CanApplyFilter("CorgeEnum!='OutOfRange'", e => e.CorgeEnum != Enum.Parse<Count>("OutOfRange"));
+        //}
 
         [Fact]
         public void CanApplyGuidEqualExpression()
         {
+            var guid = new Guid("4D868BC4-34DE-4411-9F9F-9C5F1FAE1DDB");
             CanApplyFilter(
                 "QuxGuid='4D868BC4-34DE-4411-9F9F-9C5F1FAE1DDB'",
-                e => e.QuxGuid == new Guid("4D868BC4-34DE-4411-9F9F-9C5F1FAE1DDB"));
+                e => e.QuxGuid == guid);
         }
 
         [Fact]
         public void CanApplyGuidNotEqualExpression()
         {
+            var guid = new Guid("0D256148-18ED-452E-976A-80FDD3129DCD");
             CanApplyFilter(
                 "QuxGuid!='0D256148-18ED-452E-976A-80FDD3129DCD'",
-                e => e.QuxGuid != new Guid("0D256148-18ED-452E-976A-80FDD3129DCD"));
+                e => e.QuxGuid != guid);
         }
 
         [Fact]
@@ -175,7 +181,7 @@ namespace Questar.OneRoster.Test
         {
             CanApplyFilter(
                 "FooString='Nope' OR FooString='42' AND BarInt='5'",
-                e => (e.FooString == "Nope" || e.FooString == "42") && e.BarInt == 5); // i added the parenthesis there... check with one roster on this?
+                e => e.FooString == "Nope" || e.FooString == "42" && e.BarInt == 5);
         }
 
         [Fact]
@@ -204,14 +210,6 @@ namespace Questar.OneRoster.Test
         public void CanApplyStringNotEqualExpression()
         {
             CanApplyFilter("FooString!='42'", e => e.FooString != "42");
-        }
-
-        [Fact]
-        public void CanParseStringEqual()
-        {
-            var expected = new FilterExpression<Entity>(e => e.FooString == "42");
-            var actual = new FilterString<Entity>("FooString='42'").ToFilterExpression();
-            Assert.True(ExpressionComparer.AreEqual(expected.Expression, actual.Expression));
         }
     }
 }

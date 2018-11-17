@@ -7,9 +7,10 @@ namespace Questar.OneRoster.Api.Extensions
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Filtering;
     using Microsoft.EntityFrameworkCore;
-    using Query;
     using RequestModels;
+    using Sorting;
 
     public static class DbSetExtensions
     {
@@ -30,7 +31,7 @@ namespace Questar.OneRoster.Api.Extensions
 
         private static IQueryable<T> HandleFilter<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
         {
-            var predicate = context.GetPredicate();
+            var predicate = new FilterString<T>(context.Request.Filter).ToFilterExpression();
             return predicate == null ? query : query.Where(predicate);
         }
         

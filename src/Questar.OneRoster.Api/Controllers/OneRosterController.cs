@@ -14,7 +14,7 @@ namespace Questar.OneRoster.Api.Controllers
     using Extensions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
-    using Query;
+    using Reflection;
     using RequestModels;
     using ResponseModels;
 
@@ -82,22 +82,24 @@ namespace Questar.OneRoster.Api.Controllers
 
         private static void ValidateFilter<T>(CollectionEndpointContext<T> context, IEnumerable<string> propertyNames) where T : class
         {
-            var parsedFilters = context.GetParsedFilters();
-            if (parsedFilters == null) return;
-            var invalidNames = parsedFilters
-                .Select(filter => filter.FieldName)
-                .Where(field => !propertyNames.Contains(field, StringComparer.OrdinalIgnoreCase));
-            foreach (var name in invalidNames)
-            {
-                context.AddStatusInfo(new StatusInfo
-                {
-                    CodeMajor = CodeMajor.Success,
-                    CodeMinor = CodeMinor.InvalidFilterField,
-                    Severity = Severity.Warning,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    Description = name,
-                });
-            }
+            // TODO catch exception when building expression
+
+            //var parsedFilters = context.GetParsedFilters();
+            //if (parsedFilters == null) return;
+            //var invalidNames = parsedFilters
+            //    .Select(filter => filter.FieldName)
+            //    .Where(field => !propertyNames.Contains(field, StringComparer.OrdinalIgnoreCase));
+            //foreach (var name in invalidNames)
+            //{
+            //    context.AddStatusInfo(new StatusInfo
+            //    {
+            //        CodeMajor = CodeMajor.Success,
+            //        CodeMinor = CodeMinor.InvalidFilterField,
+            //        Severity = Severity.Warning,
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        Description = name,
+            //    });
+            //}
         }
 
         private void ValidateSort<T>(CollectionEndpointContext<T> context, IEnumerable<string> propertyNames) where T : class
