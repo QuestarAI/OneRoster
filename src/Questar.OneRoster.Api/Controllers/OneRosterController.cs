@@ -72,7 +72,7 @@ namespace Questar.OneRoster.Api.Controllers
 
         private void Validate<T>(CollectionEndpointContext<T> context) where T : class
         {
-            var propertyNames = ReflectionCache<T>.PropertyNames;
+            var propertyNames = Reflect<T>.PropertyNames;
             ValidateFilter(context, propertyNames);
             ValidateSort(context, propertyNames);
             ValidateOffset(context);
@@ -145,7 +145,7 @@ namespace Questar.OneRoster.Api.Controllers
             });
         }
 
-        private void ValidateFieldSelection<T>(CollectionEndpointContext<T> context, IList<string> propertyNames) where T : class
+        private void ValidateFieldSelection<T>(CollectionEndpointContext<T> context, IEnumerable<string> propertyNames) where T : class
         {
             var fields = context.Request.Fields;
             if (fields == null) return;
