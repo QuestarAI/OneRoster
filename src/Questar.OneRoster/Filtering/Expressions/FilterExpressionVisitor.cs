@@ -1,35 +1,20 @@
-namespace Questar.OneRoster.Filtering
+namespace Questar.OneRoster.Filtering.Expressions
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Reflection;
 
     internal sealed class FilterExpressionVisitor<T> : ExpressionVisitor
     {
-        private readonly Stack<FilterStringBuilder<T>> _parts;
-
-        public FilterExpressionVisitor(FilterStringBuilder<T> stringBuilder)
+        public FilterExpressionVisitor(FilterBuilder builder, FilterFactory factory)
         {
-            _parts = new Stack<FilterStringBuilder<T>>(new[] { stringBuilder });
+            Builder = builder;
+            Factory = factory;
         }
 
-        public FilterStringBuilder<T> Part => _parts.Peek();
+        public FilterBuilder Builder { get; }
 
-        private static object Evaluate(Expression node)
-        {
-            var convert = Expression.Convert(node, typeof(object));
-            var lambda = Expression.Lambda<Func<object>>(convert);
-            var getter = lambda.Compile();
-            return getter();
-        }
-
-        private string ToString(Expression expression)
-        {
-            _parts.Push(new FilterStringBuilder<T>());
-            Visit(expression);
-            return _parts.Pop().ToFilterString();
-        }
+        public FilterFactory Factory { get; }
 
         public override Expression Visit(Expression node)
         {
@@ -54,50 +39,77 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        protected override Expression VisitBinary(BinaryExpression node)
+        private Expression VisitLogical(BinaryExpression node)
         {
-            Action<string, string> binary;
+            Action<Filter, Filter> build;
 
             switch (node.NodeType)
             {
                 case ExpressionType.AndAlso:
-                    binary = Part.AndAlso;
-                    break;
-                case ExpressionType.Equal:
-                    binary = Part.Equal;
-                    break;
-                case ExpressionType.GreaterThan:
-                    binary = Part.GreaterThan;
-                    break;
-                case ExpressionType.GreaterThanOrEqual:
-                    binary = Part.GreaterThanOrEqual;
-                    break;
-                case ExpressionType.LessThan:
-                    binary = Part.LessThan;
-                    break;
-                case ExpressionType.LessThanOrEqual:
-                    binary = Part.LessThanOrEqual;
-                    break;
-                case ExpressionType.NotEqual:
-                    binary = Part.NotEqual;
+                    build = Builder.AndAlso;
                     break;
                 case ExpressionType.OrElse:
-                    binary = Part.OrElse;
+                    build = Builder.OrElse;
                     break;
                 default:
                     throw new InvalidOperationException($"Invalid binary expression '{node.NodeType}'");
             }
 
-            binary(ToString(node.Left), ToString(node.Right));
+            build(Factory.Create<T>(node.Left), Factory.Create<T>(node.Right));
 
             return node;
         }
 
-        protected override Expression VisitConstant(ConstantExpression node)
+        private Expression VisitPredicate(BinaryExpression node)
         {
-            Part.Value(node.Value);
+            Action<FilterProperty, FilterValue> build;
+
+            switch (node.NodeType)
+            {
+                case ExpressionType.Equal:
+                    build = Builder.Equal;
+                    break;
+                case ExpressionType.GreaterThan:
+                    build = Builder.GreaterThan;
+                    break;
+                case ExpressionType.GreaterThanOrEqual:
+                    build = Builder.GreaterThanOrEqual;
+                    break;
+                case ExpressionType.LessThan:
+                    build = Builder.LessThan;
+                    break;
+                case ExpressionType.LessThanOrEqual:
+                    build = Builder.LessThanOrEqual;
+                    break;
+                case ExpressionType.NotEqual:
+                    build = Builder.NotEqual;
+                    break;
+                default:
+                    throw new InvalidOperationException($"Invalid binary expression '{node.NodeType}'");
+            }
+
+            build(Factory.CreateProperty<T>(node.Left), Factory.CreateValue<T>(node.Left));
 
             return node;
+        }
+
+        protected override Expression VisitBinary(BinaryExpression node)
+        {
+            switch (node.NodeType)
+            {
+                case ExpressionType.Equal:
+                case ExpressionType.GreaterThan:
+                case ExpressionType.GreaterThanOrEqual:
+                case ExpressionType.LessThan:
+                case ExpressionType.LessThanOrEqual:
+                case ExpressionType.NotEqual:
+                    return VisitPredicate(node);
+                case ExpressionType.AndAlso:
+                case ExpressionType.OrElse:
+                    return VisitLogical(node);
+                default:
+                    throw new InvalidOperationException($"Invalid binary expression '{node.NodeType}'");
+            }
         }
 
         protected override Expression VisitLambda<TDelegate>(Expression<TDelegate> node)
@@ -105,46 +117,25 @@ namespace Questar.OneRoster.Filtering
             return base.Visit(node.Body) ?? throw new InvalidOperationException($"Couldn't visit lambda body '{node.Body}'.");
         }
 
-        protected override Expression VisitMember(MemberExpression node)
-        {
-            var instance = node.Expression;
-            var name = node.Member.Name;
-
-            switch (instance.NodeType)
-            {
-                case ExpressionType.MemberAccess:
-                    Part.Property($"{ToString(instance)}.{name}");
-                    break;
-                case ExpressionType.Constant:
-                    Part.Value(Evaluate(node));
-                    break;
-                default:
-                    Part.Property(name);
-                    break;
-            }
-
-            return node;
-        }
-
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
             var method = node.Method;
 
-            Action<string, string> contains;
+            Action<FilterProperty, FilterValue> build;
 
             switch (method.IsGenericMethod ? method.GetGenericMethodDefinition() : null)
             {
                 case MethodInfo all when all == FilterInfo.Any:
-                    contains = Part.Any;
+                    build = Builder.Any;
                     break;
                 case MethodInfo any when any == FilterInfo.All:
-                    contains = Part.All;
+                    build = Builder.All;
                     break;
                 default:
                     throw new NotSupportedException($"Unsupported method expression '{method}'.");
             }
 
-            contains(ToString(node.Arguments[1]), ToString(node.Arguments[0]));
+            build(Factory.CreateProperty<T>(node.Arguments[0]), Factory.CreateValue<T>(node.Arguments[1]));
 
             return node;
         }

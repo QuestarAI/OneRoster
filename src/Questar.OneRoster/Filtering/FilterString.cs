@@ -1,10 +1,10 @@
-﻿namespace Questar.OneRoster.Filtering
+namespace Questar.OneRoster.Filtering
 {
-    public struct FilterString<T>
+    public struct FilterString
     {
         public string Value { get; }
 
-        public FilterString(string value)
+        internal FilterString(string value)
         {
             Value = value;
         }
@@ -19,24 +19,14 @@
             return Value.GetHashCode();
         }
 
-        public FilterExpression<T> ToFilterExpression()
-        {
-            return new FilterExpressionParser().Parse<T>(Value);
-        }
-
         public override string ToString()
         {
             return Value;
         }
 
-        public static implicit operator string(FilterString<T> filter)
+        public static implicit operator string(FilterString filter)
         {
             return filter.ToString();
-        }
-
-        public static implicit operator FilterString<T>(string value)
-        {
-            return new FilterString<T>(value);
         }
     }
 }

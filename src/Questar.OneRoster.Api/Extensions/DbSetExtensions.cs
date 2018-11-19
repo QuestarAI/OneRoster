@@ -8,6 +8,7 @@ namespace Questar.OneRoster.Api.Extensions
     using System.Reflection;
     using System.Threading.Tasks;
     using Filtering;
+    using Filtering.Expressions;
     using Microsoft.EntityFrameworkCore;
     using RequestModels;
     using Sorting;
@@ -31,7 +32,7 @@ namespace Questar.OneRoster.Api.Extensions
 
         private static IQueryable<T> HandleFilter<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
         {
-            var predicate = new FilterString<T>(context.Request.Filter).ToFilterExpression();
+            var predicate = Filter.Parse(context.Request.Filter).ToFilterExpression<T>();
             return predicate == null ? query : query.Where(predicate);
         }
         

@@ -3,6 +3,7 @@ namespace Questar.OneRoster.Test
     using System;
     using System.Linq.Expressions;
     using Filtering;
+    using Filtering.Expressions;
     using Mock;
     using Xunit;
     using static Mock.Util;
@@ -11,7 +12,7 @@ namespace Questar.OneRoster.Test
     {
         private static void CanApplyFilter(string expected, Expression<Func<Entity, bool>> actual)
         {
-            Assert.Equal(expected, new FilterExpression<Entity>(actual).ToFilterString().ToString(), StringComparer.OrdinalIgnoreCase); // value parsing case sensitivity
+            Assert.Equal(expected, new FilterExpression<Entity>(actual).ToFilter().ToString(), StringComparer.OrdinalIgnoreCase); // value parsing case sensitivity
         }
 
         [Fact]

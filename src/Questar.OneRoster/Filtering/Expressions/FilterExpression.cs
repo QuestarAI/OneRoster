@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Filtering
+namespace Questar.OneRoster.Filtering.Expressions
 {
     using System;
     using System.Linq;
@@ -41,6 +41,11 @@ namespace Questar.OneRoster.Filtering
             return Expression;
         }
 
+        public static FilterExpression<T> Parse(Filter filter)
+        {
+            return new FilterExpressionFactory<T>().Create(filter);
+        }
+
         public override bool Equals(object obj)
         {
             return Expression.Equals(obj);
@@ -66,12 +71,9 @@ namespace Questar.OneRoster.Filtering
             return new FilterExpression<T>(value);
         }
 
-        public FilterString<T> ToFilterString()
+        public Filter ToFilter()
         {
-            var builder = new FilterStringBuilder<T>();
-            var visitor = new FilterExpressionVisitor<T>(builder);
-            visitor.Visit(this);
-            return builder.ToFilterString();
+            return new FilterFactory().Create<T>(this);
         }
     }
 }

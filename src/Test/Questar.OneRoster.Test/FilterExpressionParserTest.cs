@@ -4,20 +4,21 @@ namespace Questar.OneRoster.Test
     using System.Collections.Generic;
     using System.Linq;
     using Filtering;
+    using Filtering.Expressions;
     using Mock;
     using Xunit;
     using static Mock.Util;
 
     public class FilterExpressionParserTest
     {
-        private static void AreEqual(FilterString<Entity> filter, Func<Entity, bool> expected) =>
+        private static void AreEqual(string filter, Func<Entity, bool> expected) =>
             AreEqual(Entity.BuildEntities(), filter, expected);
 
-        private static void AreEqual<T>(ICollection<T> source, FilterString<T> filter, Func<T, bool> expected) =>
+        private static void AreEqual<T>(ICollection<T> source, string filter, Func<T, bool> expected) =>
             Are(Assert.Equal, source, filter, expected);
 
-        private static void Are<T>(Action<IEnumerable<T>, IEnumerable<T>> assertion, ICollection<T> source, FilterString<T> filter, Func<T, bool> expected) =>
-            assertion(source.Where(expected).ToList(), source.Where(filter.ToFilterExpression().Compile()).ToList());
+        private static void Are<T>(Action<IEnumerable<T>, IEnumerable<T>> assertion, ICollection<T> source, string filter, Func<T, bool> expected) =>
+            assertion(source.Where(expected).ToList(), source.Where(Filter.Parse(filter).ToFilterExpression<T>().Compile()).ToList());
 
         [Fact]
         public void CanApplyContainsAllExpression() =>
@@ -131,7 +132,7 @@ namespace Questar.OneRoster.Test
         public void CanParseStringEqual()
         {
             var expected = new FilterExpression<Entity>(e => e.FooString == "42");
-            var actual = new FilterString<Entity>("FooString='42'").ToFilterExpression();
+            var actual = Filter.Parse("FooString='42'").ToFilterExpression<Entity>();
             Assert.True(ExpressionComparer.AreEqual(expected.Expression, actual.Expression));
         }
     }
