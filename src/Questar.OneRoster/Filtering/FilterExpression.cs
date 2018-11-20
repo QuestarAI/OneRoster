@@ -6,7 +6,7 @@ namespace Questar.OneRoster.Filtering
 
     public sealed class FilterExpression<T> : Expression
     {
-        public FilterExpression(Expression<Func<T, bool>> expression)
+        internal FilterExpression(Expression<Func<T, bool>> expression)
             => Expression = expression;
 
         public Expression<Func<T, bool>> Expression { get; }
@@ -47,9 +47,6 @@ namespace Questar.OneRoster.Filtering
 
         public static implicit operator Expression<Func<T, bool>>(FilterExpression<T> filter)
             => filter.Expression;
-
-        public static implicit operator FilterExpression<T>(Expression<Func<T, bool>> value)
-            => new FilterExpression<T>(value);
 
         public Filter ToFilter()
         {

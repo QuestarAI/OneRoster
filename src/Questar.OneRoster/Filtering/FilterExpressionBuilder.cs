@@ -35,7 +35,7 @@ namespace Questar.OneRoster.Filtering
         }
 
         public FilterExpression<T> ToExpression() =>
-            (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), Parameter);
+            new FilterExpression<T>((Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), Parameter));
 
         public override void Visit(LogicalFilter filter)
         {
