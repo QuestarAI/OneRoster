@@ -1,6 +1,6 @@
 namespace Questar.OneRoster.Filtering
 {
-    public struct FilterString
+    public class FilterString
     {
         public string Value { get; }
 

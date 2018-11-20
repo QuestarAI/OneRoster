@@ -4,7 +4,7 @@ namespace Questar.OneRoster.Filtering
 
     public sealed class PredicateFilter : Filter
     {
-        public PredicateFilter(FilterProperty property, Predicate predicate, FilterValue value)
+        public PredicateFilter(FilterProperty property, PredicateOperator predicate, FilterValue value)
         {
             Property = property;
             Predicate = predicate;
@@ -13,7 +13,7 @@ namespace Questar.OneRoster.Filtering
 
         public FilterProperty Property { get; }
 
-        public Predicate Predicate { get; }
+        public PredicateOperator Predicate { get; }
 
         public FilterValue Value { get; }
 

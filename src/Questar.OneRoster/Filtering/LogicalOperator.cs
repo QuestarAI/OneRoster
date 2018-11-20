@@ -3,21 +3,21 @@ namespace Questar.OneRoster.Filtering
     using System.Collections.Generic;
     using System.Linq;
 
-    public struct Logical
+    public struct LogicalOperator
     {
-        public static readonly Logical And = new Logical("AND");
+        public static readonly LogicalOperator And = new LogicalOperator("AND");
 
-        public static readonly Logical Or = new Logical("OR");
+        public static readonly LogicalOperator Or = new LogicalOperator("OR");
 
-        private Logical(string symbol)
+        private LogicalOperator(string symbol)
             => Symbol = symbol;
 
         public string Symbol { get; }
 
-        public static implicit operator string(Logical logical)
+        public static implicit operator string(LogicalOperator logical)
             => logical.Symbol;
 
-        public static IEnumerable<Logical> Values
+        public static IEnumerable<LogicalOperator> Values
         {
             get
             {
@@ -26,11 +26,11 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        public static Logical Parse(string symbol)
+        public static LogicalOperator Parse(string symbol)
             => Values.Single(value => value.Symbol == symbol);
 
-        public static bool TryParse(string symbol, out Logical logical)
-            => (logical = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(Logical);
+        public static bool TryParse(string symbol, out LogicalOperator logical)
+            => (logical = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(LogicalOperator);
         
         public override bool Equals(object obj)
             => Symbol.Equals(obj);

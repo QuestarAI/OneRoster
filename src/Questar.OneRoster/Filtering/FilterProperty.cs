@@ -3,7 +3,7 @@ namespace Questar.OneRoster.Filtering
     using System.Collections.Generic;
     using System.Linq;
 
-    public class FilterProperty
+    public sealed class FilterProperty
     {
         public FilterProperty(string name, FilterProperty caller = null)
         {

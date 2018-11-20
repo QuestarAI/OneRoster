@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Filtering.Expressions
+namespace Questar.OneRoster.Filtering
 {
     using System;
     using System.Linq;
@@ -53,7 +53,7 @@ namespace Questar.OneRoster.Filtering.Expressions
 
         public Filter ToFilter()
         {
-            var builder = new FilterBuilder<T>();
+            var builder = new FilterBuilder<T>(Expression.Parameters.Single());
             builder.Visit(Expression.Body);
             return builder.ToFilter();
         }

@@ -10,6 +10,12 @@ namespace Questar.OneRoster.Filtering
 
         private static readonly Regex LogicalRegex = new Regex(@"(?<Left>.+)\s+(?<Logical>AND|OR)\s+(?<Right>.+)", RegexOptions.Compiled);
 
+        internal Filter()
+        {
+        }
+
+        public abstract void Accept(FilterVisitor visitor);
+
         public static Filter Parse(string text)
         {
             var logical = LogicalRegex.Match(text);
@@ -17,7 +23,7 @@ namespace Questar.OneRoster.Filtering
                 return new LogicalFilter
                 (
                     Parse(logical.Groups["Left"].Value),
-                    Logical.Parse(logical.Groups["Logical"].Value),
+                    LogicalOperator.Parse(logical.Groups["Logical"].Value),
                     Parse(logical.Groups["Right"].Value)
                 );
             var predicate = PredicateRegex.Match(text);
@@ -25,7 +31,7 @@ namespace Questar.OneRoster.Filtering
                 return new PredicateFilter
                 (
                     FilterProperty.Parse(predicate.Groups["Property"].Value),
-                    Predicate.Parse(predicate.Groups["Predicate"].Value),
+                    PredicateOperator.Parse(predicate.Groups["Predicate"].Value),
                     FilterValue.Parse(predicate.Groups["Value"].Value)
                 );
             throw new ArgumentException($"Couldn't parse filter '{text}'.");
@@ -33,13 +39,10 @@ namespace Questar.OneRoster.Filtering
 
         public abstract IEnumerable<FilterProperty> GetProperties();
 
-        public abstract void Accept(FilterVisitor visitor);
-
         public FilterString ToFilterString()
         {
             var builder = new FilterStringBuilder();
-            var visitor = new FilterStringFilterVisitor(builder);
-            Accept(visitor);
+            Accept(builder);
             return builder.ToFilterString();
         }
 

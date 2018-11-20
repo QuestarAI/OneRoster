@@ -9,14 +9,10 @@ namespace Questar.OneRoster.Reflection
     public static class Reflect
     {
         public static TypeConverter GetConverter(this Type type)
-        {
-            return TypeDescriptor.GetConverter(type);
-        }
+            => TypeDescriptor.GetConverter(type);
 
         public static TypeConverter GetConverter(this PropertyInfo property)
-        {
-            return TypeDescriptor.GetProperties(property.DeclaringType).Find(property.Name, false).Converter;
-        }
+            => TypeDescriptor.GetProperties(property.DeclaringType).Find(property.Name, false).Converter;
     }
 
     public static class Reflect<T>

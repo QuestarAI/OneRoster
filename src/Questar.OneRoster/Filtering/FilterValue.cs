@@ -3,13 +3,13 @@ namespace Questar.OneRoster.Filtering
     using System;
     using System.Text.RegularExpressions;
 
-    public class FilterValue
+    public sealed class FilterValue
     {
         private static readonly Regex ScalarRegex = new Regex(@"'(?<Scalar>[^']*)'", RegexOptions.Compiled);
 
         private static readonly Regex VectorRegex = new Regex(@"(?<Vector>[^']*)", RegexOptions.Compiled);
 
-        protected internal FilterValue(FilterValueType type, string value)
+        public FilterValue(FilterValueType type, string value)
         {
             Type = type;
             Value = value;
@@ -39,7 +39,7 @@ namespace Questar.OneRoster.Filtering
                 return new FilterValue
                 (
                     FilterValueType.Vector,
-                    scalar.Groups["Vector"].Value
+                    vector.Groups["Vector"].Value
                 );
             throw new ArgumentException($"Couldn't parse filter value '{text}'.");
         }

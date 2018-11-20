@@ -11,9 +11,8 @@ namespace Questar.OneRoster.Test
     public class FilterStringBuilderTest
     {
         private static void CanApplyFilter(string expected, Expression<Func<Entity, bool>> actual)
-        {
-            Assert.Equal(expected, new FilterExpression<Entity>(actual).ToFilter().ToString(), StringComparer.OrdinalIgnoreCase); // value parsing case sensitivity
-        }
+            => Assert.Equal(expected, new FilterExpression<Entity>(actual).ToFilter().ToString(), StringComparer.OrdinalIgnoreCase); // value parsing case sensitivity
+        
 
         [Fact]
         public void CanApplyDateTimeEqualExpression()

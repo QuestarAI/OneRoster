@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Filtering.Expressions
+namespace Questar.OneRoster.Filtering
 {
     using System;
     using System.Linq.Expressions;
@@ -7,9 +7,9 @@ namespace Questar.OneRoster.Filtering.Expressions
     {
         public static FilterExpression<T> ToFilterExpression<T>(this Filter filter)
         {
-            var builder = new FilterExpressionBuilder(typeof(T));
+            var builder = new FilterExpressionBuilder<T>();
             filter.Accept(builder);
-            return (Expression<Func<T, bool>>) builder.ToExpression();
+            return builder.ToExpression();
         }
     }
 }
