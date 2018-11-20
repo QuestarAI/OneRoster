@@ -32,6 +32,7 @@ namespace Questar.OneRoster.Sorting
                     throw new InvalidOperationException($"Couldn't find property '{name}' on type '{type}'.");
 
                 body = Expression.Property(body, property);
+                type = property.PropertyType;
             }
 
             return (IOrderedQueryable<TSource>)

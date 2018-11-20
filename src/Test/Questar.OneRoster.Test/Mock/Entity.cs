@@ -18,6 +18,8 @@ namespace Questar.OneRoster.Test.Mock
 
         public string[] Subjects { get; set; }
 
+        public Foo Foo { get; set; }
+
         public Entity Parent { get; set; }
 
         public Entity[] Children { get; set; }
