@@ -45,6 +45,16 @@ namespace Questar.OneRoster.Filtering
         }
 
         public override string ToString()
-            => Value;
+        {
+            switch (Type)
+            {
+                case FilterValueType.Scalar:
+                    return $"'{Value}'";
+                case FilterValueType.Vector:
+                    return Value;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Type));
+            }
+        }
     }
 }

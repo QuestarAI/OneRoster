@@ -7,7 +7,7 @@ namespace Questar.OneRoster.Filtering.Expressions
     using System.Reflection;
     using Reflection;
 
-    public class FilterExpressionBuilder : FilterVisitor
+    public sealed class FilterExpressionBuilder : FilterVisitor
     {
         private readonly Stack<Expression> _expressions = new Stack<Expression>();
 

@@ -36,7 +36,12 @@ namespace Questar.OneRoster.Filtering
         public abstract void Accept(FilterVisitor visitor);
 
         public FilterString ToFilterString()
-            => new FilterStringFactory().Create(this);
+        {
+            var builder = new FilterStringBuilder();
+            var visitor = new FilterStringFilterVisitor(builder);
+            Accept(visitor);
+            return builder.ToFilterString();
+        }
 
         public override string ToString()
             => ToFilterString();
