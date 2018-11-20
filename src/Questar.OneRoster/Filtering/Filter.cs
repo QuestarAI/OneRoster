@@ -36,13 +36,9 @@ namespace Questar.OneRoster.Filtering
         public abstract void Visit(FilterVisitor visitor);
 
         public FilterString ToFilterString()
-        {
-            return new FilterStringFactory().Create(this);
-        }
+            => new FilterStringFactory().Create(this);
 
         public override string ToString()
-        {
-            return ToFilterString();
-        }
+            => ToFilterString();
     }
 }

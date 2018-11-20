@@ -41,7 +41,7 @@ namespace Questar.OneRoster.Filtering.Expressions
 
         private Expression VisitLogical(BinaryExpression node)
         {
-            Action<Filter, Filter> build;
+            Func<Expression, Expression, FilterBuilder> build;
 
             switch (node.NodeType)
             {
@@ -55,14 +55,14 @@ namespace Questar.OneRoster.Filtering.Expressions
                     throw new InvalidOperationException($"Invalid binary expression '{node.NodeType}'");
             }
 
-            build(Factory.Create<T>(node.Left), Factory.Create<T>(node.Right));
+            build(node.Left, node.Right);
 
             return node;
         }
 
         private Expression VisitPredicate(BinaryExpression node)
         {
-            Action<FilterProperty, FilterValue> build;
+            Func<Expression, Expression, FilterBuilder> build;
 
             switch (node.NodeType)
             {
@@ -88,7 +88,7 @@ namespace Questar.OneRoster.Filtering.Expressions
                     throw new InvalidOperationException($"Invalid binary expression '{node.NodeType}'");
             }
 
-            build(Factory.CreateProperty<T>(node.Left), Factory.CreateValue<T>(node.Left));
+            build(build(node.Left).Pop(), build(node.Right).Pop());
 
             return node;
         }
@@ -113,9 +113,7 @@ namespace Questar.OneRoster.Filtering.Expressions
         }
 
         protected override Expression VisitLambda<TDelegate>(Expression<TDelegate> node)
-        {
-            return base.Visit(node.Body) ?? throw new InvalidOperationException($"Couldn't visit lambda body '{node.Body}'.");
-        }
+            => base.Visit(node.Body) ?? throw new InvalidOperationException($"Couldn't visit lambda body '{node.Body}'.");
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {

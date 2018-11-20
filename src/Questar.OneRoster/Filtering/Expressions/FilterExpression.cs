@@ -7,32 +7,27 @@ namespace Questar.OneRoster.Filtering.Expressions
     public sealed class FilterExpression<T> : Expression
     {
         public FilterExpression(Expression<Func<T, bool>> expression)
-        {
-            Expression = expression;
-        }
+            => Expression = expression;
 
         public Expression<Func<T, bool>> Expression { get; }
 
-        public override bool CanReduce => Expression.CanReduce;
+        public override bool CanReduce
+            => Expression.CanReduce;
 
-        public override ExpressionType NodeType => Expression.NodeType;
+        public override ExpressionType NodeType
+            => Expression.NodeType;
 
-        public override Type Type => Expression.Type;
+        public override Type Type
+            => Expression.Type;
 
         protected override Expression Accept(ExpressionVisitor visitor)
-        {
-            return visitor.Visit(Expression);
-        }
+            => visitor.Visit(Expression);
 
         public override Expression Reduce()
-        {
-            return Expression.Reduce();
-        }
+            => Expression.Reduce();
 
         public override string ToString()
-        {
-            return Expression.ToString();
-        }
+            => Expression.ToString();
 
         protected override Expression VisitChildren(ExpressionVisitor visitor)
         {
@@ -41,39 +36,22 @@ namespace Questar.OneRoster.Filtering.Expressions
             return Expression;
         }
 
-        public static FilterExpression<T> Parse(Filter filter)
-        {
-            return new FilterExpressionFactory<T>().Create(filter);
-        }
-
         public override bool Equals(object obj)
-        {
-            return Expression.Equals(obj);
-        }
+            => Expression.Equals(obj);
 
         public override int GetHashCode()
-        {
-            return Expression.GetHashCode();
-        }
+            => Expression.GetHashCode();
 
         public Func<T, bool> Compile()
-        {
-            return Expression.Compile();
-        }
+            => Expression.Compile();
 
         public static implicit operator Expression<Func<T, bool>>(FilterExpression<T> filter)
-        {
-            return filter.Expression;
-        }
+            => filter.Expression;
 
         public static implicit operator FilterExpression<T>(Expression<Func<T, bool>> value)
-        {
-            return new FilterExpression<T>(value);
-        }
+            => new FilterExpression<T>(value);
 
         public Filter ToFilter()
-        {
-            return new FilterFactory().Create<T>(this);
-        }
+            => new FilterFactory().Create<T>(this);
     }
 }

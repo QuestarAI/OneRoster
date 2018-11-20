@@ -6,17 +6,11 @@ namespace Questar.OneRoster.Filtering
     {
         public FilterStringBuilder Builder { get; }
 
-        public FilterStringFactory Factory { get; }
-
-        public FilterStringFilterVisitor(FilterStringBuilder builder, FilterStringFactory factory)
-        {
-            Builder = builder;
-            Factory = factory;
-        }
+        public FilterStringFilterVisitor(FilterStringBuilder builder) => Builder = builder;
 
         public override void Visit(LogicalFilter filter)
         {
-            Action<FilterString, FilterString> build;
+            Action<Filter, Filter> build;
 
             switch (filter.Logical)
             {
@@ -30,7 +24,7 @@ namespace Questar.OneRoster.Filtering
                     throw new NotSupportedException($"Logical operator '{filter.Logical}' not supported.");
             }
 
-            build(Factory.Create(filter.Left), Factory.Create(filter.Right));
+            build(filter.Left, filter.Right);
         }
 
         public override void Visit(PredicateFilter filter)

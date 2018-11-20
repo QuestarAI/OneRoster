@@ -19,6 +19,12 @@ namespace Questar.OneRoster.Filtering
 
         public string Value { get; }
 
+        public bool IsScalar()
+            => Type == FilterValueType.Scalar;
+
+        public bool IsVector()
+            => Type == FilterValueType.Vector;
+
         public static FilterValue Parse(string text)
         {
             var scalar = ScalarRegex.Match(text);
@@ -37,5 +43,8 @@ namespace Questar.OneRoster.Filtering
                 );
             throw new ArgumentException($"Couldn't parse filter value '{text}'.");
         }
+
+        public override string ToString()
+            => Value;
     }
 }

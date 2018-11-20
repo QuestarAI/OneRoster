@@ -10,7 +10,6 @@ namespace Questar.OneRoster.Api.Extensions
     using Filtering;
     using Filtering.Expressions;
     using Microsoft.EntityFrameworkCore;
-    using RequestModels;
     using Sorting;
 
     public static class DbSetExtensions

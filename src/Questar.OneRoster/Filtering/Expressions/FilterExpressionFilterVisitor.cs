@@ -1,23 +1,17 @@
 namespace Questar.OneRoster.Filtering.Expressions
 {
     using System;
-    using System.Linq.Expressions;
 
-    public class FilterExpressionFilterVisitor<T> : FilterVisitor
+    public class FilterExpressionFilterVisitor : FilterVisitor
     {
-        public FilterExpressionFilterVisitor(FilterExpressionBuilder<T> builder, FilterExpressionFactory<T> factory)
-        {
-            Builder = builder;
-            Factory = factory;
-        }
+        public FilterExpressionFilterVisitor(FilterExpressionBuilder builder)
+        => Builder = builder;
 
-        public FilterExpressionBuilder<T> Builder { get; }
-
-        public FilterExpressionFactory<T> Factory { get; }
+        public FilterExpressionBuilder Builder { get; }
 
         public override void Visit(LogicalFilter filter)
         {
-            Action<FilterExpression<T>, FilterExpression<T>> build;
+            Action<Filter, Filter> build;
 
             switch (filter.Logical)
             {
@@ -31,15 +25,12 @@ namespace Questar.OneRoster.Filtering.Expressions
                     throw new NotSupportedException($"Logical operator not supported: {filter.Logical}.");
             }
 
-            build(Factory.Create(filter.Left), Factory.Create(filter.Right));
+            build(filter.Left, filter.Right);
         }
 
         public override void Visit(PredicateFilter filter)
         {
-            // TODO FilterPropertyExpression
-            // TODO FilterValueExpression
-
-            Action<Expression, ConstantExpression> build;
+            Action<FilterProperty, FilterValue> build;
 
             switch (filter.Predicate)
             {
@@ -65,7 +56,7 @@ namespace Questar.OneRoster.Filtering.Expressions
                     throw new NotSupportedException($"Predicate operator not supported: {filter.Predicate}.");
             }
 
-            build(Factory.CreateProperty(filter.Property), Factory.CreateValue(filter.Value));
+            build(filter.Property, filter.Value);
         }
     }
 }

@@ -10,16 +10,12 @@ namespace Questar.OneRoster.Filtering
         public static readonly Logical Or = new Logical("OR");
 
         private Logical(string symbol)
-        {
-            Symbol = symbol;
-        }
+            => Symbol = symbol;
 
         public string Symbol { get; }
 
         public static implicit operator string(Logical logical)
-        {
-            return logical.Symbol;
-        }
+            => logical.Symbol;
 
         public static IEnumerable<Logical> Values
         {
@@ -31,28 +27,18 @@ namespace Questar.OneRoster.Filtering
         }
 
         public static Logical Parse(string symbol)
-        {
-            return Values.Single(value => value.Symbol == symbol);
-        }
+            => Values.Single(value => value.Symbol == symbol);
 
         public static bool TryParse(string symbol, out Logical logical)
-        {
-            return (logical = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(Logical);
-        }
-
+            => (logical = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(Logical);
+        
         public override bool Equals(object obj)
-        {
-            return Symbol.Equals(obj);
-        }
+            => Symbol.Equals(obj);
 
         public override int GetHashCode()
-        {
-            return Symbol.GetHashCode();
-        }
+            => Symbol.GetHashCode();
 
         public override string ToString()
-        {
-            return Symbol;
-        }
+            => Symbol;
     }
 }

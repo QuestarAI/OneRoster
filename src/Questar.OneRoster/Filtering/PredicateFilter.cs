@@ -19,17 +19,13 @@ namespace Questar.OneRoster.Filtering
 
         public override IEnumerable<FilterProperty> GetProperties()
         {
-            var property = Property;
-            do
-            {
-                yield return property;
-                property = property.Caller;
-            } while (property != null);
+            yield return Property;
         }
 
         public override void Visit(FilterVisitor visitor)
-        {
-            visitor.Visit(this);
-        }
+            => visitor.Visit(this);
+
+        public override string ToString()
+            => $"{Property}{Predicate}{Value}";
     }
 }

@@ -8,14 +8,6 @@ namespace Questar.OneRoster.Reflection
 
     public static class Reflect
     {
-        public static Type GetItemType(this Type type)
-        {
-            var collection = type.Name != typeof(ICollection<>).Name
-                ? type.GetInterface(typeof(ICollection<>).Name)
-                : type;
-            return collection.GetGenericArguments().Single();
-        }
-
         public static TypeConverter GetConverter(this Type type)
         {
             return TypeDescriptor.GetConverter(type);
@@ -23,12 +15,7 @@ namespace Questar.OneRoster.Reflection
 
         public static TypeConverter GetConverter(this PropertyInfo property)
         {
-            return property.GetDescriptor().Converter;
-        }
-
-        public static PropertyDescriptor GetDescriptor(this PropertyInfo property)
-        {
-            return TypeDescriptor.GetProperties(property.DeclaringType).Find(property.Name, false);
+            return TypeDescriptor.GetProperties(property.DeclaringType).Find(property.Name, false).Converter;
         }
     }
 

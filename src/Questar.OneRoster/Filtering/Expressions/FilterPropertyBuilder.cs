@@ -5,8 +5,6 @@ namespace Questar.OneRoster.Filtering.Expressions
         public FilterProperty Value { get; private set; }
 
         public void Add(string name)
-        {
-            Value = new FilterProperty(name, Value);
-        }
+            => Value = new FilterProperty(name, Value);
     }
 }

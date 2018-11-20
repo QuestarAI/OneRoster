@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Filtering
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class FilterProperty
     {
@@ -16,7 +17,7 @@ namespace Questar.OneRoster.Filtering
 
         public static FilterProperty Parse(string text)
         {
-            using (var properties = ((IEnumerable<string>) text.Split('.')).GetEnumerator())
+            using (var properties = text.Split('.').Cast<string>().GetEnumerator())
             {
                 properties.MoveNext();
                 var property = new FilterProperty(properties.Current);
@@ -24,8 +25,22 @@ namespace Questar.OneRoster.Filtering
                 {
                     property = new FilterProperty(properties.Current, property);
                 } while (properties.MoveNext());
+
                 return property;
             }
         }
+
+        public IEnumerable<FilterProperty> GetProperties()
+        {
+            var property = this;
+            do
+            {
+                yield return property;
+                property = property.Caller;
+            } while (property != null);
+        }
+
+        public override string ToString()
+            => string.Join('.', GetProperties().Select(property => property.Name));
     }
 }

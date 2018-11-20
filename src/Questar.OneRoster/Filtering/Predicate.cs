@@ -20,16 +20,12 @@ namespace Questar.OneRoster.Filtering
         public static readonly Predicate NotEqual = new Predicate("!=");
 
         private Predicate(string symbol)
-        {
-            Symbol = symbol;
-        }
+            => Symbol = symbol;
 
         public string Symbol { get; }
 
         public static implicit operator string(Predicate logical)
-        {
-            return logical.Symbol;
-        }
+            => logical.Symbol;
 
         public static IEnumerable<Predicate> Values
         {
@@ -46,28 +42,18 @@ namespace Questar.OneRoster.Filtering
         }
 
         public static Predicate Parse(string symbol)
-        {
-            return Values.Single(value => value.Symbol == symbol);
-        }
+            => Values.Single(value => value.Symbol == symbol);
 
         public static bool TryParse(string symbol, out Predicate predicate)
-        {
-            return (predicate = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(Predicate);
-        }
-
+            => (predicate = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(Predicate);
+        
         public override bool Equals(object obj)
-        {
-            return Symbol.Equals(obj);
-        }
+            => Symbol.Equals(obj);
 
         public override int GetHashCode()
-        {
-            return Symbol.GetHashCode();
-        }
+            => Symbol.GetHashCode();
 
         public override string ToString()
-        {
-            return Symbol;
-        }
+            => Symbol;
     }
 }
