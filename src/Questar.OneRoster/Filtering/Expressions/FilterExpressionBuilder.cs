@@ -7,15 +7,16 @@ namespace Questar.OneRoster.Filtering.Expressions
     using System.Reflection;
     using Reflection;
 
-    public class FilterExpressionBuilder<T> : FilterVisitor
+    public class FilterExpressionBuilder : FilterVisitor
     {
         private readonly Stack<Expression> _expressions = new Stack<Expression>();
 
-        public ParameterExpression Parameter { get; }
-            = Expression.Parameter(typeof(T));
+        public FilterExpressionBuilder(Type type)
+            => Parameter = Expression.Parameter(type);
 
-        public Type Type
-            => Parameter.Type;
+        public ParameterExpression Parameter { get; }
+
+        public Type Type => Parameter.Type;
 
         private static ConstantExpression GetScalarValue(FilterValue value, Type type)
         {
@@ -34,12 +35,12 @@ namespace Questar.OneRoster.Filtering.Expressions
             return Expression.Constant(vector);
         }
 
-        public FilterExpression<T> ToFilterExpression() =>
-            Expression.Lambda<Func<T, bool>>(_expressions.Single(), Parameter);
+        public LambdaExpression ToExpression() =>
+            Expression.Lambda(_expressions.Single(), Parameter);
 
         public override void Visit(LogicalFilter filter)
         {
-            Func<Filter, Filter, FilterExpressionBuilder<T>> build;
+            Func<Filter, Filter, FilterExpressionBuilder> build;
 
             switch (filter.Logical)
             {
@@ -58,7 +59,7 @@ namespace Questar.OneRoster.Filtering.Expressions
 
         public override void Visit(PredicateFilter filter)
         {
-            Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>> build;
+            Func<FilterProperty, FilterValue, FilterExpressionBuilder> build;
 
             switch (filter.Predicate)
             {
@@ -93,34 +94,34 @@ namespace Questar.OneRoster.Filtering.Expressions
             build(filter.Property, filter.Value);
         }
 
-        public FilterExpressionBuilder<T> AndAlso(Filter left, Filter right)
+        public FilterExpressionBuilder AndAlso(Filter left, Filter right)
             => PushLogical(Expression.AndAlso, left, right);
 
-        public FilterExpressionBuilder<T> All(FilterProperty property, FilterValue value)
+        public FilterExpressionBuilder All(FilterProperty property, FilterValue value)
             => PushContains(FilterInfo.All, property, value);
 
-        public FilterExpressionBuilder<T> Any(FilterProperty property, FilterValue value)
+        public FilterExpressionBuilder Any(FilterProperty property, FilterValue value)
             => PushContains(FilterInfo.Any, property, value);
 
-        public FilterExpressionBuilder<T> Equal(FilterProperty property, FilterValue value)
+        public FilterExpressionBuilder Equal(FilterProperty property, FilterValue value)
             => PushPredicate(Expression.Equal, property, value);
 
-        public FilterExpressionBuilder<T> GreaterThan(FilterProperty property, FilterValue value)
+        public FilterExpressionBuilder GreaterThan(FilterProperty property, FilterValue value)
             => PushPredicate(Expression.GreaterThan, property, value);
 
-        public FilterExpressionBuilder<T> GreaterThanOrEqual(FilterProperty property, FilterValue value)
+        public FilterExpressionBuilder GreaterThanOrEqual(FilterProperty property, FilterValue value)
             => PushPredicate(Expression.GreaterThanOrEqual, property, value);
 
-        public FilterExpressionBuilder<T> LessThan(FilterProperty property, FilterValue value)
+        public FilterExpressionBuilder LessThan(FilterProperty property, FilterValue value)
             => PushPredicate(Expression.LessThan, property, value);
 
-        public FilterExpressionBuilder<T> LessThanOrEqual(FilterProperty property, FilterValue value)
+        public FilterExpressionBuilder LessThanOrEqual(FilterProperty property, FilterValue value)
             => PushPredicate(Expression.LessThanOrEqual, property, value);
 
-        public FilterExpressionBuilder<T> NotEqual(FilterProperty property, FilterValue value)
+        public FilterExpressionBuilder NotEqual(FilterProperty property, FilterValue value)
             => PushPredicate(Expression.NotEqual, property, value);
 
-        public FilterExpressionBuilder<T> OrElse(Filter left, Filter right)
+        public FilterExpressionBuilder OrElse(Filter left, Filter right)
             => PushLogical(Expression.OrElse, left, right);
 
         private MemberExpression GetProperty(FilterProperty property)
@@ -141,7 +142,7 @@ namespace Questar.OneRoster.Filtering.Expressions
             return expression as MemberExpression;
         }
 
-        private FilterExpressionBuilder<T> PushContains(MethodInfo method, FilterProperty property, FilterValue value)
+        private FilterExpressionBuilder PushContains(MethodInfo method, FilterProperty property, FilterValue value)
         {
             var info = GetProperty(property);
             var collection = info.Type.Name != typeof(ICollection<>).Name
@@ -156,7 +157,7 @@ namespace Questar.OneRoster.Filtering.Expressions
             return this;
         }
 
-        private FilterExpressionBuilder<T> PushLogical(Func<Expression, Expression, Expression> factory, Filter left, Filter right)
+        private FilterExpressionBuilder PushLogical(Func<Expression, Expression, Expression> factory, Filter left, Filter right)
         {
             right.Accept(this);
             left.Accept(this);
@@ -164,10 +165,10 @@ namespace Questar.OneRoster.Filtering.Expressions
             return this;
         }
 
-        private FilterExpressionBuilder<T> PushPredicate(Func<Expression, Expression, Expression> factory, FilterProperty property, FilterValue value)
+        private FilterExpressionBuilder PushPredicate(Func<Expression, Expression, Expression> factory, FilterProperty property, FilterValue value)
             => PushPredicate(factory, GetProperty(property), value);
 
-        private FilterExpressionBuilder<T> PushPredicate(Func<Expression, Expression, Expression> factory, Expression property, FilterValue value)
+        private FilterExpressionBuilder PushPredicate(Func<Expression, Expression, Expression> factory, Expression property, FilterValue value)
         {
             _expressions.Push(factory(property, GetScalarValue(value, property.Type)));
             return this;
