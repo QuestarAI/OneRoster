@@ -22,7 +22,7 @@ namespace Questar.OneRoster.Filtering
             yield return Property;
         }
 
-        public override void Visit(FilterVisitor visitor)
+        public override void Accept(FilterVisitor visitor)
             => visitor.Visit(this);
 
         public override string ToString()

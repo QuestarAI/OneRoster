@@ -21,7 +21,7 @@ namespace Questar.OneRoster.Filtering
         public override IEnumerable<FilterProperty> GetProperties()
             => Left.GetProperties().Concat(Right.GetProperties());
 
-        public override void Visit(FilterVisitor visitor)
+        public override void Accept(FilterVisitor visitor)
             => visitor.Visit(this);
     }
 }

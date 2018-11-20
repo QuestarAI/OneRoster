@@ -33,7 +33,7 @@ namespace Questar.OneRoster.Filtering
 
         public abstract IEnumerable<FilterProperty> GetProperties();
 
-        public abstract void Visit(FilterVisitor visitor);
+        public abstract void Accept(FilterVisitor visitor);
 
         public FilterString ToFilterString()
             => new FilterStringFactory().Create(this);

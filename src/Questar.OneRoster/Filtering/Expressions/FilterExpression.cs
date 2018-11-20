@@ -52,6 +52,10 @@ namespace Questar.OneRoster.Filtering.Expressions
             => new FilterExpression<T>(value);
 
         public Filter ToFilter()
-            => new FilterFactory().Create<T>(this);
+        {
+            var builder = new FilterBuilder<T>();
+            builder.Visit(Expression.Body);
+            return builder.ToFilter();
+        }
     }
 }

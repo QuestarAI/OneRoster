@@ -6,7 +6,7 @@ namespace Questar.OneRoster.Filtering
         {
             var builder = new FilterStringBuilder();
             var visitor = new FilterStringFilterVisitor(builder);
-            filter.Visit(visitor);
+            filter.Accept(visitor);
             return builder.ToFilterString();
         }
     }
