@@ -21,11 +21,7 @@ namespace Questar.OneRoster.Filtering
             {
                 properties.MoveNext();
                 var property = new FilterProperty(properties.Current);
-                do
-                {
-                    property = new FilterProperty(properties.Current, property);
-                } while (properties.MoveNext());
-
+                while (properties.MoveNext()) property = new FilterProperty(properties.Current, property);
                 return property;
             }
         }

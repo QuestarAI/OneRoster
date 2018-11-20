@@ -24,9 +24,9 @@ namespace Questar.OneRoster.Filtering
             if (predicate.Success)
                 return new PredicateFilter
                 (
-                    FilterProperty.Parse(logical.Groups["Property"].Value),
-                    Predicate.Parse(logical.Groups["Predicate"].Value),
-                    FilterValue.Parse(logical.Groups["Value"].Value)
+                    FilterProperty.Parse(predicate.Groups["Property"].Value),
+                    Predicate.Parse(predicate.Groups["Predicate"].Value),
+                    FilterValue.Parse(predicate.Groups["Value"].Value)
                 );
             throw new ArgumentException($"Couldn't parse filter '{text}'.");
         }
