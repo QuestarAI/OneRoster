@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace Questar.OneRoster.Api.Controllers
 {
     using System;
@@ -10,9 +8,11 @@ namespace Questar.OneRoster.Api.Controllers
     using System.Threading.Tasks;
     using Attributes;
     using Common;
-    using Microsoft.EntityFrameworkCore;
     using Extensions;
+    using Filtering;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Primitives;
     using Reflection;
     using RequestModels;
@@ -31,11 +31,13 @@ namespace Questar.OneRoster.Api.Controllers
             Description = "OK"
         };
 
-        protected async Task<IActionResult> GetCollectionAsync<T>(
+        protected async Task<IActionResult> GetCollectionAsync<T>
+        (
             DbSet<T> dbSet,
             CollectionEndpointRequest<T> request,
-            Action<EndpointResponse, IEnumerable<object>> beforeOkResponse)
-            where T: class
+            Action<EndpointResponse, IEnumerable<object>> beforeOkResponse
+        )
+            where T : class
         {
             var context = new CollectionEndpointContext<T>(request);
             var response = context.Response;
@@ -43,29 +45,23 @@ namespace Questar.OneRoster.Api.Controllers
             Validate(context);
 
             if (context.IsBadRequest())
-            {
                 return BadRequest(response);
-            }
 
             var listTask = dbSet.ToListAsync(context);
             var countTask = dbSet.CountAsync(context);
             await Task.WhenAll(listTask, countTask);
-            var count = countTask.Result;
+            var count = await countTask;
 
             HttpContext.Response.Headers.Add("X-Total-Count", count.ToString());
 
             var linkHeaderValues = BuildLinkHeaderValues(request, count);
             if (!string.IsNullOrEmpty(linkHeaderValues))
-            {
                 HttpContext.Response.Headers.Add("Link", linkHeaderValues);
-            }
 
             if (!context.HasStatusInfo())
-            {
                 context.AddStatusInfo(SuccessStatus);
-            }
 
-            beforeOkResponse(response, listTask.Result);
+            beforeOkResponse(response, await listTask);
 
             return Ok(response);
         }
@@ -82,24 +78,19 @@ namespace Questar.OneRoster.Api.Controllers
 
         private static void ValidateFilter<T>(CollectionEndpointContext<T> context, IEnumerable<string> propertyNames) where T : class
         {
-            // TODO catch exception when building expression
-
-            //var parsedFilters = context.GetParsedFilters();
-            //if (parsedFilters == null) return;
-            //var invalidNames = parsedFilters
-            //    .Select(filter => filter.FieldName)
-            //    .Where(field => !propertyNames.Contains(field, StringComparer.OrdinalIgnoreCase));
-            //foreach (var name in invalidNames)
-            //{
-            //    context.AddStatusInfo(new StatusInfo
-            //    {
-            //        CodeMajor = CodeMajor.Success,
-            //        CodeMinor = CodeMinor.InvalidFilterField,
-            //        Severity = Severity.Warning,
-            //        StatusCode = HttpStatusCode.BadRequest,
-            //        Description = name,
-            //    });
-            //}
+            var filter = Filter.Parse(context.Request.Filter);
+            var invalidNames = filter.GetProperties()
+                .Select(property => property.Name)
+                .Where(field => !propertyNames.Contains(field, StringComparer.OrdinalIgnoreCase));
+            foreach (var name in invalidNames)
+                context.AddStatusInfo(new StatusInfo
+                {
+                    CodeMajor = CodeMajor.Success,
+                    CodeMinor = CodeMinor.InvalidFilterField,
+                    Severity = Severity.Warning,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Description = name
+                });
         }
 
         private void ValidateSort<T>(CollectionEndpointContext<T> context, IEnumerable<string> propertyNames) where T : class
@@ -115,7 +106,7 @@ namespace Questar.OneRoster.Api.Controllers
                 CodeMinor = CodeMinor.InvalidSortField,
                 Severity = Severity.Warning,
                 StatusCode = HttpStatusCode.OK,
-                Description = sortPropertyName,
+                Description = sortPropertyName
             });
         }
 
@@ -128,7 +119,7 @@ namespace Questar.OneRoster.Api.Controllers
                 CodeMinor = CodeMinor.InvalidOffsetField,
                 Severity = Severity.Error,
                 StatusCode = HttpStatusCode.BadRequest,
-                Description = "Offset query parameter must be greater than or equal to 0.",
+                Description = "Offset query parameter must be greater than or equal to 0."
             });
         }
 
@@ -141,7 +132,7 @@ namespace Questar.OneRoster.Api.Controllers
                 CodeMinor = CodeMinor.InvalidLimitField,
                 Severity = Severity.Error,
                 StatusCode = HttpStatusCode.BadRequest,
-                Description = "Limit query parameter must be greater than 0.",
+                Description = "Limit query parameter must be greater than 0."
             });
         }
 
@@ -156,7 +147,7 @@ namespace Questar.OneRoster.Api.Controllers
                     CodeMajor = CodeMajor.Failure,
                     CodeMinor = CodeMinor.InvalidBlankSelectionField,
                     Severity = Severity.Error,
-                    StatusCode = HttpStatusCode.BadRequest,
+                    StatusCode = HttpStatusCode.BadRequest
                 });
                 return;
             }
@@ -165,16 +156,14 @@ namespace Questar.OneRoster.Api.Controllers
             var invalidNames = fieldsList
                 .Where(field => !propertyNames.Contains(field, StringComparer.OrdinalIgnoreCase));
             foreach (var name in invalidNames)
-            {
                 context.AddStatusInfo(new StatusInfo
                 {
                     CodeMajor = CodeMajor.Success,
                     CodeMinor = CodeMinor.InvalidSelectionField,
                     Severity = Severity.Warning,
                     StatusCode = HttpStatusCode.OK,
-                    Description = name,
+                    Description = name
                 });
-            }
         }
 
         private string BuildLinkHeaderValues<T>(CollectionEndpointRequest<T> request, int count) where T : class
@@ -190,13 +179,9 @@ namespace Questar.OneRoster.Api.Controllers
             // See https://github.com/aspnet/AspNetCore/issues/3450 for more.
             var query = new Dictionary<string, StringValues>(HttpContext.Request.Query, StringComparer.OrdinalIgnoreCase);
             if (limit == Constants.DefaultLimit)
-            {
                 query.Remove("limit");
-            }
             else
-            {
                 query["limit"] = limit.ToString();
-            }
 
             var nextOffset = offset + limit;
             var includeNextAndLast = nextOffset <= count;
@@ -207,7 +192,7 @@ namespace Questar.OneRoster.Api.Controllers
 
                 // Don't assume requester started at Offset = 0 and incremented by Limit each time.
                 // Rely on int truncation to round down division result.
-                var lastOffset = offset + ((count - offset - 1) / limit) * limit;
+                var lastOffset = offset + (count - offset - 1) / limit * limit;
                 query["offset"] = lastOffset.ToString();
                 builder.AppendFormat(@"<{0}{1}>; rel=""last""", path, QueryString.Create(query));
             }
@@ -219,11 +204,8 @@ namespace Questar.OneRoster.Api.Controllers
             builder.AppendFormat(@"<{0}{1}>; rel=""first"", ", path, QueryString.Create(query));
 
             var prevOffset = Math.Max(Constants.DefaultOffset, offset - limit);
-            if (prevOffset != Constants.DefaultOffset)
-            {
-                query["offset"] = prevOffset.ToString();
-            }
-            
+            if (prevOffset != Constants.DefaultOffset) query["offset"] = prevOffset.ToString();
+
             builder.AppendFormat(@"<{0}{1}>; rel=""prev""", path, QueryString.Create(query));
 
             return builder.ToString();

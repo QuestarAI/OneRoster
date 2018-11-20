@@ -21,11 +21,19 @@ namespace Questar.OneRoster.Reflection
 
         public static readonly Type Type = typeof(T);
 
-        public static readonly IReadOnlyDictionary<string, Type> PropertyTypesByName =
+        private static readonly Dictionary<string, Type> Properties =
             Type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .ToDictionary(property => property.Name, property => property.PropertyType, StringComparer.OrdinalIgnoreCase);
 
-        public static IEnumerable<string> PropertyNames => PropertyTypesByName.Keys;
+        static Reflect()
+        {
+            PropertyTypesByName = Properties;
+            PropertyNames = Properties.Keys;
+        }
+
+        public static IReadOnlyDictionary<string, Type> PropertyTypesByName { get; }
+
+        public static IReadOnlyCollection<string> PropertyNames { get; }
 
         // ReSharper enable StaticMemberInGenericType
     }

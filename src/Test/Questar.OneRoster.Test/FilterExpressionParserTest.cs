@@ -4,7 +4,6 @@ namespace Questar.OneRoster.Test
     using System.Collections.Generic;
     using System.Linq;
     using Filtering;
-    using Filtering.Expressions;
     using Mock;
     using Xunit;
     using static Mock.Util;
@@ -110,7 +109,7 @@ namespace Questar.OneRoster.Test
 
         [Fact]
         public void CanApplyLogicalOrAndExpression() =>
-            AreEqual("FooString='Nope' OR FooString='42' AND BarInt='5'", e => (e.FooString == "Nope" || e.FooString == "42") && e.BarInt == 5); // i added the parenthesis there... check with one roster on this?
+            AreEqual("FooString='Nope' OR FooString='42' AND BarInt='5'", e => e.FooString == "Nope" || e.FooString == "42" && e.BarInt == 5);
 
         [Fact]
         public void CanApplyLogicalOrExpression() =>

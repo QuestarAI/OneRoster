@@ -8,7 +8,6 @@ namespace Questar.OneRoster.Api.Extensions
     using System.Reflection;
     using System.Threading.Tasks;
     using Filtering;
-    using Filtering.Expressions;
     using Microsoft.EntityFrameworkCore;
     using Sorting;
 
@@ -57,17 +56,12 @@ namespace Questar.OneRoster.Api.Extensions
         private static async Task<IEnumerable<object>> HandleProjection<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
         {
             if (string.IsNullOrWhiteSpace(context.Request.Fields))
-            {
                 return await query.ToListAsync();
-            }
-
-            var projection = Projections<T>.FromFields(context.Request.Fields);
 
             // Optimization; no need for projection; OneRoster spec requires all fields returned in this case.
+            var projection = Projections<T>.FromFields(context.Request.Fields);
             if (projection.NonexistentFields.Any())
-            {
                 return await query.ToListAsync();
-            }
 
             var incompleteObjects = await query.Select<T>(projection.ExistentFields).ToListAsync();
             return projection.Apply(incompleteObjects);

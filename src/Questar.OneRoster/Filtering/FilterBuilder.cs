@@ -5,7 +5,6 @@ namespace Questar.OneRoster.Filtering
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Expressions;
 
     public sealed class FilterBuilder<T> : ExpressionVisitor
     {
@@ -82,9 +81,9 @@ namespace Questar.OneRoster.Filtering
         {
             var property = new FilterPropertyBuilder(Expression);
             property.Visit(left);
-            var value = new FilterValueBuilder(Expression);
+            var value = new FilterValueBuilder(property.PropertyInfo, Expression);
             value.Visit(right);
-            _filters.Push(new PredicateFilter(property.Value, @operator, value.Value));
+            _filters.Push(new PredicateFilter(property.Property, @operator, value.Value));
             return this;
         }
 

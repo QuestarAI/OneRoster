@@ -6,9 +6,11 @@ namespace Questar.OneRoster.Filtering
 
     public abstract class Filter
     {
-        private static readonly Regex PredicateRegex = new Regex(@"(?<Property>[A-Za-z0-9_\.]+)(?<Predicate>!=|=|>=|>|<=|<|~)(?<Value>.+)", RegexOptions.Compiled);
+        private static readonly Regex And = new Regex(@"(?<Left>.+)\s+AND\s+(?<Right>.+)", RegexOptions.Compiled);
 
-        private static readonly Regex LogicalRegex = new Regex(@"(?<Left>.+)\s+(?<Logical>AND|OR)\s+(?<Right>.+)", RegexOptions.Compiled);
+        private static readonly Regex Or = new Regex(@"(?<Left>.+)\s+OR\s+(?<Right>.+)", RegexOptions.Compiled);
+
+        private static readonly Regex Predicate = new Regex(@"(?<Property>[A-Za-z0-9_\.]+)(?<Predicate>!=|=|>=|>|<=|<|~)(?<Value>.+)", RegexOptions.Compiled);
 
         internal Filter()
         {
@@ -18,15 +20,23 @@ namespace Questar.OneRoster.Filtering
 
         public static Filter Parse(string text)
         {
-            var logical = LogicalRegex.Match(text);
-            if (logical.Success)
+            var or = Or.Match(text);
+            if (or.Success)
                 return new LogicalFilter
                 (
-                    Parse(logical.Groups["Left"].Value),
-                    LogicalOperator.Parse(logical.Groups["Logical"].Value),
-                    Parse(logical.Groups["Right"].Value)
+                    Parse(or.Groups["Left"].Value),
+                    LogicalOperator.Or,
+                    Parse(or.Groups["Right"].Value)
                 );
-            var predicate = PredicateRegex.Match(text);
+            var and = And.Match(text);
+            if (and.Success)
+                return new LogicalFilter
+                (
+                    Parse(and.Groups["Left"].Value),
+                    LogicalOperator.And,
+                    Parse(and.Groups["Right"].Value)
+                );
+            var predicate = Predicate.Match(text);
             if (predicate.Success)
                 return new PredicateFilter
                 (
@@ -38,6 +48,13 @@ namespace Questar.OneRoster.Filtering
         }
 
         public abstract IEnumerable<FilterProperty> GetProperties();
+
+        public FilterExpression<T> ToFilterExpression<T>()
+        {
+            var builder = new FilterExpressionBuilder<T>();
+            Accept(builder);
+            return builder.ToExpression();
+        }
 
         public FilterString ToFilterString()
         {

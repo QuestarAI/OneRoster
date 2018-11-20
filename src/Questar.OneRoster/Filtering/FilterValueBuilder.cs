@@ -1,22 +1,29 @@
-namespace Questar.OneRoster.Filtering.Expressions
+namespace Questar.OneRoster.Filtering
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
     using Reflection;
 
     public sealed class FilterValueBuilder : ExpressionVisitor
     {
-        public FilterValueBuilder() : this(null)
+        public FilterValueBuilder(PropertyInfo property)
+            : this(property, null)
         {
         }
 
-        public FilterValueBuilder(Expression expression)
-            => Expression = expression;
+        public FilterValueBuilder(PropertyInfo property, Expression expression)
+        {
+            Property = property;
+            Expression = expression;
+        }
 
         public Expression Expression { get; }
+
+        public PropertyInfo Property { get; }
 
         public FilterValue Value { get; private set; }
 
@@ -27,15 +34,18 @@ namespace Questar.OneRoster.Filtering.Expressions
             switch (node.NodeType)
             {
                 case ExpressionType.Constant:
-                case ExpressionType.MemberAccess:
-                case ExpressionType.NewArrayInit:
                     return base.Visit(node);
                 default:
-                    throw new InvalidOperationException($"Invalid expression '{node}'.");
+                    // should we do this?
+                    var value = Evaluate(node);
+                    Value = value is ICollection
+                        ? new FilterValue(FilterValueType.Vector, FormatVector(value))
+                        : new FilterValue(FilterValueType.Scalar, FormatScalar(value));
+                    return node;
             }
         }
 
-        private static object Evaluate(Expression node)
+        private object Evaluate(Expression node)
         {
             var convert = Expression.Convert(node, typeof(object));
             var lambda = Expression.Lambda<Func<object>>(convert);
@@ -49,18 +59,19 @@ namespace Questar.OneRoster.Filtering.Expressions
 
         private string FormatScalar(object value)
         {
-            var type = value.GetType();
-            var converter = value.GetType().GetConverter();
+            var property = Property.PropertyType;
+            var converter = property.GetConverter();
             if (converter == null)
-                throw new InvalidOperationException($"Couldn't find type converter for type '{type}'");
+                throw new InvalidOperationException($"Couldn't find type converter for type '{property}'");
             return converter.ConvertToString(value);
         }
 
         private string FormatVector(object value)
         {
-            var collection = value.GetType().Name != typeof(ICollection<>).Name
-                ? value.GetType().GetInterface(typeof(ICollection<>).Name)
-                : value.GetType();
+            var property = Property.PropertyType;
+            var collection = property.Name != typeof(ICollection<>).Name
+                ? property.GetInterface(typeof(ICollection<>).Name)
+                : property;
             if (collection == null)
                 throw new InvalidOperationException($"Value '{value}' is not of type '{typeof(ICollection<>)}'.");
             var type = collection.GetGenericArguments().Single();
@@ -72,24 +83,9 @@ namespace Questar.OneRoster.Filtering.Expressions
             throw new InvalidOperationException($"Value '{value}' is not of type '{typeof(IEnumerable)}'.");
         }
 
-        protected override Expression VisitMember(MemberExpression node)
-        {
-            var value = Evaluate(node);
-            Value = value is ICollection
-                ? new FilterValue(FilterValueType.Vector, FormatVector(value))
-                : new FilterValue(FilterValueType.Scalar, FormatScalar(value));
-            return node;
-        }
-
-        protected override Expression VisitNewArray(NewArrayExpression node)
-        {
-            Value = new FilterValue(FilterValueType.Vector, FormatVector(Evaluate(node)));
-            return node;
-        }
-
         protected override Expression VisitConstant(ConstantExpression node)
         {
-            Value = new FilterValue(FilterValueType.Scalar, FormatScalar(Evaluate(node)));
+            Value = new FilterValue(FilterValueType.Scalar, FormatScalar(node.Value));
             return node;
         }
     }

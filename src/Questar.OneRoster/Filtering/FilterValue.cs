@@ -5,9 +5,9 @@ namespace Questar.OneRoster.Filtering
 
     public sealed class FilterValue
     {
-        private static readonly Regex ScalarRegex = new Regex(@"'(?<Scalar>[^']*)'", RegexOptions.Compiled);
+        private static readonly Regex Scalar = new Regex(@"'(?<Scalar>[^']*)'", RegexOptions.Compiled);
 
-        private static readonly Regex VectorRegex = new Regex(@"(?<Vector>[^']*)", RegexOptions.Compiled);
+        private static readonly Regex Vector = new Regex(@"(?<Vector>[^']*)", RegexOptions.Compiled);
 
         public FilterValue(FilterValueType type, string value)
         {
@@ -27,14 +27,14 @@ namespace Questar.OneRoster.Filtering
 
         public static FilterValue Parse(string text)
         {
-            var scalar = ScalarRegex.Match(text);
+            var scalar = Scalar.Match(text);
             if (scalar.Success)
                 return new FilterValue
                 (
                     FilterValueType.Scalar,
                     scalar.Groups["Scalar"].Value
                 );
-            var vector = VectorRegex.Match(text);
+            var vector = Vector.Match(text);
             if (vector.Success)
                 return new FilterValue
                 (

@@ -2,6 +2,7 @@ namespace Questar.OneRoster.Filtering
 {
     using System;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     public sealed class FilterPropertyBuilder : ExpressionVisitor
     {
@@ -14,7 +15,9 @@ namespace Questar.OneRoster.Filtering
 
         public Expression Expression { get; }
 
-        public FilterProperty Value { get; private set; }
+        public PropertyInfo PropertyInfo { get; private set; }
+
+        public FilterProperty Property { get; private set; }
 
         public override Expression Visit(Expression node)
         {
@@ -35,6 +38,9 @@ namespace Questar.OneRoster.Filtering
 
         protected override Expression VisitMember(MemberExpression node)
         {
+            var property = node.Member as PropertyInfo;
+            if (property == null)
+                throw new InvalidOperationException("Filter property expression must be contain only property member expressions.");
             switch (node.NodeType)
             {
                 case ExpressionType.Constant:
@@ -45,8 +51,8 @@ namespace Questar.OneRoster.Filtering
                 default:
                     throw new InvalidOperationException($"Invalid member expression '{node}'.");
             }
-
-            Value = new FilterProperty(node.Member.Name, Value);
+            Property = new FilterProperty(property.Name, Property);
+            PropertyInfo = property;
             return node;
         }
     }
