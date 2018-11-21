@@ -1,5 +1,6 @@
 namespace Questar.OneRoster.Filtering
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -46,12 +47,6 @@ namespace Questar.OneRoster.Filtering
 
         public static bool TryParse(string symbol, out PredicateOperator predicate)
             => (predicate = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(PredicateOperator);
-        
-        public override bool Equals(object obj)
-            => Symbol.Equals(obj);
-
-        public override int GetHashCode()
-            => Symbol.GetHashCode();
 
         public override string ToString()
             => Symbol;

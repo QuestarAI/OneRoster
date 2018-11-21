@@ -11,6 +11,35 @@ namespace Questar.OneRoster.Filtering
     {
         private readonly Stack<Expression> _expressions = new Stack<Expression>();
 
+        private readonly Dictionary<LogicalOperator, Func<Filter, Filter, FilterExpressionBuilder<T>>> _logical;
+
+        private readonly Dictionary<PredicateOperator, Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>>> _scalar;
+
+        private readonly Dictionary<PredicateOperator, Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>>> _vector;
+
+        public FilterExpressionBuilder()
+        {
+            _logical = new Dictionary<LogicalOperator, Func<Filter, Filter, FilterExpressionBuilder<T>>>
+            {
+                { LogicalOperator.And, AndAlso },
+                { LogicalOperator.Or, OrElse }
+            };
+            _scalar = new Dictionary<PredicateOperator, Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>>>
+            {
+                { PredicateOperator.Equal, Equal },
+                { PredicateOperator.GreaterThan, GreaterThan },
+                { PredicateOperator.GreaterThanOrEqual, GreaterThanOrEqual },
+                { PredicateOperator.LessThan, LessThan },
+                { PredicateOperator.LessThanOrEqual, LessThanOrEqual },
+                { PredicateOperator.NotEqual, NotEqual }
+            };
+            _vector = new Dictionary<PredicateOperator, Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>>>
+            {
+                { PredicateOperator.Equal, All },
+                { PredicateOperator.Contains, Any }
+            };
+        }
+
         public ParameterExpression Parameter { get; } = Expression.Parameter(typeof(T));
 
         public Type Type => Parameter.Type;
@@ -35,62 +64,32 @@ namespace Questar.OneRoster.Filtering
         }
 
         public FilterExpression<T> ToExpression() =>
-            (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), Parameter);
+            (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), false, Parameter);
 
         public override void Visit(LogicalFilter filter)
         {
-            Func<Filter, Filter, FilterExpressionBuilder<T>> build;
-
-            switch (filter.Logical)
-            {
-                case "AND":
-                    build = AndAlso;
-                    break;
-                case "OR":
-                    build = OrElse;
-                    break;
-                default:
-                    throw new NotSupportedException($"Logical operator not supported: {filter.Logical}.");
-            }
-
-            build(filter.Left, filter.Right);
+            if (!_logical.TryGetValue(filter.Logical, out var logical))
+                throw new InvalidOperationException($"Invalid logical filter '{filter}'.");
+            logical(filter.Left, filter.Right);
         }
 
         public override void Visit(PredicateFilter filter)
         {
-            Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>> build;
-
-            switch (filter.Predicate)
+            switch (filter.Value.Type)
             {
-                case "~" when filter.Value.IsVector():
-                    build = Any;
+                case FilterValueType.Scalar:
+                    if (!_scalar.TryGetValue(filter.Predicate, out var scalar))
+                        throw new InvalidOperationException($"Invalid scalar-based predicate filter '{filter}'.");
+                    scalar(filter.Property, filter.Value);
                     break;
-                case "=" when filter.Value.IsVector():
-                    build = All;
-                    break;
-                case "=" when filter.Value.IsScalar():
-                    build = Equal;
-                    break;
-                case ">" when filter.Value.IsScalar():
-                    build = GreaterThan;
-                    break;
-                case ">=" when filter.Value.IsScalar():
-                    build = GreaterThanOrEqual;
-                    break;
-                case "<" when filter.Value.IsScalar():
-                    build = LessThan;
-                    break;
-                case "<=" when filter.Value.IsScalar():
-                    build = LessThanOrEqual;
-                    break;
-                case "!=" when filter.Value.IsScalar():
-                    build = NotEqual;
+                case FilterValueType.Vector:
+                    if (!_vector.TryGetValue(filter.Predicate, out var vector))
+                        throw new InvalidOperationException($"Invalid vector-based predicate filter '{filter}'.");
+                    vector(filter.Property, filter.Value);
                     break;
                 default:
-                    throw new NotSupportedException($"Predicate operator not supported: {filter.Predicate}.");
+                    throw new InvalidOperationException($"Invalid predicate filter '{filter}'.");
             }
-
-            build(filter.Property, filter.Value);
         }
 
         public FilterExpressionBuilder<T> AndAlso(Filter left, Filter right)

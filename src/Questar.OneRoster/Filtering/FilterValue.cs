@@ -19,12 +19,6 @@ namespace Questar.OneRoster.Filtering
 
         public string Value { get; }
 
-        public bool IsScalar()
-            => Type == FilterValueType.Scalar;
-
-        public bool IsVector()
-            => Type == FilterValueType.Vector;
-
         public static FilterValue Parse(string text)
         {
             var scalar = Scalar.Match(text);
