@@ -102,7 +102,7 @@ namespace Questar.OneRoster.Filtering
             => Contains(FilterInfo.Any, property, value);
 
         public FilterExpressionBuilder<T> Equal(FilterProperty property, FilterValue value)
-            => Predicate(Expression.Equal, property, value);
+            => Predicate(Expression.Equal, property, value, () => Expression.Constant(false));
 
         public FilterExpressionBuilder<T> GreaterThan(FilterProperty property, FilterValue value)
             => Predicate(Expression.GreaterThan, property, value);
@@ -117,7 +117,7 @@ namespace Questar.OneRoster.Filtering
             => Predicate(Expression.LessThanOrEqual, property, value);
 
         public FilterExpressionBuilder<T> NotEqual(FilterProperty property, FilterValue value)
-            => Predicate(Expression.NotEqual, property, value);
+            => Predicate(Expression.NotEqual, property, value, () => Expression.Constant(true));
 
         public FilterExpressionBuilder<T> OrElse(Filter left, Filter right)
             => Logical(Expression.OrElse, left, right);
@@ -165,12 +165,22 @@ namespace Questar.OneRoster.Filtering
             return this;
         }
 
-        private FilterExpressionBuilder<T> Predicate(Func<Expression, Expression, Expression> factory, FilterProperty property, FilterValue value)
-            => Predicate(factory, GetProperty(property), value);
+        private FilterExpressionBuilder<T> Predicate(Func<Expression, Expression, Expression> factory, FilterProperty property, FilterValue value, Func<Expression> fallback = null)
+            => Predicate(factory, GetProperty(property), value, fallback);
 
-        private FilterExpressionBuilder<T> Predicate(Func<Expression, Expression, Expression> factory, Expression property, FilterValue value)
+        private FilterExpressionBuilder<T> Predicate(Func<Expression, Expression, Expression> factory, Expression property, FilterValue value, Func<Expression> fallback)
         {
-            _expressions.Push(factory(property, GetScalarValue(value, property.Type)));
+            // TODO add stronger exception handling and conditional support for fallback
+            Expression expression;
+            try
+            {
+                expression = factory(property, GetScalarValue(value, property.Type));
+            }
+            catch (FormatException e)
+            {
+                expression = fallback?.Invoke() ?? throw e;
+            }
+            _expressions.Push(expression);
             return this;
         }
     }

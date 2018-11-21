@@ -6,6 +6,7 @@ namespace Questar.OneRoster.Filtering
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using Common;
     using Reflection;
 
     public sealed class FilterValueBuilder : ExpressionVisitor
@@ -36,16 +37,12 @@ namespace Questar.OneRoster.Filtering
                 case ExpressionType.Constant:
                     return base.Visit(node);
                 default:
-                    // should we do this?
-                    var value = Evaluate(node);
-                    Value = value is ICollection
-                        ? new FilterValue(FilterValueType.Vector, FormatVector(value))
-                        : new FilterValue(FilterValueType.Scalar, FormatScalar(value));
+                    Value = GetValue(Evaluate(node));
                     return node;
             }
         }
 
-        private object Evaluate(Expression node)
+        private static object Evaluate(Expression node)
         {
             var convert = Expression.Convert(node, typeof(object));
             var lambda = Expression.Lambda<Func<object>>(convert);
@@ -63,7 +60,13 @@ namespace Questar.OneRoster.Filtering
             var converter = property.GetConverter();
             if (converter == null)
                 throw new InvalidOperationException($"Couldn't find type converter for type '{property}'");
-            return converter.ConvertToString(value);
+
+            // TODO find a better solution for formatting in general...
+
+            if (value is DateTime date)
+                return date.ToString(date.TimeOfDay.Ticks > 0 ? "yyyy-MM-ddTHH:mm:ss.fffK" : "yyyy-MM-dd" /*, new IsoDateTimeFormatInfo() */);
+            else
+                return converter.ConvertToString(value);
         }
 
         private string FormatVector(object value)
@@ -83,9 +86,14 @@ namespace Questar.OneRoster.Filtering
             throw new InvalidOperationException($"Value '{value}' is not of type '{typeof(IEnumerable)}'.");
         }
 
+        private FilterValue GetValue(object value)
+            => value is ICollection
+                ? new FilterValue(FilterValueType.Vector, FormatVector(value))
+                : new FilterValue(FilterValueType.Scalar, FormatScalar(value));
+
         protected override Expression VisitConstant(ConstantExpression node)
         {
-            Value = new FilterValue(FilterValueType.Scalar, FormatScalar(node.Value));
+            Value = GetValue(node.Value);
             return node;
         }
     }

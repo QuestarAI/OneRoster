@@ -28,12 +28,8 @@ namespace Questar.OneRoster.Filtering
 
         public IEnumerable<FilterProperty> GetProperties()
         {
-            var property = this;
-            do
-            {
+            for (var property = this; property != null; property = property.Caller)
                 yield return property;
-                property = property.Caller;
-            } while (property != null);
         }
 
         public override string ToString()

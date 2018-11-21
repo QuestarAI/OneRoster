@@ -33,13 +33,11 @@ namespace Questar.OneRoster.Api.Extensions
             var predicate = Filter.Parse(context.Request.Filter).ToFilterExpression<T>();
             return predicate == null ? query : query.Where(predicate);
         }
-        
+
         private static IQueryable<T> HandleOrder<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
-            => !context.RequestSortIsValid || string.IsNullOrWhiteSpace(context.Request.Sort)
-                ? query
-                : context.Request.OrderBy == null || context.Request.OrderBy == SortDirection.Asc
-                    ? query.OrderBy(SelectProperty<T>(context.Request.Sort))
-                    : query.OrderByDescending(SelectProperty<T>(context.Request.Sort));
+            => context.RequestSortIsValid && !string.IsNullOrWhiteSpace(context.Request.Sort)
+                ? query.SortBy(context.Request.Sort, context.Request.OrderBy)
+                : query;
         
         private static IQueryable<T> HandleSkip<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
             => context.Request.Offset > 0
