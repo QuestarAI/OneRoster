@@ -71,16 +71,16 @@ namespace Questar.OneRoster.Filtering
                 case "=":
                     build = Equal;
                     break;
-                case ">":
+                case "<":
                     build = LessThan;
                     break;
-                case ">=":
+                case "<=":
                     build = LessThanOrEqual;
                     break;
-                case "<":
+                case ">":
                     build = GreaterThan;
                     break;
-                case "<=":
+                case ">=":
                     build = GreaterThanOrEqual;
                     break;
                 case "!=":

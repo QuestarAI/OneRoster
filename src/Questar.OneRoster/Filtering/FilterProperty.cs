@@ -33,6 +33,6 @@ namespace Questar.OneRoster.Filtering
         }
 
         public override string ToString()
-            => string.Join('.', GetProperties().Select(property => property.Name));
+            => string.Join(".", GetProperties().Select(property => property.Name));
     }
 }

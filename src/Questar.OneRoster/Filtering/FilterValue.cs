@@ -23,18 +23,10 @@ namespace Questar.OneRoster.Filtering
         {
             var scalar = Scalar.Match(text);
             if (scalar.Success)
-                return new FilterValue
-                (
-                    FilterValueType.Scalar,
-                    scalar.Groups["Scalar"].Value
-                );
+                return new FilterValue(FilterValueType.Scalar, scalar.Groups["Scalar"].Value);
             var vector = Vector.Match(text);
             if (vector.Success)
-                return new FilterValue
-                (
-                    FilterValueType.Vector,
-                    vector.Groups["Vector"].Value
-                );
+                return new FilterValue(FilterValueType.Vector, vector.Groups["Vector"].Value);
             throw new ArgumentException($"Couldn't parse filter value '{text}'.");
         }
 
@@ -47,7 +39,7 @@ namespace Questar.OneRoster.Filtering
                 case FilterValueType.Vector:
                     return Value;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(Type));
+                    throw new NotSupportedException($"Filter value type '{Type}' not supported.");
             }
         }
     }

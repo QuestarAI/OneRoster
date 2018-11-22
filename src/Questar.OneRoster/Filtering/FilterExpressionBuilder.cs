@@ -11,35 +11,6 @@ namespace Questar.OneRoster.Filtering
     {
         private readonly Stack<Expression> _expressions = new Stack<Expression>();
 
-        private readonly Dictionary<LogicalOperator, Func<Filter, Filter, FilterExpressionBuilder<T>>> _logical;
-
-        private readonly Dictionary<PredicateOperator, Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>>> _scalar;
-
-        private readonly Dictionary<PredicateOperator, Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>>> _vector;
-
-        public FilterExpressionBuilder()
-        {
-            _logical = new Dictionary<LogicalOperator, Func<Filter, Filter, FilterExpressionBuilder<T>>>
-            {
-                { LogicalOperator.And, AndAlso },
-                { LogicalOperator.Or, OrElse }
-            };
-            _scalar = new Dictionary<PredicateOperator, Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>>>
-            {
-                { PredicateOperator.Equal, Equal },
-                { PredicateOperator.GreaterThan, GreaterThan },
-                { PredicateOperator.GreaterThanOrEqual, GreaterThanOrEqual },
-                { PredicateOperator.LessThan, LessThan },
-                { PredicateOperator.LessThanOrEqual, LessThanOrEqual },
-                { PredicateOperator.NotEqual, NotEqual }
-            };
-            _vector = new Dictionary<PredicateOperator, Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>>>
-            {
-                { PredicateOperator.Equal, All },
-                { PredicateOperator.Contains, Any }
-            };
-        }
-
         public ParameterExpression Parameter { get; } = Expression.Parameter(typeof(T));
 
         public Type Type => Parameter.Type;
@@ -48,7 +19,7 @@ namespace Questar.OneRoster.Filtering
         {
             var converter = type.GetConverter();
             if (converter == null)
-                throw new InvalidOperationException($"Couldn't find type converter for type '{type}'");
+                throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             return Expression.Constant(converter.ConvertFromString(value.Value));
         }
 
@@ -56,7 +27,7 @@ namespace Questar.OneRoster.Filtering
         {
             var converter = type.GetConverter();
             if (converter == null)
-                throw new InvalidOperationException($"Couldn't find type converter for type '{type}'");
+                throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             var values = value.Value.Split(',');
             var vector = Array.CreateInstance(type, values.Length);
             for (var index = 0; index < values.Length; index++) vector.SetValue(converter.ConvertFromString(values[index]), index);
@@ -68,28 +39,68 @@ namespace Questar.OneRoster.Filtering
 
         public override void Visit(LogicalFilter filter)
         {
-            if (!_logical.TryGetValue(filter.Logical, out var logical))
-                throw new InvalidOperationException($"Invalid logical filter '{filter}'.");
-            logical(filter.Left, filter.Right);
+            Func<Filter, Filter, FilterExpressionBuilder<T>> build;
+            switch (filter.Logical)
+            {
+                case "AND":
+                    build = AndAlso;
+                    break;
+                case "OR":
+                    build = OrElse;
+                    break;
+                default:
+                    throw new NotSupportedException($"Logical operator not supported: {filter.Logical}.");
+            }
+            build(filter.Left, filter.Right);
         }
 
         public override void Visit(PredicateFilter filter)
         {
+            Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>> build;
             switch (filter.Value.Type)
             {
                 case FilterValueType.Scalar:
-                    if (!_scalar.TryGetValue(filter.Predicate, out var scalar))
-                        throw new InvalidOperationException($"Invalid scalar-based predicate filter '{filter}'.");
-                    scalar(filter.Property, filter.Value);
+                    switch (filter.Predicate)
+                    {
+                        case "=":
+                            build = Equal;
+                            break;
+                        case ">":
+                            build = GreaterThan;
+                            break;
+                        case ">=":
+                            build = GreaterThanOrEqual;
+                            break;
+                        case "<":
+                            build = LessThan;
+                            break;
+                        case "<=":
+                            build = LessThanOrEqual;
+                            break;
+                        case "!=":
+                            build = NotEqual;
+                            break;
+                        default:
+                            throw new NotSupportedException($"Predicate operator not supported for scalar value: {filter.Predicate}.");
+                    }
                     break;
                 case FilterValueType.Vector:
-                    if (!_vector.TryGetValue(filter.Predicate, out var vector))
-                        throw new InvalidOperationException($"Invalid vector-based predicate filter '{filter}'.");
-                    vector(filter.Property, filter.Value);
+                    switch (filter.Predicate)
+                    {
+                        case "~":
+                            build = Any;
+                            break;
+                        case "=":
+                            build = All;
+                            break;
+                        default:
+                            throw new NotSupportedException($"Predicate operator not supported for vector value: {filter.Predicate}.");
+                    }
                     break;
                 default:
-                    throw new InvalidOperationException($"Invalid predicate filter '{filter}'.");
+                    throw new NotSupportedException($"Filter value type not supported '{filter.Value.Type}'.");
             }
+            build(filter.Property, filter.Value);
         }
 
         public FilterExpressionBuilder<T> AndAlso(Filter left, Filter right)
@@ -124,34 +135,30 @@ namespace Questar.OneRoster.Filtering
 
         private MemberExpression GetProperty(FilterProperty property)
         {
-            var properties = new Queue<PropertyInfo>();
+            Expression expression = Parameter;
             var type = Type;
             foreach (var filter in property.GetProperties())
             {
                 var info = type.GetProperty(filter.Name);
                 if (info == null)
-                    throw new InvalidOperationException($"Couldn't determine path '{properties}' from type '${type}'.");
-                type = info.PropertyType;
-                properties.Enqueue(info);
-            }
-
-            Expression expression = Parameter;
-            while (properties.TryDequeue(out var info))
+                    throw new InvalidOperationException($"Couldn't determine path '{filter}' from type '${type.Name}'.");
                 expression = Expression.Property(expression, info);
+                type = info.PropertyType;
+            }
             return expression as MemberExpression;
         }
 
         private FilterExpressionBuilder<T> Contains(MethodInfo method, FilterProperty property, FilterValue value)
         {
-            var info = GetProperty(property);
-            var collection = info.Type.Name != typeof(ICollection<>).Name
-                ? info.Type.GetInterface(typeof(ICollection<>).Name)
-                : info.Type;
+            var member = GetProperty(property);
+            var collection = member.Type.Name == typeof(ICollection<>).Name
+                ? member.Type
+                : member.Type.GetInterface(typeof(ICollection<>).Name);
             if (collection == null)
-                throw new InvalidOperationException($"Property '{property}' is not of type '{typeof(ICollection<>)}'.");
+                throw new InvalidOperationException($"Property '{property}' does not implement '{typeof(ICollection<>)}'.");
             var type = collection.GetGenericArguments().Single();
             var item = Expression.Parameter(type);
-            var contains = Expression.Lambda(Expression.Call(null, FilterInfo.Contains.MakeGenericMethod(type), info, item), item);
+            var contains = Expression.Lambda(Expression.Call(null, FilterInfo.Contains.MakeGenericMethod(type), member, item), item);
             var call = Expression.Call(null, method.MakeGenericMethod(type), GetVectorValue(value, type), contains);
             _expressions.Push(call);
             return this;
@@ -159,9 +166,11 @@ namespace Questar.OneRoster.Filtering
 
         private FilterExpressionBuilder<T> Logical(Func<Expression, Expression, Expression> factory, Filter left, Filter right)
         {
-            right.Accept(this);
             left.Accept(this);
-            _expressions.Push(factory(_expressions.Pop(), _expressions.Pop()));
+            var leftFilter = _expressions.Pop();
+            right.Accept(this);
+            var rightFilter = _expressions.Pop();
+            _expressions.Push(factory(leftFilter, rightFilter));
             return this;
         }
 

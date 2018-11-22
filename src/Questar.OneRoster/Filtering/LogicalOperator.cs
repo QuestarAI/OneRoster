@@ -15,8 +15,8 @@ namespace Questar.OneRoster.Filtering
 
         public string Symbol { get; }
 
-        public static implicit operator string(LogicalOperator logical)
-            => logical.Symbol;
+        public static implicit operator string(LogicalOperator @operator)
+            => @operator.Symbol;
 
         public static IEnumerable<LogicalOperator> Values
         {
@@ -30,8 +30,8 @@ namespace Questar.OneRoster.Filtering
         public static LogicalOperator Parse(string symbol)
             => Values.Single(value => value.Symbol == symbol);
 
-        public static bool TryParse(string symbol, out LogicalOperator logical)
-            => (logical = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(LogicalOperator);
+        public static bool TryParse(string symbol, out LogicalOperator @operator)
+            => (@operator = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(LogicalOperator);
 
         public override string ToString()
             => Symbol;

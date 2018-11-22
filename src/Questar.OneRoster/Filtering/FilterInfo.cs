@@ -5,19 +5,15 @@ namespace Questar.OneRoster.Filtering
 
     internal static class FilterInfo
     {
-        internal static readonly MethodInfo Any
-            = typeof(Enumerable)
-                .GetMethods()
-                .Single(method => method.Name == nameof(Enumerable.Any) && method.GetParameters().Length == 2);
+        internal static MethodInfo Any { get; } = GetEnumerableMethod(nameof(Enumerable.Any), 2);
 
-        internal static readonly MethodInfo All
-            = typeof(Enumerable)
-                .GetMethods()
-                .Single(method => method.Name == nameof(Enumerable.All) && method.GetParameters().Length == 2);
+        internal static MethodInfo All { get; } = GetEnumerableMethod(nameof(Enumerable.All), 2);
 
-        internal static readonly MethodInfo Contains
-            = typeof(Enumerable)
+        internal static MethodInfo Contains { get; } = GetEnumerableMethod(nameof(Enumerable.Contains), 2);
+
+        private static MethodInfo GetEnumerableMethod(string name, int arity)
+            => typeof(Enumerable)
                 .GetMethods()
-                .Single(method => method.Name == nameof(Enumerable.Contains) && method.GetParameters().Length == 2);
+                .Single(method => method.Name == name && method.GetParameters().Length == arity);
     }
 }

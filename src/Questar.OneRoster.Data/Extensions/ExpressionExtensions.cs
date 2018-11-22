@@ -4,7 +4,7 @@ namespace Questar.OneRoster.Data.Extensions
     using System.Linq.Expressions;
     using Remotion.Linq.Parsing.ExpressionVisitors;
 
-    public static class Pagination
+    public static class ExpressionExtensions
     {
         public static Expression<Func<TSource, TTarget>> AndThen<TSource, TIntermediate, TTarget>(this Expression<Func<TSource, TIntermediate>> source, Expression<Func<TIntermediate, TTarget>> target)
         {

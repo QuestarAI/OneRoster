@@ -25,8 +25,8 @@ namespace Questar.OneRoster.Filtering
 
         public string Symbol { get; }
 
-        public static implicit operator string(PredicateOperator logical)
-            => logical.Symbol;
+        public static implicit operator string(PredicateOperator @operator)
+            => @operator.Symbol;
 
         public static IEnumerable<PredicateOperator> Values
         {
@@ -45,8 +45,8 @@ namespace Questar.OneRoster.Filtering
         public static PredicateOperator Parse(string symbol)
             => Values.Single(value => value.Symbol == symbol);
 
-        public static bool TryParse(string symbol, out PredicateOperator predicate)
-            => (predicate = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(PredicateOperator);
+        public static bool TryParse(string symbol, out PredicateOperator @operator)
+            => (@operator = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(PredicateOperator);
 
         public override string ToString()
             => Symbol;

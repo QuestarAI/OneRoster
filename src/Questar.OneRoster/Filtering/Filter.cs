@@ -12,9 +12,7 @@ namespace Questar.OneRoster.Filtering
 
         private static readonly Regex Predicate = new Regex(@"(?<Property>[A-Za-z0-9_\.]+)(?<Predicate>!=|=|>=|>|<=|<|~)(?<Value>.+)", RegexOptions.Compiled);
 
-        internal Filter()
-        {
-        }
+        internal Filter() { }
 
         public abstract void Accept(FilterVisitor visitor);
 

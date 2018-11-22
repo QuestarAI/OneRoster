@@ -56,8 +56,9 @@ namespace Questar.OneRoster.Api.Extensions
             if (string.IsNullOrWhiteSpace(context.Request.Fields))
                 return await query.ToListAsync();
 
-            // Optimization; no need for projection; OneRoster spec requires all fields returned in this case.
             var projection = Projections<T>.FromFields(context.Request.Fields);
+
+            // Optimization; no need for projection; OneRoster spec requires all fields returned in this case.
             if (projection.NonexistentFields.Any())
                 return await query.ToListAsync();
 

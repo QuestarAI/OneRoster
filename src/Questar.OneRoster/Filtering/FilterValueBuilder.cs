@@ -6,16 +6,10 @@ namespace Questar.OneRoster.Filtering
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Common;
     using Reflection;
 
     public sealed class FilterValueBuilder : ExpressionVisitor
     {
-        public FilterValueBuilder(PropertyInfo property)
-            : this(property, null)
-        {
-        }
-
         public FilterValueBuilder(PropertyInfo property, Expression expression)
         {
             Property = property;
@@ -31,7 +25,6 @@ namespace Questar.OneRoster.Filtering
         public override Expression Visit(Expression node)
         {
             if (IsTerminal(node)) return node;
-
             switch (node.NodeType)
             {
                 case ExpressionType.Constant:
@@ -47,8 +40,7 @@ namespace Questar.OneRoster.Filtering
             var convert = Expression.Convert(node, typeof(object));
             var lambda = Expression.Lambda<Func<object>>(convert);
             var getter = lambda.Compile();
-            var value = getter();
-            return value;
+            return getter();
         }
 
         private bool IsTerminal(Expression expression)
@@ -59,31 +51,31 @@ namespace Questar.OneRoster.Filtering
             var property = Property.PropertyType;
             var converter = property.GetConverter();
             if (converter == null)
-                throw new InvalidOperationException($"Couldn't find type converter for type '{property}'");
+                throw new InvalidOperationException($"Couldn't find type converter for type '{property}'.");
 
+            // TODO refactor this special case
             // TODO find a better solution for formatting in general...
 
-            if (value is DateTime date)
-                return date.ToString(date.TimeOfDay.Ticks > 0 ? "yyyy-MM-ddTHH:mm:ss.fffK" : "yyyy-MM-dd" /*, new IsoDateTimeFormatInfo() */);
-            else
-                return converter.ConvertToString(value);
+            return value is DateTime date
+                ? date.ToString(date.TimeOfDay.Ticks > 0 ? "yyyy-MM-ddTHH:mm:ss.fffK" : "yyyy-MM-dd")
+                : converter.ConvertToString(value);
         }
 
         private string FormatVector(object value)
         {
             var property = Property.PropertyType;
-            var collection = property.Name != typeof(ICollection<>).Name
-                ? property.GetInterface(typeof(ICollection<>).Name)
-                : property;
+            var collection = property.Name == typeof(ICollection<>).Name
+                ? property
+                : property.GetInterface(typeof(ICollection<>).Name);
             if (collection == null)
-                throw new InvalidOperationException($"Value '{value}' is not of type '{typeof(ICollection<>)}'.");
+                throw new InvalidOperationException($"Value '{value}' does not implement '{typeof(ICollection<>).Name}'.");
             var type = collection.GetGenericArguments().Single();
             var converter = type.GetConverter();
             if (converter == null)
-                throw new InvalidOperationException($"Couldn't find type converter for type '{type}'");
+                throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             if (value is IEnumerable enumerable)
-                return string.Join(',', enumerable.Cast<object>().Select(converter.ConvertToString));
-            throw new InvalidOperationException($"Value '{value}' is not of type '{typeof(IEnumerable)}'.");
+                return string.Join(".", enumerable.Cast<object>().Select(converter.ConvertToString));
+            throw new InvalidOperationException($"Value '{value}' does not implement '{typeof(IEnumerable).Name}'.");
         }
 
         private FilterValue GetValue(object value)

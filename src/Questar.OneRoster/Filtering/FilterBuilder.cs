@@ -8,33 +8,9 @@ namespace Questar.OneRoster.Filtering
 
     public sealed class FilterBuilder<T> : ExpressionVisitor
     {
-        private readonly Dictionary<ExpressionType, Func<Expression, Expression, FilterBuilder<T>>> _binary;
-
-        private readonly Dictionary<MethodInfo, Func<Expression, Expression, FilterBuilder<T>>> _call;
-
         private readonly Stack<Filter> _filters = new Stack<Filter>();
 
-        public FilterBuilder()
-        {
-            _call = new Dictionary<MethodInfo, Func<Expression, Expression, FilterBuilder<T>>>
-            {
-                { FilterInfo.All, All },
-                { FilterInfo.Any, Any }
-            };
-            _binary = new Dictionary<ExpressionType, Func<Expression, Expression, FilterBuilder<T>>>
-            {
-                { ExpressionType.AndAlso, AndAlso },
-                { ExpressionType.Equal, Equal },
-                { ExpressionType.GreaterThan, GreaterThan },
-                { ExpressionType.GreaterThanOrEqual, GreaterThanOrEqual },
-                { ExpressionType.LessThan, LessThan },
-                { ExpressionType.LessThanOrEqual, LessThanOrEqual },
-                { ExpressionType.NotEqual, NotEqual },
-                { ExpressionType.OrElse, OrElse }
-            };
-        }
-
-        public FilterBuilder(Expression expression) : this()
+        public FilterBuilder(Expression expression)
             => Expression = expression;
 
         public Expression Expression { get; }
@@ -65,9 +41,11 @@ namespace Questar.OneRoster.Filtering
 
         public FilterBuilder<T> Logical(Expression left, LogicalOperator @operator, Expression right)
         {
-            Visit(right);
             Visit(left);
-            _filters.Push(new LogicalFilter(_filters.Pop(), @operator, _filters.Pop()));
+            var leftExpression = _filters.Pop();
+            Visit(right);
+            var rightExpression = _filters.Pop();
+            _filters.Push(new LogicalFilter(leftExpression, @operator, rightExpression));
             return this;
         }
 
@@ -92,7 +70,6 @@ namespace Questar.OneRoster.Filtering
         public override Expression Visit(Expression node)
         {
             if (IsTerminal(node)) return node;
-
             switch (node.NodeType)
             {
                 case ExpressionType.AndAlso:
@@ -107,7 +84,7 @@ namespace Questar.OneRoster.Filtering
                 case ExpressionType.OrElse:
                     return base.Visit(node);
                 default:
-                    throw new InvalidOperationException($"Invalid expression '{node}'.");
+                    throw new NotSupportedException($"Expression not supported '{node}'.");
             }
         }
 
@@ -116,9 +93,37 @@ namespace Questar.OneRoster.Filtering
 
         protected override Expression VisitBinary(BinaryExpression node)
         {
-            if (!_binary.TryGetValue(node.NodeType, out var binary))
-                throw new InvalidOperationException($"Invalid binary expression '{node}'");
-            binary(node.Left, node.Right);
+            Func<Expression, Expression, FilterBuilder<T>> build;
+            switch (node.NodeType)
+            {
+                case ExpressionType.AndAlso:
+                    build = AndAlso;
+                    break;
+                case ExpressionType.Equal:
+                    build = Equal;
+                    break;
+                case ExpressionType.GreaterThan:
+                    build = GreaterThan;
+                    break;
+                case ExpressionType.GreaterThanOrEqual:
+                    build = GreaterThanOrEqual;
+                    break;
+                case ExpressionType.LessThan:
+                    build = LessThan;
+                    break;
+                case ExpressionType.LessThanOrEqual:
+                    build = LessThanOrEqual;
+                    break;
+                case ExpressionType.NotEqual:
+                    build = NotEqual;
+                    break;
+                case ExpressionType.OrElse:
+                    build = OrElse;
+                    break;
+                default:
+                    throw new NotSupportedException($"Binary expression not supported '{node}'.");
+            }
+            build(node.Left, node.Right);
             return node;
         }
 
@@ -128,9 +133,19 @@ namespace Questar.OneRoster.Filtering
             var info = method.IsGenericMethod
                 ? method.GetGenericMethodDefinition()
                 : null;
-            if (!_call.TryGetValue(info, out var call))
-                throw new InvalidOperationException($"Invalid method call expression '{node}'");
-            call(node.Arguments[0], node.Arguments[1]);
+            Func<Expression, Expression, FilterBuilder<T>> build;
+            switch (info)
+            {
+                case MethodInfo all when all == FilterInfo.All:
+                    build = All;
+                    break;
+                case MethodInfo all when all == FilterInfo.All:
+                    build = All;
+                    break;
+                default:
+                    throw new NotSupportedException($"Method call expression not supported '{node}'.");
+            }
+            build(node.Arguments[0], node.Arguments[1]);
             return node;
         }
     }
