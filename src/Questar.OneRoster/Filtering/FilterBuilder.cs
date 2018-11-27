@@ -139,8 +139,8 @@ namespace Questar.OneRoster.Filtering
                 case MethodInfo all when all == FilterInfo.All:
                     build = All;
                     break;
-                case MethodInfo all when all == FilterInfo.All:
-                    build = All;
+                case MethodInfo any when any == FilterInfo.Any:
+                    build = Any;
                     break;
                 default:
                     throw new NotSupportedException($"Method call expression not supported '{node}'.");

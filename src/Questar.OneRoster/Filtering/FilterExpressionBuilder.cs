@@ -42,10 +42,10 @@ namespace Questar.OneRoster.Filtering
             Func<Filter, Filter, FilterExpressionBuilder<T>> build;
             switch (filter.Logical)
             {
-                case "AND":
+                case LogicalOperatorString.And:
                     build = AndAlso;
                     break;
-                case "OR":
+                case LogicalOperatorString.Or:
                     build = OrElse;
                     break;
                 default:
@@ -62,22 +62,22 @@ namespace Questar.OneRoster.Filtering
                 case FilterValueType.Scalar:
                     switch (filter.Predicate)
                     {
-                        case "=":
+                        case PredicateOperatorString.Equal:
                             build = Equal;
                             break;
-                        case ">":
+                        case PredicateOperatorString.GreaterThan:
                             build = GreaterThan;
                             break;
-                        case ">=":
+                        case PredicateOperatorString.GreaterThanOrEqual:
                             build = GreaterThanOrEqual;
                             break;
-                        case "<":
+                        case PredicateOperatorString.LessThan:
                             build = LessThan;
                             break;
-                        case "<=":
+                        case PredicateOperatorString.LessThanOrEqual:
                             build = LessThanOrEqual;
                             break;
-                        case "!=":
+                        case PredicateOperatorString.NotEqual:
                             build = NotEqual;
                             break;
                         default:
@@ -87,10 +87,10 @@ namespace Questar.OneRoster.Filtering
                 case FilterValueType.Vector:
                     switch (filter.Predicate)
                     {
-                        case "~":
+                        case PredicateOperatorString.Contains:
                             build = Any;
                             break;
-                        case "=":
+                        case PredicateOperatorString.Equal:
                             build = All;
                             break;
                         default:

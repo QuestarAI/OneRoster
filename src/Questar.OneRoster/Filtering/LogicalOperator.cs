@@ -6,9 +6,9 @@ namespace Questar.OneRoster.Filtering
 
     public struct LogicalOperator
     {
-        public static readonly LogicalOperator And = new LogicalOperator("AND");
+        public static readonly LogicalOperator And = new LogicalOperator(LogicalOperatorString.And);
 
-        public static readonly LogicalOperator Or = new LogicalOperator("OR");
+        public static readonly LogicalOperator Or = new LogicalOperator(LogicalOperatorString.Or);
 
         private LogicalOperator(string symbol)
             => Symbol = symbol;

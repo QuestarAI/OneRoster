@@ -11,34 +11,34 @@ namespace Questar.OneRoster.Filtering
         private readonly StringBuilder _filter = new StringBuilder();
 
         public void AndAlso(Filter left, Filter right)
-            => _filter.Append($"{left} AND {right}");
+            => _filter.Append($"{left} {LogicalOperatorString.And} {right}");
 
         public void All(FilterProperty property, FilterValue value)
-            => _filter.Append($"{property}={value}");
+            => _filter.Append($"{property}{PredicateOperatorString.Equal}{value}");
 
         public void Any(FilterProperty property, FilterValue value)
-            => _filter.Append($"{property}~{value}");
+            => _filter.Append($"{property}{PredicateOperatorString.Contains}{value}");
 
         public void Equal(FilterProperty left, FilterValue value)
-            => _filter.Append($"{left}={value}");
+            => _filter.Append($"{left}{PredicateOperatorString.Equal}{value}");
 
         public void GreaterThan(FilterProperty property, FilterValue value)
-            => _filter.Append($"{property}>{value}");
+            => _filter.Append($"{property}{PredicateOperatorString.GreaterThan}{value}");
 
         public void GreaterThanOrEqual(FilterProperty property, FilterValue value)
-            => _filter.Append($"{property}>={value}");
+            => _filter.Append($"{property}{PredicateOperatorString.GreaterThanOrEqual}{value}");
 
         public void LessThan(FilterProperty property, FilterValue value)
-            => _filter.Append($"{property}<{value}");
+            => _filter.Append($"{property}{PredicateOperatorString.LessThan}{value}");
 
         public void LessThanOrEqual(FilterProperty property, FilterValue value)
-            => _filter.Append($"{property}<={value}");
+            => _filter.Append($"{property}{PredicateOperatorString.LessThanOrEqual}{value}");
 
         public void NotEqual(FilterProperty property, FilterValue value)
-            => _filter.Append($"{property}!={value}");
+            => _filter.Append($"{property}{PredicateOperatorString.NotEqual}{value}");
 
         public void OrElse(Filter left, Filter right)
-            => _filter.Append($"{left} OR {right}");
+            => _filter.Append($"{left} {LogicalOperatorString.Or} {right}");
 
         public FilterString ToFilterString()
             => new FilterString(_filter.ToString());
@@ -49,10 +49,10 @@ namespace Questar.OneRoster.Filtering
 
             switch (filter.Logical)
             {
-                case "AND":
+                case LogicalOperatorString.And:
                     build = AndAlso;
                     break;
-                case "OR":
+                case LogicalOperatorString.Or:
                     build = OrElse;
                     break;
                 default:
@@ -68,22 +68,22 @@ namespace Questar.OneRoster.Filtering
 
             switch (filter.Predicate)
             {
-                case "=":
+                case PredicateOperatorString.Equal:
                     build = Equal;
                     break;
-                case "<":
+                case PredicateOperatorString.LessThan:
                     build = LessThan;
                     break;
-                case "<=":
+                case PredicateOperatorString.LessThanOrEqual:
                     build = LessThanOrEqual;
                     break;
-                case ">":
+                case PredicateOperatorString.GreaterThan:
                     build = GreaterThan;
                     break;
-                case ">=":
+                case PredicateOperatorString.GreaterThanOrEqual:
                     build = GreaterThanOrEqual;
                     break;
-                case "!=":
+                case PredicateOperatorString.NotEqual:
                     build = NotEqual;
                     break;
                 default:

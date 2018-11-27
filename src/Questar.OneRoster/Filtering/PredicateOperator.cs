@@ -6,19 +6,19 @@ namespace Questar.OneRoster.Filtering
 
     public struct PredicateOperator
     {
-        public static readonly PredicateOperator Contains = new PredicateOperator("~");
+        public static readonly PredicateOperator Contains = new PredicateOperator(PredicateOperatorString.Contains);
 
-        public static readonly PredicateOperator Equal = new PredicateOperator("=");
+        public static readonly PredicateOperator Equal = new PredicateOperator(PredicateOperatorString.Equal);
 
-        public static readonly PredicateOperator GreaterThan = new PredicateOperator(">");
+        public static readonly PredicateOperator GreaterThan = new PredicateOperator(PredicateOperatorString.GreaterThan);
 
-        public static readonly PredicateOperator GreaterThanOrEqual = new PredicateOperator(">=");
+        public static readonly PredicateOperator GreaterThanOrEqual = new PredicateOperator(PredicateOperatorString.GreaterThanOrEqual);
 
-        public static readonly PredicateOperator LessThan = new PredicateOperator("<");
+        public static readonly PredicateOperator LessThan = new PredicateOperator(PredicateOperatorString.LessThan);
 
-        public static readonly PredicateOperator LessThanOrEqual = new PredicateOperator("<=");
+        public static readonly PredicateOperator LessThanOrEqual = new PredicateOperator(PredicateOperatorString.LessThanOrEqual);
 
-        public static readonly PredicateOperator NotEqual = new PredicateOperator("!=");
+        public static readonly PredicateOperator NotEqual = new PredicateOperator(PredicateOperatorString.NotEqual);
 
         private PredicateOperator(string symbol)
             => Symbol = symbol;
