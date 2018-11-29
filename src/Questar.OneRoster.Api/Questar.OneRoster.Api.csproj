@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Questar.OneRoster.ApiFramework\Questar.OneRoster.ApiFramework.csproj" />
     <ProjectReference Include="..\Questar.OneRoster.Data\Questar.OneRoster.Data.csproj" />
     <ProjectReference Include="..\Questar.OneRoster\Questar.OneRoster.csproj" />
   </ItemGroup>

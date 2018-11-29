@@ -6,6 +6,7 @@ namespace Questar.OneRoster.Data.Collections
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
+    using OneRoster.Collections;
 
     public static class Pagination
     {

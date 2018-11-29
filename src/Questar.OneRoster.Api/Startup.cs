@@ -1,15 +1,12 @@
 namespace Questar.OneRoster.Api
 {
-    using Conventions;
-    using Data;
+    using ApiFramework;
+    using Data.Services;
     using JetBrains.Annotations;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Logging.Console;
     using Newtonsoft.Json.Converters;
     using Swashbuckle.AspNetCore.Swagger;
 
@@ -19,34 +16,21 @@ namespace Questar.OneRoster.Api
 
         [UsedImplicitly]
         public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+            => Configuration = configuration;
 
         [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddMvc(mvc =>
-                {
-                    mvc.Conventions.Add(new ControllerNameAttributeConvention());
-                })
-                .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
-            // TODO: Consolidate where this connection string comes from.
-            const string connection = @"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True";
+            services.AddOneRoster(@"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True");
+            services.AddOneRosterApiFramework();
 
-            var myLoggerFactory = new LoggerFactory(new[] {
-                new ConsoleLoggerProvider((category, level)
-                    => category == DbLoggerCategory.Database.Command.Name
-                       && level == LogLevel.Information, true)
-            });
-            
-            services.AddDbContext<OneRosterDbContext>(options =>
-            {
-                options.UseSqlServer(connection);
-                options.UseLoggerFactory(myLoggerFactory);
-            });
-            
+            services
+                .AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter())) // eh...
+                .AddOneRosterApiFramework();
+
+            // TODO: Consolidate where this connection string comes from.
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1p1", new Info
@@ -73,9 +57,10 @@ namespace Questar.OneRoster.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
+
+            app.UseOneRoster();
+            app.UseOneRosterApiFramework();
 
             app.UseStaticFiles();
             app.UseSwagger(options =>
