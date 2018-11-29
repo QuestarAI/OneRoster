@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.ApiFramework.Responses
+namespace Questar.OneRoster.Models.Errors
 {
     using System.Runtime.Serialization;
 

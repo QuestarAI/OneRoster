@@ -29,7 +29,7 @@ namespace Questar.OneRoster.Data.Services
         public void Remove(T entity) => Set.Remove(entity);
 
         public Task<T> Single(SingleQueryParams @params)
-            => Set.FindAsync(@params.Id);
+            => Set.FindAsync(@params.SourceId);
 
         public Task<Page<T>> Select(SelectQueryParams @params)
             => Set

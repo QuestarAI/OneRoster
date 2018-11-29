@@ -1,14 +1,7 @@
-using System.Collections.Generic;
-
 namespace Questar.OneRoster
 {
     using Filtering;
     using Sorting;
-
-    public class QueryParams
-    {
-        public IList<string> Fields { get; set; }
-    }
 
     public class SelectQueryParams : QueryParams
     {
@@ -21,10 +14,5 @@ namespace Questar.OneRoster
         public string SortField { get; set; }
 
         public SortDirection? SortDirection { get; set; }
-    }
-
-    public class SingleQueryParams : QueryParams
-    {
-        public object Id { get; set; }
     }
 }

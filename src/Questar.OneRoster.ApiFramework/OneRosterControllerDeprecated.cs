@@ -17,6 +17,7 @@ namespace Questar.OneRoster.ApiFramework
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Models.Errors;
     using Reflection;
     using Requests;
     using Responses;
@@ -68,7 +69,7 @@ namespace Questar.OneRoster.ApiFramework
 
         private void Validate<T>(CollectionEndpointContext<T> context) where T : class
         {
-            var propertyNames = Reflect<T>.PropertyNames;
+            var propertyNames = new string[] { };
             ValidateFilter(context, propertyNames);
             ValidateSort(context, propertyNames);
             ValidateOffset(context);

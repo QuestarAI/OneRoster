@@ -3,9 +3,8 @@ namespace Questar.OneRoster.ApiFramework.Requests
     using System;
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc;
-    using Models;
 
-    public class CreateRequest<T> : Request
+    public class UpsertRequest<T> : Request
     {
         [Required]
         [FromRoute]

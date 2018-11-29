@@ -6,6 +6,7 @@ namespace Questar.OneRoster.Api
     using System.Net;
     using ApiFramework.Requests;
     using ApiFramework.Responses;
+    using Models.Errors;
 
 
     public class CollectionEndpointContext<T>
