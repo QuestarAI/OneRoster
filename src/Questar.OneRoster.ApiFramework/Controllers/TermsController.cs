@@ -4,7 +4,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     [Route("ims/oneroster/v1p1/terms")]
-    public class TermsController : OneRosterController
+    public class TermsController : OneRosterControllerDeprecated
     {
         /// <summary>
         /// Returns the collection of terms.

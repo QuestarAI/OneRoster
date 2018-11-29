@@ -1,4 +1,4 @@
-﻿namespace Questar.OneRoster.Data
+namespace Questar.OneRoster.Data
 {
     using System.Linq;
     using System.Threading.Tasks;

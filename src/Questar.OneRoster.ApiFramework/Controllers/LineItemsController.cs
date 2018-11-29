@@ -4,7 +4,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     [Route("ims/oneroster/v1p1/lineItems")]
-    public class LineItemsController : OneRosterController
+    public class LineItemsController : OneRosterControllerDeprecated
     {
         /// <summary>
         /// Returns the collection of line items.

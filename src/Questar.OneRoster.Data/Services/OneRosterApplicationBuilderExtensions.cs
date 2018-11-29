@@ -10,12 +10,11 @@ namespace Questar.OneRoster.Data.Services
         public static void UseOneRoster(this IApplicationBuilder app)
         {
             if (app == null) throw new ArgumentNullException(nameof(app));
+
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             using (var context = scope.ServiceProvider.GetService<OneRosterDbContext>())
             {
-                var created = context.Database.EnsureCreated();
                 context.Database.Migrate();
-                if (created) new OneRosterDbContextInitializer(context).Initialize();
             }
         }
     }

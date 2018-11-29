@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0-preview3-35497" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0-preview3-35497" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0-preview3-35497" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.2.0-preview3-35497" />
   </ItemGroup>

@@ -13,21 +13,19 @@ namespace Questar.OneRoster.Api
         private bool _hasParsedFields;
         private IList<string> _fieldsList;
 
-        public CollectionEndpointContext(CollectionEndpointRequest<T> request)
+        public CollectionEndpointContext(SelectRequest request)
             => Request = request;
 
-        public CollectionEndpointRequest<T> Request { get; private set; }
+        public SelectRequest Request { get; private set; }
 
-        public EndpointResponse Response { get; private set; } = new EndpointResponse();
+        public Response<T> Response { get; private set; } = new Response<T>();
 
         public bool RequestSortIsValid { get; set; } = true;
 
         public IList<string> GetFieldsList()
         {
             if (_hasParsedFields)
-            {
                 return _fieldsList;
-            }
 
             if (!string.IsNullOrWhiteSpace(Request.Fields))
             {
@@ -38,16 +36,18 @@ namespace Questar.OneRoster.Api
             }
 
             _hasParsedFields = true;
+
             return _fieldsList;
         }
 
         public void AddStatusInfo(StatusInfo statusInfo)
-            => Response.StatusInfoSet.Add(statusInfo);
+            => Response.StatusInfo.Add(statusInfo);
 
         public bool HasStatusInfo()
-            => Response.StatusInfoSet.Any();
+            => Response.StatusInfo.Any();
 
         public bool IsBadRequest()
-            => Response.StatusInfoSet.Any(si => si.StatusCode == HttpStatusCode.BadRequest);
+            => throw new NotImplementedException();
+            //=> Response.StatusInfo.Any(si => si.StatusCode == HttpStatusCode.BadRequest);
     }
 }

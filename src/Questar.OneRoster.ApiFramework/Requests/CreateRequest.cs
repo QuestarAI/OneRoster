@@ -5,10 +5,14 @@ namespace Questar.OneRoster.ApiFramework.Requests
     using Microsoft.AspNetCore.Mvc;
     using Models;
 
-    public class AcademicSessionEndpointRequest : EndpointRequest<AcademicSession>
+    public class CreateRequest<T> : Request
     {
         [Required]
         [FromRoute]
-        public Guid AcademicSessionId { get; set; }
+        public Guid Id { get; set; }
+
+        [Required]
+        [FromBody]
+        public T Data { get; set; }
     }
 }

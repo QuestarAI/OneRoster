@@ -4,7 +4,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     [Route("ims/oneroster/v1p1/demographics")]
-    public class DemographicsController : OneRosterController
+    public class DemographicsController : OneRosterControllerDeprecated
     {
         /// <summary>
         /// Returns the collection of demographics.

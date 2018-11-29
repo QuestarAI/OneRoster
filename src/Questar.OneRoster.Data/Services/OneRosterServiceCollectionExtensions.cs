@@ -13,6 +13,8 @@ namespace Questar.OneRoster.Data.Services
             {
                 options.UseSqlServer(connectionString);
             });
+            services.AddScoped<OneRosterDbContext>();
+            services.AddScoped<IWorkspace, DbContextWorkspace<OneRosterDbContext>>();
         }
 
         public static void AddOneRoster(this IServiceCollection services, string connectionString, Action<OneRosterOptions> setupAction)

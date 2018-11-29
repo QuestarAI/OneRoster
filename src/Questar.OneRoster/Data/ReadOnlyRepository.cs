@@ -6,6 +6,7 @@ namespace Questar.OneRoster.Data
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
+    using Collections;
 
     public sealed class ReadOnlyRepository<T> : IRepository<T>
     {
@@ -27,6 +28,12 @@ namespace Questar.OneRoster.Data
 
         void IRepository<T>.Remove(T entity)
             => throw new NotSupportedException("The repository is read-only.");
+
+        public Task<T> Single(SingleQueryParams @params)
+            => Repository.Single(@params);
+
+        public Task<Page<T>> Select(SelectQueryParams @params)
+            => Repository.Select(@params);
 
         public IEnumerator<T> GetEnumerator()
             => Repository.GetEnumerator();

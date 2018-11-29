@@ -4,7 +4,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     [Route("ims/oneroster/v1p1/gradingPeriods")]
-    public class GradingPeriodsController : OneRosterController
+    public class GradingPeriodsController : OneRosterControllerDeprecated
     {
         /// <summary>
         /// Returns the collection of grading periods.

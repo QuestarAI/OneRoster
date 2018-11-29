@@ -6,8 +6,11 @@ namespace Questar.OneRoster.Data.Services
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
+    using Collections;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Query.Internal;
+    using OneRoster.Collections;
+    using Sorting;
 
     public class DbSetRepository<T> : IRepository<T>, IAsyncEnumerableAccessor<T> where T : class
     {
@@ -24,6 +27,15 @@ namespace Questar.OneRoster.Data.Services
         public Task<int> CountAsync() => Set.CountAsync();
 
         public void Remove(T entity) => Set.Remove(entity);
+
+        public Task<T> Single(SingleQueryParams @params)
+            => Set.FindAsync(@params.Id);
+
+        public Task<Page<T>> Select(SelectQueryParams @params)
+            => Set
+                .Where(@params.Filter.ToFilterExpression<T>())
+                .SortBy(@params.SortField, @params.SortDirection)
+                .ToPageAsync(@params.PageOffset / @params.PageLimit, @params.PageLimit);
 
         public void Add(T entity) => Set.Add(entity);
 

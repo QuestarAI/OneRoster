@@ -4,7 +4,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     [Route("ims/oneroster/v1p1/schools")]
-    public class SchoolsController : OneRosterController
+    public class SchoolsController : OneRosterControllerDeprecated
     {
         /// <summary>
         /// Returns the collection of schools.

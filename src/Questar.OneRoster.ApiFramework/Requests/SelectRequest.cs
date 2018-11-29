@@ -1,17 +1,16 @@
 namespace Questar.OneRoster.ApiFramework.Requests
 {
     using System.ComponentModel.DataAnnotations;
-    using Common;
     using Microsoft.AspNetCore.Mvc;
     using Sorting;
 
-    public class CollectionEndpointRequest<T> : EndpointRequest<T>
+    public class SelectRequest : Request
     {
         [FromQuery]
-        public int Limit { get; set; } = Constants.DefaultLimit;
+        public int Offset { get; set; } = 0;
 
         [FromQuery]
-        public int Offset { get; set; } = Constants.DefaultOffset;
+        public int Limit { get; set; } = 100;
 
         [FromQuery]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -19,7 +18,7 @@ namespace Questar.OneRoster.ApiFramework.Requests
 
         [FromQuery]
         public SortDirection? OrderBy { get; set; }
-
+        
         [FromQuery]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Filter { get; set; }

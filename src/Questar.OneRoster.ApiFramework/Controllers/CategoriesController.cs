@@ -4,7 +4,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     [Route("ims/oneroster/v1p1/categories")]
-    public class CategoriesController : OneRosterController
+    public class CategoriesController : OneRosterControllerDeprecated
     {
         /// <summary>
         /// Returns the collection of grading categories.

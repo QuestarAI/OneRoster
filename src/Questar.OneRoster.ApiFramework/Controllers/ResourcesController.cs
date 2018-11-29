@@ -4,7 +4,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     [Route("ims/oneroster/v1p1/resources")]
-    public class ResourcesController : OneRosterController
+    public class ResourcesController : OneRosterControllerDeprecated
     {
         /// <summary>
         /// Returns the collection of resources.

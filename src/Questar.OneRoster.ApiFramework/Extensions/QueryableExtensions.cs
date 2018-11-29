@@ -8,7 +8,6 @@ namespace Questar.OneRoster.ApiFramework.Extensions
     using System.Reflection;
     using System.Threading.Tasks;
     using Api;
-    using Data;
     using Filtering;
     using Sorting;
 
