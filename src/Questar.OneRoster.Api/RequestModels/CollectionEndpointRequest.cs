@@ -5,7 +5,7 @@ namespace Questar.OneRoster.Api.RequestModels
     using System.Linq.Expressions;
     using Common;
     using Microsoft.AspNetCore.Mvc;
-    using Query;
+    using Sorting;
 
     public class CollectionEndpointRequest<T> : EndpointRequest<T>
     {

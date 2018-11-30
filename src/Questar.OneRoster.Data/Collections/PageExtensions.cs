@@ -1,11 +1,10 @@
-namespace Questar.OneRoster.Data.Extensions
+namespace Questar.OneRoster.Data.Collections
 {
     using System;
     using System.Diagnostics;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using Collections;
     using Microsoft.EntityFrameworkCore;
 
     public static class Pagination
