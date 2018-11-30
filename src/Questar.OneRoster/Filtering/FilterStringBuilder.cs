@@ -1,9 +1,6 @@
 namespace Questar.OneRoster.Filtering
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using System.Reflection;
     using System.Text;
 
     public sealed class FilterStringBuilder : FilterVisitor
@@ -44,53 +41,33 @@ namespace Questar.OneRoster.Filtering
             => new FilterString(_filter.ToString());
 
         public override void Visit(LogicalFilter filter)
-        {
-            Action<Filter, Filter> build;
-
-            switch (filter.Logical)
-            {
-                case LogicalOperatorString.And:
-                    build = AndAlso;
-                    break;
-                case LogicalOperatorString.Or:
-                    build = OrElse;
-                    break;
-                default:
-                    throw new NotSupportedException($"Logical operator '{filter.Logical}' not supported.");
-            }
-
-            build(filter.Left, filter.Right);
-        }
+            => LogicalBuilder(filter)(filter.Left, filter.Right);
 
         public override void Visit(PredicateFilter filter)
-        {
-            Action<FilterProperty, FilterValue> build;
+            => PredicateBuilder(filter)(filter.Property, filter.Value);
 
+        private Action<Filter, Filter> LogicalBuilder(LogicalFilter filter)
+        {
+            switch (filter.Logical)
+            {
+                case LogicalOperatorString.And: return AndAlso;
+                case LogicalOperatorString.Or: return OrElse;
+                default: throw new NotSupportedException($"Logical operator '{filter.Logical}' not supported.");
+            }
+        }
+
+        private Action<FilterProperty, FilterValue> PredicateBuilder(PredicateFilter filter)
+        {
             switch (filter.Predicate)
             {
-                case PredicateOperatorString.Equal:
-                    build = Equal;
-                    break;
-                case PredicateOperatorString.LessThan:
-                    build = LessThan;
-                    break;
-                case PredicateOperatorString.LessThanOrEqual:
-                    build = LessThanOrEqual;
-                    break;
-                case PredicateOperatorString.GreaterThan:
-                    build = GreaterThan;
-                    break;
-                case PredicateOperatorString.GreaterThanOrEqual:
-                    build = GreaterThanOrEqual;
-                    break;
-                case PredicateOperatorString.NotEqual:
-                    build = NotEqual;
-                    break;
-                default:
-                    throw new NotSupportedException($"Logical operator '{filter.Predicate}' not supported.");
+                case PredicateOperatorString.Equal: return Equal;
+                case PredicateOperatorString.LessThan: return LessThan;
+                case PredicateOperatorString.LessThanOrEqual: return LessThanOrEqual;
+                case PredicateOperatorString.GreaterThan: return GreaterThan;
+                case PredicateOperatorString.GreaterThanOrEqual: return GreaterThanOrEqual;
+                case PredicateOperatorString.NotEqual: return NotEqual;
+                default: throw new NotSupportedException($"Logical operator '{filter.Predicate}' not supported.");
             }
-
-            build(filter.Property, filter.Value);
         }
     }
 }

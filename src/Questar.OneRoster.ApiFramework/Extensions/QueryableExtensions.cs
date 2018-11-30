@@ -38,7 +38,6 @@ namespace Questar.OneRoster.ApiFramework.Extensions
             => context.RequestSortIsValid && !string.IsNullOrWhiteSpace(context.Request.Sort)
                 ? query.SortBy(context.Request.Sort, context.Request.OrderBy)
                 : query;
-
         private static IQueryable<T> HandleSkip<T>(this IQueryable<T> query, CollectionEndpointContext<T> context) where T : class
             => context.Request.Offset > 0
                 ? query.Skip(context.Request.Offset)

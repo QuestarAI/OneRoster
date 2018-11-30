@@ -35,73 +35,13 @@ namespace Questar.OneRoster.Filtering
         }
 
         public FilterExpression<T> ToExpression() =>
-            (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), false, Parameter);
+            (Expression<Func<T, bool>>)Expression.Lambda(_expressions.Single(), false, Parameter);
 
         public override void Visit(LogicalFilter filter)
-        {
-            Func<Filter, Filter, FilterExpressionBuilder<T>> build;
-            switch (filter.Logical)
-            {
-                case LogicalOperatorString.And:
-                    build = AndAlso;
-                    break;
-                case LogicalOperatorString.Or:
-                    build = OrElse;
-                    break;
-                default:
-                    throw new NotSupportedException($"Logical operator not supported: {filter.Logical}.");
-            }
-            build(filter.Left, filter.Right);
-        }
+            => LogicalBuilder(filter)(filter.Left, filter.Right);
 
         public override void Visit(PredicateFilter filter)
-        {
-            Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>> build;
-            switch (filter.Value.Type)
-            {
-                case FilterValueType.Scalar:
-                    switch (filter.Predicate)
-                    {
-                        case PredicateOperatorString.Equal:
-                            build = Equal;
-                            break;
-                        case PredicateOperatorString.GreaterThan:
-                            build = GreaterThan;
-                            break;
-                        case PredicateOperatorString.GreaterThanOrEqual:
-                            build = GreaterThanOrEqual;
-                            break;
-                        case PredicateOperatorString.LessThan:
-                            build = LessThan;
-                            break;
-                        case PredicateOperatorString.LessThanOrEqual:
-                            build = LessThanOrEqual;
-                            break;
-                        case PredicateOperatorString.NotEqual:
-                            build = NotEqual;
-                            break;
-                        default:
-                            throw new NotSupportedException($"Predicate operator not supported for scalar value: {filter.Predicate}.");
-                    }
-                    break;
-                case FilterValueType.Vector:
-                    switch (filter.Predicate)
-                    {
-                        case PredicateOperatorString.Contains:
-                            build = Any;
-                            break;
-                        case PredicateOperatorString.Equal:
-                            build = All;
-                            break;
-                        default:
-                            throw new NotSupportedException($"Predicate operator not supported for vector value: {filter.Predicate}.");
-                    }
-                    break;
-                default:
-                    throw new NotSupportedException($"Filter value type not supported '{filter.Value.Type}'.");
-            }
-            build(filter.Property, filter.Value);
-        }
+            => PredicateBuilder(filter)(filter.Property, filter.Value);
 
         public FilterExpressionBuilder<T> AndAlso(Filter left, Filter right)
             => Logical(Expression.AndAlso, left, right);
@@ -137,11 +77,11 @@ namespace Questar.OneRoster.Filtering
         {
             Expression expression = Parameter;
             var type = Type;
-            foreach (var filter in property.GetProperties())
+            foreach (var name in property.GetProperties().Select(info => info.Name))
             {
-                var info = type.GetProperty(filter.Name);
+                var info = type.GetProperty(name);
                 if (info == null)
-                    throw new InvalidOperationException($"Couldn't determine path '{filter}' from type '${type.Name}'.");
+                    throw new InvalidOperationException($"Couldn't determine path '{name}' from type '${type.Name}'.");
                 expression = Expression.Property(expression, info);
                 type = info.PropertyType;
             }
@@ -174,6 +114,19 @@ namespace Questar.OneRoster.Filtering
             return this;
         }
 
+        private Func<Filter, Filter, FilterExpressionBuilder<T>> LogicalBuilder(LogicalFilter filter)
+        {
+            switch (filter.Logical)
+            {
+                case LogicalOperatorString.And:
+                    return AndAlso;
+                case LogicalOperatorString.Or:
+                    return OrElse;
+                default:
+                    throw new NotSupportedException($"Logical operator not supported: {filter.Logical}.");
+            }
+        }
+
         private FilterExpressionBuilder<T> Predicate(Func<Expression, Expression, Expression> factory, FilterProperty property, FilterValue value, Func<Expression> fallback = null)
             => Predicate(factory, GetProperty(property), value, fallback);
 
@@ -191,6 +144,35 @@ namespace Questar.OneRoster.Filtering
             }
             _expressions.Push(expression);
             return this;
+        }
+
+        private Func<FilterProperty, FilterValue, FilterExpressionBuilder<T>> PredicateBuilder(PredicateFilter filter)
+        {
+            switch (filter.Value.Type)
+            {
+                case FilterValueType.Scalar:
+                    switch (filter.Predicate)
+                    {
+                        case PredicateOperatorString.Equal: return Equal;
+                        case PredicateOperatorString.GreaterThan: return GreaterThan;
+                        case PredicateOperatorString.GreaterThanOrEqual: return GreaterThanOrEqual;
+                        case PredicateOperatorString.LessThan: return LessThan;
+                        case PredicateOperatorString.LessThanOrEqual: return LessThanOrEqual;
+                        case PredicateOperatorString.NotEqual: return NotEqual;
+                        default:
+                            throw new NotSupportedException($"Predicate operator not supported for scalar value: {filter.Predicate}.");
+                    }
+                case FilterValueType.Vector:
+                    switch (filter.Predicate)
+                    {
+                        case PredicateOperatorString.Contains: return Any;
+                        case PredicateOperatorString.Equal: return All;
+                        default:
+                            throw new NotSupportedException($"Predicate operator not supported for vector value: {filter.Predicate}.");
+                    }
+                default:
+                    throw new NotSupportedException($"Filter value type not supported '{filter.Value.Type}'.");
+            }
         }
     }
 }
