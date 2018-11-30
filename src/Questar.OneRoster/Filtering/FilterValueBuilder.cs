@@ -74,7 +74,7 @@ namespace Questar.OneRoster.Filtering
             if (converter == null)
                 throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             if (value is IEnumerable enumerable)
-                return string.Join(".", enumerable.Cast<object>().Select(converter.ConvertToString));
+                return string.Join(",", enumerable.Cast<object>().Select(converter.ConvertToString));
             throw new InvalidOperationException($"Value '{value}' does not implement '{typeof(IEnumerable).Name}'.");
         }
 

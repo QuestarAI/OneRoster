@@ -93,60 +93,46 @@ namespace Questar.OneRoster.Filtering
 
         protected override Expression VisitBinary(BinaryExpression node)
         {
-            Func<Expression, Expression, FilterBuilder<T>> build;
-            switch (node.NodeType)
-            {
-                case ExpressionType.AndAlso:
-                    build = AndAlso;
-                    break;
-                case ExpressionType.Equal:
-                    build = Equal;
-                    break;
-                case ExpressionType.GreaterThan:
-                    build = GreaterThan;
-                    break;
-                case ExpressionType.GreaterThanOrEqual:
-                    build = GreaterThanOrEqual;
-                    break;
-                case ExpressionType.LessThan:
-                    build = LessThan;
-                    break;
-                case ExpressionType.LessThanOrEqual:
-                    build = LessThanOrEqual;
-                    break;
-                case ExpressionType.NotEqual:
-                    build = NotEqual;
-                    break;
-                case ExpressionType.OrElse:
-                    build = OrElse;
-                    break;
-                default:
-                    throw new NotSupportedException($"Binary expression not supported '{node}'.");
-            }
-            build(node.Left, node.Right);
+            PredicateBuilder(node)(node.Left, node.Right);
             return node;
         }
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
+            ContainsBuilder(node)(node.Arguments[0], node.Arguments[1]);
+            return node;
+        }
+
+        private Func<Expression, Expression, FilterBuilder<T>> ContainsBuilder(MethodCallExpression node)
+        {
             var method = node.Method;
             var info = method.IsGenericMethod
                 ? method.GetGenericMethodDefinition()
                 : null;
-            Func<Expression, Expression, FilterBuilder<T>> build;
             switch (info)
             {
-                case MethodInfo all when all == FilterInfo.All:
-                    build = All;
-                    break;
-                case MethodInfo any when any == FilterInfo.Any:
-                    build = Any;
-                    break;
+                case MethodInfo all when all == FilterInfo.All: return All;
+                case MethodInfo any when any == FilterInfo.Any: return Any;
                 default:
                     throw new NotSupportedException($"Method call expression not supported '{node}'.");
             }
-            build(node.Arguments[0], node.Arguments[1]);
-            return node;
+        }
+
+        private Func<Expression, Expression, FilterBuilder<T>> PredicateBuilder(BinaryExpression node)
+        {
+            switch (node.NodeType)
+            {
+                case ExpressionType.AndAlso: return AndAlso;
+                case ExpressionType.Equal: return Equal;
+                case ExpressionType.GreaterThan: return GreaterThan;
+                case ExpressionType.GreaterThanOrEqual: return GreaterThanOrEqual;
+                case ExpressionType.LessThan: return LessThan;
+                case ExpressionType.LessThanOrEqual: return LessThanOrEqual;
+                case ExpressionType.NotEqual: return NotEqual;
+                case ExpressionType.OrElse: return OrElse;
+                default:
+                    throw new NotSupportedException($"Binary expression not supported '{node}'.");
+            }
         }
     }
 }
