@@ -1,6 +1,6 @@
 namespace Questar.OneRoster.Models.Errors
 {
-    using Newtonsoft.Json;
+    using Newtonsoft.Json; // TODO hmm... remove this dependency, if possible
 
     /// <summary>
     /// Represents an informational status about an API request/response.
@@ -18,7 +18,7 @@ namespace Questar.OneRoster.Models.Errors
 
         [JsonProperty("imsx_description")]
         public string Description { get; set; }
-        
+
         [JsonProperty("imsx_messageRefIdentifier")]
         public string MessageRefIdentifier { get; set; }
 

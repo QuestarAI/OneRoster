@@ -14,7 +14,7 @@ namespace Questar.OneRoster.Data.Services
 
         protected TContext Context { get; }
 
-        public IRepository<T> GetRepository<T>() where T : class
+        public virtual IRepository<T> GetRepository<T>() where T : class
         {
             if (_repositories.TryGetValue(typeof(T), out var repository))
                 return repository as IRepository<T>;
@@ -22,13 +22,13 @@ namespace Questar.OneRoster.Data.Services
             return (IRepository<T>) repository;
         }
 
-        public void Save()
+        public virtual void Save()
             => Context.SaveChanges();
 
-        public Task SaveAsync()
+        public virtual Task SaveAsync()
             => Context.SaveChangesAsync();
 
-        public void Dispose()
+        public virtual void Dispose()
             => Context.Dispose();
     }
 }

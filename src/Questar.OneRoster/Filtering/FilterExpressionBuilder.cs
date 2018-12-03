@@ -2,10 +2,10 @@ namespace Questar.OneRoster.Filtering
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Reflection;
 
     public sealed class FilterExpressionBuilder<T> : FilterVisitor
     {
@@ -17,7 +17,7 @@ namespace Questar.OneRoster.Filtering
 
         private static ConstantExpression GetScalarValue(FilterValue value, Type type)
         {
-            var converter = type.GetConverter();
+            var converter = TypeDescriptor.GetConverter(type);
             if (converter == null)
                 throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             return Expression.Constant(converter.ConvertFromString(value.Value));
@@ -25,7 +25,7 @@ namespace Questar.OneRoster.Filtering
 
         private static ConstantExpression GetVectorValue(FilterValue value, Type type)
         {
-            var converter = type.GetConverter();
+            var converter = TypeDescriptor.GetConverter(type);
             if (converter == null)
                 throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             var values = value.Value.Split(',');

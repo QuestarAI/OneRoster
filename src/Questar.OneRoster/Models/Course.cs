@@ -2,9 +2,6 @@ namespace Questar.OneRoster.Models
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Common;
-    using Vocabulary.Ceds;
-    using Vocabulary.Sced;
 
     public class Course : Base
     {
@@ -17,6 +14,4 @@ namespace Questar.OneRoster.Models
         public IEnumerable<SubjectCode> SubjectCodes { get; set; } = Enumerable.Empty<SubjectCode>();
         public IEnumerable<GuidRef> Resources { get; set; } = Enumerable.Empty<GuidRef>();
     }
-
-
 }

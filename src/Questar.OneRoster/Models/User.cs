@@ -2,9 +2,6 @@ namespace Questar.OneRoster.Models
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Common;
-    using Vocabulary;
-    using Vocabulary.Ceds;
 
     public class User : Base
     {

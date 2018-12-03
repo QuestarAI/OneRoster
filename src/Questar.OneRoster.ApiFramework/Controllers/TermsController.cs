@@ -1,24 +1,18 @@
 namespace Questar.OneRoster.ApiFramework.Controllers
 {
     using System;
+    using Data;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/terms")]
-    public class TermsController : OneRosterControllerDeprecated
+    public class TermsController : OneRosterController<AcademicSession>
     {
-        /// <summary>
-        /// Returns the collection of terms.
-        /// A term is an instance of an academic session.
-        /// </summary>
-        [HttpGet]
-        public object GetAllTerms() => throw new NotImplementedException();
+        public TermsController(IWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Returns a specific term by identifier.
-        /// A term is an instance of an academic session.
-        /// </summary>
-        [HttpGet("{academicSessionId}")]
-        public object GetTerm(Guid academicSessionId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of classes taught in this term.

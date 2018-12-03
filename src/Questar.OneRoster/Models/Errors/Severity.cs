@@ -7,13 +7,10 @@ namespace Questar.OneRoster.Models.Errors
     /// </summary>
     public enum Severity
     {
-        [EnumMember(Value = "status")]
-        Status = 0,
+        [EnumMember(Value = "status")] Status = 0,
 
-        [EnumMember(Value = "warning")]
-        Warning = 1,
+        [EnumMember(Value = "warning")] Warning = 1,
 
-        [EnumMember(Value = "error")]
-        Error = 2,
+        [EnumMember(Value = "error")] Error = 2
     }
 }

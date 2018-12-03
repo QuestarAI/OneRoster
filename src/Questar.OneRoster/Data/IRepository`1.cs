@@ -1,14 +1,13 @@
 namespace Questar.OneRoster.Data
 {
-    using System.Linq;
     using System.Threading.Tasks;
     using Collections;
 
-    public interface IRepository<T> : IRepository, IQueryable<T>
+    public interface IRepository<T> : IRepository
     {
-        void Add(T entity);
+        Task Upsert(T entity);
 
-        void Remove(T entity);
+        Task Delete(T entity);
 
         Task<T> Single(SingleQueryParams @params);
 

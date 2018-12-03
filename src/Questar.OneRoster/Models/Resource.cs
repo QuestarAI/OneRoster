@@ -2,8 +2,6 @@ namespace Questar.OneRoster.Models
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Common;
-    using Vocabulary;
 
     public class Resource : Base
     {

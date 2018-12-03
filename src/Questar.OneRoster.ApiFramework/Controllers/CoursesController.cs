@@ -1,16 +1,17 @@
 namespace Questar.OneRoster.ApiFramework.Controllers
 {
     using System;
+    using Data;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/courses")]
-    public class CoursesController : OneRosterControllerDeprecated
+    public class CoursesController : OneRosterController<Course>
     {
-        /// <summary>
-        /// Returns the collection of courses.
-        /// </summary>
-        [HttpGet]
-        public object GetAllCourses() => throw new NotImplementedException();
+        public CoursesController(IWorkspace workspace) : base(workspace)
+        {
+        }
 
         /// <summary>
         /// Returns the collection of classes teaching this course.
@@ -23,11 +24,5 @@ namespace Questar.OneRoster.ApiFramework.Controllers
         /// </summary>
         [HttpGet("{courseId}/resources")]
         public object GetResourcesForCourse(Guid courseId) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Returns a specific course by identifier.
-        /// </summary>
-        [HttpGet("{courseId}")]
-        public object GetCourse(Guid courseId) => throw new NotImplementedException();
     }
 }

@@ -1,10 +1,6 @@
 namespace Questar.OneRoster.Data
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Collections;
 
@@ -23,10 +19,10 @@ namespace Questar.OneRoster.Data
 
         bool IRepository.IsReadOnly => true;
 
-        void IRepository<T>.Add(T entity)
+        void IRepository<T>.Upsert(T entity)
             => throw new NotSupportedException("The repository is read-only.");
 
-        void IRepository<T>.Remove(T entity)
+        void IRepository<T>.Delete(T entity)
             => throw new NotSupportedException("The repository is read-only.");
 
         public Task<T> Single(SingleQueryParams @params)
@@ -34,17 +30,5 @@ namespace Questar.OneRoster.Data
 
         public Task<Page<T>> Select(SelectQueryParams @params)
             => Repository.Select(@params);
-
-        public IEnumerator<T> GetEnumerator()
-            => Repository.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator()
-            => GetEnumerator();
-
-        public Type ElementType => Repository.ElementType;
-
-        public Expression Expression => Repository.Expression;
-
-        public IQueryProvider Provider => Repository.Provider;
     }
 }

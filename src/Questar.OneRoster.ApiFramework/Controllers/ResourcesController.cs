@@ -1,21 +1,15 @@
 namespace Questar.OneRoster.ApiFramework.Controllers
 {
-    using System;
+    using Data;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/resources")]
-    public class ResourcesController : OneRosterControllerDeprecated
+    public class ResourcesController : OneRosterController<Resource>
     {
-        /// <summary>
-        /// Returns the collection of resources.
-        /// </summary>
-        [HttpGet]
-        public object GetAllResources() => throw new NotImplementedException();
-
-        /// <summary>
-        /// Returns a specific resource by identifier.
-        /// </summary>
-        [HttpGet("{resourceId}")]
-        public object GetResource(Guid resourceId) => throw new NotImplementedException();
+        public ResourcesController(IWorkspace workspace) : base(workspace)
+        {
+        }
     }
 }

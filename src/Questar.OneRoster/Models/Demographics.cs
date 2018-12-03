@@ -1,9 +1,6 @@
 namespace Questar.OneRoster.Models
 {
     using System;
-    using Common;
-    using Vocabulary;
-    using Vocabulary.Ceds;
 
     public class Demographics : Base
     {
@@ -16,9 +13,9 @@ namespace Questar.OneRoster.Models
         public bool White { get; set; }
         public bool DemographicRaceTwoOrMoreRaces { get; set; }
         public bool HispanicOrLatinoEthnicity { get; set; }
-        public CountryCode CountryOfBirthCode { get; set; }
-        public StateCode StateOfBirthAbbreviation { get; set; }
+        public CountryCode CountryOfBirthCode { get; set; } // TODO string
+        public StateCode StateOfBirthAbbreviation { get; set; } // TODO string
         public string CityOfBirth { get; set; }
-        public PublicSchoolResidenceStatus PublicSchoolResidenceStatus { get; set; }
+        public PublicSchoolResidenceStatus PublicSchoolResidenceStatus { get; set; } // TODO string
     }
 }

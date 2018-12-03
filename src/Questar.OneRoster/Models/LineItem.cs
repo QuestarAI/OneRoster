@@ -1,7 +1,6 @@
 namespace Questar.OneRoster.Models
 {
     using System;
-    using Common;
 
     public class LineItem : Base
     {

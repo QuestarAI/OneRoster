@@ -1,22 +1,17 @@
 namespace Questar.OneRoster.ApiFramework.Controllers
 {
     using System;
+    using Data;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/users")]
-    public class UsersController : OneRosterControllerDeprecated
+    public class UsersController : OneRosterController<User>
     {
-        /// <summary>
-        /// Returns the collection of users.
-        /// </summary>
-        [HttpGet]
-        public object GetAllUsers() => throw new NotImplementedException();
-
-        /// <summary>
-        /// Returns a specific user by identifier.
-        /// </summary>
-        [HttpGet("{userId}")]
-        public object GetUser(Guid userId) => throw new NotImplementedException();
+        public UsersController(IWorkspace workspace) : base(workspace)
+        {
+        }
 
         /// <summary>
         /// Returns the collection of classes enrolled by this user.

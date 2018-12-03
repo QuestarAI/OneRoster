@@ -1,34 +1,24 @@
 namespace Questar.OneRoster.ApiFramework.Controllers
 {
     using System;
+    using System.Threading.Tasks;
+    using Data;
     using Microsoft.AspNetCore.Mvc;
+    using Models.Requests;
+    using Models.Responses;
+    using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/lineItems")]
-    public class LineItemsController : OneRosterControllerDeprecated
+    public class LineItemsController : OneRosterController<LineItem>
     {
-        /// <summary>
-        /// Returns the collection of line items.
-        /// </summary>
-        [HttpGet]
-        public object GetAllLineItems() => throw new NotImplementedException();
+        public LineItemsController(IWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Marks a specific line item as deleted by identifier.
-        /// An immediate GET will result in HTTP 404 code.
-        /// </summary>
-        [HttpDelete("{lineItemId}")]
-        public object DeleteLineItem(Guid lineItemId) => throw new NotImplementedException();
+        [HttpPut("{id}")]
+        public virtual async Task<ActionResult<UpsertResponse<LineItem>>> Upsert(UpsertRequest<LineItem> request) => throw new NotImplementedException();
 
-        /// <summary>
-        /// Returns a specific line item by identifier.
-        /// </summary>
-        [HttpGet("{lineItemId}")]
-        public object GetLineItem(Guid lineItemId) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Creates or replaces a line item by identifier.
-        /// </summary>
-        [HttpPut("{lineItemId}")]
-        public object PutLineItem(Guid lineItemId) => throw new NotImplementedException();
+        [HttpDelete("{id}")]
+        public virtual async Task<ActionResult<DeleteResponse<LineItem>>> Delete(DeleteRequest request) => throw new NotImplementedException();
     }
 }

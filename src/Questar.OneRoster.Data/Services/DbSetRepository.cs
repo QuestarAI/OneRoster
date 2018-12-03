@@ -8,11 +8,14 @@ namespace Questar.OneRoster.Data.Services
     using System.Threading.Tasks;
     using Collections;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Query.Internal;
+    using Microsoft.Extensions.DependencyInjection;
+    using Models;
     using OneRoster.Collections;
     using Sorting;
 
-    public class DbSetRepository<T> : IRepository<T>, IAsyncEnumerableAccessor<T> where T : class
+    public class DbSetRepository<T> : IRepository<T>, IQueryable, IAsyncEnumerableAccessor<T> where T : class
     {
         public DbSetRepository(DbSet<T> set) => Set = set;
 
@@ -26,18 +29,23 @@ namespace Questar.OneRoster.Data.Services
 
         public Task<int> CountAsync() => Set.CountAsync();
 
-        public void Remove(T entity) => Set.Remove(entity);
+        public async Task Delete(T entity) => Set.Remove(entity);
 
-        public Task<T> Single(SingleQueryParams @params)
+        public virtual Task<T> Single(SingleQueryParams @params)
             => Set.FindAsync(@params.SourceId);
 
-        public Task<Page<T>> Select(SelectQueryParams @params)
+        public virtual Task<Page<T>> Select(SelectQueryParams @params)
             => Set
                 .Where(@params.Filter.ToFilterExpression<T>())
                 .SortBy(@params.SortField, @params.SortDirection)
                 .ToPageAsync(@params.PageOffset / @params.PageLimit, @params.PageLimit);
 
-        public void Add(T entity) => Set.Add(entity);
+        public virtual async Task Upsert(T entity)
+        {
+            var result = await Set.FindAsync(/* TODO entity.SourceId */ -1);
+            if (result == null)
+                await Set.AddAsync(entity);
+        }
 
         public IEnumerator<T> GetEnumerator() => Set.AsQueryable().GetEnumerator();
 

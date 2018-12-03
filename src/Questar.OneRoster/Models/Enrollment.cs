@@ -1,8 +1,6 @@
 namespace Questar.OneRoster.Models
 {
     using System;
-    using Common;
-    using Vocabulary;
 
     public class Enrollment : Base
     {

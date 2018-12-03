@@ -1,34 +1,24 @@
 namespace Questar.OneRoster.ApiFramework.Controllers
 {
     using System;
+    using System.Threading.Tasks;
+    using Data;
     using Microsoft.AspNetCore.Mvc;
+    using Models.Requests;
+    using Models.Responses;
+    using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/results")]
-    public class ResultsController : OneRosterControllerDeprecated
+    public class ResultsController : OneRosterController<Result>
     {
-        /// <summary>
-        /// Returns the collection of results.
-        /// </summary>
-        [HttpGet]
-        public object GetAllResults() => throw new NotImplementedException();
+        public ResultsController(IWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Marks a specific result as deleted by identifier.
-        /// An immediate GET will result in HTTP 404 code.
-        /// </summary>
-        [HttpDelete("{resultId}")]
-        public object DeleteResult(Guid resultId) => throw new NotImplementedException();
+        [HttpPut("{id}")]
+        public virtual async Task<ActionResult<UpsertResponse<Result>>> Upsert(UpsertRequest<Result> request) => throw new NotImplementedException();
 
-        /// <summary>
-        /// Returns specific result by identifier.
-        /// </summary>
-        [HttpGet("{resultId}")]
-        public object GetResult(Guid resultId) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Creates or replaces a result by identifier.
-        /// </summary>
-        [HttpPut("{resultId}")]
-        public object PutResult(Guid resultId) => throw new NotImplementedException();
+        [HttpDelete("{id}")]
+        public virtual async Task<ActionResult<DeleteResponse<Result>>> Delete(DeleteRequest request) => throw new NotImplementedException();
     }
 }

@@ -1,21 +1,15 @@
 namespace Questar.OneRoster.ApiFramework.Controllers
 {
-    using System;
+    using Data;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/orgs")]
-    public class OrgsController : OneRosterControllerDeprecated
+    public class OrgsController : OneRosterController<Org>
     {
-        /// <summary>
-        /// Returns the collection of organizations.
-        /// </summary>
-        [HttpGet]
-        public object GetAllOrgs() => throw new NotImplementedException();
-
-        /// <summary>
-        /// Returns a specific organization by identifier.
-        /// </summary>
-        [HttpGet("{orgId}")]
-        public object GetOrg(Guid orgId) => throw new NotImplementedException();
+        public OrgsController(IWorkspace workspace) : base(workspace)
+        {
+        }
     }
 }
