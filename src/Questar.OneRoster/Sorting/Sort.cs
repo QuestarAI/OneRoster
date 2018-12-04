@@ -10,11 +10,9 @@ namespace Questar.OneRoster.Sorting
         internal static readonly MethodInfo Info =
             typeof(Sort)
                 .GetMethods()
-                .Single(method => method.Name == nameof(SortBy) && method.GetGenericArguments().Length == 2 &&
-                                  method.GetParameters().Length == 3);
+                .Single(method => method.Name == nameof(SortBy) && method.GetGenericArguments().Length == 2 && method.GetParameters().Length == 3);
 
-        public static IOrderedQueryable<TSource> SortBy<TSource>(this IQueryable<TSource> source, string path,
-            SortDirection? direction = default)
+        public static IOrderedQueryable<TSource> SortBy<TSource>(this IQueryable<TSource> source, string path, SortDirection? direction = default)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (path == null) throw new ArgumentNullException(nameof(path));
@@ -23,8 +21,8 @@ namespace Questar.OneRoster.Sorting
             if (names.Length == 0)
                 throw new ArgumentException("A property path must be provided.");
 
-            var type = typeof(TSource);
             var parameter = Expression.Parameter(typeof(TSource));
+            var type = typeof(TSource);
             var body = (Expression) parameter;
 
             foreach (var name in names)
@@ -42,8 +40,7 @@ namespace Questar.OneRoster.Sorting
                     .Invoke(null, new object[] {source, Expression.Lambda(body, parameter), direction});
         }
 
-        public static IOrderedQueryable<TSource> SortBy<TSource, TProperty>(this IQueryable<TSource> source,
-            Expression<Func<TSource, TProperty>> selector, SortDirection? direction = default)
+        public static IOrderedQueryable<TSource> SortBy<TSource, TProperty>(this IQueryable<TSource> source, Expression<Func<TSource, TProperty>> selector, SortDirection? direction = default)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (selector == null) throw new ArgumentNullException(nameof(selector));

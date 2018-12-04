@@ -4,11 +4,11 @@ namespace Questar.OneRoster.Data
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Organization : IBaseObject
+    public class Org : IBaseObject
     {
-        public Organization(OrganizationType type) => Type = type;
+        public Org(OrganizationType type) => Type = type;
 
-        private Organization()
+        private Org()
         {
         }
 
@@ -22,11 +22,11 @@ namespace Questar.OneRoster.Data
         [MaxLength(256)]
         public virtual string Identifier { get; set; }
 
-        public virtual Organization Parent { get; set; } // TODO one-time only? no...
+        public virtual Org Parent { get; set; } // TODO one-time only? no...
 
         public virtual Guid? ParentId { get; private set; }
 
-        public virtual ICollection<Organization> Children { get; } = new HashSet<Organization>();
+        public virtual ICollection<Org> Children { get; } = new HashSet<Org>();
 
         // schools only
         public virtual IReadOnlyCollection<Class> Classes { get; } = new HashSet<Class>();

@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Data.Services
 {
     using System;
+    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,7 @@ namespace Questar.OneRoster.Data.Services
             {
                 options.UseSqlServer(connectionString);
             });
+            services.AddAutoMapper();
             services.AddScoped<OneRosterDbContext>();
             services.AddScoped<IWorkspace, DbContextWorkspace<OneRosterDbContext>>();
         }

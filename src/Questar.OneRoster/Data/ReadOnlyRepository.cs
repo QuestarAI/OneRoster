@@ -19,10 +19,10 @@ namespace Questar.OneRoster.Data
 
         bool IRepository.IsReadOnly => true;
 
-        void IRepository<T>.Upsert(T entity)
+        Task IRepository<T>.Upsert(T entity)
             => throw new NotSupportedException("The repository is read-only.");
 
-        void IRepository<T>.Delete(T entity)
+        Task IRepository<T>.Delete(T entity)
             => throw new NotSupportedException("The repository is read-only.");
 
         public Task<T> Single(SingleQueryParams @params)

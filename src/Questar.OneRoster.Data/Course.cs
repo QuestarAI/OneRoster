@@ -17,7 +17,7 @@ namespace Questar.OneRoster.Data
 
         public virtual Guid SchoolYearId { get; private set; }
 
-        public virtual Organization Organization { get; set; } // TODO one-time only?
+        public virtual Org Organization { get; set; } // TODO one-time only?
 
         public virtual Guid OrganizationId { get; private set; }
 

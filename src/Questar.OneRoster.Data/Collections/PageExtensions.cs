@@ -10,7 +10,12 @@ namespace Questar.OneRoster.Data.Collections
 
     public static class Pagination
     {
-        public static async Task<Page<TSource>> ToPageAsync<TSource>(this IOrderedQueryable<TSource> queryable, int index, int size)
+        public static async Task<Page<TSource>> ToPageAsync<TSource>
+        (
+            this IOrderedQueryable<TSource> queryable,
+            int index,
+            int size
+        )
         {
             Debug.Assert(index >= 0, $"{nameof(index)} must be greater than or equal to 0.");
             Debug.Assert(size > 0, $"{nameof(size)} must be greater than 0.");
@@ -21,11 +26,13 @@ namespace Questar.OneRoster.Data.Collections
             return new Page<TSource>(index, size, await count, await items);
         }
 
-        public static async Task<Page<TResult>> ToPageAsync<TSource, TResult>(
+        public static async Task<Page<TResult>> ToPageAsync<TSource, TResult>
+        (
             this IOrderedQueryable<TSource> queryable,
             int index,
             int size,
-            Expression<Func<TSource, TResult>> resultSelector)
+            Expression<Func<TSource, TResult>> resultSelector
+        )
         {
             Debug.Assert(index >= 0, $"{nameof(index)} must be greater than or equal to 0.");
             Debug.Assert(size > 0, $"{nameof(size)} must be greater than 0.");

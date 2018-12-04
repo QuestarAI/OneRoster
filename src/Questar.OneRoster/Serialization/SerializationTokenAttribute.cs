@@ -2,7 +2,6 @@ namespace Questar.OneRoster.Serialization
 {
     using System;
 
-    // TODO this seems unnecessary
     public class SerializationTokenAttribute : Attribute
     {
         public SerializationTokenAttribute(string value) => Value = value;

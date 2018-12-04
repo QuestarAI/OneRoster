@@ -13,7 +13,7 @@ namespace Questar.OneRoster.Data
         }
 
         [Required]
-        public AcademicSessionType? Type { get; private set; }
+        public AcademicSessionType Type { get; private set; }
 
         [Required]
         [MaxLength(256)]

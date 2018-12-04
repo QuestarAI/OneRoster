@@ -82,9 +82,9 @@ namespace Questar.OneRoster.ApiFramework
             var validator = new SelectQueryParamsValidator<T>();
             validator.ValidateFields(fields);
 
-            var status = validator.StatusInfo;
-            if (status.Any())
-                return BadRequest(new SelectResponse<T> { StatusInfo = status });
+            var statuses = validator.StatusInfo;
+            if (statuses.Any(status => status.Severity == Severity.Error))
+                return BadRequest(new SelectResponse<T> { StatusInfo = statuses });
 
             var @params = new SingleQueryParams
             {
@@ -97,9 +97,11 @@ namespace Questar.OneRoster.ApiFramework
             return Ok(new SingleResponse<T> { Data = data }); // TODO data name
         }
 
+        // IUpsertable<T>
         //[HttpPut("{id}")]
         //public virtual async Task<ActionResult<UpsertResponse<T>>> Upsert(UpsertRequest<T> request) => throw new NotImplementedException();
 
+        // IDeletable<T>
         //[HttpDelete("{id}")]
         //public virtual async Task<ActionResult<DeleteResponse<T>>> Delete(DeleteRequest request) => throw new NotImplementedException();
     }

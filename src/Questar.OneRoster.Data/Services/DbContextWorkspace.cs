@@ -4,6 +4,7 @@ namespace Questar.OneRoster.Data.Services
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
+    using Models;
 
     public class DbContextWorkspace<TContext> : IWorkspace where TContext : DbContext
     {
@@ -14,7 +15,7 @@ namespace Questar.OneRoster.Data.Services
 
         protected TContext Context { get; }
 
-        public virtual IRepository<T> GetRepository<T>() where T : class
+        public virtual IRepository<T> GetRepository<T>() where T : Base
         {
             if (_repositories.TryGetValue(typeof(T), out var repository))
                 return repository as IRepository<T>;

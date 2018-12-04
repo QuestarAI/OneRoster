@@ -8,13 +8,13 @@ namespace Questar.OneRoster.Data
         {
         }
 
-        public UserOrganization(Organization organization) => Organization = organization;
+        public UserOrganization(Org organization) => Organization = organization;
 
         public virtual User User { get; private set; }
 
         public virtual Guid UserId { get; private set; }
 
-        public virtual Organization Organization { get; private set; }
+        public virtual Org Organization { get; private set; }
 
         public virtual Guid OrganizationId { get; private set; }
     }

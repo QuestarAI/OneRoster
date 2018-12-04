@@ -29,7 +29,7 @@ namespace Questar.OneRoster.Data
 
         public virtual Guid CourseId { get; private set; }
 
-        public virtual Organization School { get; set; } // TODO one-time only?
+        public virtual Org School { get; set; } // TODO one-time only?
 
         public virtual Guid SchoolId { get; private set; }
 

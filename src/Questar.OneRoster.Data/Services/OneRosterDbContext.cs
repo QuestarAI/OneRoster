@@ -28,7 +28,7 @@ namespace Questar.OneRoster.Data.Services
 
         public DbSet<LineItem> LineItems { get; private set; }
 
-        public DbSet<Organization> Organizations { get; private set; }
+        public DbSet<Org> Organizations { get; private set; }
 
         public DbSet<Resource> Resources { get; private set; }
 
@@ -140,7 +140,7 @@ namespace Questar.OneRoster.Data.Services
             // organization
 
             builder
-                .Entity<Organization>()
+                .Entity<Org>()
                 .HasIndex(entity => entity.Identifier);
 
             // resource role
