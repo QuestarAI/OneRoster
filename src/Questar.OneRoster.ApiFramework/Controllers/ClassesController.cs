@@ -6,7 +6,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/classes")]
-    public class ClassesController : OneRosterController<Class>
+    public class ClassesController : BaseController<Class>
     {
         public ClassesController(IWorkspace workspace) : base(workspace)
         {

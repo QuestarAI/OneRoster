@@ -9,7 +9,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/categories")]
-    public class CategoriesController : OneRosterController<Category>
+    public class CategoriesController : BaseController<Category>
     {
         public CategoriesController(IWorkspace workspace) : base(workspace)
         {

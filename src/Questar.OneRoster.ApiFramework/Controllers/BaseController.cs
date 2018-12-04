@@ -12,9 +12,9 @@ namespace Questar.OneRoster.ApiFramework
     using OneRoster.Models.Errors;
 
     [Produces("application/json")]
-    public abstract class OneRosterController<T> : ControllerBase where T : Base
+    public abstract class BaseController<T> : ControllerBase where T : Base
     {
-        protected OneRosterController(IWorkspace workspace) => Workspace = workspace;
+        protected BaseController(IWorkspace workspace) => Workspace = workspace;
 
         protected IWorkspace Workspace { get; }
 
@@ -45,7 +45,7 @@ namespace Questar.OneRoster.ApiFramework
             var @params = new SelectQueryParams
             {
                 Filter = filter,
-                Fields = fields,
+                //Fields = fields,
                 PageOffset = pageOffset,
                 PageLimit = pageLimit,
                 SortField = sortField,
@@ -59,7 +59,15 @@ namespace Questar.OneRoster.ApiFramework
             // the above is the EF pseudo code - queryable should be open, if the implementation supports it; otherwise, Select(@params) is the interface this controller will use
             // this project shouldn't know of or have access to IQueryable - its not needed in this context or for wider support - this just needs the service access
 
-            var data = await Workspace.GetRepository<T>().Select(@params);
+            var data = await Workspace
+                .GetRepository<T>()
+                .Select()
+                .Filter(@params.Filter)
+                .Offset(@params.PageOffset)
+                .Limit(@params.PageLimit)
+                .Fields(fields.ToArray())
+                .QueryAsync();
+
             var count = data.Count;
 
             HttpContext.Response.Headers.Add("X-Total-Count", count.ToString());
@@ -69,7 +77,7 @@ namespace Questar.OneRoster.ApiFramework
             if (!string.IsNullOrEmpty(link))
                 HttpContext.Response.Headers.Add("Link", link);
 
-            return Ok(new SelectResponse<T> { Data = data }); // TODO data name
+            return Ok(new SelectResponse<object> { Data = data }); // TODO data name
         }
 
         [HttpGet("{id}")]
@@ -88,11 +96,11 @@ namespace Questar.OneRoster.ApiFramework
 
             var @params = new SingleQueryParams
             {
-                Fields = fields,
-                SourceId = request.SourceId
+                //Fields = fields,
+                SourcedId = request.SourceId
             };
 
-            var data = await Workspace.GetRepository<T>().Single(@params);
+            var data = await Workspace.GetRepository<T>().Single().QueryAsync(@params.SourcedId);
             
             return Ok(new SingleResponse<T> { Data = data }); // TODO data name
         }

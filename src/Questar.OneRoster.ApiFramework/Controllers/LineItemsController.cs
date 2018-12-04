@@ -9,7 +9,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/lineItems")]
-    public class LineItemsController : OneRosterController<LineItem>
+    public class LineItemsController : BaseController<LineItem>
     {
         public LineItemsController(IWorkspace workspace) : base(workspace)
         {

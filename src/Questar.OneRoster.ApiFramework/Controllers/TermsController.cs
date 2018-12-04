@@ -6,7 +6,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/terms")]
-    public class TermsController : OneRosterController<AcademicSession>
+    public class TermsController : BaseController<AcademicSession>
     {
         public TermsController(IWorkspace workspace) : base(workspace)
         {

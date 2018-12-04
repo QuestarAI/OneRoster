@@ -4,6 +4,6 @@ namespace Questar.OneRoster
 
     public class SingleQueryParams : QueryParams
     {
-        public Guid SourceId { get; set; }
+        public Guid SourcedId { get; set; }
     }
 }

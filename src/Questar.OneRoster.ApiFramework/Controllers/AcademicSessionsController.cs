@@ -5,7 +5,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/academicSessions")]
-    public class AcademicSessionsController : OneRosterController<AcademicSession>
+    public class AcademicSessionsController : BaseController<AcademicSession>
     {
         public AcademicSessionsController(IWorkspace workspace) : base(workspace)
         {

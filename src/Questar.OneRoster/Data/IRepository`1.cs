@@ -1,7 +1,6 @@
 namespace Questar.OneRoster.Data
 {
     using System.Threading.Tasks;
-    using Collections;
 
     public interface IRepository<T> : IRepository
     {
@@ -9,8 +8,8 @@ namespace Questar.OneRoster.Data
 
         Task Delete(T entity);
 
-        Task<T> Single(SingleQueryParams @params);
+        ISingleQueryBuilder<T> Single();
 
-        Task<Page<T>> Select(SelectQueryParams @params);
+        ISelectQueryBuilder<T> Select();
     }
 }

@@ -9,7 +9,7 @@ namespace Questar.OneRoster.ApiFramework.Controllers
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/results")]
-    public class ResultsController : OneRosterController<Result>
+    public class ResultsController : BaseController<Result>
     {
         public ResultsController(IWorkspace workspace) : base(workspace)
         {

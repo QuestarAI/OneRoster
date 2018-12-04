@@ -6,18 +6,22 @@ namespace Questar.OneRoster.Data.Services
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using Collections;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Query.Internal;
     using Models;
-    using OneRoster.Collections;
-    using Sorting;
 
-    public class DbSetRepository<T> : IRepository<T>, IQueryable, IAsyncEnumerableAccessor<T> where T : Base
+    //public class DbSetRepositoryAdapter<TSource, TEntity> : IRepository<TSource>
+    //    where TSource : Base
+    //    where TEntity : class, IBaseObject
+    //{
+    //}
+
+    public class DbSetRepository<T> : IRepository<T>, IQueryable, IAsyncEnumerableAccessor<T>
+        where T : Base
     {
-        public DbSetRepository(DbSet<T> set) => Set = set;
+        public DbSet<T> Set { get; }
 
-        protected DbSet<T> Set { get; }
+        public DbSetRepository(DbSet<T> set) => Set = set;
 
         public IAsyncEnumerable<T> AsyncEnumerable => Set.ToAsyncEnumerable();
 
@@ -35,25 +39,23 @@ namespace Questar.OneRoster.Data.Services
 
         public Task<int> CountAsync() => Set.CountAsync();
 
-        public async Task Delete(T entity) => Set.Remove(entity);
+        public async Task Delete(T entity)
+        {
+            await Task.Yield();
+            Set.Remove(entity);
+        }
 
-        public virtual Task<T> Single(SingleQueryParams @params)
-            => Set.FindAsync(@params.SourceId);
+        public ISelectQueryBuilder<T> Select() => new SelectQueryBuilder<T>(Set);
 
-        public virtual Task<Page<T>> Select(SelectQueryParams @params)
-            /* TODO EntityMapper.Map(entity)? */
-            => Set
-                .Where(@params.Filter.ToFilterExpression<T>()) /* TODO EntityMapper.Map(@params.Filter.ToExpression<T>())? */
-                .SortBy(@params.SortField, @params.SortDirection) /* TODO EntityMapper.Map(@params.SortField.ToExpression<T>())? */
-                .ToPageAsync(@params.PageOffset / @params.PageLimit, @params.PageLimit);
+        public ISingleQueryBuilder<T> Single() => new SingleQueryBuilder<T>(Set);
 
         public virtual async Task Upsert(T entity)
         {
-            var result = await Set.FindAsync(entity.SourcedId);
-            if (result == null)
-                await Set.AddAsync(entity); // TODO EntityMapper.Map(entity)
+            var found = Set.FindAsync(entity.SourcedId);
+            if (found == null)
+                await Set.AddAsync(entity);
         }
 
-        public IEnumerator<T> GetEnumerator() => Set.AsQueryable().GetEnumerator();
+        public virtual IEnumerator<T> GetEnumerator() => Set.AsQueryable().GetEnumerator();
     }
 }
