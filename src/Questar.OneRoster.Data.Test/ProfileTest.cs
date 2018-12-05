@@ -12,7 +12,10 @@ namespace Questar.OneRoster.Data.Test
  
         protected IMapper Mapper { get; }
 
-        protected void CanMap<TSourceProperty, TTargetProperty>(Expression<Func<TSource, TSourceProperty>> expected, Expression<Func<TTarget, TTargetProperty>> target)
-            => Assert.True(ExpressionComparer.AreEqual(expected, Mapper.Map<Expression<Func<TSource, TSourceProperty>>>(target)));
+        protected void CanMap<TSourceProperty, TTargetProperty>(Expression<Func<TSource, TSourceProperty>> source, Expression<Func<TTarget, TTargetProperty>> target)
+        {
+            Assert.True(ExpressionComparer.AreEqual(source, Mapper.Map<Expression<Func<TSource, TSourceProperty>>>(target)));
+            Assert.True(ExpressionComparer.AreEqual(target, Mapper.Map<Expression<Func<TTarget, TTargetProperty>>>(source)));
+        }
     }
 }
