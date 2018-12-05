@@ -12,10 +12,10 @@ namespace Questar.OneRoster.Data
         public virtual string Description { get; set; }
 
         [Required]
-        public virtual DateTimeOffset? AssignDate { get; set; }
+        public virtual DateTime? AssignDate { get; set; }
 
         [Required]
-        public virtual DateTimeOffset? DueDate { get; set; }
+        public virtual DateTime? DueDate { get; set; }
 
         public virtual Class Class { get; private set; }
 
@@ -45,9 +45,9 @@ namespace Questar.OneRoster.Data
 
         public virtual Guid? MetadataCollectionId { get; private set; }
 
-        public virtual bool Active { get; private set; }
+        public virtual Status Status { get; private set; }
 
-        public virtual DateTimeOffset Modified { get; private set; }
+        public virtual DateTime Modified { get; private set; }
 
         #endregion
     }

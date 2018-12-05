@@ -4,6 +4,6 @@ namespace Questar.OneRoster.Data
 
     public interface IModifiable
     {
-        DateTimeOffset Modified { get; }
+        DateTime Modified { get; }
     }
 }

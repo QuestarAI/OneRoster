@@ -6,7 +6,10 @@ namespace Questar.OneRoster.Data.Mappings
     {
         public BaseProfile()
         {
-            CreateMap<T, Models.Base>();
+            // TODO how does this work?
+            //CreateMap<Models.Base, T>()
+            //    .ForMember(source => source.Id, config => config.MapFrom(source => source.SourcedId))
+            //    .ForMember(source => source.Modified, config => config.MapFrom(source => source.DateLastModified));
         }
     }
 }

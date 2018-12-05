@@ -42,7 +42,7 @@ namespace Questar.OneRoster.Data.Services
                 type.Relational().TableName = type.DisplayName();
 
             // if (typeof(IBaseObject).IsAssignableFrom(type.ClrType))
-            //      type.FindProperty(nameof(IBaseObject.Modified)).SetValueGeneratorFactory((property, entity) => new TemporaryDateTimeOffsetValueGenerator());
+            //      type.FindProperty(nameof(IBaseObject.Modified)).SetValueGeneratorFactory((property, entity) => new TemporaryDateTimeValueGenerator());
 
             // class
 

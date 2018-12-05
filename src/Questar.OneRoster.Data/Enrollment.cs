@@ -13,9 +13,9 @@ namespace Questar.OneRoster.Data
         {
         }
 
-        public virtual DateTimeOffset? BeginDate { get; set; }
+        public virtual DateTime? BeginDate { get; set; }
 
-        public virtual DateTimeOffset? EndDate { get; set; }
+        public virtual DateTime? EndDate { get; set; }
 
         public virtual User User { get; private set; }
 
@@ -36,9 +36,9 @@ namespace Questar.OneRoster.Data
 
         public virtual Guid? MetadataCollectionId { get; private set; }
 
-        public virtual bool Active { get; private set; }
+        public virtual Status Status { get; private set; }
 
-        public virtual DateTimeOffset Modified { get; private set; }
+        public virtual DateTime Modified { get; private set; }
 
         #endregion
     }

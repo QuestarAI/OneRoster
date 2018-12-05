@@ -26,7 +26,7 @@ namespace Questar.OneRoster.Data
         public virtual int? Score { get; set; }
 
         [Required]
-        public virtual DateTimeOffset? ScoreDate { get; set; }
+        public virtual DateTime? ScoreDate { get; set; }
 
         [Required]
         public virtual ResultScoreStatus? ScoreStatus { get; set; }
@@ -39,9 +39,9 @@ namespace Questar.OneRoster.Data
 
         public virtual Guid? MetadataCollectionId { get; private set; }
 
-        public virtual bool Active { get; private set; }
+        public virtual Status Status { get; private set; }
 
-        public virtual DateTimeOffset Modified { get; private set; }
+        public virtual DateTime Modified { get; private set; }
 
         #endregion
     }

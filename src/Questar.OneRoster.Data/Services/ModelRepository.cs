@@ -17,13 +17,13 @@ namespace Questar.OneRoster.Data.Services
             KeyComparer = keyComparer;
         }
 
-        public ISourceInjectedQueryable<T> Source { get; }
+        protected ISourceInjectedQueryable<T> Source { get; }
 
-        public IPersistence Persistence { get; }
+        protected IPersistence Persistence { get; }
 
-        public Func<T, TKey> KeySelector { get; }
+        protected Func<T, TKey> KeySelector { get; }
 
-        public Func<TKey, TKey, bool> KeyComparer { get; }
+        protected Func<TKey, TKey, bool> KeyComparer { get; }
 
         public override Task UpsertAsync(T entity)
         {
@@ -31,13 +31,13 @@ namespace Questar.OneRoster.Data.Services
             return Task.CompletedTask;
         }
 
-        public override IQueryable<T> AsQueryable() => Source;
-
         public override Task DeleteAsync(T entity)
         {
             Persistence.Remove(entity);
             return Task.CompletedTask;
         }
+
+        public override IQueryable<T> AsQueryable() => Source;
 
         public override IQuery<T> AsQuery() => new Query<T>(Source, entity => KeySelector(entity), (x, y) => KeyComparer((TKey) x, (TKey) y));
     }

@@ -2,6 +2,6 @@ namespace Questar.OneRoster.Data
 {
     public interface IDeletable
     {
-        bool Active { get; }
+        Status Status { get; }
     }
 }

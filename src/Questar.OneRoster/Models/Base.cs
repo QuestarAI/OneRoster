@@ -15,7 +15,7 @@ namespace Questar.OneRoster.Models
         /// <summary>
         /// Gets or sets the status.
         /// </summary>
-        public StatusType Status { get; set; }
+        public StatusType StatusType { get; set; }
 
         /// <summary>
         /// Gets or sets the date this object was last modified.

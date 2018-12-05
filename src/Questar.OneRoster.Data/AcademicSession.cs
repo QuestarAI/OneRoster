@@ -3,6 +3,7 @@ namespace Questar.OneRoster.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Models;
 
     public class AcademicSession : IBaseObject
     {
@@ -20,10 +21,10 @@ namespace Questar.OneRoster.Data
         public virtual string Title { get; set; }
 
         [Required]
-        public virtual DateTimeOffset? StartDate { get; set; }
+        public virtual DateTime? StartDate { get; set; }
 
         [Required]
-        public virtual DateTimeOffset? EndDate { get; set; }
+        public virtual DateTime? EndDate { get; set; }
 
         public virtual AcademicSession Parent { get; set; } // TODO one-time only?
 
@@ -48,9 +49,9 @@ namespace Questar.OneRoster.Data
 
         public virtual Guid? MetadataCollectionId { get; private set; }
 
-        public virtual bool Active { get; private set; }
+        public virtual Status Status { get; private set; }
 
-        public virtual DateTimeOffset Modified { get; private set; }
+        public virtual DateTime Modified { get; private set; }
 
         #endregion
     }

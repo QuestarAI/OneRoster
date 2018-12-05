@@ -105,45 +105,6 @@ namespace Questar.OneRoster.Data.Test
                     return CompareMemberInit((MemberInitExpression)a, (MemberInitExpression)b);
                 case ExpressionType.ListInit:
                     return CompareListInit((ListInitExpression)a, (ListInitExpression)b);
-                case ExpressionType.AddAssign:
-                case ExpressionType.AddAssignChecked:
-                case ExpressionType.AndAssign:
-                case ExpressionType.Assign:
-                case ExpressionType.Block:
-                case ExpressionType.DebugInfo:
-                case ExpressionType.Decrement:
-                case ExpressionType.Default:
-                case ExpressionType.DivideAssign:
-                case ExpressionType.Dynamic:
-                case ExpressionType.ExclusiveOrAssign:
-                case ExpressionType.Extension:
-                case ExpressionType.Goto:
-                case ExpressionType.Increment:
-                case ExpressionType.Index:
-                case ExpressionType.IsFalse:
-                case ExpressionType.IsTrue:
-                case ExpressionType.Label:
-                case ExpressionType.LeftShiftAssign:
-                case ExpressionType.Loop:
-                case ExpressionType.ModuloAssign:
-                case ExpressionType.MultiplyAssign:
-                case ExpressionType.MultiplyAssignChecked:
-                case ExpressionType.OnesComplement:
-                case ExpressionType.OrAssign:
-                case ExpressionType.PostDecrementAssign:
-                case ExpressionType.PostIncrementAssign:
-                case ExpressionType.PowerAssign:
-                case ExpressionType.PreDecrementAssign:
-                case ExpressionType.PreIncrementAssign:
-                case ExpressionType.RightShiftAssign:
-                case ExpressionType.RuntimeVariables:
-                case ExpressionType.SubtractAssign:
-                case ExpressionType.SubtractAssignChecked:
-                case ExpressionType.Switch:
-                case ExpressionType.Throw:
-                case ExpressionType.Try:
-                case ExpressionType.TypeEqual:
-                case ExpressionType.Unbox:
                 default:
                     throw new UnhandledExpressionTypeException(a.NodeType);
             }
