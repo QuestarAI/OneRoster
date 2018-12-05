@@ -8,8 +8,8 @@ namespace Questar.OneRoster.Data
 
         Task Delete(T entity);
 
-        ISingleQueryBuilder<T> Single();
+        ISingleQuery<T> Single();
 
-        ISelectQueryBuilder<T> Select();
+        ISelectQuery<T> Select();
     }
 }

@@ -45,9 +45,9 @@ namespace Questar.OneRoster.Data.Services
             Set.Remove(entity);
         }
 
-        public ISelectQueryBuilder<T> Select() => new SelectQueryBuilder<T>(Set);
+        public ISelectQuery<T> Select() => new SelectQuery<T>(Set);
 
-        public ISingleQueryBuilder<T> Single() => new SingleQueryBuilder<T>(Set);
+        public ISingleQuery<T> Single() => new SingleQuery<T>(Set);
 
         public virtual async Task Upsert(T entity)
         {

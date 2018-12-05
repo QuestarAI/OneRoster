@@ -1,6 +1,6 @@
 namespace Questar.OneRoster.ApiFramework.Models.Responses
 {
-    public class SingleResponse<T> : Response<T>
+    public class SingleResponse : Response<object>
     {
     }
 }

@@ -19,8 +19,8 @@ namespace Questar.OneRoster.Data
 
         Task IRepository<T>.Delete(T entity) => throw new NotSupportedException("The repository is read-only.");
 
-        public ISingleQueryBuilder<T> Single() => Repository.Single();
+        public ISingleQuery<T> Single() => Repository.Single();
 
-        public ISelectQueryBuilder<T> Select() => Repository.Select();
+        public ISelectQuery<T> Select() => Repository.Select();
     }
 }

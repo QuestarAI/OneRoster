@@ -8,6 +8,6 @@ namespace Questar.OneRoster.ApiFramework.Models.Requests
     {
         [Required]
         [FromRoute]
-        public Guid SourceId { get; set; }
+        public Guid SourcedId { get; set; }
     }
 }
