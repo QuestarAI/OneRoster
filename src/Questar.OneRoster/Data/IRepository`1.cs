@@ -4,12 +4,10 @@ namespace Questar.OneRoster.Data
 
     public interface IRepository<T> : IRepository
     {
-        Task Upsert(T entity);
+        Task UpsertAsync(T entity);
 
-        Task Delete(T entity);
+        Task DeleteAsync(T entity);
 
-        ISingleQuery<T> Single();
-
-        ISelectQuery<T> Select();
+        new IQuery<T> AsQuery();
     }
 }

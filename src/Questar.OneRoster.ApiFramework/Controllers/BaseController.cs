@@ -67,14 +67,11 @@ namespace Questar.OneRoster.ApiFramework
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(new SelectResponse { StatusInfo = statuses });
 
-            var data = await Workspace
-                .GetRepository<T>()
-                .Select()
-                .Filter(filter)
-                .Sort(sortName, sortDirection)
-                .Fields(fields)
-                .ToPageAsync(pageOffset, pageLimit);
-
+            var query = Workspace.GetRepository<T>().AsQuery();
+            var query1 = filter == null ? query : query.Where(filter.ToFilterExpression<T>());
+            var query2 = query1.Sort(sortName ?? nameof(Base.SourcedId), sortDirection);
+            var query3 = fields == null ? query2 : query2.Fields(fields);
+            var data = await query3.ToPageAsync(pageOffset, pageLimit);
             var count = data.Count;
 
             HttpContext.Response.Headers.Add("X-Total-Count", count.ToString());
@@ -107,11 +104,10 @@ namespace Questar.OneRoster.ApiFramework
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(new SingleResponse { StatusInfo = statuses });
 
-            var data = await Workspace
-                .GetRepository<T>()
-                .Single()
-                .Fields(fields)
-                .ToObjectAsync(request.SourcedId);
+            var query = Workspace.GetRepository<T>().AsQuery();
+            var query1 = query.WhereHasKey(request.SourcedId);
+            var query2 = fields == null ? query1 : query1.Fields(fields);
+            var data = await query2.SingleAsync();
 
             return Ok(new SingleResponse { Data = data }); // TODO data name
         }
