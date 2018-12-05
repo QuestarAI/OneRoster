@@ -3,6 +3,7 @@ namespace Questar.OneRoster.Data.Test
     using System;
     using System.Linq.Expressions;
     using AutoMapper;
+    using OneRoster.Expressions;
     using Xunit;
 
     public abstract class ProfileTest<TSource, TTarget>

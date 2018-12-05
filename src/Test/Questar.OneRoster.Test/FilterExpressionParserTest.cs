@@ -3,6 +3,7 @@ namespace Questar.OneRoster.Test
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Expressions;
     using Filtering;
     using Mock;
     using Xunit;
