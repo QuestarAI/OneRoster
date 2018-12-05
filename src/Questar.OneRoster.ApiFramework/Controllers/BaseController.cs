@@ -7,6 +7,7 @@ namespace Questar.OneRoster.ApiFramework
     using System.Threading.Tasks;
     using Data;
     using Filtering;
+    using Helpers;
     using Microsoft.AspNetCore.Mvc;
     using Models.Requests;
     using Models.Responses;
@@ -16,7 +17,10 @@ namespace Questar.OneRoster.ApiFramework
     [Produces("application/json")]
     public abstract class BaseController<T> : ControllerBase where T : Base
     {
-        protected static readonly HashSet<string> Properties = new HashSet<string>(typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
+        protected static readonly HashSet<string> Properties =
+            new HashSet<string>(typeof(T)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
 
         protected BaseController(IWorkspace workspace) => Workspace = workspace;
 
@@ -25,125 +29,91 @@ namespace Questar.OneRoster.ApiFramework
         [HttpGet]
         public virtual async Task<ActionResult<SelectResponse>> Select(SelectRequest request)
         {
-            var statuses = new List<StatusInfo>();
+            var statuses = new StatusInfoList();
 
-            var fields = request.Fields?.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries).Select(field => field.Trim()).ToList();
+            var fields = request.Fields?
+                .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(field => field.Trim())
+                .ToList();
             if (fields != null)
                 if (fields.Any())
-                    foreach (var property in fields.Where(field => !Properties.Contains(field)))
-                        statuses.Add(new StatusInfo
-                        {
-                            CodeMajor = CodeMajor.Success,
-                            CodeMinor = CodeMinor.InvalidSelectionField,
-                            Severity = Severity.Warning,
-                            Description = property
-                        });
+                    statuses.AddRange(fields
+                        .Where(field => !Properties.Contains(field))
+                        .Select(StatusInfo.InvalidSelectionField));
                 else
-                    statuses.Add(new StatusInfo
-                    {
-                        CodeMajor = CodeMajor.Failure,
-                        CodeMinor = CodeMinor.InvalidBlankSelectionField,
-                        Severity = Severity.Error
-                    });
+                    statuses.Add(StatusInfo.InvalidBlankSelectionField());
 
             var filter = request.Filter != null ? Filter.Parse(request.Filter) : null;
-            if (fields != null)
-                foreach (var property in filter.GetProperties().Select(property => property.Name).Where(field => !Properties.Contains(field)))
-                    statuses.Add(new StatusInfo
-                    {
-                        CodeMajor = CodeMajor.Success,
-                        CodeMinor = CodeMinor.InvalidFilterField,
-                        Severity = Severity.Warning,
-                        Description = property
-                    });
+            if (filter != null)
+                statuses.AddRange(filter
+                    .GetProperties()
+                    .Select(property => property.Name)
+                    .Where(property => !Properties.Contains(property))
+                    .Select(StatusInfo.InvalidFilterField));
 
-            var sort = request.Sort;
-            var direction = request.OrderBy;
-            if (sort != null && !Properties.Contains(sort))
-                statuses.Add(new StatusInfo
-                {
-                    CodeMajor = CodeMajor.Success,
-                    CodeMinor = CodeMinor.InvalidSortField,
-                    Severity = Severity.Warning,
-                    Description = sort
-                });
+            var sortName = request.Sort;
+            var sortDirection = request.OrderBy;
+            if (sortName != null && !Properties.Contains(sortName))
+                statuses.Add(StatusInfo.InvalidSortField(sortName));
 
-            var limit = request.Limit;
-            if (limit < 0)
-                statuses.Add(new StatusInfo
-                {
-                    CodeMajor = CodeMajor.Failure,
-                    CodeMinor = CodeMinor.InvalidLimitField,
-                    Severity = Severity.Error,
-                    Description = "Limit query parameter must be greater than 0."
-                });
+            var pageLimit = request.Limit;
+            if (pageLimit < 0)
+                statuses.Add(StatusInfo.InvalidLimitField());
 
-            var offset = request.Offset;
-            if (offset < 0)
-                statuses.Add(new StatusInfo
-                {
-                    CodeMajor = CodeMajor.Failure,
-                    CodeMinor = CodeMinor.InvalidOffsetField,
-                    Severity = Severity.Error,
-                    Description = "Offset query parameter must be greater than or equal to 0."
-                });
+            var pageOffset = request.Offset;
+            if (pageOffset < 0)
+                statuses.Add(StatusInfo.InvalidOffsetField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(new SelectResponse {StatusInfo = statuses});
+                return BadRequest(new SelectResponse { StatusInfo = statuses });
 
             var data = await Workspace
                 .GetRepository<T>()
                 .Select()
                 .Filter(filter)
+                .Sort(sortName, sortDirection)
                 .Fields(fields)
-                .Sort(sort, direction)
-                .ToPageAsync(offset, limit);
+                .ToPageAsync(pageOffset, pageLimit);
 
             var count = data.Count;
 
             HttpContext.Response.Headers.Add("X-Total-Count", count.ToString());
 
             var linkFactory = new OneRosterLinkHeaderFactory(HttpContext);
-            var link = linkFactory.Create(offset, limit, count);
+            var link = linkFactory.Create(pageOffset, pageLimit, count);
             if (!string.IsNullOrEmpty(link))
                 HttpContext.Response.Headers.Add("Link", link);
 
-            return Ok(new SelectResponse {Data = data}); // TODO data name
+            return Ok(new SelectResponse { Data = data }); // TODO data name
         }
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<SingleResponse>> Single(SingleRequest request)
         {
-            var statuses = new List<StatusInfo>();
+            var statuses = new StatusInfoList();
 
-            var fields = request.Fields?.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries).Select(field => field.Trim()).ToList();
+            var fields = request.Fields?
+                .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(field => field.Trim())
+                .ToList();
             if (fields != null)
                 if (fields.Any())
-                    foreach (var property in fields.Where(field => !Properties.Contains(field)))
-                        statuses.Add(new StatusInfo
-                        {
-                            CodeMajor = CodeMajor.Success,
-                            CodeMinor = CodeMinor.InvalidSelectionField,
-                            Severity = Severity.Warning,
-                            Description = property
-                        });
+                    statuses.AddRange(fields
+                        .Where(field => !Properties.Contains(field))
+                        .Select(StatusInfo.InvalidSelectionField));
                 else
-                    statuses.Add(new StatusInfo
-                    {
-                        CodeMajor = CodeMajor.Failure,
-                        CodeMinor = CodeMinor.InvalidBlankSelectionField,
-                        Severity = Severity.Error
-                    });
+                    statuses.Add(StatusInfo.InvalidBlankSelectionField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(new SingleResponse {StatusInfo = statuses});
+                return BadRequest(new SingleResponse { StatusInfo = statuses });
 
             var data = await Workspace
                 .GetRepository<T>()
                 .Single()
+                .Fields(fields)
                 .ToObjectAsync(request.SourcedId);
 
-            return Ok(new SingleResponse {Data = data}); // TODO data name
+            return Ok(new SingleResponse { Data = data }); // TODO data name
         }
 
         // IUpsertable<T>
