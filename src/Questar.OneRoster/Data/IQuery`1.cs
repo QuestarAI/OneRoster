@@ -7,11 +7,13 @@ namespace Questar.OneRoster.Data
 
     public interface IQuery<T> : IQuery
     {
+        IDynamicQuery Fields(IEnumerable<string> fields);
+
+        IOrderedQuery<T> Sort(string field, SortDirection? direction = SortDirection.Asc);
+
         IQuery<T> Where(FilterExpression<T> filter);
 
         IQuery<T> WhereHasKey(object key);
-
-        IOrderedQuery<T> Sort(string field, SortDirection? direction = SortDirection.Asc);
 
         new T Single();
 

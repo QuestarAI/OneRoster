@@ -15,11 +15,7 @@ namespace Questar.OneRoster.Data.Services
 
         protected new IOrderedQueryable<T> Source => (IOrderedQueryable<T>) base.Source;
 
-        public new IOrderedQuery Fields(IEnumerable<string> fields) => (IOrderedQuery) base.Fields(fields);
-
-        public Page<T> ToPage(int offset, int limit) => Source.ToPage(offset, limit);
-
-        public Task<Page<T>> ToPageAsync(int offset, int limit) => Source.ToPageAsync(offset, limit);
+        public new IOrderedDynamicQuery Fields(IEnumerable<string> fields) => (IOrderedDynamicQuery) base.Fields(fields);
 
         IPage<T> IOrderedQuery<T>.ToPage(int offset, int limit) => ToPage(offset, limit);
 
@@ -28,5 +24,11 @@ namespace Questar.OneRoster.Data.Services
         IPage IOrderedQuery.ToPage(int offset, int limit) => ToPage(offset, limit);
 
         async Task<IPage> IOrderedQuery.ToPageAsync(int offset, int limit) => await ToPageAsync(offset, limit);
+
+        protected override IDynamicQuery ToDynamic(IEnumerable<string> fields) => new OrderedDynamicQuery<T>(Source, fields);
+
+        public Page<T> ToPage(int offset, int limit) => Source.ToPage(offset, limit);
+
+        public Task<Page<T>> ToPageAsync(int offset, int limit) => Source.ToPageAsync(offset, limit);
     }
 }
