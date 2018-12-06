@@ -13,6 +13,6 @@ namespace Questar.OneRoster.Models
         public AcademicSessionType Type { get; set; }
         public GuidRef Parent { get; set; }
         public IEnumerable<GuidRef> Children { get; set; } = Enumerable.Empty<GuidRef>();
-        public Year Year { get; set; }
+        public Year SchoolYear { get; set; }
     }
 }

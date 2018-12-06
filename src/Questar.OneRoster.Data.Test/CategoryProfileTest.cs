@@ -1,5 +1,6 @@
 namespace Questar.OneRoster.Data.Test
 {
+    using System.Linq;
     using AutoMapper;
     using AutoMapper.EquivalencyExpression;
     using AutoMapper.Extensions.ExpressionMapping;
@@ -13,18 +14,34 @@ namespace Questar.OneRoster.Data.Test
             config.AddExpressionMapping();
             config.AddCollectionMappers();
             config.AddProfile<GuidRefProfile>();
+            config.AddProfile<MetadataProfile>();
             config.AddProfile<CategoryProfile>();
         })))
         {
         }
 
         [Fact]
-        public void CanMapFromDateLastModified() => CanMapFrom(entity => entity.Modified, model => model.DateLastModified);
+        public void CanMapFromDateLastModified()
+            => CanMapFrom(entity => entity.Modified, model => model.DateLastModified);
 
         [Fact]
-        public void CanMapFromSourcedId() => CanMapFrom(entity => entity.Id, model => model.SourcedId);
+        public void CanMapFromMetadata()
+            => CanMapFrom(entity => entity.MetadataCollection.Metadata, model => model.Metadata);
 
         [Fact]
-        public void CanMapFromStatusType() => CanMapFrom(entity => entity.Status, model => model.StatusType);
+        public void CanMapFromMetadataWithProjection()
+            => CanMapFrom(entity => entity.MetadataCollection.Metadata.Any(metadata => metadata.Key == "foo"), model => model.Metadata.Any(metadata => metadata.Key == "foo"));
+
+        [Fact]
+        public void CanMapFromSourcedId()
+            => CanMapFrom(entity => entity.Id, model => model.SourcedId);
+
+        [Fact]
+        public void CanMapFromStatusType()
+            => CanMapFrom(entity => entity.Status, model => model.StatusType);
+
+        [Fact]
+        public void CanMapFromTitle()
+            => CanMapFrom(entity => entity.Title, model => model.Title);
     }
 }

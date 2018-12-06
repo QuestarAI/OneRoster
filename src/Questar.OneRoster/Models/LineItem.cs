@@ -11,7 +11,7 @@ namespace Questar.OneRoster.Models
         public GuidRef Class { get; set; }
         public GuidRef Category { get; set; }
         public GuidRef GradingPeriod { get; set; }
-        public double ResultValueMin { get; set; }
-        public double ResultValueMax { get; set; }
+        public float ResultValueMin { get; set; }
+        public float ResultValueMax { get; set; }
     }
 }

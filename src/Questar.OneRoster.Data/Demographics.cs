@@ -12,21 +12,21 @@ namespace Questar.OneRoster.Data
         
         public virtual DateTime? BirthDate { get; set; }
 
-        public virtual Gender? Gender { get; set; }
+        public virtual Gender? Sex { get; set; }
 
-        public virtual bool AmericanIndianOrAlaskaNative { get; set; }
+        public virtual bool? AmericanIndianOrAlaskaNative { get; set; }
 
-        public virtual bool Asian { get; set; }
+        public virtual bool? Asian { get; set; }
 
-        public virtual bool BlackOrAfricanAmerican { get; set; }
+        public virtual bool? BlackOrAfricanAmerican { get; set; }
 
-        public virtual bool NativeHawaiianOrOtherPacificIslander { get; set; }
+        public virtual bool? NativeHawaiianOrOtherPacificIslander { get; set; }
 
-        public virtual bool White { get; set; }
+        public virtual bool? White { get; set; }
 
-        public virtual bool DemographicRaceTwoOrMoreRaces { get; set; }
+        public virtual bool? DemographicRaceTwoOrMoreRaces { get; set; }
 
-        public virtual bool HispanicOrLatinoEthnicity { get; set; }
+        public virtual bool? HispanicOrLatinoEthnicity { get; set; }
 
         // TODO https://ceds.ed.gov/CEDSElementDetails.aspx?TermxTopicId=20002
         public virtual string CountryOfBirthCode { get; set; }

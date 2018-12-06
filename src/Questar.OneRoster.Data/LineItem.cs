@@ -32,10 +32,10 @@ namespace Questar.OneRoster.Data
         public virtual IReadOnlyCollection<Result> Results { get; } = new HashSet<Result>();
 
         [Required]
-        public virtual double? ResultValueMin { get; set; }
+        public virtual float? ResultValueMin { get; set; }
 
         [Required]
-        public virtual double? ResultValueMax { get; set; }
+        public virtual float? ResultValueMax { get; set; }
 
         #region Base Object
 

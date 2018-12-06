@@ -4,7 +4,6 @@ namespace Questar.OneRoster.Data.Services
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading.Tasks;
-    using Models;
 
     public abstract class Workspace : IWorkspace
     {
@@ -12,7 +11,7 @@ namespace Questar.OneRoster.Data.Services
 
         protected Lazy<ReadOnlyDictionary<Type, IRepository>> Repositories { get; }
 
-        public virtual IRepository<T> GetRepository<T>() where T : Base => (IRepository<T>) Repositories.Value[typeof(T)];
+        public virtual IRepository<T> GetRepository<T>() => (IRepository<T>) Repositories.Value[typeof(T)];
 
         public abstract void Save();
 

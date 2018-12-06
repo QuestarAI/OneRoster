@@ -4,10 +4,7 @@ namespace Questar.OneRoster.Data
 
     public class Enrollment : IBaseObject
     {
-        public Enrollment(Class @class)
-        {
-            Class = @class;
-        }
+        public Enrollment(Class @class) => Class = @class;
 
         private Enrollment()
         {
@@ -26,7 +23,7 @@ namespace Questar.OneRoster.Data
         public virtual Guid ClassId { get; private set; }
 
         // applicable only to teachers
-        public virtual bool Primary { get; set; }
+        public virtual bool? Primary { get; set; }
 
         #region Base Object
 

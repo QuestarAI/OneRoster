@@ -1,12 +1,15 @@
 namespace Questar.OneRoster.Models
 {
-    using System.Collections.Generic;
-
-    /// <summary>
-    /// Represents additional metadata associated with an object.
-    /// Generally, this is used to extend an object with information outside the spec.
-    /// </summary>
-    public class Metadata : Dictionary<string, object>
+    public class Metadata
     {
+        public Metadata(string key, object value)
+        {
+            Key = key;
+            Value = value;
+        }
+
+        public string Key { get; private set; }
+
+        public object Value { get; private set; }
     }
 }

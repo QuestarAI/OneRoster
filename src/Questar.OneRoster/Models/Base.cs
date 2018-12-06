@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Models
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The base class used by all objects.
@@ -26,6 +27,6 @@ namespace Questar.OneRoster.Models
         /// Gets or sets the additional metadata associated with this object.
         /// Generally, this is used to extend an object with information outside the spec.
         /// </summary>
-        public Metadata Metadata { get; set; }
+        public ICollection<Metadata> Metadata { get; set; }
     }
 }

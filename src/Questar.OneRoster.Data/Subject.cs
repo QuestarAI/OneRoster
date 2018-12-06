@@ -7,7 +7,10 @@ namespace Questar.OneRoster.Data
     public class Subject
     {
         public virtual Guid Id { get; private set; }
-        
+
+        [Required]
+        public virtual string Name { get; set; }
+
         [Required]
         public virtual string Code { get; set; }
 
