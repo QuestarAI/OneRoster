@@ -6,7 +6,7 @@ namespace Questar.OneRoster.Expressions
     using System.Reflection;
     using Collections;
 
-    public class ExpressionComparer
+    public class ExpressionComparer // TODO : IEqualityComparer<Expression>
     {
         protected ExpressionComparer(ScopedDictionary<ParameterExpression, ParameterExpression> parameterScope, Func<object, object, bool> fnCompare)
         {
@@ -15,6 +15,7 @@ namespace Questar.OneRoster.Expressions
         }
 
         public ScopedDictionary<ParameterExpression, ParameterExpression> ParameterScope { get; private set; }
+
         protected Func<object, object, bool> FnCompare { get; }
 
         public static bool AreEqual(Expression a, Expression b)
@@ -229,7 +230,7 @@ namespace Questar.OneRoster.Expressions
                 case MemberBindingType.MemberBinding:
                     return CompareMemberMemberBinding((MemberMemberBinding) a, (MemberMemberBinding) b);
                 default:
-                    throw new Exception(string.Format("Unhandled binding type: '{0}'", a.BindingType));
+                    throw new Exception($"Unhandled binding type: '{a.BindingType}'");
             }
         }
 
