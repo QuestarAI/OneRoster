@@ -3,7 +3,6 @@ namespace Questar.OneRoster.Models
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Common;
 
     public class AcademicSession : Base
     {
@@ -13,6 +12,6 @@ namespace Questar.OneRoster.Models
         public AcademicSessionType Type { get; set; }
         public GuidRef Parent { get; set; }
         public IEnumerable<GuidRef> Children { get; set; } = Enumerable.Empty<GuidRef>();
-        public Year SchoolYear { get; set; }
+        public int SchoolYear { get; set; }
     }
 }

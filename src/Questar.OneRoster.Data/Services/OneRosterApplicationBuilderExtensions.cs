@@ -15,6 +15,8 @@ namespace Questar.OneRoster.Data.Services
             using (var context = scope.ServiceProvider.GetService<OneRosterDbContext>())
             {
                 context.Database.Migrate();
+
+                new OneRosterDbContextInitializer(context).Initialize();
             }
         }
     }

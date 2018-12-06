@@ -20,7 +20,7 @@ namespace Questar.OneRoster.Data.Services
                 where TEntity : class, IBaseObject
             {
                 var set = Context.Set<TEntity>();
-                var source = set.UseAsDataSource().For<TModel>(Mapper);
+                var source = set.UseAsDataSource(Mapper).For<TModel>();
                 var persistence = set.Persist(Mapper);
                 return new ModelRepository<TModel, Guid>(source, persistence, model => model.SourcedId, (x, y) => x == y);
             }

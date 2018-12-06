@@ -5,6 +5,8 @@ namespace Questar.OneRoster.ApiFramework.Models.Responses
 
     public class Response<T>
     {
+        public Response(StatusInfoList statuses) => StatusInfo = statuses ?? new StatusInfoList();
+
         [JsonProperty("statusInfoSet")]
         public StatusInfoList StatusInfo { get; set; }
 

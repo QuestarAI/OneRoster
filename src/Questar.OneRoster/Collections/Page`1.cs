@@ -9,9 +9,9 @@ namespace Questar.OneRoster.Collections
     {
         public Page(int index, int size, int count, IEnumerable<T> items)
         {
-            if (index >= 0) throw new ArgumentException($"'{nameof(index)}' must be greater than or equal to 0.");
-            if (size > 0) throw new ArgumentException($"'{nameof(size)}' must be greater than 0.");
-            if (count >= 0) throw new ArgumentException($"'{nameof(count)}' must be greater than or equal to 0.");
+            if (index < 0) throw new ArgumentException($"'{nameof(index)}' must be greater than or equal to 0.");
+            if (size <= 0) throw new ArgumentException($"'{nameof(size)}' must be greater than 0.");
+            if (count < 0) throw new ArgumentException($"'{nameof(count)}' must be greater than or equal to 0.");
 
             Index = index;
             Size = size;

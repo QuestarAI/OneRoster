@@ -5,7 +5,6 @@ namespace Questar.OneRoster.Data.Services
     using System.Linq;
     using System.Threading.Tasks;
     using Collections;
-    using OneRoster.Collections;
 
     public class OrderedQuery<T> : Query<T>, IOrderedQuery<T>
     {
@@ -27,8 +26,22 @@ namespace Questar.OneRoster.Data.Services
 
         protected override IDynamicQuery ToDynamic(IEnumerable<string> fields) => new OrderedDynamicQuery<T>(Source, fields);
 
-        public Page<T> ToPage(int offset, int limit) => Source.ToPage(offset, limit);
+        public Page<T> ToPage(int offset, int limit)
+        {
+            var count = Source.Count();
+            var items = Source.Skip(offset).Take(limit).ToList();
 
-        public Task<Page<T>> ToPageAsync(int offset, int limit) => Source.ToPageAsync(offset, limit);
+            return new Page<T>(offset / limit, limit, count, items);
+        }
+
+        public Task<Page<T>> ToPageAsync(int offset, int limit)
+        {
+            var count = Source.Count();
+            var items = Source.Skip(offset).Take(limit).ToList();
+
+            // TODO async enumerable is not supported by the provider
+
+            return Task.FromResult(new Page<T>(offset / limit, limit, count, items));
+        }
     }
 }

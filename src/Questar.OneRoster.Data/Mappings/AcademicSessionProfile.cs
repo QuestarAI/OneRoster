@@ -2,6 +2,8 @@ namespace Questar.OneRoster.Data.Mappings
 {
     using AutoMapper;
     using Common;
+    using Models;
+    using AcademicSession = Data.AcademicSession;
 
     public class AcademicSessionProfile : Profile
     {
@@ -10,9 +12,10 @@ namespace Questar.OneRoster.Data.Mappings
             CreateMap<AcademicSession, Models.AcademicSession>()
                 .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.Id))
                 .ForMember(target => target.DateLastModified, config => config.MapFrom(source => source.Modified))
-                .ForMember(target => target.StatusType, config => config.MapFrom(source => source.Status))
+                .ForMember(target => target.StatusType, config => config.MapFrom(source => (StatusType) source.Status))
                 .ForMember(target => target.Metadata, config => config.MapFrom(source => source.MetadataCollection.Metadata))
-                .ForMember(target => target.SchoolYear, config => config.MapFrom(source => (Year) (int) source.SchoolYear));
+                .ForMember(target => target.SchoolYear, config => config.MapFrom(source => (int) source.SchoolYear))
+                .ForMember(target => target.Type, config => config.MapFrom(source => (AcademicSessionType) source.Type));
         }
     }
 }
