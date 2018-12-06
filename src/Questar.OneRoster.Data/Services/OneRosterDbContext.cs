@@ -28,7 +28,7 @@ namespace Questar.OneRoster.Data.Services
 
         public DbSet<LineItem> LineItems { get; private set; }
 
-        public DbSet<Org> Organizations { get; private set; }
+        public DbSet<Org> Orgs { get; private set; }
 
         public DbSet<Resource> Resources { get; private set; }
 
@@ -137,7 +137,7 @@ namespace Questar.OneRoster.Data.Services
                 .Entity<Metadata>()
                 .HasKey(entity => new { entity.CollectionId, entity.Key });
 
-            // organization
+            // orgs
 
             builder
                 .Entity<Org>()
@@ -192,11 +192,11 @@ namespace Questar.OneRoster.Data.Services
                 .Entity<UserIdentifier>()
                 .HasKey(entity => new { entity.UserId, entity.Type, entity.Identifier });
 
-            // user organization
+            // user orgs
 
             builder
-                .Entity<UserOrganization>()
-                .HasKey(entity => new { entity.UserId, entity.OrganizationId });
+                .Entity<UserOrg>()
+                .HasKey(entity => new { entity.UserId, entity.OrgId });
         }
     }
 }

@@ -5,14 +5,13 @@ namespace Questar.OneRoster.Data
 
     public class Result : IBaseObject
     {
-        public Result(LineItem item)
-        {
-            LineItem = item;
-        }
+        public Result(LineItem item) => LineItem = item;
 
         private Result()
         {
         }
+
+        public virtual string Comment { get; set; }
 
         public virtual LineItem LineItem { get; private set; }
 
@@ -23,7 +22,7 @@ namespace Questar.OneRoster.Data
         public virtual Guid StudentId { get; private set; }
 
         [Required]
-        public virtual int? Score { get; set; }
+        public virtual float? Score { get; set; }
 
         [Required]
         public virtual DateTime? ScoreDate { get; set; }

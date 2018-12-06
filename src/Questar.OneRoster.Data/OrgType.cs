@@ -1,6 +1,6 @@
 namespace Questar.OneRoster.Data
 {
-    public enum OrganizationType
+    public enum OrgType
     {
         Department,
         School,

@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Data.Test
 {
     using AutoMapper;
+    using AutoMapper.EquivalencyExpression;
     using AutoMapper.Extensions.ExpressionMapping;
     using Mappings;
     using Xunit;
@@ -10,18 +11,20 @@ namespace Questar.OneRoster.Data.Test
         public OrgProfileTest() : base(new Mapper(new MapperConfiguration(config =>
         {
             config.AddExpressionMapping();
+            config.AddCollectionMappers();
+            config.AddProfile<GuidRefProfile>();
             config.AddProfile<OrgProfile>();
         })))
         {
         }
 
         [Fact]
-        public void CanMapSourcedId() => CanMap(entity => entity.Id, model => model.SourcedId);
+        public void CanMapFromDateLastModified() => CanMapFrom(entity => entity.Modified, model => model.DateLastModified);
 
         [Fact]
-        public void CanMapStatusType() => CanMap(entity => entity.Status, model => model.StatusType);
+        public void CanMapFromSourcedId() => CanMapFrom(entity => entity.Id, model => model.SourcedId);
 
         [Fact]
-        public void CanMapDateLastModified() => CanMap(entity => entity.Modified, model => model.DateLastModified);
+        public void CanMapFromStatusType() => CanMapFrom(entity => entity.Status, model => model.StatusType);
     }
 }

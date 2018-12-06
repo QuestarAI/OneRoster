@@ -6,7 +6,7 @@ namespace Questar.OneRoster.Data
 
     public class Org : IBaseObject
     {
-        public Org(OrganizationType type) => Type = type;
+        public Org(OrgType type) => Type = type;
 
         private Org()
         {
@@ -17,7 +17,7 @@ namespace Questar.OneRoster.Data
         public virtual string Name { get; set; }
 
         [Required]
-        public virtual OrganizationType? Type { get; private set; }
+        public virtual OrgType? Type { get; private set; }
 
         [MaxLength(256)]
         public virtual string Identifier { get; set; }

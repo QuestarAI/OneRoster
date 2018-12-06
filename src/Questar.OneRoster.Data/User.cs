@@ -50,7 +50,7 @@ namespace Questar.OneRoster.Data
 
         public virtual ICollection<UserIdentifier> Ids { get; } = new HashSet<UserIdentifier>();
 
-        public virtual ICollection<UserOrganization> Organizations { get; } = new HashSet<UserOrganization>();
+        public virtual ICollection<UserOrg> Orgs { get; } = new HashSet<UserOrg>();
 
         public virtual ICollection<Enrollment> Enrollments { get; } = new HashSet<Enrollment>();
 

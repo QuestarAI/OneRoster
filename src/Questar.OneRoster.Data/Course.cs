@@ -17,9 +17,9 @@ namespace Questar.OneRoster.Data
 
         public virtual Guid SchoolYearId { get; private set; }
 
-        public virtual Org Organization { get; set; } // TODO one-time only?
+        public virtual Org Org { get; set; } // TODO one-time only?
 
-        public virtual Guid OrganizationId { get; private set; }
+        public virtual Guid OrgId { get; private set; }
 
         public virtual ICollection<CourseGrade> Grades { get; } = new HashSet<CourseGrade>();
 

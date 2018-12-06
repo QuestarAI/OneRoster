@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Data.Test
 {
     using AutoMapper;
+    using AutoMapper.EquivalencyExpression;
     using AutoMapper.Extensions.ExpressionMapping;
     using Mappings;
     using Xunit;
@@ -10,42 +11,42 @@ namespace Questar.OneRoster.Data.Test
         public AcademicSessionProfileTest() : base(new Mapper(new MapperConfiguration(config =>
         {
             config.AddExpressionMapping();
+            config.AddCollectionMappers();
+            config.AddProfile<GuidRefProfile>();
             config.AddProfile<AcademicSessionProfile>();
         })))
         {
         }
 
         [Fact]
-        public void CanMapSourcedId() => CanMap(entity => entity.Id, model => model.SourcedId);
+        public void CanMapFromChildren() => CanMapFrom(entity => entity.Children, entity => entity.Children);
 
         [Fact]
-        public void CanMapStatusType() => CanMap(entity => entity.Status, model => model.StatusType);
-
-        [Fact]
-        public void CanMapDateLastModified() => CanMap(entity => entity.Modified, model => model.DateLastModified);
-
-        // TODO GuidRef
-        //[Fact]
-        //public void CanMapParent() => CanMap(entity => entity.Parent, entity => entity.Parent);
-
-        // TODO GuidRef
-        //[Fact]
-        //public void CanMapChildren() => CanMap(entity => entity.Children, entity => entity.Children);
+        public void CanMapFromDateLastModified() => CanMapFrom(entity => entity.Modified, model => model.DateLastModified);
 
         // TODO Year
         //[Fact]
-        //public void CanMapYear() => CanMap(entity => entity.Year, entity => entity.Year);
+        //public void CanMapFromYear() => CanMap(entity => entity.Year, entity => entity.Year);
 
         [Fact]
-        public void CanMapEndDate() => CanMap(entity => entity.EndDate, model => model.EndDate);
+        public void CanMapFromEndDate() => CanMapFrom(entity => entity.EndDate, model => model.EndDate);
 
         [Fact]
-        public void CanMapStartDate() => CanMap(entity => entity.StartDate, model => model.StartDate);
+        public void CanMapFromParent() => CanMapFrom(entity => entity.Parent, entity => entity.Parent);
 
         [Fact]
-        public void CanMapTitle() => CanMap(entity => entity.Title, model => model.Title);
+        public void CanMapFromSourcedId() => CanMapFrom(entity => entity.Id, model => model.SourcedId);
 
         [Fact]
-        public void CanMapType() => CanMap(entity => entity.Type, model => model.Type);
+        public void CanMapFromStartDate() => CanMapFrom(entity => entity.StartDate, model => model.StartDate);
+
+        [Fact]
+        public void CanMapFromStatusType() => CanMapFrom(entity => entity.Status, model => model.StatusType);
+
+        [Fact]
+        public void CanMapFromTitle() => CanMapFrom(entity => entity.Title, model => model.Title);
+
+        [Fact]
+        public void CanMapFromType() => CanMapFrom(entity => entity.Type, model => model.Type);
     }
 }

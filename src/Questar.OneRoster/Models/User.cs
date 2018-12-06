@@ -6,7 +6,7 @@ namespace Questar.OneRoster.Models
     public class User : Base
     {
         public string Username { get; set; }
-        public IEnumerable<UserId> UserIds { get; set; } = Enumerable.Empty<UserId>();
+        public ICollection<UserId> UserIds { get; set; }
         public bool EnabledUser { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
@@ -16,9 +16,9 @@ namespace Questar.OneRoster.Models
         public string Email { get; set; }
         public string Sms { get; set; }
         public string Phone { get; set; }
-        public IEnumerable<GuidRef> Agents { get; set; } = Enumerable.Empty<GuidRef>();
-        public IEnumerable<GuidRef> Orgs { get; set; } = Enumerable.Empty<GuidRef>();
-        public IEnumerable<Grade> Grades { get; set; } = Enumerable.Empty<Grade>();
+        public ICollection<GuidRef> Agents { get; set; }
+        public ICollection<GuidRef> Orgs { get; set; } 
+        public ICollection<string> Grades { get; set; }
         public string Password { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Questar.OneRoster.Data.Services
 
         protected override void Configure(WorkspaceBuilder builder)
         {
-            ModelRepository<TModel, Guid> GetRepository<TModel, TEntity>()
+            ModelRepository<TModel, Guid> ModelRepository<TModel, TEntity>()
                 where TModel : Base
                 where TEntity : class, IBaseObject
             {
@@ -25,16 +25,16 @@ namespace Questar.OneRoster.Data.Services
                 return new ModelRepository<TModel, Guid>(source, persistence, model => model.SourcedId, (x, y) => x == y);
             }
 
-            builder.Add(GetRepository<AcademicSession, Data.AcademicSession>());
-            builder.Add(GetRepository<Category, Data.Category>());
-            builder.Add(GetRepository<Class, Data.Class>());
-            builder.Add(GetRepository<Course, Data.Course>());
-            builder.Add(GetRepository<Demographics, Data.Demographics>());
-            builder.Add(GetRepository<Enrollment, Data.Enrollment>());
-            builder.Add(GetRepository<LineItem, Data.LineItem>());
-            builder.Add(GetRepository<Resource, Data.Resource>());
-            builder.Add(GetRepository<Result, Data.Result>());
-            builder.Add(GetRepository<User, Data.User>());
+            builder.Add(ModelRepository<AcademicSession, Data.AcademicSession>());
+            builder.Add(ModelRepository<Category, Data.Category>());
+            builder.Add(ModelRepository<Class, Data.Class>());
+            builder.Add(ModelRepository<Course, Data.Course>());
+            builder.Add(ModelRepository<Demographics, Data.Demographics>());
+            builder.Add(ModelRepository<Enrollment, Data.Enrollment>());
+            builder.Add(ModelRepository<LineItem, Data.LineItem>());
+            builder.Add(ModelRepository<Resource, Data.Resource>());
+            builder.Add(ModelRepository<Result, Data.Result>());
+            builder.Add(ModelRepository<User, Data.User>());
         }
     }
 }
