@@ -23,49 +23,34 @@ namespace Questar.OneRoster.Data.Services
 
         protected Func<object, object, bool> KeyComparer { get; }
 
-        protected virtual IDynamicQuery ToDynamic(IEnumerable<string> fields)
-            => new DynamicQuery<T>(Source, fields);
+        protected virtual IDynamicQuery ToDynamicQuery(IEnumerable<string> fields) => new DynamicQuery<T>(Source, fields);
 
-        public IDynamicQuery Fields(IEnumerable<string> fields)
-            => ToDynamic(fields);
+        public IDynamicQuery Fields(IEnumerable<string> fields) => ToDynamicQuery(fields);
 
-        public virtual T Single()
-            => Source.Single();
+        public virtual T Single() => Source.Single();
 
-        public virtual Task<T> SingleAsync()
-            => Task.FromResult(Source.Single()); // TODO check async enumerable support non-enumerable return values
+        public virtual Task<T> SingleAsync() => Task.FromResult(Source.Single());
 
-        IList<T> IQuery<T>.ToList()
-            => ToList();
+        IList<T> IQuery<T>.ToList() => ToList();
 
-        async Task<IList<T>> IQuery<T>.ToListAsync()
-            => await ToListAsync();
+        async Task<IList<T>> IQuery<T>.ToListAsync() => await ToListAsync();
 
-        public virtual IQuery<T> Where(FilterExpression<T> predicate)
-            => new Query<T>(Source.Where(predicate), KeySelector, KeyComparer);
+        public virtual IQuery<T> Where(FilterExpression<T> predicate) => new Query<T>(Source.Where(predicate), KeySelector, KeyComparer);
 
-        public virtual IQuery<T> WhereHasKey(object key)
-            => new Query<T>(Source.Where(source => KeyComparer(KeySelector(source), key)), KeySelector, KeyComparer);
+        public virtual IQuery<T> WhereHasKey(object key) => new Query<T>(Source.Where(source => KeyComparer(KeySelector(source), key)), KeySelector, KeyComparer);
 
-        public virtual IOrderedQuery<T> Sort(string field, SortDirection? direction)
-            => new OrderedQuery<T>(Source.SortBy(field, direction), KeySelector, KeyComparer);
+        public virtual IOrderedQuery<T> Sort(string field, SortDirection? direction) => new OrderedQuery<T>(Source.SortBy(field, direction), KeySelector, KeyComparer);
 
-        object IQuery.Single()
-            => Single();
+        object IQuery.Single() => Single();
 
-        async Task<object> IQuery.SingleAsync()
-            => await SingleAsync();
+        async Task<object> IQuery.SingleAsync() => await SingleAsync();
 
-        IList IQuery.ToList()
-            => ToList();
+        IList IQuery.ToList() => ToList();
 
-        async Task<IList> IQuery.ToListAsync()
-            => await ToListAsync();
+        async Task<IList> IQuery.ToListAsync() => await ToListAsync();
 
-        public virtual List<T> ToList()
-            => Source.ToList();
+        public virtual List<T> ToList() => Source.ToList();
 
-        public virtual Task<List<T>> ToListAsync()
-            => Source.ToAsyncEnumerable().ToList();
+        public virtual Task<List<T>> ToListAsync() => Source.ToAsyncEnumerable().ToList();
     }
 }

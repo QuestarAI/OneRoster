@@ -24,7 +24,7 @@ namespace Questar.OneRoster.Data.Services
 
         async Task<IPage> IOrderedQuery.ToPageAsync(int offset, int limit) => await ToPageAsync(offset, limit);
 
-        protected override IDynamicQuery ToDynamic(IEnumerable<string> fields) => new OrderedDynamicQuery<T>(Source, fields);
+        protected override IDynamicQuery ToDynamicQuery(IEnumerable<string> fields) => new OrderedDynamicQuery<T>(Source, fields);
 
         public Page<T> ToPage(int offset, int limit)
         {
