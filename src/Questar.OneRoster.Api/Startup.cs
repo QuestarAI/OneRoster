@@ -15,19 +15,16 @@ namespace Questar.OneRoster.Api
     {
         public IConfiguration Configuration { get; }
 
-        [UsedImplicitly]
-        public Startup(IConfiguration configuration)
-            => Configuration = configuration;
-
-        [UsedImplicitly]
+        public Startup(IConfiguration configuration) => Configuration = configuration;
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOneRoster(@"Data Source=.\SQLEXPRESS;Initial Catalog=OneRoster;Integrated Security=True");
+            services.AddOneRoster(@"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True");
             services.AddOneRosterApiFramework();
 
             services
                 .AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter())) // eh...
+                .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()))
                 .AddOneRosterApiFramework();
 
             // TODO: Consolidate where this connection string comes from.

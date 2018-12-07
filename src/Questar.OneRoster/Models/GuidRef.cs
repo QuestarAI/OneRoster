@@ -10,7 +10,7 @@ namespace Questar.OneRoster.Models
         /// <summary>
         /// Gets or sets the URI/URL to retrieve this object.
         /// </summary>
-        public Uri Href { get; set; }
+        public string Href { get; set; }
 
         /// <summary>
         /// Gets or sets the primary identifier.
