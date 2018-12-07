@@ -33,7 +33,7 @@ namespace Questar.OneRoster.Data.Services
             => Source.Single();
 
         public virtual Task<T> SingleAsync()
-            => Task.FromResult(Source.Single()); // TODO async enumerable is not supported by the provider
+            => Task.FromResult(Source.Single()); // TODO check async enumerable support non-enumerable return values
 
         IList<T> IQuery<T>.ToList()
             => ToList();
@@ -66,6 +66,6 @@ namespace Questar.OneRoster.Data.Services
             => Source.ToList();
 
         public virtual Task<List<T>> ToListAsync()
-            => Task.FromResult(Source.ToList()); // TODO async enumerable is not supported by the provider
+            => Source.ToAsyncEnumerable().ToList();
     }
 }

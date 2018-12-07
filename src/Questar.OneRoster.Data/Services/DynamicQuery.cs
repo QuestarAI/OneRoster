@@ -8,8 +8,6 @@ namespace Questar.OneRoster.Data.Services
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
     public class DynamicQuery<T> : IDynamicQuery
     {
@@ -28,7 +26,8 @@ namespace Questar.OneRoster.Data.Services
 
         public object Single() => Source.Single();
 
-        public async Task<object> SingleAsync() => await Invoke(Source).SingleAsync();
+        // TODO check async enumerable support non-enumerable return values
+        public async Task<object> SingleAsync() => await Task.FromResult(Invoke(Source).Single());
 
         IList IQuery.ToList() => ToList();
 
@@ -82,6 +81,6 @@ namespace Questar.OneRoster.Data.Services
 
         public List<dynamic> ToList() => Invoke(Source).AsEnumerable().Select(Map).ToList();
 
-        public async Task<List<dynamic>> ToListAsync() => await Invoke(Source).AsAsyncEnumerable().Select(Map).ToList();
+        public Task<List<dynamic>> ToListAsync() => Invoke(Source).ToAsyncEnumerable().Select(Map).ToList();
     }
 }

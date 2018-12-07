@@ -21,12 +21,10 @@ namespace Questar.OneRoster.Data.Services
 
         public async Task<IPage> ToPageAsync(int offset, int limit)
         {
-            var count = Source.Count();
-            var items = Invoke(Source.Skip(offset).Take(limit)).AsEnumerable().Select(Map).ToList();
+            var count = Source.Count(); // TODO check async enumerable support non-enumerable return values
+            var items = Invoke(Source.Skip(offset).Take(limit)).ToAsyncEnumerable().Select(Map).ToList();
 
-            // TODO async enumerable is not supported by the provider
-
-            return await Task.FromResult(new Page<dynamic>(offset / limit, limit, count, items));
+            return new Page<dynamic>(offset / limit, limit, count, await items);
         }
     }
 }

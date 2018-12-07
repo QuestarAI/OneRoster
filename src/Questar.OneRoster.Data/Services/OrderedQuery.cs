@@ -34,14 +34,12 @@ namespace Questar.OneRoster.Data.Services
             return new Page<T>(offset / limit, limit, count, items);
         }
 
-        public Task<Page<T>> ToPageAsync(int offset, int limit)
+        public async Task<Page<T>> ToPageAsync(int offset, int limit)
         {
             var count = Source.Count();
-            var items = Source.Skip(offset).Take(limit).ToList();
+            var items = Source.Skip(offset).Take(limit).ToAsyncEnumerable().ToList();
 
-            // TODO async enumerable is not supported by the provider
-
-            return Task.FromResult(new Page<T>(offset / limit, limit, count, items));
+            return new Page<T>(offset / limit, limit, count, await items);
         }
     }
 }

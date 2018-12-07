@@ -6,13 +6,9 @@ namespace Questar.OneRoster.Data.Services
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Query.Internal;
 
-    public abstract class Repository<T> : IRepository<T>, IQueryable, IAsyncEnumerableAccessor<T>
+    public abstract class Repository<T> : IRepository<T>, IQueryable
     {
-        public IAsyncEnumerable<T> AsyncEnumerable => AsQueryable().ToAsyncEnumerable();
-
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public Type ElementType => AsQueryable().ElementType;
@@ -27,7 +23,7 @@ namespace Questar.OneRoster.Data.Services
 
         public int Count() => AsQueryable().Count();
 
-        public Task<int> CountAsync() => AsQueryable().CountAsync();
+        public virtual Task<int> CountAsync() => Task.FromResult(Count()); // TODO check async enumerable support non-enumerable return values
 
         public abstract Task DeleteAsync(T entity);
 
