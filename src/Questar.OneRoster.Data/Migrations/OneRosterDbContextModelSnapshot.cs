@@ -160,7 +160,7 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     b.Property<Guid>("ClassId");
 
-                    b.Property<byte>("Period");
+                    b.Property<string>("Period");
 
                     b.HasKey("ClassId", "Period");
 

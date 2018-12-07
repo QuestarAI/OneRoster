@@ -7,17 +7,16 @@ namespace Questar.OneRoster.Data.Test
     using Mappings;
     using Models;
     using Xunit;
-    using Category = Data.Category;
 
-    public class CategoryProfileTest : ProfileTest<Category, Models.Category>
+    public class CourseProfileTest : ProfileTest<Data.Course, Course>
     {
-        public CategoryProfileTest() : base(new Mapper(new MapperConfiguration(config =>
+        public CourseProfileTest() : base(new Mapper(new MapperConfiguration(config =>
         {
             config.AddExpressionMapping();
             config.AddCollectionMappers();
             config.AddProfile<GuidRefProfile>();
             config.AddProfile<MetadataProfile>();
-            config.AddProfile<CategoryProfile>();
+            config.AddProfile<CourseProfile>();
         })))
         {
         }
@@ -25,6 +24,10 @@ namespace Questar.OneRoster.Data.Test
         [Fact]
         public void CanMapFromDateLastModified()
             => CanMapFrom(entity => entity.Modified, model => model.DateLastModified);
+
+        [Fact]
+        public void CanMapFromGrades()
+            => CanMapFrom(entity => entity.Grades, model => model.Grades);
 
         [Fact]
         public void CanMapFromMetadata()
@@ -35,12 +38,24 @@ namespace Questar.OneRoster.Data.Test
             => CanMapFrom(entity => entity.MetadataCollection.Metadata.Any(metadata => metadata.Key == "foo"), model => model.Metadata.Any(metadata => metadata.Key == "foo"));
 
         [Fact]
+        public void CanMapFromResources()
+            => CanMapFrom(entity => entity.Resources, model => model.Resources);
+
+        [Fact]
         public void CanMapFromSourcedId()
             => CanMapFrom(entity => entity.Id, model => model.SourcedId);
 
         [Fact]
         public void CanMapFromStatusType()
             => CanMapFrom(entity => (StatusType) entity.Status, model => model.StatusType);
+
+        [Fact]
+        public void CanMapFromSubjectCodes()
+            => CanMapFrom(entity => entity.Subjects.Select(relationship => relationship.Subject.Code), model => model.SubjectCodes);
+
+        [Fact]
+        public void CanMapFromSubjects()
+            => CanMapFrom(entity => entity.Subjects.Select(relationship => relationship.Subject.Name), model => model.Subjects);
 
         [Fact]
         public void CanMapFromTitle()

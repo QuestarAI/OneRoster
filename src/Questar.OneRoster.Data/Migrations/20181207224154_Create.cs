@@ -701,7 +701,7 @@ namespace Questar.OneRoster.Data.Migrations
                 columns: table => new
                 {
                     ClassId = table.Column<Guid>(nullable: false),
-                    Period = table.Column<byte>(nullable: false)
+                    Period = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

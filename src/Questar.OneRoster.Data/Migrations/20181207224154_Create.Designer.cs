@@ -10,7 +10,7 @@ using Questar.OneRoster.Data.Services;
 namespace Questar.OneRoster.Data.Migrations
 {
     [DbContext(typeof(OneRosterDbContext))]
-    [Migration("20181206221434_Create")]
+    [Migration("20181207224154_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,7 +162,7 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     b.Property<Guid>("ClassId");
 
-                    b.Property<byte>("Period");
+                    b.Property<string>("Period");
 
                     b.HasKey("ClassId", "Period");
 

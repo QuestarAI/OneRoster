@@ -6,7 +6,9 @@ namespace Questar.OneRoster.Data.Test
     using AutoMapper.EquivalencyExpression;
     using AutoMapper.Extensions.ExpressionMapping;
     using Mappings;
+    using Models;
     using Xunit;
+    using Result = Data.Result;
 
     public class ResultProfileTest : ProfileTest<Result, Models.Result>
     {
@@ -59,7 +61,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromStatusType()
-            => CanMapFrom(entity => entity.Status, model => model.StatusType);
+            => CanMapFrom(entity => (StatusType) entity.Status, model => model.StatusType);
 
         [Fact]
         public void CanMapFromStudent()

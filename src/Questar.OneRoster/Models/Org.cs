@@ -1,14 +1,17 @@
 namespace Questar.OneRoster.Models
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Org : Base
     {
         public string Name { get; set; }
+
         public OrgType Type { get; set; }
+
         public string Identifier { get; set; }
+
         public GuidRef Parent { get; set; }
-        public IEnumerable<GuidRef> Children { get; set; } = Enumerable.Empty<GuidRef>();
+
+        public ICollection<GuidRef> Children { get; set; }
     }
 }

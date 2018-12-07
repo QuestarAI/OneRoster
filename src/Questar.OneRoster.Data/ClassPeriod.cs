@@ -5,10 +5,7 @@ namespace Questar.OneRoster.Data
 
     public class ClassPeriod
     {
-        public ClassPeriod(byte period)
-        {
-            Period = period;
-        }
+        public ClassPeriod(string period) => Period = period;
 
         private ClassPeriod()
         {
@@ -19,6 +16,6 @@ namespace Questar.OneRoster.Data
         public virtual Guid ClassId { get; private set; }
 
         [Required]
-        public virtual byte Period { get; private set; }
+        public virtual string Period { get; private set; }
     }
 }

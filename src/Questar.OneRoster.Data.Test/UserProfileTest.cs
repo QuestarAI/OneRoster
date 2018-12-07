@@ -5,6 +5,7 @@ namespace Questar.OneRoster.Data.Test
     using AutoMapper.EquivalencyExpression;
     using AutoMapper.Extensions.ExpressionMapping;
     using Mappings;
+    using Models;
     using Xunit;
     using User = Data.User;
 
@@ -80,7 +81,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromRole()
-            => CanMapFrom(entity => (UserType) entity.Type, model => model.Role);
+            => CanMapFrom(entity => (RoleType) entity.Type, model => model.Role);
 
         [Fact]
         public void CanMapFromSms()
@@ -92,7 +93,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromStatusType()
-            => CanMapFrom(entity => entity.Status, model => model.StatusType);
+            => CanMapFrom(entity => (StatusType) entity.Status, model => model.StatusType);
 
         [Fact]
         public void CanMapFromUserIds()

@@ -6,7 +6,9 @@ namespace Questar.OneRoster.Data.Test
     using AutoMapper.Extensions.ExpressionMapping;
     using Common;
     using Mappings;
+    using Models;
     using Xunit;
+    using AcademicSession = Data.AcademicSession;
 
     public class AcademicSessionProfileTest : ProfileTest<AcademicSession, Models.AcademicSession>
     {
@@ -59,7 +61,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromStatusType()
-            => CanMapFrom(entity => entity.Status, model => model.StatusType);
+            => CanMapFrom(entity => (StatusType) entity.Status, model => model.StatusType);
 
         [Fact]
         public void CanMapFromTitle()
@@ -67,6 +69,6 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromType()
-            => CanMapFrom(entity => entity.Type, model => model.Type);
+            => CanMapFrom(entity => (AcademicSessionType) entity.Type, model => model.Type);
     }
 }
