@@ -22,7 +22,7 @@ namespace Questar.OneRoster.Api
         [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOneRoster(@"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True");
+            services.AddOneRoster(@"Data Source=.\SQLEXPRESS;Initial Catalog=OneRoster;Integrated Security=True");
             services.AddOneRosterApiFramework();
 
             services

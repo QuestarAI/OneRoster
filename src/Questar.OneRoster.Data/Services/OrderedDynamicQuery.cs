@@ -14,7 +14,7 @@ namespace Questar.OneRoster.Data.Services
         public async Task<IPage<dynamic>> ToPageAsync(int offset, int limit)
         {
             var count = Source.Count(); // TODO check async enumerable support non-enumerable return values
-            var items = Invoke(Source.Skip(offset).Take(limit)).ToAsyncEnumerable().Select(Map).ToList();
+            var items = Invoke(Source.Skip(offset).Take(limit)).ToAsyncEnumerable().ToList();
 
             return new Page<dynamic>(offset / limit, limit, count, await items);
         }
@@ -22,7 +22,7 @@ namespace Questar.OneRoster.Data.Services
         public IPage<dynamic> ToPage(int offset, int limit)
         {
             var count = Source.Count();
-            var items = Invoke(Source.Skip(offset).Take(limit)).AsEnumerable().Select(Map).ToList();
+            var items = Invoke(Source.Skip(offset).Take(limit)).AsEnumerable().ToList();
 
             return new Page<dynamic>(offset / limit, limit, count, items);
         }

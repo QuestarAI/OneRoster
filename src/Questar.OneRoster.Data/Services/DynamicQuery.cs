@@ -3,10 +3,10 @@ namespace Questar.OneRoster.Data.Services
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Dynamic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using System.Reflection.Emit;
     using System.Threading.Tasks;
 
     public class DynamicQuery<T> : IDynamicQuery
@@ -15,12 +15,9 @@ namespace Questar.OneRoster.Data.Services
         {
             Source = source;
             Members = fields.ToList();
-            Mapper = new Lazy<Delegate>(GetMapper);
         }
 
         protected IQueryable<T> Source { get; }
-
-        protected Lazy<Delegate> Mapper { get; }
 
         public IEnumerable<string> Members { get; }
 
@@ -33,54 +30,74 @@ namespace Questar.OneRoster.Data.Services
 
         async Task<IList> IQuery.ToListAsync() => await ToListAsync();
 
-        private Delegate GetMapper()
+        protected IQueryable<dynamic> Invoke(IQueryable<T> queryable)
         {
-            var item = Expression.Parameter(typeof(T));
-            var dictionary = Expression.Parameter(typeof(IDictionary<string, object>));
-            var assignments =
-                from field in Members
-                let indexer = Expression.Property(dictionary, "Item", Expression.Constant(field))
-                let property = Expression.Property(item, field)
-                let right = property.Type.IsValueType
-                    ? (Expression) Expression.Convert(property, typeof(object))
-                    : property
-                select (Expression) Expression.Assign(indexer, right);
-            var body = Expression.Block(assignments);
-            var func = Expression.Lambda(body, item, dictionary);
-            return func.Compile();
-        }
+            // TODO extract?
 
-        protected IQueryable<T> Invoke(IQueryable<T> queryable)
-        {
-            var type = typeof(T);
-            var parameter = Expression.Parameter(type);
-            var bindings = Members.Select(member =>
+            var properties = Members.ToDictionary(member => member, member =>
             {
-                var property = type.GetProperty(member, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                var property = typeof(T).GetProperty(member, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                 if (property == null)
-                    throw new InvalidOperationException($"Could not find property '{member}' on type '{type.Name}'.");
+                    throw new InvalidOperationException($"Could not find property '{member}' on type '{typeof(T).Name}'.");
 
-                // TODO get full path
-
-                return Expression.Bind(property, Expression.Property(parameter, member));
+                return property.PropertyType;
             });
-            var body = Expression.MemberInit(Expression.New(type), bindings);
+
+            // TODO get full path
+
+            var sourceType = typeof(T);
+            var targetType = CreateAnonymousType(properties);
+            var parameter = Expression.Parameter(sourceType);
+            var bindings = properties.Select(entry => Expression.Bind(targetType.GetProperty(entry.Key) ?? throw new InvalidOperationException("Couldn't find the property."), Expression.Property(parameter, entry.Key)));
+            var body = Expression.MemberInit(Expression.New(targetType), bindings);
             var selector = Expression.Lambda(body, parameter);
-            var call = Expression.Call(typeof(Queryable), "Select", new[] { type, type }, Source.Expression, selector);
-            var query = queryable.Provider.CreateQuery<T>(call);
+            var call = Expression.Call(typeof(Queryable), "Select", new[] {sourceType, targetType}, Source.Expression, selector);
+            var query = queryable.Provider.CreateQuery<dynamic>(call);
             return query;
         }
 
-        protected dynamic Map(T item)
+        public List<dynamic> ToList() => Invoke(Source).AsEnumerable().ToList();
+
+        public Task<List<dynamic>> ToListAsync() => Invoke(Source).ToAsyncEnumerable().ToList();
+
+        // TODO clean this up - lots seems unnecessary
+        private static Type CreateAnonymousType(IDictionary<string, Type> properties)
         {
-            var expando = new ExpandoObject();
-            var dictionary = (IDictionary<string, object>) expando;
-            Mapper.Value.DynamicInvoke(item, dictionary);
-            return expando;
+            var assembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString()), AssemblyBuilderAccess.Run);
+            var module = assembly.DefineDynamicModule("Dynamics");
+            var type = module.DefineType("Anonymous", TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass | TypeAttributes.AnsiClass | TypeAttributes.BeforeFieldInit | TypeAttributes.AutoLayout);
+
+            type.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
+
+            foreach (var entry in properties)
+            {
+                var field = type.DefineField("_" + entry.Key, entry.Value, FieldAttributes.Private);
+
+                var property = type.DefineProperty(entry.Key, PropertyAttributes.HasDefault, entry.Value, null);
+                var propertyGetter = type.DefineMethod($"get_{entry.Key}", MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig, entry.Value, Type.EmptyTypes);
+                var propertyGetterIl = propertyGetter.GetILGenerator();
+
+                propertyGetterIl.Emit(OpCodes.Ldarg_0);
+                propertyGetterIl.Emit(OpCodes.Ldfld, field);
+                propertyGetterIl.Emit(OpCodes.Ret);
+
+                var propertySetter = type.DefineMethod($"set_{entry.Key}", MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig, null, new[] {entry.Value});
+                var propertySetterIl = propertySetter.GetILGenerator();
+
+                propertySetterIl.MarkLabel(propertySetterIl.DefineLabel());
+                propertySetterIl.Emit(OpCodes.Ldarg_0);
+                propertySetterIl.Emit(OpCodes.Ldarg_1);
+                propertySetterIl.Emit(OpCodes.Stfld, field);
+
+                propertySetterIl.Emit(OpCodes.Nop);
+                propertySetterIl.MarkLabel(propertySetterIl.DefineLabel());
+                propertySetterIl.Emit(OpCodes.Ret);
+
+                property.SetGetMethod(propertyGetter);
+                property.SetSetMethod(propertySetter);
+            }
+
+            return type.CreateTypeInfo().AsType();
         }
-
-        public List<dynamic> ToList() => Invoke(Source).AsEnumerable().Select(Map).ToList();
-
-        public Task<List<dynamic>> ToListAsync() => Invoke(Source).ToAsyncEnumerable().Select(Map).ToList();
     }
 }
