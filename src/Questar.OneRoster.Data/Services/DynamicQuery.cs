@@ -66,7 +66,7 @@ namespace Questar.OneRoster.Data.Services
             });
             var body = Expression.MemberInit(Expression.New(type), bindings);
             var selector = Expression.Lambda(body, parameter);
-            var call = Expression.Call(typeof(Queryable), "Select", new[] { type, type }, Source.Expression, Expression.Quote(selector));
+            var call = Expression.Call(typeof(Queryable), "Select", new[] { type, type }, Source.Expression, selector);
             var query = queryable.Provider.CreateQuery<T>(call);
             return query;
         }
