@@ -30,7 +30,6 @@ namespace Questar.OneRoster.Data.Services
         {
             var count = Source.Count();
             var items = Source.Skip(offset).Take(limit).ToList();
-
             return new Page<T>(offset / limit, limit, count, items);
         }
 
@@ -38,7 +37,6 @@ namespace Questar.OneRoster.Data.Services
         {
             var count = Source.Count();
             var items = Source.Skip(offset).Take(limit).ToAsyncEnumerable().ToList();
-
             return new Page<T>(offset / limit, limit, count, await items);
         }
     }

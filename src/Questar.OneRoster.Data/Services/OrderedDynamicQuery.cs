@@ -15,7 +15,6 @@ namespace Questar.OneRoster.Data.Services
         {
             var count = Source.Count();
             var items = Source.Skip(offset).Take(limit).DynamicSelect(Members).ToList();
-
             return new Page<dynamic>(offset / limit, limit, count, items);
         }
 
@@ -23,7 +22,6 @@ namespace Questar.OneRoster.Data.Services
         {
             var count = Source.Count();
             var items = Source.Skip(offset).Take(limit).DynamicSelect(Members).ToAsyncEnumerable().ToList();
-
             return new Page<dynamic>(offset / limit, limit, count, await items);
         }
 

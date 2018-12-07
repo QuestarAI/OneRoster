@@ -17,9 +17,9 @@ namespace Questar.OneRoster.Data.Services
 
         public IEnumerable<string> Members { get; }
 
-        public object Single() => Source.Single();
+        public dynamic Single() => Source.Single();
 
-        public async Task<object> SingleAsync() => await Task.FromResult(Source.DynamicSelect(Members).Single());
+        public async Task<dynamic> SingleAsync() => await Task.FromResult(Source.DynamicSelect(Members).Single());
 
         IList IQuery.ToList() => ToList();
 
