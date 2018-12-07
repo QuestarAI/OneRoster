@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EC1CCE21-CB53-4BA5-8B70-2F06A8FAFEF2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\.gitignore = ..\.gitignore
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F3419DBB-B068-48B3-90D1-79C43356A349}"
@@ -22,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Data", "Q
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.ApiFramework", "Questar.OneRoster.ApiFramework\Questar.OneRoster.ApiFramework.csproj", "{7EC7338F-19ED-45F0-A20A-DE85B5DD0CC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questar.OneRoster.Data.Test", "Questar.OneRoster.Data.Test\Questar.OneRoster.Data.Test.csproj", "{F777FA18-679B-4E9C-A98E-29C49B4E107A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Data.Test", "Questar.OneRoster.Data.Test\Questar.OneRoster.Data.Test.csproj", "{F777FA18-679B-4E9C-A98E-29C49B4E107A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

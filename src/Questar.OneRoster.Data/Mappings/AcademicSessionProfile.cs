@@ -1,7 +1,6 @@
 namespace Questar.OneRoster.Data.Mappings
 {
     using AutoMapper;
-    using Common;
     using Models;
     using AcademicSession = Data.AcademicSession;
 

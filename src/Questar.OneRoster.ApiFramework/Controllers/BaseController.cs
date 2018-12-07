@@ -84,7 +84,7 @@ namespace Questar.OneRoster.ApiFramework
             return Ok(new SelectResponse { Data = data }); // TODO data name
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{SourcedId}")]
         public virtual async Task<ActionResult<SingleResponse>> Single(SingleRequest request)
         {
             var statuses = new StatusInfoList();
@@ -105,7 +105,7 @@ namespace Questar.OneRoster.ApiFramework
                 return BadRequest(new SingleResponse { StatusInfo = statuses });
 
             var query = Workspace.GetRepository<T>().AsQuery();
-            var query1 = query.WhereHasKey(request.SourcedId);
+            var query1 = query.WhereHasKey(request.SourcedId); // query.Where(x => x.SourcedId == request.SourcedId);
             var query2 = fields == null ? (IQuery) query1 : query1.Fields(fields);
             var data = await query2.SingleAsync();
 

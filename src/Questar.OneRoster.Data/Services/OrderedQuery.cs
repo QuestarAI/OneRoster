@@ -3,12 +3,14 @@ namespace Questar.OneRoster.Data.Services
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Collections;
+    using Models;
 
     public class OrderedQuery<T> : Query<T>, IOrderedQuery<T>
     {
-        public OrderedQuery(IOrderedQueryable<T> source, Func<T, object> keySelector, Func<object, object, bool> keyComparer) : base(source, keySelector, keyComparer)
+        public OrderedQuery(IOrderedQueryable<T> source, Expression<Func<T, object>> keySelector, Expression<Func<object, object, bool>> keyComparer) : base(source, keySelector, keyComparer)
         {
         }
 

@@ -4,13 +4,15 @@ namespace Questar.OneRoster.Data.Services
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Filtering;
+    using Remotion.Linq.Parsing.ExpressionVisitors;
     using Sorting;
 
     public class Query<T> : IQuery<T>
     {
-        public Query(IQueryable<T> source, Func<T, object> keySelector, Func<object, object, bool> keyComparer)
+        public Query(IQueryable<T> source, Expression<Func<T, object>> keySelector, Expression<Func<object, object, bool>> keyComparer)
         {
             Source = source;
             KeySelector = keySelector;
@@ -19,9 +21,9 @@ namespace Questar.OneRoster.Data.Services
 
         protected IQueryable<T> Source { get; }
 
-        protected Func<T, object> KeySelector { get; }
+        protected Expression<Func<T, object>> KeySelector { get; }
 
-        protected Func<object, object, bool> KeyComparer { get; }
+        protected Expression<Func<object, object, bool>> KeyComparer { get; }
 
         protected virtual IDynamicQuery ToDynamicQuery(IEnumerable<string> fields) => new DynamicQuery<T>(Source, fields);
 
@@ -37,7 +39,19 @@ namespace Questar.OneRoster.Data.Services
 
         public virtual IQuery<T> Where(FilterExpression<T> predicate) => new Query<T>(Source.Where(predicate), KeySelector, KeyComparer);
 
-        public virtual IQuery<T> WhereHasKey(object key) => new Query<T>(Source.Where(source => KeyComparer(KeySelector(source), key)), KeySelector, KeyComparer);
+        public virtual IQuery<T> WhereHasKey(object key)
+        {
+            // delegate invocation creates an invalid expression, so we have to rearrange the expression tree
+            var value = Expression.Convert(Expression.Constant(key), typeof(object));
+            var parameter = Expression.Parameter(Source.ElementType);
+            var select = ReplacingExpressionVisitor.Replace(KeySelector.Parameters.Single(), parameter, KeySelector.Body);
+            var compare1 = ReplacingExpressionVisitor.Replace(KeyComparer.Parameters.ElementAt(0), select, KeyComparer.Body);
+            var compare2 = ReplacingExpressionVisitor.Replace(KeyComparer.Parameters.ElementAt(1), value, compare1);
+            var predicate = Expression.Lambda(compare2, parameter);
+            var call = Expression.Call(typeof(Queryable), "Where", new[] { parameter.Type }, Source.Expression, predicate);
+            var query = Source.Provider.CreateQuery<T>(call);
+            return new Query<T>(query, KeySelector, KeyComparer);
+        }
 
         public virtual IOrderedQuery<T> Sort(string field, SortDirection? direction) => new OrderedQuery<T>(Source.SortBy(field, direction), KeySelector, KeyComparer);
 

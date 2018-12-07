@@ -2,14 +2,15 @@ namespace Questar.OneRoster.Data.Services
 {
     using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using AutoMapper.EntityFrameworkCore;
     using AutoMapper.Extensions.ExpressionMapping.Impl;
 
-    public class ModelRepository<T, TKey> : Repository<T>
+    public class ModelRepository<T> : Repository<T>
         where T : class
     {
-        public ModelRepository(ISourceInjectedQueryable<T> source, IPersistence persistence, Func<T, TKey> keySelector, Func<TKey, TKey, bool> keyComparer)
+        public ModelRepository(ISourceInjectedQueryable<T> source, IPersistence persistence, Expression<Func<T, object>> keySelector, Expression<Func<object, object, bool>> keyComparer)
         {
             Source = source;
             Persistence = persistence;
@@ -21,9 +22,9 @@ namespace Questar.OneRoster.Data.Services
 
         protected IPersistence Persistence { get; }
 
-        protected Func<T, TKey> KeySelector { get; }
+        protected Expression<Func<T, object>> KeySelector { get; }
 
-        protected Func<TKey, TKey, bool> KeyComparer { get; }
+        protected Expression<Func<object, object, bool>> KeyComparer { get; }
 
         public override Task UpsertAsync(T entity)
         {
@@ -39,6 +40,6 @@ namespace Questar.OneRoster.Data.Services
 
         public override IQueryable<T> AsQueryable() => Source;
 
-        public override IQuery<T> AsQuery() => new Query<T>(Source, entity => KeySelector(entity), (x, y) => KeyComparer((TKey) x, (TKey) y));
+        public override IQuery<T> AsQuery() => new Query<T>(Source, KeySelector, KeyComparer);
     }
 }
