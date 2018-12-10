@@ -18,7 +18,7 @@ namespace Questar.OneRoster.App
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOneRoster(@"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True");
+            services.AddOneRoster(Configuration.GetConnectionString("OneRoster"));
             services.AddOneRosterApiFramework();
 
             services

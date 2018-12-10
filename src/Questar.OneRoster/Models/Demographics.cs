@@ -22,12 +22,12 @@ namespace Questar.OneRoster.Models
 
         public bool? HispanicOrLatinoEthnicity { get; set; }
 
-        public string CountryOfBirthCode { get; set; } // TODO string
+        public string CountryOfBirthCode { get; set; }
 
-        public string StateOfBirthAbbreviation { get; set; } // TODO string
+        public string StateOfBirthAbbreviation { get; set; }
 
         public string CityOfBirth { get; set; }
 
-        public string PublicSchoolResidenceStatus { get; set; } // TODO string
+        public string PublicSchoolResidenceStatus { get; set; }
     }
 }

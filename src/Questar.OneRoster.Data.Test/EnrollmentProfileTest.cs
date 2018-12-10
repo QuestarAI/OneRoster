@@ -52,11 +52,11 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromRole()
-            => CanMapFrom(entity => (RoleType) entity.User.Type, model => model.Role); // TODO UserProfile?
+            => CanMapFrom(entity => (RoleType) entity.User.Type, model => model.Role);
 
         [Fact]
         public void CanMapFromSchool()
-            => CanMapFrom(entity => entity.Class.School, model => model.School); // TODO ClassProfile?
+            => CanMapFrom(entity => entity.Class.School, model => model.School);
 
         [Fact]
         public void CanMapFromSourcedId()

@@ -41,6 +41,6 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 
         public override IQueryable<T> AsQueryable() => Source;
 
-        public override IQuery<T> AsQuery() => new Query<T>(Source, KeySelector, KeyComparer);
+        public override IQuery<T> AsQuery() => new SourceInjectedQuery<T>(Source, KeySelector, KeyComparer);
     }
 }

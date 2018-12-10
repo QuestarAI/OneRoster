@@ -67,11 +67,15 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(new SelectResponse { StatusInfo = statuses });
 
-            var query = Workspace.GetRepository<T>().AsQuery();
-            var query1 = filter == null ? query : query.Where(filter.ToFilterExpression<T>());
-            var query2 = query1.Sort(sortName ?? nameof(Base.SourcedId), sortDirection);
-            var query3 = fields == null ? (IOrderedQuery) query2 : query2.Fields(fields);
-            var data = await query3.ToPageAsync(pageOffset, pageLimit);
+            IQuery query = Workspace.GetRepository<T>().AsQuery();
+
+            if (filter != null) query = query.Where(filter);
+
+            query = query.Sort(sortName ?? nameof(Base.SourcedId), sortDirection);
+
+            if (fields != null) query = query.Select(fields);
+
+            var data = await query.ToPageAsync(pageOffset, pageLimit);
             var count = data.Count;
 
             HttpContext.Response.Headers.Add("X-Total-Count", count.ToString());
@@ -104,10 +108,15 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(new SingleResponse { StatusInfo = statuses });
 
-            var query = Workspace.GetRepository<T>().AsQuery();
-            var query1 = query.WhereHasKey(request.SourcedId); // query.Where(x => x.SourcedId == request.SourcedId);
-            var query2 = fields == null ? (IQuery) query1 : query1.Fields(fields);
-            var data = await query2.SingleAsync();
+            IQuery query =
+                Workspace
+                    .GetRepository<T>()
+                    .AsQuery()
+                    .WhereHasKey(request.SourcedId);
+
+            if (fields != null) query = query.Select(fields);
+
+            var data = await query.SingleAsync();
 
             return Ok(new SingleResponse { Data = data }); // TODO data name
         }

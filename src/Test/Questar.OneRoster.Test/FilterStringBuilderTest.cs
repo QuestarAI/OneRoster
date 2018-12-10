@@ -67,7 +67,7 @@ namespace Questar.OneRoster.Test
             CanApplyFilter("CorgeEnum='One'", e => e.CorgeEnum == Count.One);
         }
 
-        // TODO do not explicitly support this
+        // do not explicitly support this
         //[Fact]
         //public void CanApplyEnumEqualExpressionWithInvalidValue()
         //{
@@ -80,7 +80,7 @@ namespace Questar.OneRoster.Test
             CanApplyFilter("CorgeEnum!='One'", e => e.CorgeEnum != Count.One);
         }
 
-        // TODO do not explicitly support this
+        // do not explicitly support this
         //[Fact]
         //public void CanApplyEnumNotEqualExpressionWithInvalidValue()
         //{

@@ -2,18 +2,17 @@ namespace Questar.OneRoster.DataServices
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Collections;
     using Filtering;
     using Sorting;
 
     public interface IQuery<T> : IQuery
     {
-        IDynamicQuery Fields(IEnumerable<string> fields);
+        new IQuery<T> Sort(string field, SortDirection? direction = SortDirection.Asc);
 
-        IOrderedQuery<T> Sort(string field, SortDirection? direction = SortDirection.Asc);
+        new IQuery<T> Where(Filter filter);
 
-        IQuery<T> Where(FilterExpression<T> filter);
-
-        IQuery<T> WhereHasKey(object key);
+        new IQuery<T> WhereHasKey(object key);
 
         new T Single();
 
@@ -22,5 +21,9 @@ namespace Questar.OneRoster.DataServices
         new IList<T> ToList();
 
         new Task<IList<T>> ToListAsync();
+
+        new IPage<T> ToPage(int offset, int limit);
+
+        new Task<IPage<T>> ToPageAsync(int offset, int limit);
     }
 }

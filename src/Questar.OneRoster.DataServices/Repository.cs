@@ -23,7 +23,7 @@ namespace Questar.OneRoster.DataServices
 
         public int Count() => AsQueryable().Count();
 
-        public virtual Task<int> CountAsync() => Task.FromResult(Count()); // TODO check async enumerable support non-enumerable return values
+        public virtual Task<int> CountAsync() => Task.FromResult(Count());
 
         public abstract Task DeleteAsync(T entity);
 
