@@ -1,9 +1,10 @@
-namespace Questar.OneRoster.Data.Services
+namespace Questar.OneRoster.Data.Extensions
 {
     using System;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Services;
 
     public static class OneRosterApplicationBuilderExtensions
     {

@@ -52,7 +52,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromRole()
-            => CanMapFrom(entity => (UserType) entity.User.Type, model => model.Role); // TODO UserProfile?
+            => CanMapFrom(entity => (RoleType) entity.User.Type, model => model.Role); // TODO UserProfile?
 
         [Fact]
         public void CanMapFromSchool()

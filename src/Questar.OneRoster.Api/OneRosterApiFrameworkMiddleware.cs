@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.ApiFramework
+namespace Questar.OneRoster.Api
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;

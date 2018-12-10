@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Data
+namespace Questar.OneRoster.DataServices
 {
     public static class ReadOnlyRepositoryExtensions
     {

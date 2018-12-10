@@ -1,11 +1,11 @@
-namespace Questar.OneRoster.ApiFramework
+namespace Questar.OneRoster.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Data;
+    using DataServices;
     using Filtering;
     using Helpers;
     using Microsoft.AspNetCore.Mvc;

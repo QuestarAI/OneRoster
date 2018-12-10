@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.ApiFramework.Helpers
+namespace Questar.OneRoster.Api.Helpers
 {
     using System;
     using System.Linq;

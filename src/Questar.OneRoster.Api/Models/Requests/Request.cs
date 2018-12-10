@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.ApiFramework.Models.Requests
+namespace Questar.OneRoster.Api.Models.Requests
 {
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc;

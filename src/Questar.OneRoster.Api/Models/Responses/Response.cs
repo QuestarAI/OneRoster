@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.ApiFramework.Models.Responses
+namespace Questar.OneRoster.Api.Models.Responses
 {
     using Newtonsoft.Json;
     using OneRoster.Models.Errors;

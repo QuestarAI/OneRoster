@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Api
+namespace Questar.OneRoster.App
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;

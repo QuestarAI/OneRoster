@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Data.Services
+namespace Questar.OneRoster.Data.Extensions
 {
     public class OneRosterOptions
     {

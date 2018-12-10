@@ -76,7 +76,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromSex()
-            => CanMapFrom(entity => entity.Sex, model => model.Sex);
+            => CanMapFrom(entity => (Gender) entity.Sex, model => model.Sex);
 
         [Fact]
         public void CanMapFromSourcedId()

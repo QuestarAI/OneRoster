@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Data.Services
+namespace Questar.OneRoster.DataServices.EntityFrameworkCore.Refactor
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,6 @@ namespace Questar.OneRoster.Data.Services
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Collections;
-    using Models;
 
     public class OrderedQuery<T> : Query<T>, IOrderedQuery<T>
     {

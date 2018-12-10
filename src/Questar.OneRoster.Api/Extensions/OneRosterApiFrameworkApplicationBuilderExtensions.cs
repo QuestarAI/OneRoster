@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.ApiFramework.Extensions
+namespace Questar.OneRoster.Api.Extensions
 {
     using System;
     using System.Reflection;

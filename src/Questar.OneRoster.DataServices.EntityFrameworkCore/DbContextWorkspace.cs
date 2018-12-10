@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Data.Services
+namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 {
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;

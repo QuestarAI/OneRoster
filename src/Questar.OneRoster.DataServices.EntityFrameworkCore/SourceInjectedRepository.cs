@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Data.Services
+namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 {
     using System;
     using System.Linq;
@@ -6,6 +6,7 @@ namespace Questar.OneRoster.Data.Services
     using System.Threading.Tasks;
     using AutoMapper.EntityFrameworkCore;
     using AutoMapper.Extensions.ExpressionMapping.Impl;
+    using Refactor;
 
     public class SourceInjectedRepository<T> : Repository<T>
         where T : class

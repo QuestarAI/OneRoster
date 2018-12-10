@@ -4,6 +4,8 @@ namespace Questar.OneRoster.Data.Services
     using AutoMapper;
     using AutoMapper.EntityFrameworkCore;
     using AutoMapper.Extensions.ExpressionMapping;
+    using DataServices;
+    using DataServices.EntityFrameworkCore;
     using Models;
 
     public class OneRosterDbContextWorkspace : DbContextWorkspace<OneRosterDbContext>

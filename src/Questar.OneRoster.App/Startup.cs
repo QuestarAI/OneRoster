@@ -1,8 +1,7 @@
-namespace Questar.OneRoster.Api
+namespace Questar.OneRoster.App
 {
-    using ApiFramework;
-    using ApiFramework.Extensions;
-    using Data.Services;
+    using Api.Extensions;
+    using Data.Extensions;
     using JetBrains.Annotations;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;

@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.ApiFramework
+namespace Questar.OneRoster.Api
 {
     public class OneRosterApiFrameworkOptions
     {

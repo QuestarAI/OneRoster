@@ -1,11 +1,13 @@
-namespace Questar.OneRoster.Data.Services
+namespace Questar.OneRoster.Data.Extensions
 {
     using System;
     using AutoMapper;
     using AutoMapper.EquivalencyExpression;
     using AutoMapper.Extensions.ExpressionMapping;
+    using DataServices;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Services;
 
     public static class OneRosterServiceCollectionExtensions
     {

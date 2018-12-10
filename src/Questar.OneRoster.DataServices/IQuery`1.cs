@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Data
+namespace Questar.OneRoster.DataServices
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Data.Services
+namespace Questar.OneRoster.DataServices
 {
     using System;
     using System.Collections.ObjectModel;

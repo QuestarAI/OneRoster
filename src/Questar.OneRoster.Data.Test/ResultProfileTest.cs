@@ -53,7 +53,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromScoreStatus()
-            => CanMapFrom(entity => entity.ScoreStatus, model => model.ScoreStatus);
+            => CanMapFrom(entity => (ScoreStatus) entity.ScoreStatus, model => model.ScoreStatus);
 
         [Fact]
         public void CanMapFromSourcedId()

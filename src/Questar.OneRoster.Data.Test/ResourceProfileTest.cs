@@ -32,7 +32,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromImportance()
-            => CanMapFrom(entity => entity.Importance, model => model.Importance);
+            => CanMapFrom(entity => (Importance) entity.Importance, model => model.Importance);
 
         [Fact]
         public void CanMapFromMetadata()
