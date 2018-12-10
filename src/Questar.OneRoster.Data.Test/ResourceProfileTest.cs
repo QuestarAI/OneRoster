@@ -44,7 +44,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromRoles()
-            => CanMapFrom(entity => entity.Roles, model => model.Roles);
+            => CanMapFrom(entity => entity.Roles.Select(container => (RoleType) container.Role), model => model.Roles);
 
         [Fact]
         public void CanMapFromSourcedId()
