@@ -32,10 +32,22 @@ namespace Questar.OneRoster.Data.Profiles
                 .ForMember(target => target.Href, config => config.MapFrom(source => $"{prefix}/classes/{source.Id}"))
                 .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.Id))
                 .ForMember(target => target.Type, config => config.MapFrom(source => GuidType.Class));
+            CreateMap<ClassAcademicSession, GuidRef>()
+                .ForMember(target => target.Href, config => config.MapFrom(source => $"{prefix}/academicSessions/{source.AcademicSessionId}"))
+                .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.AcademicSessionId))
+                .ForMember(target => target.Type, config => config.MapFrom(source => GuidType.AcademicSession));
+            CreateMap<ClassResource, GuidRef>()
+                .ForMember(target => target.Href, config => config.MapFrom(source => $"{prefix}/resources/{source.ResourceId}"))
+                .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.ResourceId))
+                .ForMember(target => target.Type, config => config.MapFrom(source => GuidType.Resource));
             CreateMap<Course, GuidRef>()
                 .ForMember(target => target.Href, config => config.MapFrom(source => $"{prefix}/courses/{source.Id}"))
                 .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.Id))
                 .ForMember(target => target.Type, config => config.MapFrom(source => GuidType.Course));
+            CreateMap<CourseResource, GuidRef>()
+                .ForMember(target => target.Href, config => config.MapFrom(source => $"{prefix}/resources/{source.ResourceId}"))
+                .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.ResourceId))
+                .ForMember(target => target.Type, config => config.MapFrom(source => GuidType.Resource));
             CreateMap<Demographics, GuidRef>()
                 .ForMember(target => target.Href, config => config.MapFrom(source => $"{prefix}/demographics/{source.Id}"))
                 .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.Id))
