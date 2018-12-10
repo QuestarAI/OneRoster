@@ -108,8 +108,8 @@ namespace Questar.OneRoster.Api.Controllers
         [HttpGet("{SourcedId}")]
         public virtual async Task<ActionResult<dynamic>> Single(SingleRequest request)
         {
-            var result = (IDictionary<string, object>)new ExpandoObject();
-            var statuses = (StatusInfoList)(result[StatusInfoSet] = new StatusInfoList());
+            var result = (IDictionary<string, object>) new ExpandoObject();
+            var statuses = (StatusInfoList) (result[StatusInfoSet] = new StatusInfoList());
 
             var fields = request.Fields?
                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)

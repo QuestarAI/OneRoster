@@ -14,10 +14,7 @@ namespace Questar.OneRoster.Data.Extensions
         public static void AddOneRoster(this IServiceCollection services, string connectionString)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-            services.AddDbContext<OneRosterDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
+            services.AddDbContext<OneRosterDbContext>(options => { options.UseSqlServer(connectionString); });
             services.AddAutoMapper(config =>
             {
                 config.AddExpressionMapping();

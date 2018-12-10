@@ -48,7 +48,7 @@ namespace Questar.OneRoster.Data.Test
 
         [Fact]
         public void CanMapFromSchoolYear()
-            => CanMapFrom(entity => (Year) (int) entity.SchoolYear, entity => entity.SchoolYear);
+            => CanMapFrom(entity => (int) entity.SchoolYear, entity => entity.SchoolYear);
 
         [Fact]
         public void CanMapFromSourcedId()

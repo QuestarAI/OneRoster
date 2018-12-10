@@ -18,7 +18,7 @@ namespace Questar.OneRoster.Api.Models
 
         [FromQuery]
         public SortDirection? OrderBy { get; set; }
-        
+
         [FromQuery]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Filter { get; set; }

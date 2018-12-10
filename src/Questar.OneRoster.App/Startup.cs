@@ -12,8 +12,6 @@ namespace Questar.OneRoster.App
 
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -28,6 +26,8 @@ namespace Questar.OneRoster.App
             Configuration = builder.Build();
         }
 
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOneRoster(Configuration.GetConnectionString("OneRoster"));
@@ -38,7 +38,7 @@ namespace Questar.OneRoster.App
                 .AddOneRosterApi();
 
             // TODO: Consolidate where this connection string comes from.
-           
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1p1", new Info
@@ -67,10 +67,7 @@ namespace Questar.OneRoster.App
             app.UseOneRoster(Configuration.GetValue<bool>("Data:Initialize"));
 
             app.UseStaticFiles();
-            app.UseSwagger(options =>
-            {
-                options.RouteTemplate = "ims/oneroster/{documentName}/swagger.json";
-            });
+            app.UseSwagger(options => { options.RouteTemplate = "ims/oneroster/{documentName}/swagger.json"; });
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "ims/oneroster";

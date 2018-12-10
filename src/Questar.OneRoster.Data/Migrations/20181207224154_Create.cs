@@ -1,80 +1,65 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-
 namespace Questar.OneRoster.Data.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Metadata;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class Create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DataProtectionKey",
-                columns: table => new
+                "DataProtectionKey",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FriendlyName = table.Column<string>(nullable: true),
                     Xml = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DataProtectionKey", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_DataProtectionKey", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Grade",
-                columns: table => new
+                "Grade",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Code = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Grade", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Grade", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "MetadataCollection",
-                columns: table => new
+                "MetadataCollection",
+                table => new
                 {
                     MetadataCollectionId = table.Column<Guid>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MetadataCollection", x => x.MetadataCollectionId);
-                });
+                constraints: table => { table.PrimaryKey("PK_MetadataCollection", x => x.MetadataCollectionId); });
 
             migrationBuilder.CreateTable(
-                name: "Role",
-                columns: table => new
+                "Role",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Role", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Role", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Subject",
-                columns: table => new
+                "Subject",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Code = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subject", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Subject", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AcademicSession",
-                columns: table => new
+                "AcademicSession",
+                table => new
                 {
                     Type = table.Column<int>(nullable: false),
                     Title = table.Column<string>(maxLength: 256, nullable: false),
@@ -91,22 +76,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_AcademicSession", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AcademicSession_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_AcademicSession_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AcademicSession_AcademicSession_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "AcademicSession",
-                        principalColumn: "Id",
+                        "FK_AcademicSession_AcademicSession_ParentId",
+                        x => x.ParentId,
+                        "AcademicSession",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
-                columns: table => new
+                "Category",
+                table => new
                 {
                     Title = table.Column<string>(nullable: false),
                     Id = table.Column<Guid>(nullable: false),
@@ -118,16 +103,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Category_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Category_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Metadata",
-                columns: table => new
+                "Metadata",
+                table => new
                 {
                     CollectionId = table.Column<Guid>(nullable: false),
                     Key = table.Column<string>(maxLength: 64, nullable: false),
@@ -137,16 +122,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Metadata", x => new { x.CollectionId, x.Key });
                     table.ForeignKey(
-                        name: "FK_Metadata_MetadataCollection_CollectionId",
-                        column: x => x.CollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Metadata_MetadataCollection_CollectionId",
+                        x => x.CollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Org",
-                columns: table => new
+                "Org",
+                table => new
                 {
                     Name = table.Column<string>(maxLength: 256, nullable: false),
                     Type = table.Column<int>(nullable: false),
@@ -161,22 +146,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Org", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Org_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Org_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Org_Org_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Org",
-                        principalColumn: "Id",
+                        "FK_Org_Org_ParentId",
+                        x => x.ParentId,
+                        "Org",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Resource",
-                columns: table => new
+                "Resource",
+                table => new
                 {
                     Title = table.Column<string>(maxLength: 64, nullable: true),
                     Importance = table.Column<int>(nullable: false),
@@ -192,16 +177,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Resource", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Resource_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Resource_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
+                "User",
+                table => new
                 {
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
@@ -234,16 +219,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_User_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleClaim",
-                columns: table => new
+                "RoleClaim",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -255,16 +240,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_RoleClaim", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleClaim_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
+                        "FK_RoleClaim_Role_RoleId",
+                        x => x.RoleId,
+                        "Role",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Course",
-                columns: table => new
+                "Course",
+                table => new
                 {
                     Title = table.Column<string>(maxLength: 256, nullable: false),
                     Code = table.Column<string>(maxLength: 256, nullable: true),
@@ -279,28 +264,28 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Course", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Course_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Course_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Course_Org_OrgId",
-                        column: x => x.OrgId,
-                        principalTable: "Org",
-                        principalColumn: "Id",
+                        "FK_Course_Org_OrgId",
+                        x => x.OrgId,
+                        "Org",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Course_AcademicSession_SchoolYearId",
-                        column: x => x.SchoolYearId,
-                        principalTable: "AcademicSession",
-                        principalColumn: "Id",
+                        "FK_Course_AcademicSession_SchoolYearId",
+                        x => x.SchoolYearId,
+                        "AcademicSession",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ResourceRole",
-                columns: table => new
+                "ResourceRole",
+                table => new
                 {
                     ResourceId = table.Column<Guid>(nullable: false),
                     Role = table.Column<int>(nullable: false)
@@ -309,16 +294,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_ResourceRole", x => new { x.ResourceId, x.Role });
                     table.ForeignKey(
-                        name: "FK_ResourceRole_Resource_ResourceId",
-                        column: x => x.ResourceId,
-                        principalTable: "Resource",
-                        principalColumn: "Id",
+                        "FK_ResourceRole_Resource_ResourceId",
+                        x => x.ResourceId,
+                        "Resource",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Demographics",
-                columns: table => new
+                "Demographics",
+                table => new
                 {
                     UserId = table.Column<Guid>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: true),
@@ -343,28 +328,28 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Demographics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Demographics_User_Id",
-                        column: x => x.Id,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_Demographics_User_Id",
+                        x => x.Id,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Demographics_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Demographics_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Demographics_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_Demographics_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAgent",
-                columns: table => new
+                "UserAgent",
+                table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
                     AgentId = table.Column<Guid>(nullable: false)
@@ -373,22 +358,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserAgent", x => new { x.UserId, x.AgentId });
                     table.ForeignKey(
-                        name: "FK_UserAgent_User_AgentId",
-                        column: x => x.AgentId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserAgent_User_AgentId",
+                        x => x.AgentId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserAgent_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserAgent_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserClaim",
-                columns: table => new
+                "UserClaim",
+                table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
@@ -400,16 +385,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserClaim", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserClaim_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserClaim_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserGrade",
-                columns: table => new
+                "UserGrade",
+                table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
                     GradeId = table.Column<Guid>(nullable: false)
@@ -418,22 +403,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserGrade", x => new { x.UserId, x.GradeId });
                     table.ForeignKey(
-                        name: "FK_UserGrade_Grade_GradeId",
-                        column: x => x.GradeId,
-                        principalTable: "Grade",
-                        principalColumn: "Id",
+                        "FK_UserGrade_Grade_GradeId",
+                        x => x.GradeId,
+                        "Grade",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserGrade_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserGrade_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserIdentifier",
-                columns: table => new
+                "UserIdentifier",
+                table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
                     Type = table.Column<string>(maxLength: 256, nullable: false),
@@ -443,16 +428,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserIdentifier", x => new { x.UserId, x.Type, x.Identifier });
                     table.ForeignKey(
-                        name: "FK_UserIdentifier_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserIdentifier_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserLogin",
-                columns: table => new
+                "UserLogin",
+                table => new
                 {
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
@@ -463,16 +448,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserLogin", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_UserLogin_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserLogin_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserOrg",
-                columns: table => new
+                "UserOrg",
+                table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
                     OrgId = table.Column<Guid>(nullable: false)
@@ -481,22 +466,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserOrg", x => new { x.UserId, x.OrgId });
                     table.ForeignKey(
-                        name: "FK_UserOrg_Org_OrgId",
-                        column: x => x.OrgId,
-                        principalTable: "Org",
-                        principalColumn: "Id",
+                        "FK_UserOrg_Org_OrgId",
+                        x => x.OrgId,
+                        "Org",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserOrg_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserOrg_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRole",
-                columns: table => new
+                "UserRole",
+                table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
                     RoleId = table.Column<Guid>(nullable: false)
@@ -505,22 +490,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserRole", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_UserRole_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
+                        "FK_UserRole_Role_RoleId",
+                        x => x.RoleId,
+                        "Role",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRole_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserRole_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserToken",
-                columns: table => new
+                "UserToken",
+                table => new
                 {
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
@@ -531,16 +516,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserToken", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_UserToken_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_UserToken_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Class",
-                columns: table => new
+                "Class",
+                table => new
                 {
                     Type = table.Column<int>(nullable: false),
                     Title = table.Column<string>(maxLength: 256, nullable: false),
@@ -557,28 +542,28 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Class", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Class_Course_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Course",
-                        principalColumn: "Id",
+                        "FK_Class_Course_CourseId",
+                        x => x.CourseId,
+                        "Course",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Class_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Class_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Class_Org_SchoolId",
-                        column: x => x.SchoolId,
-                        principalTable: "Org",
-                        principalColumn: "Id",
+                        "FK_Class_Org_SchoolId",
+                        x => x.SchoolId,
+                        "Org",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CourseGrade",
-                columns: table => new
+                "CourseGrade",
+                table => new
                 {
                     CourseId = table.Column<Guid>(nullable: false),
                     GradeId = table.Column<Guid>(nullable: false)
@@ -587,22 +572,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_CourseGrade", x => new { x.CourseId, x.GradeId });
                     table.ForeignKey(
-                        name: "FK_CourseGrade_Course_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Course",
-                        principalColumn: "Id",
+                        "FK_CourseGrade_Course_CourseId",
+                        x => x.CourseId,
+                        "Course",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseGrade_Grade_GradeId",
-                        column: x => x.GradeId,
-                        principalTable: "Grade",
-                        principalColumn: "Id",
+                        "FK_CourseGrade_Grade_GradeId",
+                        x => x.GradeId,
+                        "Grade",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CourseResource",
-                columns: table => new
+                "CourseResource",
+                table => new
                 {
                     CourseId = table.Column<Guid>(nullable: false),
                     ResourceId = table.Column<Guid>(nullable: false)
@@ -611,22 +596,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_CourseResource", x => new { x.CourseId, x.ResourceId });
                     table.ForeignKey(
-                        name: "FK_CourseResource_Course_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Course",
-                        principalColumn: "Id",
+                        "FK_CourseResource_Course_CourseId",
+                        x => x.CourseId,
+                        "Course",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseResource_Resource_ResourceId",
-                        column: x => x.ResourceId,
-                        principalTable: "Resource",
-                        principalColumn: "Id",
+                        "FK_CourseResource_Resource_ResourceId",
+                        x => x.ResourceId,
+                        "Resource",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CourseSubject",
-                columns: table => new
+                "CourseSubject",
+                table => new
                 {
                     CourseId = table.Column<Guid>(nullable: false),
                     SubjectId = table.Column<Guid>(nullable: false)
@@ -635,22 +620,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_CourseSubject", x => new { x.CourseId, x.SubjectId });
                     table.ForeignKey(
-                        name: "FK_CourseSubject_Course_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Course",
-                        principalColumn: "Id",
+                        "FK_CourseSubject_Course_CourseId",
+                        x => x.CourseId,
+                        "Course",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseSubject_Subject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subject",
-                        principalColumn: "Id",
+                        "FK_CourseSubject_Subject_SubjectId",
+                        x => x.SubjectId,
+                        "Subject",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassAcademicSession",
-                columns: table => new
+                "ClassAcademicSession",
+                table => new
                 {
                     ClassId = table.Column<Guid>(nullable: false),
                     AcademicSessionId = table.Column<Guid>(nullable: false)
@@ -659,22 +644,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_ClassAcademicSession", x => new { x.ClassId, x.AcademicSessionId });
                     table.ForeignKey(
-                        name: "FK_ClassAcademicSession_AcademicSession_AcademicSessionId",
-                        column: x => x.AcademicSessionId,
-                        principalTable: "AcademicSession",
-                        principalColumn: "Id",
+                        "FK_ClassAcademicSession_AcademicSession_AcademicSessionId",
+                        x => x.AcademicSessionId,
+                        "AcademicSession",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClassAcademicSession_Class_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
+                        "FK_ClassAcademicSession_Class_ClassId",
+                        x => x.ClassId,
+                        "Class",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassGrade",
-                columns: table => new
+                "ClassGrade",
+                table => new
                 {
                     ClassId = table.Column<Guid>(nullable: false),
                     GradeId = table.Column<Guid>(nullable: false)
@@ -683,22 +668,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_ClassGrade", x => new { x.ClassId, x.GradeId });
                     table.ForeignKey(
-                        name: "FK_ClassGrade_Class_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
+                        "FK_ClassGrade_Class_ClassId",
+                        x => x.ClassId,
+                        "Class",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClassGrade_Grade_GradeId",
-                        column: x => x.GradeId,
-                        principalTable: "Grade",
-                        principalColumn: "Id",
+                        "FK_ClassGrade_Grade_GradeId",
+                        x => x.GradeId,
+                        "Grade",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassPeriod",
-                columns: table => new
+                "ClassPeriod",
+                table => new
                 {
                     ClassId = table.Column<Guid>(nullable: false),
                     Period = table.Column<string>(nullable: false)
@@ -707,16 +692,16 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_ClassPeriod", x => new { x.ClassId, x.Period });
                     table.ForeignKey(
-                        name: "FK_ClassPeriod_Class_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
+                        "FK_ClassPeriod_Class_ClassId",
+                        x => x.ClassId,
+                        "Class",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassResource",
-                columns: table => new
+                "ClassResource",
+                table => new
                 {
                     ClassId = table.Column<Guid>(nullable: false),
                     ResourceId = table.Column<Guid>(nullable: false)
@@ -725,22 +710,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_ClassResource", x => new { x.ClassId, x.ResourceId });
                     table.ForeignKey(
-                        name: "FK_ClassResource_Class_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
+                        "FK_ClassResource_Class_ClassId",
+                        x => x.ClassId,
+                        "Class",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClassResource_Resource_ResourceId",
-                        column: x => x.ResourceId,
-                        principalTable: "Resource",
-                        principalColumn: "Id",
+                        "FK_ClassResource_Resource_ResourceId",
+                        x => x.ResourceId,
+                        "Resource",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassSubject",
-                columns: table => new
+                "ClassSubject",
+                table => new
                 {
                     ClassId = table.Column<Guid>(nullable: false),
                     SubjectId = table.Column<Guid>(nullable: false)
@@ -749,22 +734,22 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_ClassSubject", x => new { x.ClassId, x.SubjectId });
                     table.ForeignKey(
-                        name: "FK_ClassSubject_Class_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
+                        "FK_ClassSubject_Class_ClassId",
+                        x => x.ClassId,
+                        "Class",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClassSubject_Subject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subject",
-                        principalColumn: "Id",
+                        "FK_ClassSubject_Subject_SubjectId",
+                        x => x.SubjectId,
+                        "Subject",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Enrollment",
-                columns: table => new
+                "Enrollment",
+                table => new
                 {
                     BeginDate = table.Column<DateTime>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true),
@@ -780,28 +765,28 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Enrollment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Enrollment_Class_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
+                        "FK_Enrollment_Class_ClassId",
+                        x => x.ClassId,
+                        "Class",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Enrollment_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Enrollment_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Enrollment_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_Enrollment_User_UserId",
+                        x => x.UserId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LineItem",
-                columns: table => new
+                "LineItem",
+                table => new
                 {
                     Title = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
@@ -821,34 +806,34 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_LineItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LineItem_Category_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Category",
-                        principalColumn: "Id",
+                        "FK_LineItem_Category_CategoryId",
+                        x => x.CategoryId,
+                        "Category",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LineItem_Class_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
+                        "FK_LineItem_Class_ClassId",
+                        x => x.ClassId,
+                        "Class",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LineItem_AcademicSession_GradingPeriodId",
-                        column: x => x.GradingPeriodId,
-                        principalTable: "AcademicSession",
-                        principalColumn: "Id",
+                        "FK_LineItem_AcademicSession_GradingPeriodId",
+                        x => x.GradingPeriodId,
+                        "AcademicSession",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_LineItem_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_LineItem_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Result",
-                columns: table => new
+                "Result",
+                table => new
                 {
                     Comment = table.Column<string>(nullable: true),
                     LineItemId = table.Column<Guid>(nullable: false),
@@ -865,366 +850,366 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     table.PrimaryKey("PK_Result", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Result_LineItem_LineItemId",
-                        column: x => x.LineItemId,
-                        principalTable: "LineItem",
-                        principalColumn: "Id",
+                        "FK_Result_LineItem_LineItemId",
+                        x => x.LineItemId,
+                        "LineItem",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Result_MetadataCollection_MetadataCollectionId",
-                        column: x => x.MetadataCollectionId,
-                        principalTable: "MetadataCollection",
-                        principalColumn: "MetadataCollectionId",
+                        "FK_Result_MetadataCollection_MetadataCollectionId",
+                        x => x.MetadataCollectionId,
+                        "MetadataCollection",
+                        "MetadataCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Result_User_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        "FK_Result_User_StudentId",
+                        x => x.StudentId,
+                        "User",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AcademicSession_MetadataCollectionId",
-                table: "AcademicSession",
-                column: "MetadataCollectionId");
+                "IX_AcademicSession_MetadataCollectionId",
+                "AcademicSession",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AcademicSession_ParentId",
-                table: "AcademicSession",
-                column: "ParentId");
+                "IX_AcademicSession_ParentId",
+                "AcademicSession",
+                "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_MetadataCollectionId",
-                table: "Category",
-                column: "MetadataCollectionId");
+                "IX_Category_MetadataCollectionId",
+                "Category",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Class_CourseId",
-                table: "Class",
-                column: "CourseId");
+                "IX_Class_CourseId",
+                "Class",
+                "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Class_MetadataCollectionId",
-                table: "Class",
-                column: "MetadataCollectionId");
+                "IX_Class_MetadataCollectionId",
+                "Class",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Class_SchoolId",
-                table: "Class",
-                column: "SchoolId");
+                "IX_Class_SchoolId",
+                "Class",
+                "SchoolId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassAcademicSession_AcademicSessionId",
-                table: "ClassAcademicSession",
-                column: "AcademicSessionId");
+                "IX_ClassAcademicSession_AcademicSessionId",
+                "ClassAcademicSession",
+                "AcademicSessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassGrade_GradeId",
-                table: "ClassGrade",
-                column: "GradeId");
+                "IX_ClassGrade_GradeId",
+                "ClassGrade",
+                "GradeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassResource_ResourceId",
-                table: "ClassResource",
-                column: "ResourceId");
+                "IX_ClassResource_ResourceId",
+                "ClassResource",
+                "ResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassSubject_SubjectId",
-                table: "ClassSubject",
-                column: "SubjectId");
+                "IX_ClassSubject_SubjectId",
+                "ClassSubject",
+                "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_MetadataCollectionId",
-                table: "Course",
-                column: "MetadataCollectionId");
+                "IX_Course_MetadataCollectionId",
+                "Course",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_OrgId",
-                table: "Course",
-                column: "OrgId");
+                "IX_Course_OrgId",
+                "Course",
+                "OrgId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_SchoolYearId",
-                table: "Course",
-                column: "SchoolYearId");
+                "IX_Course_SchoolYearId",
+                "Course",
+                "SchoolYearId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseGrade_GradeId",
-                table: "CourseGrade",
-                column: "GradeId");
+                "IX_CourseGrade_GradeId",
+                "CourseGrade",
+                "GradeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseResource_ResourceId",
-                table: "CourseResource",
-                column: "ResourceId");
+                "IX_CourseResource_ResourceId",
+                "CourseResource",
+                "ResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseSubject_SubjectId",
-                table: "CourseSubject",
-                column: "SubjectId");
+                "IX_CourseSubject_SubjectId",
+                "CourseSubject",
+                "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Demographics_MetadataCollectionId",
-                table: "Demographics",
-                column: "MetadataCollectionId");
+                "IX_Demographics_MetadataCollectionId",
+                "Demographics",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Demographics_UserId",
-                table: "Demographics",
-                column: "UserId");
+                "IX_Demographics_UserId",
+                "Demographics",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollment_ClassId",
-                table: "Enrollment",
-                column: "ClassId");
+                "IX_Enrollment_ClassId",
+                "Enrollment",
+                "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollment_MetadataCollectionId",
-                table: "Enrollment",
-                column: "MetadataCollectionId");
+                "IX_Enrollment_MetadataCollectionId",
+                "Enrollment",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollment_UserId",
-                table: "Enrollment",
-                column: "UserId");
+                "IX_Enrollment_UserId",
+                "Enrollment",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Grade_Code",
-                table: "Grade",
-                column: "Code");
+                "IX_Grade_Code",
+                "Grade",
+                "Code");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LineItem_CategoryId",
-                table: "LineItem",
-                column: "CategoryId");
+                "IX_LineItem_CategoryId",
+                "LineItem",
+                "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LineItem_ClassId",
-                table: "LineItem",
-                column: "ClassId");
+                "IX_LineItem_ClassId",
+                "LineItem",
+                "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LineItem_GradingPeriodId",
-                table: "LineItem",
-                column: "GradingPeriodId");
+                "IX_LineItem_GradingPeriodId",
+                "LineItem",
+                "GradingPeriodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LineItem_MetadataCollectionId",
-                table: "LineItem",
-                column: "MetadataCollectionId");
+                "IX_LineItem_MetadataCollectionId",
+                "LineItem",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Org_Identifier",
-                table: "Org",
-                column: "Identifier");
+                "IX_Org_Identifier",
+                "Org",
+                "Identifier");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Org_MetadataCollectionId",
-                table: "Org",
-                column: "MetadataCollectionId");
+                "IX_Org_MetadataCollectionId",
+                "Org",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Org_ParentId",
-                table: "Org",
-                column: "ParentId");
+                "IX_Org_ParentId",
+                "Org",
+                "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Resource_MetadataCollectionId",
-                table: "Resource",
-                column: "MetadataCollectionId");
+                "IX_Resource_MetadataCollectionId",
+                "Resource",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Result_LineItemId",
-                table: "Result",
-                column: "LineItemId");
+                "IX_Result_LineItemId",
+                "Result",
+                "LineItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Result_MetadataCollectionId",
-                table: "Result",
-                column: "MetadataCollectionId");
+                "IX_Result_MetadataCollectionId",
+                "Result",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Result_StudentId",
-                table: "Result",
-                column: "StudentId");
+                "IX_Result_StudentId",
+                "Result",
+                "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "Role",
-                column: "NormalizedName",
+                "RoleNameIndex",
+                "Role",
+                "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleClaim_RoleId",
-                table: "RoleClaim",
-                column: "RoleId");
+                "IX_RoleClaim_RoleId",
+                "RoleClaim",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subject_Code",
-                table: "Subject",
-                column: "Code");
+                "IX_Subject_Code",
+                "Subject",
+                "Code");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_Identifier",
-                table: "User",
-                column: "Identifier");
+                "IX_User_Identifier",
+                "User",
+                "Identifier");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_MetadataCollectionId",
-                table: "User",
-                column: "MetadataCollectionId");
+                "IX_User_MetadataCollectionId",
+                "User",
+                "MetadataCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "User",
-                column: "NormalizedEmail");
+                "EmailIndex",
+                "User",
+                "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "User",
-                column: "NormalizedUserName",
+                "UserNameIndex",
+                "User",
+                "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAgent_AgentId",
-                table: "UserAgent",
-                column: "AgentId");
+                "IX_UserAgent_AgentId",
+                "UserAgent",
+                "AgentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserClaim_UserId",
-                table: "UserClaim",
-                column: "UserId");
+                "IX_UserClaim_UserId",
+                "UserClaim",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserGrade_GradeId",
-                table: "UserGrade",
-                column: "GradeId");
+                "IX_UserGrade_GradeId",
+                "UserGrade",
+                "GradeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserLogin_UserId",
-                table: "UserLogin",
-                column: "UserId");
+                "IX_UserLogin_UserId",
+                "UserLogin",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserOrg_OrgId",
-                table: "UserOrg",
-                column: "OrgId");
+                "IX_UserOrg_OrgId",
+                "UserOrg",
+                "OrgId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRole_RoleId",
-                table: "UserRole",
-                column: "RoleId");
+                "IX_UserRole_RoleId",
+                "UserRole",
+                "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ClassAcademicSession");
+                "ClassAcademicSession");
 
             migrationBuilder.DropTable(
-                name: "ClassGrade");
+                "ClassGrade");
 
             migrationBuilder.DropTable(
-                name: "ClassPeriod");
+                "ClassPeriod");
 
             migrationBuilder.DropTable(
-                name: "ClassResource");
+                "ClassResource");
 
             migrationBuilder.DropTable(
-                name: "ClassSubject");
+                "ClassSubject");
 
             migrationBuilder.DropTable(
-                name: "CourseGrade");
+                "CourseGrade");
 
             migrationBuilder.DropTable(
-                name: "CourseResource");
+                "CourseResource");
 
             migrationBuilder.DropTable(
-                name: "CourseSubject");
+                "CourseSubject");
 
             migrationBuilder.DropTable(
-                name: "DataProtectionKey");
+                "DataProtectionKey");
 
             migrationBuilder.DropTable(
-                name: "Demographics");
+                "Demographics");
 
             migrationBuilder.DropTable(
-                name: "Enrollment");
+                "Enrollment");
 
             migrationBuilder.DropTable(
-                name: "Metadata");
+                "Metadata");
 
             migrationBuilder.DropTable(
-                name: "ResourceRole");
+                "ResourceRole");
 
             migrationBuilder.DropTable(
-                name: "Result");
+                "Result");
 
             migrationBuilder.DropTable(
-                name: "RoleClaim");
+                "RoleClaim");
 
             migrationBuilder.DropTable(
-                name: "UserAgent");
+                "UserAgent");
 
             migrationBuilder.DropTable(
-                name: "UserClaim");
+                "UserClaim");
 
             migrationBuilder.DropTable(
-                name: "UserGrade");
+                "UserGrade");
 
             migrationBuilder.DropTable(
-                name: "UserIdentifier");
+                "UserIdentifier");
 
             migrationBuilder.DropTable(
-                name: "UserLogin");
+                "UserLogin");
 
             migrationBuilder.DropTable(
-                name: "UserOrg");
+                "UserOrg");
 
             migrationBuilder.DropTable(
-                name: "UserRole");
+                "UserRole");
 
             migrationBuilder.DropTable(
-                name: "UserToken");
+                "UserToken");
 
             migrationBuilder.DropTable(
-                name: "Subject");
+                "Subject");
 
             migrationBuilder.DropTable(
-                name: "Resource");
+                "Resource");
 
             migrationBuilder.DropTable(
-                name: "LineItem");
+                "LineItem");
 
             migrationBuilder.DropTable(
-                name: "Grade");
+                "Grade");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                "Role");
 
             migrationBuilder.DropTable(
-                name: "User");
+                "User");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                "Category");
 
             migrationBuilder.DropTable(
-                name: "Class");
+                "Class");
 
             migrationBuilder.DropTable(
-                name: "Course");
+                "Course");
 
             migrationBuilder.DropTable(
-                name: "Org");
+                "Org");
 
             migrationBuilder.DropTable(
-                name: "AcademicSession");
+                "AcademicSession");
 
             migrationBuilder.DropTable(
-                name: "MetadataCollection");
+                "MetadataCollection");
         }
     }
 }
