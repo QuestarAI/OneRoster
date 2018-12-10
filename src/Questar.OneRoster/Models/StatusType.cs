@@ -5,14 +5,11 @@ namespace Questar.OneRoster.Models
 
     public enum StatusType
     {
-        [SerializationToken("active")]
-        Active = 0,
+        [SerializationToken("active")] Active = 0,
 
-        [SerializationToken("tobedeleted")]
-        ToBeDeleted = 1,
+        [SerializationToken("tobedeleted")] ToBeDeleted = 1,
 
-        [Obsolete("Inactive is deprecated. Use ToBeDeleted.")]
-        [SerializationToken("inactive")]
+        [Obsolete("Inactive is deprecated. Use ToBeDeleted.")] [SerializationToken("inactive")]
         Inactive = ToBeDeleted
     }
 }

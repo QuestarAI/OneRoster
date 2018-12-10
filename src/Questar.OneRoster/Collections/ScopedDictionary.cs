@@ -35,17 +35,11 @@ namespace Questar.OneRoster.Collections
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
-            foreach (var item in _items)
-            {
-                yield return item;
-            }
+            foreach (var item in _items) yield return item;
 
             if (_parent == null) yield break;
 
-            foreach (var item in _parent)
-            {
-                yield return item;
-            }
+            foreach (var item in _parent) yield return item;
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

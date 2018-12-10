@@ -13,8 +13,6 @@ namespace Questar.OneRoster.Data
         {
         }
 
-        public new Guid Id => base.Id;
-
         [Required]
         public virtual UserType? Type { get; private set; }
 
@@ -56,6 +54,8 @@ namespace Questar.OneRoster.Data
 
         // students only
         public virtual ICollection<Result> Results { get; } = new HashSet<Result>();
+
+        public new Guid Id => base.Id;
 
         #region Base Object
 

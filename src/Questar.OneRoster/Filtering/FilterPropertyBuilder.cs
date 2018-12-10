@@ -46,6 +46,7 @@ namespace Questar.OneRoster.Filtering
                 default:
                     throw new NotSupportedException($"Member expression '{node}' not supported.");
             }
+
             Property = new FilterProperty(property.Name, Property);
             PropertyInfo = property;
             return node;

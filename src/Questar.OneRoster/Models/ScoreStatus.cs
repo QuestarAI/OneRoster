@@ -10,7 +10,8 @@ namespace Questar.OneRoster.Models
 
         [SerializationToken("not submitted")] NotSubmitted,
 
-        [SerializationToken("partially graded")] PartiallyGraded,
+        [SerializationToken("partially graded")]
+        PartiallyGraded,
 
         [SerializationToken("submitted")] Submitted
     }

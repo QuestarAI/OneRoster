@@ -15,7 +15,7 @@ namespace Questar.OneRoster.Data
         public virtual string Code { get; set; }
 
         public virtual IReadOnlyCollection<CourseSubject> Classes { get; } = new HashSet<CourseSubject>();
-        
+
         public virtual IReadOnlyCollection<ClassSubject> Courses { get; } = new HashSet<ClassSubject>();
     }
 }

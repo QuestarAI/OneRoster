@@ -4,10 +4,7 @@ namespace Questar.OneRoster.Data
 
     public class ClassAcademicSession
     {
-        public ClassAcademicSession(AcademicSession academicSession)
-        {
-            AcademicSession = academicSession;
-        }
+        public ClassAcademicSession(AcademicSession academicSession) => AcademicSession = academicSession;
 
         private ClassAcademicSession()
         {

@@ -7,8 +7,9 @@ namespace Questar.OneRoster.Data.Test
     using Models;
     using Profiles;
     using Xunit;
+    using Course = Data.Course;
 
-    public class CourseProfileTest : ProfileTest<Data.Course, Course>
+    public class CourseProfileTest : ProfileTest<Course, Models.Course>
     {
         public CourseProfileTest() : base(new Mapper(new MapperConfiguration(config =>
         {

@@ -14,8 +14,6 @@ namespace Questar.OneRoster.Data.Services
         {
         }
 
-        public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
-
         public DbSet<AcademicSession> AcademicSessions { get; private set; }
 
         public DbSet<Category> Categories { get; private set; }
@@ -33,6 +31,8 @@ namespace Questar.OneRoster.Data.Services
         public DbSet<Resource> Resources { get; private set; }
 
         public DbSet<Result> Results { get; private set; }
+
+        public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -115,7 +115,7 @@ namespace Questar.OneRoster.Data.Services
                 .HasOne<User>()
                 .WithOne(dependent => dependent.Demographics)
                 .HasForeignKey<Demographics>(dependent => dependent.Id);
-           
+
             // grade
 
             builder

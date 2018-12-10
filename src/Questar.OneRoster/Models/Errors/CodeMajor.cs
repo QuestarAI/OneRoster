@@ -7,13 +7,10 @@ namespace Questar.OneRoster.Models.Errors
     /// </summary>
     public enum CodeMajor
     {
-        [EnumMember(Value = "success")]
-        Success,
+        [EnumMember(Value = "success")] Success,
 
-        [EnumMember(Value = "failure")]
-        Failure,
+        [EnumMember(Value = "failure")] Failure,
 
-        [EnumMember(Value = "unsupported")]
-        Unsupported
+        [EnumMember(Value = "unsupported")] Unsupported
     }
 }

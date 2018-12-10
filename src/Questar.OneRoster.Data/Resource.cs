@@ -25,7 +25,7 @@ namespace Questar.OneRoster.Data
         public virtual ICollection<ResourceRole> Roles { get; } = new HashSet<ResourceRole>();
 
         public virtual IReadOnlyCollection<ClassResource> Classes { get; } = new HashSet<ClassResource>();
-        
+
         public virtual IReadOnlyCollection<CourseResource> Courses { get; } = new HashSet<CourseResource>();
 
         #region Base Object

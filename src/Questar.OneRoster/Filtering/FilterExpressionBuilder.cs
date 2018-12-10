@@ -35,7 +35,7 @@ namespace Questar.OneRoster.Filtering
         }
 
         public FilterExpression<T> ToExpression() =>
-            (Expression<Func<T, bool>>)Expression.Lambda(_expressions.Single(), false, Parameter);
+            (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), false, Parameter);
 
         public override void Visit(LogicalFilter filter)
             => LogicalBuilder(filter)(filter.Left, filter.Right);
@@ -85,6 +85,7 @@ namespace Questar.OneRoster.Filtering
                 expression = Expression.Property(expression, info);
                 type = info.PropertyType;
             }
+
             return expression as MemberExpression;
         }
 
@@ -142,6 +143,7 @@ namespace Questar.OneRoster.Filtering
             {
                 expression = fallback?.Invoke() ?? throw e;
             }
+
             _expressions.Push(expression);
             return this;
         }

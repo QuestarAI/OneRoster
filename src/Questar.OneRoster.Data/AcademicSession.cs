@@ -3,7 +3,6 @@ namespace Questar.OneRoster.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Models;
 
     public class AcademicSession : IBaseObject
     {

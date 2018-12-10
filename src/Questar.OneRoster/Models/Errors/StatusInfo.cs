@@ -1,6 +1,8 @@
 namespace Questar.OneRoster.Models.Errors
 {
-    using Newtonsoft.Json; // TODO hmm... remove this dependency, if possible
+    using Newtonsoft.Json;
+
+// TODO hmm... remove this dependency, if possible
 
     /// <summary>
     /// Represents an informational status about an API request/response.

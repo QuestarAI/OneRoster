@@ -9,7 +9,7 @@ namespace Questar.OneRoster.Data
         }
 
         public virtual User User { get; private set; }
-        
+
         public virtual DateTime? BirthDate { get; set; }
 
         public virtual Gender? Sex { get; set; }

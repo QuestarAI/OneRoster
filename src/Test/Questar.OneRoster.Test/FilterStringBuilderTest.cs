@@ -14,7 +14,7 @@ namespace Questar.OneRoster.Test
 
         [Fact]
         public void CanApplyDateTimeEqualExpression()
-          =>  CanApplyFilter("BazDateTime='2018-05-21'", e => e.BazDateTime == UtcDate(2018, 5, 21));
+            => CanApplyFilter("BazDateTime='2018-05-21'", e => e.BazDateTime == UtcDate(2018, 5, 21));
 
         [Fact]
         public void CanApplyDateTimeGreaterThanExpression()

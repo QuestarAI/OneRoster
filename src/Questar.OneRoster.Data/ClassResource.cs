@@ -4,10 +4,7 @@ namespace Questar.OneRoster.Data
 
     public class ClassResource
     {
-        public ClassResource(Resource resource)
-        {
-            Resource = resource;
-        }
+        public ClassResource(Resource resource) => Resource = resource;
 
         private ClassResource()
         {
