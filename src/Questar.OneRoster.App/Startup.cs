@@ -14,17 +14,28 @@ namespace Questar.OneRoster.App
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration) => Configuration = configuration;
-        
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
+                .AddEnvironmentVariables();
+
+            // manage secrets by right-clicking on the project in visual studio
+            if (env.IsDevelopment()) builder.AddUserSecrets<Startup>();
+
+            Configuration = builder.Build();
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOneRoster(Configuration.GetConnectionString("OneRoster"));
-            services.AddOneRosterApiFramework();
 
             services
                 .AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()))
-                .AddOneRosterApiFramework();
+                .AddOneRosterApi();
 
             // TODO: Consolidate where this connection string comes from.
            
@@ -53,8 +64,7 @@ namespace Questar.OneRoster.App
         [UsedImplicitly]
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseOneRoster();
-            app.UseOneRosterApiFramework();
+            app.UseOneRoster(Configuration.GetValue<bool>("Data:Initialize"));
 
             app.UseStaticFiles();
             app.UseSwagger(options =>

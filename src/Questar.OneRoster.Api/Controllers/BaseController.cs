@@ -2,6 +2,7 @@ namespace Questar.OneRoster.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Dynamic;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
@@ -9,27 +10,35 @@ namespace Questar.OneRoster.Api.Controllers
     using Filtering;
     using Helpers;
     using Microsoft.AspNetCore.Mvc;
-    using Models.Requests;
-    using Models.Responses;
+    using Models;
     using OneRoster.Models;
     using OneRoster.Models.Errors;
 
     [Produces("application/json")]
     public abstract class BaseController<T> : ControllerBase where T : Base
     {
+        protected const string StatusInfoSet = "StatusInfoSet";
+
         protected static readonly HashSet<string> Properties =
             new HashSet<string>(typeof(T)
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
 
-        protected BaseController(IWorkspace workspace) => Workspace = workspace;
+        protected BaseController(IWorkspace workspace, BaseControllerOptions options)
+        {
+            Workspace = workspace;
+            Options = options;
+        }
+
+        public BaseControllerOptions Options { get; }
 
         protected IWorkspace Workspace { get; }
 
         [HttpGet]
-        public virtual async Task<ActionResult<SelectResponse>> Select(SelectRequest request)
+        public virtual async Task<ActionResult<dynamic>> Select(SelectRequest request)
         {
-            var statuses = new StatusInfoList();
+            var result = (IDictionary<string, object>) new ExpandoObject();
+            var statuses = (StatusInfoList) (result[StatusInfoSet] = new StatusInfoList());
 
             var fields = request.Fields?
                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
@@ -65,14 +74,20 @@ namespace Questar.OneRoster.Api.Controllers
                 statuses.Add(StatusInfo.InvalidOffsetField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(new SelectResponse { StatusInfo = statuses });
+                return BadRequest(result);
 
-            IQuery query = Workspace.GetRepository<T>().AsQuery();
+            IQuery query =
+                Workspace
+                    .GetRepository<T>()
+                    .AsQuery();
 
+            // filter, only if requested
             if (filter != null) query = query.Where(filter);
 
+            // always sort, so that we may paginate
             query = query.Sort(sortName ?? nameof(Base.SourcedId), sortDirection);
 
+            // dynamic select, after sorting, only if requested
             if (fields != null) query = query.Select(fields);
 
             var data = await query.ToPageAsync(pageOffset, pageLimit);
@@ -80,18 +95,21 @@ namespace Questar.OneRoster.Api.Controllers
 
             HttpContext.Response.Headers.Add("X-Total-Count", count.ToString());
 
-            var linkFactory = new OneRosterLinkHeaderFactory(HttpContext);
+            var linkFactory = new LinkHeaderFactory(HttpContext);
             var link = linkFactory.Create(pageOffset, pageLimit, count);
             if (!string.IsNullOrEmpty(link))
                 HttpContext.Response.Headers.Add("Link", link);
 
-            return Ok(new SelectResponse { Data = data }); // TODO data name
+            result[Options.Plural] = data;
+
+            return Ok(result); // TODO data name
         }
 
         [HttpGet("{SourcedId}")]
-        public virtual async Task<ActionResult<SingleResponse>> Single(SingleRequest request)
+        public virtual async Task<ActionResult<dynamic>> Single(SingleRequest request)
         {
-            var statuses = new StatusInfoList();
+            var result = (IDictionary<string, object>)new ExpandoObject();
+            var statuses = (StatusInfoList)(result[StatusInfoSet] = new StatusInfoList());
 
             var fields = request.Fields?
                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
@@ -106,7 +124,7 @@ namespace Questar.OneRoster.Api.Controllers
                     statuses.Add(StatusInfo.InvalidBlankSelectionField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(new SingleResponse { StatusInfo = statuses });
+                return BadRequest(result);
 
             IQuery query =
                 Workspace
@@ -114,11 +132,14 @@ namespace Questar.OneRoster.Api.Controllers
                     .AsQuery()
                     .WhereHasKey(request.SourcedId);
 
+            // dynamic select, only if requested
             if (fields != null) query = query.Select(fields);
 
             var data = await query.SingleAsync();
 
-            return Ok(new SingleResponse { Data = data }); // TODO data name
+            result[Options.Singular] = data;
+
+            return Ok(result); // TODO data name
         }
 
         // IUpsertable<T>

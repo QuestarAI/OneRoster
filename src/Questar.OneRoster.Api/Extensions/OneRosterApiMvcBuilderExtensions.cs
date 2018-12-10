@@ -4,9 +4,9 @@ namespace Questar.OneRoster.Api.Extensions
     using System.Reflection;
     using Microsoft.Extensions.DependencyInjection;
 
-    public static class OneRosterApiFrameworkMvcBuilderExtensions
+    public static class OneRosterApiMvcBuilderExtensions
     {
-        public static IMvcBuilder AddOneRosterApiFramework(this IMvcBuilder builder)
+        public static IMvcBuilder AddOneRosterApi(this IMvcBuilder builder)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder));
             return builder

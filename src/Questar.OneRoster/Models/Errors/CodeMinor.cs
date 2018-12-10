@@ -8,7 +8,8 @@ namespace Questar.OneRoster.Models.Errors
     /// </summary>
     public enum CodeMinor
     {
-        [EnumMember(Value = "full success")] FullSuccess,
+        [EnumMember(Value = "full success")]
+        FullSuccess,
 
         [EnumMember(Value = "invalid_sort_field")]
         InvalidSortField,
@@ -16,7 +17,8 @@ namespace Questar.OneRoster.Models.Errors
         [EnumMember(Value = "invalid_selection_field")]
         InvalidSelectionField,
 
-        [EnumMember(Value = "invalid data")] InvalidData,
+        [EnumMember(Value = "invalid data")]
+        InvalidData,
 
         [EnumMember(Value = "invalid_filter_field")]
         InvalidFilterField,
@@ -32,12 +34,16 @@ namespace Questar.OneRoster.Models.Errors
         [EnumMember(Value = "invalid_blank_selection_field")]
         InvalidBlankSelectionField,
 
-        [EnumMember(Value = "unauthorized")] Unauthorized,
+        [EnumMember(Value = "unauthorized")]
+        Unauthorized,
 
-        [EnumMember(Value = "forbidden")] Forbidden,
+        [EnumMember(Value = "forbidden")]
+        Forbidden,
 
-        [EnumMember(Value = "unknown object")] UnknownObject,
+        [EnumMember(Value = "unknown object")]
+        UnknownObject,
 
-        [EnumMember(Value = "server_busy")] ServerBusy
+        [EnumMember(Value = "server_busy")]
+        ServerBusy
     }
 }

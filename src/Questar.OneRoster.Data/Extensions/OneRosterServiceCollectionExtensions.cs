@@ -26,13 +26,5 @@ namespace Questar.OneRoster.Data.Extensions
             services.AddScoped<OneRosterDbContext>();
             services.AddScoped<IWorkspace, OneRosterDbContextWorkspace>();
         }
-
-        public static void AddOneRoster(this IServiceCollection services, string connectionString, Action<OneRosterOptions> setupAction)
-        {
-            if (services == null) throw new ArgumentNullException(nameof(services));
-            if (setupAction == null) throw new ArgumentNullException(nameof(setupAction));
-            services.AddOneRoster(connectionString);
-            services.Configure(setupAction);
-        }
     }
 }

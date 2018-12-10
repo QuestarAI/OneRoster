@@ -1,18 +1,19 @@
-namespace Questar.OneRoster.Data.Mappings
+namespace Questar.OneRoster.Data.Profiles
 {
     using AutoMapper;
     using Models;
 
-    public class DemographicsProfile : Profile
+    public class EnrollmentProfile : Profile
     {
-        public DemographicsProfile()
+        public EnrollmentProfile()
         {
-            CreateMap<Data.Demographics, Demographics>()
+            CreateMap<Data.Enrollment, Enrollment>()
                 .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.Id))
                 .ForMember(target => target.DateLastModified, config => config.MapFrom(source => source.Modified))
                 .ForMember(target => target.StatusType, config => config.MapFrom(source => (StatusType) source.Status))
                 .ForMember(target => target.Metadata, config => config.MapFrom(source => source.MetadataCollection.Metadata))
-                .ForMember(target => target.Sex, config => config.MapFrom(source => (Gender) source.Sex));
+                .ForMember(target => target.Role, config => config.MapFrom(source => (RoleType) source.User.Type))
+                .ForMember(target => target.School, config => config.MapFrom(source => source.Class.School));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Questar.OneRoster.Data.Services
 
         protected override void Configure(WorkspaceBuilder builder)
         {
-            SourceInjectedRepository<TModel> ModelRepository<TModel, TEntity>()
+            SourceInjectedRepository<TModel> CreateRepository<TModel, TEntity>()
                 where TModel : Base
                 where TEntity : class, IBaseObject
             {
@@ -25,17 +25,17 @@ namespace Questar.OneRoster.Data.Services
                 return new SourceInjectedRepository<TModel>(source, persistence, model => model.SourcedId, (x, y) => (Guid) x == (Guid) y);
             }
 
-            builder.Add(ModelRepository<AcademicSession, Data.AcademicSession>());
-            builder.Add(ModelRepository<Category, Data.Category>());
-            builder.Add(ModelRepository<Class, Data.Class>());
-            builder.Add(ModelRepository<Course, Data.Course>());
-            builder.Add(ModelRepository<Demographics, Data.Demographics>());
-            builder.Add(ModelRepository<Enrollment, Data.Enrollment>());
-            builder.Add(ModelRepository<LineItem, Data.LineItem>());
-            builder.Add(ModelRepository<Org, Data.Org>());
-            builder.Add(ModelRepository<Resource, Data.Resource>());
-            builder.Add(ModelRepository<Result, Data.Result>());
-            builder.Add(ModelRepository<User, Data.User>());
+            builder.Add(CreateRepository<AcademicSession, Data.AcademicSession>());
+            builder.Add(CreateRepository<Category, Data.Category>());
+            builder.Add(CreateRepository<Class, Data.Class>());
+            builder.Add(CreateRepository<Course, Data.Course>());
+            builder.Add(CreateRepository<Demographics, Data.Demographics>());
+            builder.Add(CreateRepository<Enrollment, Data.Enrollment>());
+            builder.Add(CreateRepository<LineItem, Data.LineItem>());
+            builder.Add(CreateRepository<Org, Data.Org>());
+            builder.Add(CreateRepository<Resource, Data.Resource>());
+            builder.Add(CreateRepository<Result, Data.Result>());
+            builder.Add(CreateRepository<User, Data.User>());
         }
     }
 }

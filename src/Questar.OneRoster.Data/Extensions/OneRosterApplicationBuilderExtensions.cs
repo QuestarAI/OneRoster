@@ -8,7 +8,7 @@ namespace Questar.OneRoster.Data.Extensions
 
     public static class OneRosterApplicationBuilderExtensions
     {
-        public static void UseOneRoster(this IApplicationBuilder app)
+        public static void UseOneRoster(this IApplicationBuilder app, bool initialize = false)
         {
             if (app == null) throw new ArgumentNullException(nameof(app));
 
@@ -17,7 +17,7 @@ namespace Questar.OneRoster.Data.Extensions
             {
                 context.Database.Migrate();
 
-                new OneRosterDbContextInitializer(context).Initialize();
+                if (initialize) new OneRosterDbContextInitializer(context).Initialize();
             }
         }
     }

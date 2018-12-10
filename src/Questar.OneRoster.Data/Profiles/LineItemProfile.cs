@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Data.Mappings
+namespace Questar.OneRoster.Data.Profiles
 {
     using System;
     using AutoMapper;

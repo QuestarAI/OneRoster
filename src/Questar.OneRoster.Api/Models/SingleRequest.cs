@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Api.Models.Requests
+namespace Questar.OneRoster.Api.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;

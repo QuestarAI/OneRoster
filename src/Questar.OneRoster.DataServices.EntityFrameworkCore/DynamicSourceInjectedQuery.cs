@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.DataServices.EntityFrameworkCore.Refactor
+namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 {
     using System;
     using System.Collections.Generic;

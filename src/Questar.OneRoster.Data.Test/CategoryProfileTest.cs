@@ -4,8 +4,8 @@ namespace Questar.OneRoster.Data.Test
     using AutoMapper;
     using AutoMapper.EquivalencyExpression;
     using AutoMapper.Extensions.ExpressionMapping;
-    using Mappings;
     using Models;
+    using Profiles;
     using Xunit;
     using Category = Data.Category;
 

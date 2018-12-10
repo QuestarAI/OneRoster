@@ -5,9 +5,9 @@ namespace Questar.OneRoster.Api.Helpers
     using System.Text;
     using Microsoft.AspNetCore.Http;
 
-    public class OneRosterLinkHeaderFactory
+    public class LinkHeaderFactory
     {
-        public OneRosterLinkHeaderFactory(HttpContext httpContext) => HttpContext = httpContext;
+        public LinkHeaderFactory(HttpContext httpContext) => HttpContext = httpContext;
 
         public HttpContext HttpContext { get; }
 

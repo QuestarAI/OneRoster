@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.DataServices.EntityFrameworkCore.Refactor
+namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 {
     using System;
     using System.Collections;
@@ -31,11 +31,11 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore.Refactor
 
         protected ISourceInjectedQueryable<T> Source { get; }
 
-        public virtual IQuery<dynamic> Select(IEnumerable<string> properties)
-            => Select(properties.Select(property => typeof(T).GetProperty(property, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)).ToArray());
+        public virtual IQuery<dynamic> Select(IEnumerable<string> properties) => Select(properties.Select(property => typeof(T).GetProperty(property, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)).ToArray());
 
         public virtual IQuery<dynamic> Select(PropertyInfo[] properties)
         {
+            // TODO assembly management - can we reuse these types?
             var assembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString()), AssemblyBuilderAccess.Run);
             var module = assembly.DefineDynamicModule("DynamicQueryable");
             var type = module.DefineType("Anonymous", TypeAttributes.Public | TypeAttributes.Sealed);
