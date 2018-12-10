@@ -22,7 +22,7 @@ namespace Questar.OneRoster.Data.Services
                 config.AddCollectionMappers();
             });
             services.AddScoped<OneRosterDbContext>();
-            services.AddScoped<IWorkspace, ModelWorkspace>();
+            services.AddScoped<IWorkspace, OneRosterDbContextWorkspace>();
         }
 
         public static void AddOneRoster(this IServiceCollection services, string connectionString, Action<OneRosterOptions> setupAction)

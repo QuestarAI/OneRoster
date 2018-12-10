@@ -6,21 +6,21 @@ namespace Questar.OneRoster.Data.Services
     using AutoMapper.Extensions.ExpressionMapping;
     using Models;
 
-    public class ModelWorkspace : DbContextWorkspace<OneRosterDbContext>
+    public class OneRosterDbContextWorkspace : DbContextWorkspace<OneRosterDbContext>
     {
-        public ModelWorkspace(OneRosterDbContext context, IMapper mapper) : base(context) => Mapper = mapper;
+        public OneRosterDbContextWorkspace(OneRosterDbContext context, IMapper mapper) : base(context) => Mapper = mapper;
         public IMapper Mapper { get; }
 
         protected override void Configure(WorkspaceBuilder builder)
         {
-            ModelRepository<TModel> ModelRepository<TModel, TEntity>()
+            SourceInjectedRepository<TModel> ModelRepository<TModel, TEntity>()
                 where TModel : Base
                 where TEntity : class, IBaseObject
             {
                 var set = Context.Set<TEntity>();
                 var source = set.UseAsDataSource(Mapper).For<TModel>();
                 var persistence = set.Persist(Mapper);
-                return new ModelRepository<TModel>(source, persistence, model => model.SourcedId, (x, y) => (Guid) x == (Guid) y);
+                return new SourceInjectedRepository<TModel>(source, persistence, model => model.SourcedId, (x, y) => (Guid) x == (Guid) y);
             }
 
             builder.Add(ModelRepository<AcademicSession, Data.AcademicSession>());

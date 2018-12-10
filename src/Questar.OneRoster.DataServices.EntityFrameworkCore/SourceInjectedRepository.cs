@@ -7,10 +7,10 @@ namespace Questar.OneRoster.Data.Services
     using AutoMapper.EntityFrameworkCore;
     using AutoMapper.Extensions.ExpressionMapping.Impl;
 
-    public class ModelRepository<T> : Repository<T>
+    public class SourceInjectedRepository<T> : Repository<T>
         where T : class
     {
-        public ModelRepository(ISourceInjectedQueryable<T> source, IPersistence persistence, Expression<Func<T, object>> keySelector, Expression<Func<object, object, bool>> keyComparer)
+        public SourceInjectedRepository(ISourceInjectedQueryable<T> source, IPersistence persistence, Expression<Func<T, object>> keySelector, Expression<Func<object, object, bool>> keyComparer)
         {
             Source = source;
             Persistence = persistence;
