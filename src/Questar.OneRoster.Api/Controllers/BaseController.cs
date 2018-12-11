@@ -100,7 +100,7 @@ namespace Questar.OneRoster.Api.Controllers
             if (!string.IsNullOrEmpty(link))
                 HttpContext.Response.Headers.Add("Link", link);
 
-            result[Options.Plural] = data;
+            result[Options.Plural] = data.Items;
 
             return Ok(result); // TODO data name
         }
