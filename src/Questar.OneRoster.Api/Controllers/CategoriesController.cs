@@ -19,9 +19,9 @@ namespace Questar.OneRoster.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<dynamic>> Upsert(UpsertRequest<Category> request) => throw new NotImplementedException();
+        public virtual Task<ActionResult<dynamic>> Upsert(UpsertRequest<Category> request) => throw new NotImplementedException();
 
         [HttpDelete("{id}")]
-        public virtual async Task<ActionResult<dynamic>> Delete(DeleteRequest request) => throw new NotImplementedException();
+        public virtual Task<ActionResult<dynamic>> Delete(DeleteRequest request) => throw new NotImplementedException();
     }
 }
