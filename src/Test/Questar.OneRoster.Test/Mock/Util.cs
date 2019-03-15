@@ -1,7 +1,7 @@
-using System;
-
 namespace Questar.OneRoster.Test.Mock
 {
+    using System;
+
     public class Util
     {
         internal static DateTime UtcDate(int year, int month, int day)

@@ -1,10 +1,10 @@
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
-
 namespace Questar.OneRoster.Common
 {
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// ISO 8601 parser. Attempts to more closely match standards than simple DateTime.Parse/ParseExact would provide.
     /// Derived from Stack Overflow answer here: https://stackoverflow.com/a/31246449/221867.
@@ -48,7 +48,8 @@ namespace Questar.OneRoster.Common
             "yyyy-MM-ddTHHK", "yyyyMMddTHHK"
         };
 
-        private static readonly string[] TwoYearFormats = {
+        private static readonly string[] TwoYearFormats =
+        {
             "yy-MM-ddK", "yyMMddK",
             "yy-MM-ddTHH:mm:ss.fffffffK", "yyMMddTHH:mm:ss.fffffffK",
             "yy-MM-ddTHH:mm:ss,fffffffK", "yyMMddTHH:mm:ss,fffffffK",
@@ -82,50 +83,37 @@ namespace Questar.OneRoster.Common
 
         private static readonly string[] AllYearFormats = FourYearFormats.Concat(TwoYearFormats).ToArray();
 
-        public static DateTime Parse(
-        string iso8601String,
-        MidpointRounding rounding = MidpointRounding.ToEven,
-        YearFormat yearFormat = YearFormat.FourDigitYear,
-        LeapSecondPolicy leapSecondPolicy = LeapSecondPolicy.EndOfDay)
+        public static DateTime Parse
+        (
+            string iso8601String,
+            MidpointRounding rounding = MidpointRounding.ToEven,
+            YearFormat yearFormat = YearFormat.FourDigitYear,
+            LeapSecondPolicy leapSecondPolicy = LeapSecondPolicy.EndOfDay
+        )
         {
             var match = WeekAndDayRegex.Match(iso8601String);
             if (match.Success)
-            {
                 if (FromWeekAndDay(out iso8601String, match, out var dateTime))
-                {
                     return dateTime;
-                }
-            }
 
             if (ExcessiveFractions.IsMatch(iso8601String))
-            {
                 iso8601String = ExcessiveFractions.Replace(
-                  iso8601String,
-                  m => decimal.Round(decimal.Parse(m.Value.Substring(0, Math.Max(m.Value.Length, 10))), 7, rounding).ToString());
-            }
+                    iso8601String,
+                    m => decimal.Round(decimal.Parse(m.Value.Substring(0, Math.Max(m.Value.Length, 10))), 7, rounding).ToString());
 
-            if (iso8601String.Contains("T24"))
-            {
-                return ParseT24Date(iso8601String, rounding, yearFormat);
-            }
+            if (iso8601String.Contains("T24")) return ParseT24Date(iso8601String, rounding, yearFormat);
 
             if (LeapSecond.IsMatch(iso8601String))
             {
                 var oneSecondBefore = Parse(LeapSecond.Replace(iso8601String, "T23:59:59"));
                 // Can't have fractions past second 60.
-                if (oneSecondBefore.TimeOfDay != new TimeSpan(23, 59, 59))
-                {
-                    throw new FormatException();
-                }
+                if (oneSecondBefore.TimeOfDay != new TimeSpan(23, 59, 59)) throw new FormatException();
 
                 // Can only be on --12-31 or --06-30
                 if (oneSecondBefore.Month == 12 && oneSecondBefore.Day == 31 || oneSecondBefore.Month == 6 && oneSecondBefore.Day == 30)
-                {
-                    // Since DateTime can't handle leap seconds, we need a policy as to which side of it to be on.
                     return leapSecondPolicy == LeapSecondPolicy.EndOfDay
                         ? oneSecondBefore
                         : oneSecondBefore.AddSeconds(1);
-                }
 
                 throw new FormatException();
             }
@@ -141,10 +129,7 @@ namespace Questar.OneRoster.Common
         private static DateTime ParseT24Date(string dateString, MidpointRounding rounding, YearFormat yearFormat)
         {
             var yesterday = Parse(dateString.Replace("T24", "T00"), rounding, yearFormat);
-            if (yesterday.TimeOfDay != TimeSpan.Zero)
-            {
-                throw new FormatException();
-            }
+            if (yesterday.TimeOfDay != TimeSpan.Zero) throw new FormatException();
             return yesterday.AddDays(1);
         }
 
@@ -153,20 +138,14 @@ namespace Questar.OneRoster.Common
             var year = int.Parse(match.Groups[1].Value);
             var week = int.Parse(match.Groups[3].Value + match.Groups[4].Value);
             var day = int.Parse(match.Groups[5].Value);
-            if (year < 1 || year > 9999 || week < 1 || week > 53 || day < 1 || day > 7)
-            {
-                throw new FormatException();
-            }
+            if (year < 1 || year > 9999 || week < 1 || week > 53 || day < 1 || day > 7) throw new FormatException();
 
             var firstOfJanuary = new DateTime(year, 1, 1);
             var firstWeek = firstOfJanuary.DayOfWeek >= DayOfWeek.Friday
                 ? firstOfJanuary.AddDays(firstOfJanuary.DayOfWeek - DayOfWeek.Monday - 1)
                 : firstOfJanuary.AddDays(DayOfWeek.Monday - firstOfJanuary.DayOfWeek);
             var fromWeekAndDay = firstWeek.AddDays((week - 1) * 7 + day - 1);
-            if (week > 51 && fromWeekAndDay > Parse(fromWeekAndDay.Year + "-W01-1"))
-            {
-                throw new FormatException();
-            }
+            if (week > 51 && fromWeekAndDay > Parse(fromWeekAndDay.Year + "-W01-1")) throw new FormatException();
 
             if (match.Groups[6].Success)
             {

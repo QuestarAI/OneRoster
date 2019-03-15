@@ -3,10 +3,10 @@ namespace Questar.OneRoster.Filtering
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Reflection;
 
     public sealed class FilterValueBuilder : ExpressionVisitor
     {
@@ -49,7 +49,7 @@ namespace Questar.OneRoster.Filtering
         private string FormatScalar(object value)
         {
             var property = Property.PropertyType;
-            var converter = property.GetConverter();
+            var converter = TypeDescriptor.GetConverter(property);
             if (converter == null)
                 throw new InvalidOperationException($"Couldn't find type converter for type '{property}'.");
 
@@ -70,7 +70,7 @@ namespace Questar.OneRoster.Filtering
             if (collection == null)
                 throw new InvalidOperationException($"Value '{value}' does not implement '{typeof(ICollection<>).Name}'.");
             var type = collection.GetGenericArguments().Single();
-            var converter = type.GetConverter();
+            var converter = TypeDescriptor.GetConverter(type);
             if (converter == null)
                 throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             if (value is IEnumerable enumerable)

@@ -4,16 +4,8 @@ namespace Questar.OneRoster.Serialization
 
     public class SerializationTokenAttribute : Attribute
     {
-        public SerializationTokenAttribute(string value)
-        {
-            Value = value;
-        }
-
-        public SerializationTokenAttribute(int value)
-        {
-            Value = value;
-        }
-
+        public SerializationTokenAttribute(string value) => Value = value;
+        public SerializationTokenAttribute(int value) => Value = value;
         public object Value { get; }
     }
 }

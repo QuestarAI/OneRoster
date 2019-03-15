@@ -1,17 +1,20 @@
 namespace Questar.OneRoster.Api.Controllers
 {
     using System;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/courses")]
-    public class CoursesController : Controller
+    public class CoursesController : BaseController<Course>
     {
-        /// <summary>
-        /// Returns the collection of courses.
-        /// </summary>
-        [HttpGet]
-        public object GetAllCourses() => throw new NotImplementedException();
+        public CoursesController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        {
+            Plural = "Courses",
+            Singular = "Course"
+        })
+        {
+        }
 
         /// <summary>
         /// Returns the collection of classes teaching this course.
@@ -24,11 +27,5 @@ namespace Questar.OneRoster.Api.Controllers
         /// </summary>
         [HttpGet("{courseId}/resources")]
         public object GetResourcesForCourse(Guid courseId) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Returns a specific course by identifier.
-        /// </summary>
-        [HttpGet("{courseId}")]
-        public object GetCourse(Guid courseId) => throw new NotImplementedException();
     }
 }

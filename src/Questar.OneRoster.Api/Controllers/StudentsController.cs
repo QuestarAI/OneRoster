@@ -1,25 +1,20 @@
 namespace Questar.OneRoster.Api.Controllers
 {
     using System;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/students")]
-    public class StudentsController : Controller
+    public class StudentsController : BaseController<User>
     {
-        /// <summary>
-        /// Returns the collection of students.
-        /// A student is an instance of a user.
-        /// </summary>
-        [HttpGet]
-        public object GetAllStudents() => throw new NotImplementedException();
-
-        /// <summary>
-        /// Returns a specific student by identifier.
-        /// A student is an instance of a user.
-        /// </summary>
-        [HttpGet("{userId}")]
-        public object GetStudent(Guid userId) => throw new NotImplementedException();
+        public StudentsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        {
+            Plural = "Users",
+            Singular = "User"
+        })
+        {
+        }
 
         /// <summary>
         /// Returns the collection of classes this student is taking.

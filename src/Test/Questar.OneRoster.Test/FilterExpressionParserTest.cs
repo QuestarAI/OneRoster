@@ -3,6 +3,7 @@ namespace Questar.OneRoster.Test
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Expressions;
     using Filtering;
     using Mock;
     using Xunit;
@@ -78,7 +79,7 @@ namespace Questar.OneRoster.Test
         [Fact]
         public void CanApplyIntEqualExpression() =>
             AreEqual("BarInt='4'", e => e.BarInt == 4);
-        
+
         [Fact]
         public void CanApplyIntGreaterThanExpression() =>
             AreEqual("BarInt>'5'", e => e.BarInt > 5);

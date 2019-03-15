@@ -2,10 +2,10 @@ namespace Questar.OneRoster.Filtering
 {
     public class FilterString
     {
-        public string Value { get; }
-
         internal FilterString(string value)
             => Value = value;
+
+        public string Value { get; }
 
         public override bool Equals(object obj)
             => Value.Equals(obj);

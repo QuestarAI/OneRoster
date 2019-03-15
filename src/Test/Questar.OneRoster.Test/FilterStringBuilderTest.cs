@@ -14,7 +14,7 @@ namespace Questar.OneRoster.Test
 
         [Fact]
         public void CanApplyDateTimeEqualExpression()
-          =>  CanApplyFilter("BazDateTime='2018-05-21'", e => e.BazDateTime == UtcDate(2018, 5, 21));
+            => CanApplyFilter("BazDateTime='2018-05-21'", e => e.BazDateTime == UtcDate(2018, 5, 21));
 
         [Fact]
         public void CanApplyDateTimeGreaterThanExpression()
@@ -67,7 +67,7 @@ namespace Questar.OneRoster.Test
             CanApplyFilter("CorgeEnum='One'", e => e.CorgeEnum == Count.One);
         }
 
-        // TODO do not explicitly support this
+        // do not explicitly support this
         //[Fact]
         //public void CanApplyEnumEqualExpressionWithInvalidValue()
         //{
@@ -80,7 +80,7 @@ namespace Questar.OneRoster.Test
             CanApplyFilter("CorgeEnum!='One'", e => e.CorgeEnum != Count.One);
         }
 
-        // TODO do not explicitly support this
+        // do not explicitly support this
         //[Fact]
         //public void CanApplyEnumNotEqualExpressionWithInvalidValue()
         //{

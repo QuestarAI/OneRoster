@@ -1,17 +1,21 @@
 namespace Questar.OneRoster.Api.Controllers
 {
     using System;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/classes")]
-    public class ClassesController : Controller
+    public class ClassesController : BaseController<Class>
     {
-        /// <summary>
-        /// Returns the collection of classes.
-        /// </summary>
-        [HttpGet]
-        public object GetAllClasses() => throw new NotImplementedException();
+        public ClassesController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        {
+            Plural = "Classes",
+            Singular = "Class"
+        })
+        {
+        }
+
 
         /// <summary>
         /// Returns the collection of line items (columns) in the gradebook for this class.
@@ -54,11 +58,5 @@ namespace Questar.OneRoster.Api.Controllers
         /// </summary>
         [HttpGet("{classId}/teachers")]
         public object GetTeachersForClass(Guid classId) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Returns a specific class by identifier.
-        /// </summary>
-        [HttpGet("{classId}")]
-        public object GetClass(Guid classId) => throw new NotImplementedException();
     }
 }
