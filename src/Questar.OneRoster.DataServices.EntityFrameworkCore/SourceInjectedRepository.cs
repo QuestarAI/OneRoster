@@ -7,10 +7,10 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
     using AutoMapper.EntityFrameworkCore;
     using AutoMapper.Extensions.ExpressionMapping.Impl;
 
-    public class SourceInjectedRepository<T> : Repository<T>
-        where T : class
+    public class SourceInjectedRepository<TModel, TSource> : Repository<TModel>
+        where TModel : class
     {
-        public SourceInjectedRepository(ISourceInjectedQueryable<T> source, IPersistence persistence, Expression<Func<T, object>> keySelector, Expression<Func<object, object, bool>> keyComparer)
+        public SourceInjectedRepository(ISourceInjectedQueryable<TModel> source, IPersistence<TSource> persistence, Expression<Func<TModel, object>> keySelector, Expression<Func<object, object, bool>> keyComparer)
         {
             Source = source;
             Persistence = persistence;
@@ -18,28 +18,28 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             KeyComparer = keyComparer;
         }
 
-        protected ISourceInjectedQueryable<T> Source { get; }
+        protected ISourceInjectedQueryable<TModel> Source { get; }
 
-        protected IPersistence Persistence { get; }
+        protected IPersistence<TSource> Persistence { get; }
 
-        protected Expression<Func<T, object>> KeySelector { get; }
+        protected Expression<Func<TModel, object>> KeySelector { get; }
 
         protected Expression<Func<object, object, bool>> KeyComparer { get; }
 
-        public override Task UpsertAsync(T entity)
+        public override Task UpsertAsync(TModel entity)
         {
             Persistence.InsertOrUpdate(entity);
             return Task.CompletedTask;
         }
 
-        public override Task DeleteAsync(T entity)
+        public override Task DeleteAsync(TModel entity)
         {
             Persistence.Remove(entity);
             return Task.CompletedTask;
         }
 
-        public override IQueryable<T> AsQueryable() => Source;
+        public override IQueryable<TModel> AsQueryable() => Source;
 
-        public override IQuery<T> AsQuery() => new SourceInjectedQuery<T>(Source, KeySelector, KeyComparer);
+        public override IQuery<TModel> AsQuery() => new SourceInjectedQuery<TModel>(Source, KeySelector, KeyComparer);
     }
 }

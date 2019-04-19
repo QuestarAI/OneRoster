@@ -21,19 +21,22 @@ namespace Questar.OneRoster.Data.Services
 
     public class OneRosterDbContextWorkspace : DbContextWorkspace<OneRosterDbContext>
     {
-        public OneRosterDbContextWorkspace(OneRosterDbContext context, IMapper mapper) : base(context) => Mapper = mapper;
+        public OneRosterDbContextWorkspace(OneRosterDbContext context, IMapper mapper) : base(context) =>
+            Mapper = mapper;
+
         public IMapper Mapper { get; }
 
         protected override void Configure(WorkspaceBuilder builder)
         {
-            SourceInjectedRepository<TModel> CreateRepository<TModel, TEntity>()
+            IRepository<TModel> CreateRepository<TModel, TSource>()
                 where TModel : Base
-                where TEntity : class, IBaseObject
+                where TSource : class, IBaseObject
             {
-                var set = Context.Set<TEntity>();
+                var set = Context.Set<TSource>();
                 var source = set.UseAsDataSource(Mapper).For<TModel>();
                 var persistence = set.Persist(Mapper);
-                return new SourceInjectedRepository<TModel>(source, persistence, model => model.SourcedId, (x, y) => (Guid) x == (Guid) y);
+                return new SourceInjectedRepository<TModel, TSource>(source, persistence, model => model.SourcedId,
+                    (x, y) => (Guid) x == (Guid) y);
             }
 
             builder.Add(CreateRepository<Models.AcademicSession, AcademicSession>());

@@ -20,8 +20,7 @@ namespace Questar.OneRoster.Client
 
         public IQueryProvider Provider { get; }
 
-        public IEnumerator<TElement> GetEnumerator()
-            => Provider.Execute<IEnumerable<TElement>>(Expression).GetEnumerator();
+        public IEnumerator<TElement> GetEnumerator() => Provider.Execute<IEnumerable<TElement>>(Expression).GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
