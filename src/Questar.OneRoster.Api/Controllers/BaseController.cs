@@ -13,6 +13,7 @@ namespace Questar.OneRoster.Api.Controllers
     using Models;
     using OneRoster.Models;
     using OneRoster.Models.Errors;
+    using Sorting;
 
     [Produces("application/json")]
     public abstract class BaseController<T> : ControllerBase where T : Base
@@ -40,10 +41,11 @@ namespace Questar.OneRoster.Api.Controllers
             var result = (IDictionary<string, object>) new ExpandoObject();
             var statuses = (StatusInfoList) (result[StatusInfoSet] = new StatusInfoList());
 
-            var fields = request.Fields?
-                .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(field => field.Trim())
-                .ToList();
+            var fields =
+                request.Fields?
+                    .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(field => field.Trim())
+                    .ToList();
             if (fields != null)
                 if (fields.Any())
                     statuses.AddRange(fields
@@ -63,7 +65,11 @@ namespace Questar.OneRoster.Api.Controllers
             var sortName = request.Sort;
             var sortDirection = request.OrderBy;
             if (sortName != null && !Properties.Contains(sortName))
+            {
                 statuses.Add(StatusInfo.InvalidSortField(sortName));
+                sortName = nameof(Base.SourcedId);
+                sortDirection = default(SortDirection);
+            }
 
             var pageLimit = request.Limit;
             if (pageLimit < 0)
@@ -76,19 +82,19 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(result);
 
-            IQuery query =
-                Workspace
-                    .GetRepository<T>()
-                    .AsQuery();
+            IQuery query = Workspace.GetRepository<T>().AsQuery();
 
             // filter, only if requested
-            if (filter != null) query = query.Where(filter);
+            if (filter != null)
+                query = query.Where(filter);
 
             // always sort, so that we may paginate
             query = query.Sort(sortName ?? nameof(Base.SourcedId), sortDirection);
 
             // dynamic select, after sorting, only if requested
-            if (fields != null) query = query.Select(fields);
+            var selectors = fields?.Where(field => Properties.Contains(field)).ToList();
+            if (selectors != null)
+                query = query.Select(selectors);
 
             var data = await query.ToPageAsync(pageOffset, pageLimit);
             var count = data.Count;
@@ -105,16 +111,17 @@ namespace Questar.OneRoster.Api.Controllers
             return Ok(result); // TODO data name
         }
 
-        [HttpGet("{SourcedId}")]
+        [HttpGet("{SourcedId:guid}")]
         public virtual async Task<ActionResult<dynamic>> Single(SingleRequest request)
         {
             var result = (IDictionary<string, object>) new ExpandoObject();
             var statuses = (StatusInfoList) (result[StatusInfoSet] = new StatusInfoList());
 
-            var fields = request.Fields?
-                .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(field => field.Trim())
-                .ToList();
+            var fields =
+                request.Fields?
+                    .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(field => field.Trim())
+                    .ToList();
             if (fields != null)
                 if (fields.Any())
                     statuses.AddRange(fields
@@ -126,14 +133,12 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(result);
 
-            IQuery query =
-                Workspace
-                    .GetRepository<T>()
-                    .AsQuery()
-                    .WhereHasKey(request.SourcedId);
+            IQuery query = Workspace.GetRepository<T>().AsQuery().WhereHasKey(request.SourcedId);
 
             // dynamic select, only if requested
-            if (fields != null) query = query.Select(fields);
+            var selectors = fields?.Where(field => Properties.Contains(field)).ToList();
+            if (selectors != null)
+                query = query.Select(selectors);
 
             var data = await query.SingleAsync();
 

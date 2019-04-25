@@ -7,10 +7,18 @@
 
   <ItemGroup>
     <PackageReference Include="Flurl.Http" Version="2.4.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" />
+    <PackageReference Include="Remotion.Linq" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Questar.OneRoster\Questar.OneRoster.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Reflection.Emit">
+      <HintPath>..\..\..\..\Users\mheiler\.nuget\packages\system.reflection.emit\4.3.0\ref\netstandard1.1\System.Reflection.Emit.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

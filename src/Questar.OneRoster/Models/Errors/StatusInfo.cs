@@ -47,7 +47,7 @@ namespace Questar.OneRoster.Models.Errors
         {
             CodeMajor = CodeMajor.Success,
             CodeMinor = CodeMinor.InvalidData,
-            Severity = Severity.Warning,
+            Severity = Severity.Error,
             Description = property
         };
 
@@ -55,7 +55,7 @@ namespace Questar.OneRoster.Models.Errors
         {
             CodeMajor = CodeMajor.Success,
             CodeMinor = CodeMinor.InvalidFilterField,
-            Severity = Severity.Warning,
+            Severity = Severity.Error,
             Description = property
         };
 
@@ -63,7 +63,7 @@ namespace Questar.OneRoster.Models.Errors
         {
             CodeMajor = CodeMajor.Failure,
             CodeMinor = CodeMinor.InvalidLimitField,
-            Severity = Severity.Error,
+            Severity = Severity.Warning,
             Description = "Limit query parameter must be greater than 0."
         };
 
@@ -71,7 +71,7 @@ namespace Questar.OneRoster.Models.Errors
         {
             CodeMajor = CodeMajor.Failure,
             CodeMinor = CodeMinor.InvalidOffsetField,
-            Severity = Severity.Error,
+            Severity = Severity.Warning,
             Description = "Offset query parameter must be greater than or equal to 0."
         };
 
