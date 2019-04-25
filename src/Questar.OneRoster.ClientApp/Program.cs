@@ -14,18 +14,17 @@ namespace Questar.OneRoster.ClientApp
             using (var client = new OneRosterClient(http))
             {
                 var enrollments =
-                    await client
-                        .Schools
-                        .For(Guid.NewGuid())
-                        .Classes
-                        .For(Guid.NewGuid())
-                        .Enrollments
-                        .Filter(enrollment => enrollment.Role == RoleType.Parent)
-                        .Fields(enrollment => new { enrollment.User, enrollment.Class })
-                        .OrderBy(enrollment => new { enrollment.User, enrollment.Class })
-                        .Offset(1000)
-                        .Limit(200)
-                        .ToPageAsync();
+                    await
+                        client
+                            .Schools.For(Guid.NewGuid())
+                                .Classes.For(Guid.NewGuid())
+                                    .Enrollments
+                                        .Filter(enrollment => enrollment.Role == RoleType.Parent)
+                                        .Fields(enrollment => new { enrollment.User, enrollment.Class })
+                                        .OrderBy(enrollment => new { enrollment.User, enrollment.Class })
+                                        .Offset(1000)
+                                        .Limit(200)
+                                        .ToPageAsync();
             }
         }
     }
