@@ -1,22 +1,21 @@
 namespace Questar.OneRoster.Client
 {
     using System;
-    using System.Net.Http;
     using Flurl.Http;
     using JetBrains.Annotations;
+    using Models;
+
 
     public class OneRosterClient : IClient
     {
-        public OneRosterClient([NotNull] IFlurlClient http) => Http = http;
-
-        public OneRosterClient([NotNull] HttpClient http)
-            : this(new FlurlClient(http))
+        public OneRosterClient([NotNull] IFlurlClient http)
         {
         }
 
-        public IFlurlClient Http { get; }
 
-        public void Dispose() => Http.Dispose();
+        public void Dispose()
+        {
+        }
 
         public IAcademicSessionsEndpoint AcademicSessions => throw new NotImplementedException();
 

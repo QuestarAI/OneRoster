@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Client
 {
     using Models.Errors;
+    using Serialization;
 
     public class OneRosterSingle<T>
     {

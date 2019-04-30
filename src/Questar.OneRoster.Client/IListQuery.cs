@@ -4,6 +4,7 @@ namespace Questar.OneRoster.Client
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Collections;
+    using Sorting;
 
     public interface IListQuery<TSource, TContext>
     {
@@ -15,11 +16,11 @@ namespace Questar.OneRoster.Client
 
         IListQuery<TSource, TContext> Offset(int offset);
 
-        IListQuery<TSource, TContext> OrderBy<TResult>(Expression<Func<TSource, TResult>> selector);
+        IListQuery<TSource, TContext> Sort(Expression<Func<TSource, object>> selector);
 
-        IListQuery<TSource, TContext> OrderByDesc<TResult>(Expression<Func<TSource, TResult>> selector);
+        IListQuery<TSource, TContext> OrderBy(SortDirection direction);
 
-        Task<IPage<TContext>> ToPageAsync();
+        Task<Page<TContext>> ToPageAsync();
     }
 
     public interface IListQuery<TSource> : IListQuery<TSource, TSource>

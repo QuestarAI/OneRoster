@@ -2,6 +2,7 @@ namespace Questar.OneRoster.Client
 {
     using System.Collections.Generic;
     using Models.Errors;
+    using Serialization;
 
     public sealed class OneRosterCollection<T>
     {

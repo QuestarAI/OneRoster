@@ -1,4 +1,4 @@
-namespace Questar.OneRoster.Client
+namespace Questar.OneRoster.Serialization
 {
     using System;
     using System.Linq;

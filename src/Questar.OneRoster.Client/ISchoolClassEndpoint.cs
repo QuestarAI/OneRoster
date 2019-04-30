@@ -2,7 +2,7 @@ namespace Questar.OneRoster.Client
 {
     using Models;
 
-    public interface ISchoolClassEndpoint : IItemEndpoint<Org>
+    public interface ISchoolClassEndpoint : IItemEndpoint<Class>
     {
         IListEndpoint<Enrollment> Enrollments { get; }
 
