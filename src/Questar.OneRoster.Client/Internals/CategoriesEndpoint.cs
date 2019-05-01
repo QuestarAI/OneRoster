@@ -4,12 +4,12 @@ namespace Questar.OneRoster.Client.Internals
     using Implementations;
     using Models;
 
-    public class CategoriesEndpoint : ListEndpoint<Category>, ICategoriesEndpoint
+    public class CategoriesEndpoint : ListEndpoint<Category>
     {
         public CategoriesEndpoint(string path) : base(path)
         {
         }
 
-        public IEditEndpoint<Category> For(Guid id) => new EditEndpoint<Category>($"{Path}/{id}");
+        public CategoryEndpoint For(Guid id) => new CategoryEndpoint($"{Path}/{id}") { Http = Http };
     }
 }

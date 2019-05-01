@@ -55,7 +55,7 @@ namespace Questar.OneRoster.Filtering
         {
             var builder = new FilterBuilder<T>(Expression.Parameters.Single());
             builder.Visit(Expression.Body);
-            return builder.ToFilter();
+            return builder.ToFilter(); ;
         }
     }
 }

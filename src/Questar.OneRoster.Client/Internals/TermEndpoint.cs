@@ -3,14 +3,14 @@ namespace Questar.OneRoster.Client.Internals
     using Implementations;
     using Models;
 
-    public class TermEndpoint : ListEndpoint<AcademicSession>, ITermEndpoint
+    public class TermEndpoint : ListEndpoint<AcademicSession>
     {
         public TermEndpoint(string path) : base(path)
         {
         }
 
-        public IListEndpoint<Class> Classes => new ListEndpoint<Class>($"{Path}/classes");
+        public TermClassesEndpoint Classes => new TermClassesEndpoint($"{Path}/classes") { Http = Http };
 
-        public IListEndpoint<AcademicSession> GradingPeriods => new ListEndpoint<AcademicSession>($"{Path}/academicSessions");
+        public TermGradingPeriodsEndpoint GradingPeriods => new TermGradingPeriodsEndpoint($"{Path}/academicSessions") { Http = Http };
     }
 }

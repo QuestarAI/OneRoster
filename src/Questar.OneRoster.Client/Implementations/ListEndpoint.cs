@@ -7,6 +7,7 @@ namespace Questar.OneRoster.Client.Implementations
     using Collections;
     using Filtering;
     using Flurl.Http;
+    using Models;
     using Newtonsoft.Json;
     using Serialization;
     using Sorting;
@@ -30,8 +31,8 @@ namespace Questar.OneRoster.Client.Implementations
         public IListQuery<T, T> Offset(int offset)
             => Offset<T>(offset);
 
-        public IListQuery<T, T> Sort(Expression<Func<T, object>> selector)
-            => Sort<T>(selector);
+        public IListQuery<T, T> Sort<TResult>(Expression<Func<T, TResult>> selector)
+            => Sort<T, TResult>(selector);
 
         public IListQuery<T, T> OrderBy(SortDirection direction)
             => OrderBy<T>(direction);
@@ -48,8 +49,8 @@ namespace Questar.OneRoster.Client.Implementations
         protected IListQuery<T, TContext> Fields<TSource, TContext>(Expression<Func<TSource, TContext>> selector)
             => Append<TContext>("fields", string.Join(",", ((NewExpression) selector.Body).Members.Select(member => member.Name)));
 
-        protected IListQuery<T, TContext> Filter<TContext>(Expression<Func<T, bool>> predicate)
-            => Append<TContext>("filter", new FilterExpression<T>(predicate).ToFilter().ToString());
+        protected IListQuery<T, TContext> Filter<TContext>(FilterExpression<T> predicate)
+            => Append<TContext>("filter", predicate.ToFilter().ToString());
 
         protected IListQuery<T, TContext> Limit<TContext>(int value)
             => Append<TContext>("limit", value.ToString());
@@ -60,8 +61,22 @@ namespace Questar.OneRoster.Client.Implementations
         protected IListQuery<T, TContext> OrderBy<TContext>(SortDirection direction)
             => Append<TContext>("orderBy", Enum.GetName(typeof(SortDirection), direction));
 
-        protected IListQuery<T, TContext> Sort<TContext>(Expression<Func<T, object>> selector)
-            => Append<TContext>("sort", ((MemberExpression) selector.Body).Member.Name);
+        protected IListQuery<T, TContext> Sort<TContext, TResult>(Expression<Func<T, TResult>> selector)
+            => Sort<TContext>(selector.Body);
+
+        protected IListQuery<T, TContext> Sort<TContext>(Expression expression)
+        {
+            switch (expression)
+            {
+                case MemberExpression member:
+                    return Sort<TContext>(member.Member.Name);
+                default:
+                    throw new NotSupportedException($"Not supported ({expression.NodeType}).");
+            }
+        }
+
+        protected IListQuery<T, TContext> Sort<TContext>(string value)
+            => Append<TContext>("sort", value);
 
         public async Task<Page<TResult>> ToPageAsync<TResult>()
         {
@@ -81,7 +96,7 @@ namespace Questar.OneRoster.Client.Implementations
 
             var total = int.Parse(response.Headers.GetValues("X-Total-Count").Single());
             var value = result.Results;
-            return new Page<TResult>(0, 0, total, value);
+            return new Page<TResult>(total, value);
         }
 
         private class ListQueryAdapter<TContext> : IListQuery<T, TContext>
@@ -103,8 +118,8 @@ namespace Questar.OneRoster.Client.Implementations
             public IListQuery<T, TContext> Offset(int offset)
                 => _endpoint.Offset<TContext>(offset);
 
-            public IListQuery<T, TContext> Sort(Expression<Func<T, object>> selector)
-                => _endpoint.Sort<TContext>(selector);
+            public IListQuery<T, TContext> Sort<TResult>(Expression<Func<T, TResult>> selector)
+                => _endpoint.Sort<TContext, TResult>(selector);
 
             public IListQuery<T, TContext> OrderBy(SortDirection direction)
                 => _endpoint.OrderBy<TContext>(direction);

@@ -20,14 +20,9 @@ namespace Questar.OneRoster.Client.Implementations
 
         public string Path { get; set; }
 
-        public Uri ToUri()
+        public string ToUri()
         {
-            return new UriBuilder
-            {
-                Host = Host,
-                Path = Path,
-                Query = string.Join("&", Query.Select(entry => $"{entry.Key}={entry.Value}"))
-            }.Uri;
+            return $"{Path}?{string.Join("&", Query.Select(entry => $"{entry.Key}={entry.Value}"))}";
         }
     }
 }

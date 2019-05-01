@@ -4,12 +4,12 @@ namespace Questar.OneRoster.Client.Internals
     using Implementations;
     using Models;
 
-    public class AcademicSessionsEndpoint : ListEndpoint<AcademicSession>, IAcademicSessionsEndpoint
+    public class AcademicSessionsEndpoint : ListEndpoint<AcademicSession>
     {
         public AcademicSessionsEndpoint(string path) : base(path)
         {
         }
 
-        public IItemEndpoint<AcademicSession> For(Guid id) => new ItemEndpoint<AcademicSession>($"{Path}/{id}");
+        public AcademicSessionEndpoint For(Guid id) => new AcademicSessionEndpoint($"{Path}/{id}") { Http = Http };
     }
 }

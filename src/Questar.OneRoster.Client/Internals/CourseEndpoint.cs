@@ -3,13 +3,13 @@ namespace Questar.OneRoster.Client.Internals
     using Implementations;
     using Models;
 
-    public class CourseEndpoint : ItemEndpoint<Course>, ICourseEndpoint
+    public class CourseEndpoint : ItemEndpoint<Course>
     {
         public CourseEndpoint(string path) : base(path)
         {
         }
 
-        public IListEndpoint<Class> Classes => new ListEndpoint<Class>($"{Path}/classes");
-        public IListEndpoint<Resource> Resources => new ListEndpoint<Resource>($"{Path}/resources");
+        public CourseClassesEndpoint Classes => new CourseClassesEndpoint($"{Path}/classes") { Http = Http };
+        public CourseResourcesEndpoint Resources => new CourseResourcesEndpoint($"{Path}/resources") { Http = Http };
     }
 }

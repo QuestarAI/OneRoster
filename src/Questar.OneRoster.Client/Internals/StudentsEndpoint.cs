@@ -4,12 +4,12 @@ namespace Questar.OneRoster.Client.Internals
     using Implementations;
     using Models;
 
-    public class StudentsEndpoint : ListEndpoint<User>, IStudentsEndpoint
+    public class StudentsEndpoint : ListEndpoint<User>
     {
         public StudentsEndpoint(string path) : base(path)
         {
         }
 
-        public IStudentEndpoint For(Guid id) => new StudentEndpoint($"{Path}/{id}");
+        public StudentEndpoint For(Guid id) => new StudentEndpoint($"{Path}/{id}") { Http = Http };
     }
 }

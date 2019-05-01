@@ -16,7 +16,7 @@ namespace Questar.OneRoster.Client
 
         IListQuery<TSource, TContext> Offset(int offset);
 
-        IListQuery<TSource, TContext> Sort(Expression<Func<TSource, object>> selector);
+        IListQuery<TSource, TContext> Sort<TResult>(Expression<Func<TSource, TResult>> selector);
 
         IListQuery<TSource, TContext> OrderBy(SortDirection direction);
 

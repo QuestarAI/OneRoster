@@ -82,14 +82,14 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
         {
             var count = Source.Count();
             var items = Source.Skip(offset).Take(limit).ToList();
-            return new Page<T>(offset / limit, limit, count, items);
+            return new Page<T>(count, items);
         }
 
         public async Task<Page<T>> ToPageAsync(int offset, int limit)
         {
             var count = Source.Count();
             var items = Source.Skip(offset).Take(limit).ToAsyncEnumerable().ToList();
-            return new Page<T>(offset / limit, limit, count, await items);
+            return new Page<T>(count, await items);
         }
 
         #region IQuery<T>

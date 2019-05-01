@@ -1,7 +1,7 @@
-namespace Questar.OneRoster.Client
+namespace Questar.OneRoster.Models
 {
     using System.Collections.Generic;
-    using Models.Errors;
+    using Errors;
     using Serialization;
 
     public sealed class OneRosterCollection<T>

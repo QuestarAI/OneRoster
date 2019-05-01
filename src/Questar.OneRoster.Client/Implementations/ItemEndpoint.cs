@@ -5,6 +5,7 @@ namespace Questar.OneRoster.Client.Implementations
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Flurl.Http;
+    using Models;
     using Newtonsoft.Json;
     using Serialization;
 

@@ -1,9 +1,9 @@
-namespace Questar.OneRoster.Client
+namespace Questar.OneRoster.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Models.Errors;
+    using Errors;
 
     public class OneRosterException : Exception
     {
