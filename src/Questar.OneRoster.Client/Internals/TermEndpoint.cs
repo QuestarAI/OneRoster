@@ -5,11 +5,12 @@ namespace Questar.OneRoster.Client.Internals
 
     public class TermEndpoint : ListEndpoint<AcademicSession>, ITermEndpoint
     {
-        public TermEndpoint(string host, string path) : base(host, path)
+        public TermEndpoint(string path) : base(path)
         {
         }
 
-        public IListEndpoint<Class> Classes { get; }
-        public IListEndpoint<AcademicSession> GradingPeriods { get; }
+        public IListEndpoint<Class> Classes => new ListEndpoint<Class>($"{Path}/classes");
+
+        public IListEndpoint<AcademicSession> GradingPeriods => new ListEndpoint<AcademicSession>($"{Path}/academicSessions");
     }
 }

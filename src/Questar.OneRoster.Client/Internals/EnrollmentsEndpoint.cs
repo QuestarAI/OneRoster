@@ -6,10 +6,10 @@ namespace Questar.OneRoster.Client.Internals
 
     public class EnrollmentsEndpoint : ListEndpoint<Enrollment>, IEnrollmentsEndpoint
     {
-        public EnrollmentsEndpoint(string host, string path) : base(host, path)
+        public EnrollmentsEndpoint(string path) : base(path)
         {
         }
 
-        public IItemEndpoint<Enrollment> For(Guid id) => throw new NotImplementedException();
+        public IItemEndpoint<Enrollment> For(Guid id) => new ItemEndpoint<Enrollment>($"{Path}/{id}");
     }
 }

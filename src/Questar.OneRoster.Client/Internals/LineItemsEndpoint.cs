@@ -6,10 +6,10 @@ namespace Questar.OneRoster.Client.Internals
 
     public class LineItemsEndpoint : ListEndpoint<LineItem>, ILineItemsEndpoint
     {
-        public LineItemsEndpoint(string host, string path) : base(host, path)
+        public LineItemsEndpoint(string path) : base(path)
         {
         }
 
-        public IEditEndpoint<LineItem> For(Guid id) => throw new NotImplementedException();
+        public IEditEndpoint<LineItem> For(Guid id) => new EditEndpoint<LineItem>($"{Path}/{id}");
     }
 }

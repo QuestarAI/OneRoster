@@ -13,8 +13,8 @@ namespace Questar.OneRoster.Client.Implementations
 
     public class ListEndpoint<T> : Endpoint<T>, IListEndpoint<T>
     {
-        public ListEndpoint(string host, string path)
-            : base(host, path)
+        public ListEndpoint(string path)
+            : base(path)
         {
         }
 

@@ -6,10 +6,10 @@ namespace Questar.OneRoster.Client.Internals
 
     public class OrgsEndpoint : ListEndpoint<Org>, IOrgsEndpoint
     {
-        public OrgsEndpoint(string host, string path) : base(host, path)
+        public OrgsEndpoint(string path) : base(path)
         {
         }
 
-        public IItemEndpoint<Org> For(Guid id) => throw new NotImplementedException();
+        public IItemEndpoint<Org> For(Guid id) => new ItemEndpoint<Org>($"{Path}/{id}");
     }
 }

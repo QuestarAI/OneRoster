@@ -10,8 +10,8 @@ namespace Questar.OneRoster.Client.Implementations
 
     public class ItemEndpoint<T> : Endpoint<T>, IItemEndpoint<T>
     {
-        public ItemEndpoint(string host, string path)
-            : base(host, path)
+        public ItemEndpoint(string path)
+            : base(path)
         {
         }
 

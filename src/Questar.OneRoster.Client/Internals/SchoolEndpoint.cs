@@ -5,15 +5,15 @@ namespace Questar.OneRoster.Client.Internals
 
     public class SchoolEndpoint : ItemEndpoint<Org>, ISchoolEndpoint
     {
-        public SchoolEndpoint(string host, string path) : base(host, path)
+        public SchoolEndpoint(string path) : base(path)
         {
         }
 
-        public IListEndpoint<Course> Courses { get; }
-        public ISchoolClassesEndpoint Classes { get; }
-        public IListEndpoint<Enrollment> Enrollments { get; }
-        public IListEndpoint<User> Students { get; }
-        public IListEndpoint<User> Teachers { get; }
-        public IListEndpoint<AcademicSession> Terms { get; }
+        public IListEndpoint<Course> Courses => new ListEndpoint<Course>($"{Path}/courses");
+        public ISchoolClassesEndpoint Classes => new SchoolClassesEndpoint($"{Path}/classes");
+        public IListEndpoint<Enrollment> Enrollments => new ListEndpoint<Enrollment>($"{Path}/enrollments");
+        public IListEndpoint<User> Students => new ListEndpoint<User>($"{Path}/students");
+        public IListEndpoint<User> Teachers => new ListEndpoint<User>($"{Path}/teachers");
+        public IListEndpoint<AcademicSession> Terms => new ListEndpoint<AcademicSession>($"{Path}/terms");
     }
 }

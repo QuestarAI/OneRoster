@@ -9,9 +9,8 @@ namespace Questar.OneRoster.Client.Implementations
     {
         protected readonly IDictionary<string, string> Query = new Dictionary<string, string>();
 
-        protected Endpoint(string host, string path)
+        protected Endpoint(string path)
         {
-            Host = host;
             Path = path;
         }
 

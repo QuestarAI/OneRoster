@@ -6,10 +6,10 @@ namespace Questar.OneRoster.Client.Internals
 
     public class AcademicSessionsEndpoint : ListEndpoint<AcademicSession>, IAcademicSessionsEndpoint
     {
-        public AcademicSessionsEndpoint(string host, string path) : base(host, path)
+        public AcademicSessionsEndpoint(string path) : base(path)
         {
         }
 
-        public IItemEndpoint<AcademicSession> For(Guid id) => throw new NotImplementedException();
+        public IItemEndpoint<AcademicSession> For(Guid id) => new ItemEndpoint<AcademicSession>($"{Path}/{id}");
     }
 }

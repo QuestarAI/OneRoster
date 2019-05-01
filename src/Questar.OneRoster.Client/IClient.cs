@@ -10,7 +10,7 @@ namespace Questar.OneRoster.Client
 
         IClassesEndpoint Classes { get; }
 
-        ICourseEndpoint Courses { get; }
+        ICoursesEndpoint Courses { get; }
 
         IGradingPeriodsEndpoint GradingPeriods { get; }
 

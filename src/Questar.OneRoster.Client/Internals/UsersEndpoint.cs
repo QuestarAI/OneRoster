@@ -6,10 +6,10 @@ namespace Questar.OneRoster.Client.Internals
 
     public class UsersEndpoint : ListEndpoint<User>, IUsersEndpoint
     {
-        public UsersEndpoint(string host, string path) : base(host, path)
+        public UsersEndpoint(string path) : base(path)
         {
         }
 
-        public IUserEndpoint For(Guid id) => throw new NotImplementedException();
+        public IUserEndpoint For(Guid id) => new UserEndpoint($"{Path}/{id}");
     }
 }

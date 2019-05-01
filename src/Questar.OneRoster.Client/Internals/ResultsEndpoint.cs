@@ -6,10 +6,10 @@ namespace Questar.OneRoster.Client.Internals
 
     public class ResultsEndpoint : ListEndpoint<Result>, IResultsEndpoint
     {
-        public ResultsEndpoint(string host, string path) : base(host, path)
+        public ResultsEndpoint(string path) : base(path)
         {
         }
 
-        public IEditEndpoint<Result> For(Guid id) => throw new NotImplementedException();
+        public IEditEndpoint<Result> For(Guid id) => new EditEndpoint<Result>($"{Path}/{id}");
     }
 }

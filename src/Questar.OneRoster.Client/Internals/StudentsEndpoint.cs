@@ -6,10 +6,10 @@ namespace Questar.OneRoster.Client.Internals
 
     public class StudentsEndpoint : ListEndpoint<User>, IStudentsEndpoint
     {
-        public StudentsEndpoint(string host, string path) : base(host, path)
+        public StudentsEndpoint(string path) : base(path)
         {
         }
 
-        public IStudentEndpoint For(Guid id) => throw new NotImplementedException();
+        public IStudentEndpoint For(Guid id) => new StudentEndpoint($"{Path}/{id}");
     }
 }

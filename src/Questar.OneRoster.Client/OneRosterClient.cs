@@ -1,15 +1,16 @@
 namespace Questar.OneRoster.Client
 {
-    using System;
     using Flurl.Http;
+    using Internals;
     using JetBrains.Annotations;
-    using Models;
-
-
+    
     public class OneRosterClient : IClient
     {
+        [NotNull] public IFlurlClient Http { get; }
+
         public OneRosterClient([NotNull] IFlurlClient http)
         {
+            Http = http;
         }
 
 
@@ -17,36 +18,36 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public IAcademicSessionsEndpoint AcademicSessions => throw new NotImplementedException();
+        public IAcademicSessionsEndpoint AcademicSessions => new AcademicSessionsEndpoint("academicSessions") { Http = Http };
 
-        public ICategoriesEndpoint Categories => throw new NotImplementedException();
+        public ICategoriesEndpoint Categories => new CategoriesEndpoint("categories") { Http = Http };
 
-        public IClassesEndpoint Classes => throw new NotImplementedException();
+        public IClassesEndpoint Classes => new ClassesEndpoint("classes") { Http = Http };
 
-        public ICourseEndpoint Courses => throw new NotImplementedException();
+        public ICoursesEndpoint Courses => new CoursesEndpoint("courses") { Http = Http };
 
-        public IGradingPeriodsEndpoint GradingPeriods => throw new NotImplementedException();
+        public IGradingPeriodsEndpoint GradingPeriods => new GradingPeriodsEndpoint("gradingPeriods") { Http = Http };
 
-        public IDemographicsEndpoint Demographics => throw new NotImplementedException();
+        public IDemographicsEndpoint Demographics => new DemographicsEndpoint("demographics") { Http = Http };
 
-        public IEnrollmentsEndpoint Enrollments => throw new NotImplementedException();
+        public IEnrollmentsEndpoint Enrollments => new EnrollmentsEndpoint("enrollments") { Http = Http };
 
-        public ILineItemsEndpoint LineItems => throw new NotImplementedException();
+        public ILineItemsEndpoint LineItems => new LineItemsEndpoint("lineItems") { Http = Http };
 
-        public IOrgsEndpoint Orgs => throw new NotImplementedException();
+        public IOrgsEndpoint Orgs => new OrgsEndpoint("orgs") { Http = Http };
 
-        public IResourcesEndpoint Resources => throw new NotImplementedException();
+        public IResourcesEndpoint Resources => new ResourcesEndpoint("resources") { Http = Http };
 
-        public IResultsEndpoint Results => throw new NotImplementedException();
+        public IResultsEndpoint Results => new ResultsEndpoint("results") { Http = Http };
 
-        public ISchoolsEndpoint Schools => throw new NotImplementedException();
+        public ISchoolsEndpoint Schools => new SchoolsEndpoint("schools") { Http = Http };
 
-        public IStudentsEndpoint Students => throw new NotImplementedException();
+        public IStudentsEndpoint Students => new StudentsEndpoint("students") { Http = Http };
 
-        public ITeachersEndpoint Teachers => throw new NotImplementedException();
+        public ITeachersEndpoint Teachers => new TeachersEndpoint("teachers") { Http = Http };
 
-        public ITermsEndpoint Terms => throw new NotImplementedException();
+        public ITermsEndpoint Terms => new TermsEndpoint("terms") { Http = Http };
 
-        public IUsersEndpoint Users => throw new NotImplementedException();
+        public IUsersEndpoint Users => new UsersEndpoint("users") { Http = Http };
     }
 }

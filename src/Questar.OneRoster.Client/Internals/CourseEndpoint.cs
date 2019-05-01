@@ -5,11 +5,11 @@ namespace Questar.OneRoster.Client.Internals
 
     public class CourseEndpoint : ItemEndpoint<Course>, ICourseEndpoint
     {
-        public CourseEndpoint(string host, string path) : base(host, path)
+        public CourseEndpoint(string path) : base(path)
         {
         }
 
-        public IListEndpoint<Class> Classes { get; }
-        public IListEndpoint<Resource> Resources { get; }
+        public IListEndpoint<Class> Classes => new ListEndpoint<Class>($"{Path}/classes");
+        public IListEndpoint<Resource> Resources => new ListEndpoint<Resource>($"{Path}/resources");
     }
 }

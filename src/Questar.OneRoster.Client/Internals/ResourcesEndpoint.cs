@@ -6,10 +6,10 @@ namespace Questar.OneRoster.Client.Internals
 
     public class ResourcesEndpoint : ListEndpoint<Resource>, IResourcesEndpoint
     {
-        public ResourcesEndpoint(string host, string path) : base(host, path)
+        public ResourcesEndpoint(string path) : base(path)
         {
         }
 
-        public IItemEndpoint<Resource> For(Guid id) => throw new NotImplementedException();
+        public IItemEndpoint<Resource> For(Guid id) => new ItemEndpoint<Resource>($"{Path}/{id}");
     }
 }
