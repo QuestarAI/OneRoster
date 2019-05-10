@@ -11,6 +11,6 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public AcademicSessionEndpoint For(Guid id) => new AcademicSessionEndpoint(Http, $"{Path}/{id}");
+        public AcademicSessionEndpoint For(string id) => new AcademicSessionEndpoint(Http, $"{Path}/{id}");
     }
 }

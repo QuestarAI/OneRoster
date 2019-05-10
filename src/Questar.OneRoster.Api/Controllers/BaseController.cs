@@ -111,7 +111,7 @@ namespace Questar.OneRoster.Api.Controllers
             return Ok(result); // TODO data name
         }
 
-        [HttpGet("{SourcedId:guid}")]
+        [HttpGet("{SourcedId}")]
         public virtual async Task<ActionResult<dynamic>> Single(SingleRequest request)
         {
             var result = (IDictionary<string, object>) new ExpandoObject();

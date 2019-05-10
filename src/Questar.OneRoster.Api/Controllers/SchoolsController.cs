@@ -20,54 +20,54 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of courses taught in this school.
         /// </summary>
         [HttpGet("{orgId}/courses")]
-        public object GetCoursesForSchool(Guid orgId) => throw new NotImplementedException();
+        public object GetCoursesForSchool(string orgId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of classes taught in this school.
         /// </summary>
         [HttpGet("{orgId}/classes")]
-        public object GetClassesForSchool(Guid orgId) => throw new NotImplementedException();
+        public object GetClassesForSchool(string orgId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of enrollments of this class in this school.
         /// </summary>
         [HttpGet("{orgId}/classes/{classId}/enrollments")]
-        public object GetEnrollmentsForClassInSchool(Guid orgId, Guid classId) => throw new NotImplementedException();
+        public object GetEnrollmentsForClassInSchool(string orgId, string classId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of students taking this class in this school.
         /// </summary>
         [HttpGet("{orgId}/classes/{classId}/students")]
-        public object GetStudentsForClassInSchool(Guid orgId, Guid classId) => throw new NotImplementedException();
+        public object GetStudentsForClassInSchool(string orgId, string classId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of teachers teaching this class in this school.
         /// </summary>
         [HttpGet("{orgId}/classes/{classId}/teachers")]
-        public object GetTeachersForClassInSchool(Guid orgId, Guid classId) => throw new NotImplementedException();
+        public object GetTeachersForClassInSchool(string orgId, string classId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of enrollments in this school.
         /// </summary>
         [HttpGet("{orgId}/enrollments")]
-        public object GetEnrollmentsForSchool(Guid orgId) => throw new NotImplementedException();
+        public object GetEnrollmentsForSchool(string orgId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of students attending this school.
         /// </summary>
         [HttpGet("{orgId}/students")]
-        public object GetStudentsForSchool(Guid orgId) => throw new NotImplementedException();
+        public object GetStudentsForSchool(string orgId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of teachers teaching at this school.
         /// </summary>
         [HttpGet("{orgId}/teachers")]
-        public object GetTeachersForSchool(Guid orgId) => throw new NotImplementedException();
+        public object GetTeachersForSchool(string orgId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of terms used by this school.
         /// </summary>
         [HttpGet("{orgId}/terms")]
-        public object GetTermsForSchool(Guid orgId) => throw new NotImplementedException();
+        public object GetTermsForSchool(string orgId) => throw new NotImplementedException();
     }
 }

@@ -11,6 +11,6 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public SchoolEndpoint For(Guid id) => new SchoolEndpoint(Http, $"{Path}/{id}");
+        public SchoolEndpoint For(string id) => new SchoolEndpoint(Http, $"{Path}/{id}");
     }
 }

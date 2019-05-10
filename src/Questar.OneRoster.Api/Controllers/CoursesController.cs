@@ -20,12 +20,12 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes teaching this course.
         /// </summary>
         [HttpGet("{courseId}/classes")]
-        public object GetClassesForCourse(Guid courseId) => throw new NotImplementedException();
+        public object GetClassesForCourse(string courseId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of resources associated with this course.
         /// </summary>
         [HttpGet("{courseId}/resources")]
-        public object GetResourcesForCourse(Guid courseId) => throw new NotImplementedException();
+        public object GetResourcesForCourse(string courseId) => throw new NotImplementedException();
     }
 }

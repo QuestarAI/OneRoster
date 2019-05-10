@@ -11,6 +11,6 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public EnrollmentEndpoint For(Guid id) => new EnrollmentEndpoint(Http, $"{Path}/{id}");
+        public EnrollmentEndpoint For(string id) => new EnrollmentEndpoint(Http, $"{Path}/{id}");
     }
 }

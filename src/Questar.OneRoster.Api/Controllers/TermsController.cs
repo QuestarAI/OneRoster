@@ -21,12 +21,12 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes taught in this term.
         /// </summary>
         [HttpGet("{academicSessionId}/classes")]
-        public object GetClassesForTerm(Guid academicSessionId) => throw new NotImplementedException();
+        public object GetClassesForTerm(string academicSessionId) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the collection of grading periods which are part of this term.
         /// </summary>
         [HttpGet("{academicSessionId}/gradingPeriods")]
-        public object GetGradingPeriodsForTerm(Guid academicSessionId) => throw new NotImplementedException();
+        public object GetGradingPeriodsForTerm(string academicSessionId) => throw new NotImplementedException();
     }
 }

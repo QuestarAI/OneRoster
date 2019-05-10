@@ -1,6 +1,5 @@
 namespace Questar.OneRoster.Api.Models
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +7,7 @@ namespace Questar.OneRoster.Api.Models
     {
         [Required]
         [FromRoute]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [FromBody]

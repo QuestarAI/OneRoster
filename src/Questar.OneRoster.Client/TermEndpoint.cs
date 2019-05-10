@@ -4,7 +4,7 @@ namespace Questar.OneRoster.Client
     using Infrastructure;
     using Models;
 
-    public class TermEndpoint : ListEndpoint<AcademicSession>
+    public class TermEndpoint : ItemEndpoint<AcademicSession>
     {
         public TermEndpoint(IFlurlClient http, string path) : base(http, path)
         {

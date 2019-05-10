@@ -20,6 +20,6 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes this student is taking.
         /// </summary>
         [HttpGet("{userId}/classes")]
-        public object GetClassesForStudent(Guid userId) => throw new NotImplementedException();
+        public object GetClassesForStudent(string userId) => throw new NotImplementedException();
     }
 }
