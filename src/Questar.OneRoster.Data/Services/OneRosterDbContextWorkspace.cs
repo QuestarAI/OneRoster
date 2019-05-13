@@ -1,10 +1,8 @@
 namespace Questar.OneRoster.Data.Services
 {
-    using System;
     using AutoMapper;
     using AutoMapper.EntityFrameworkCore;
     using AutoMapper.Extensions.ExpressionMapping;
-    using AutoMapper.QueryableExtensions;
     using DataServices;
     using DataServices.EntityFrameworkCore;
     using Models;
@@ -36,7 +34,7 @@ namespace Questar.OneRoster.Data.Services
                 var set = Context.Set<TSource>();
                 var source = set.UseAsDataSource(Mapper).For<TModel>();
                 var persistence = set.Persist(Mapper);
-                return new SourceInjectedRepository<TModel, TSource>(source, persistence, model => model.SourcedId, (x, y) => (string) x == (string) y);
+                return new SourceInjectedRepository<TModel>(source, persistence, model => model.SourcedId, (x, y) => (string) x == (string) y);
             }
 
             builder.Add(CreateRepository<Models.AcademicSession, AcademicSession>());

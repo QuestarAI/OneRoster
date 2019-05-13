@@ -7,10 +7,10 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
     using AutoMapper.EntityFrameworkCore;
     using AutoMapper.Extensions.ExpressionMapping.Impl;
 
-    public class SourceInjectedRepository<TModel, TSource> : Repository<TModel>
+    public class SourceInjectedRepository<TModel> : Repository<TModel>
         where TModel : class
     {
-        public SourceInjectedRepository(ISourceInjectedQueryable<TModel> source, IPersistence<TSource> persistence, Expression<Func<TModel, object>> keySelector, Expression<Func<object, object, bool>> keyComparer)
+        public SourceInjectedRepository(ISourceInjectedQueryable<TModel> source, IPersistence persistence, Expression<Func<TModel, object>> keySelector, Expression<Func<object, object, bool>> keyComparer)
         {
             Source = source;
             Persistence = persistence;
@@ -20,7 +20,7 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 
         protected ISourceInjectedQueryable<TModel> Source { get; }
 
-        protected IPersistence<TSource> Persistence { get; }
+        protected IPersistence Persistence { get; }
 
         protected Expression<Func<TModel, object>> KeySelector { get; }
 

@@ -15,7 +15,6 @@ namespace Questar.OneRoster.ClientApp
             using (var client = new OneRosterClient(http))
             {
                 var orgs = await client.Orgs.ToPageAsync();
-
             }
 
             // lookup demographics, courses, and orgs

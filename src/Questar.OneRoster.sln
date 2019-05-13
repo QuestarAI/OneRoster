@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.DataServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Client.Test", "Test\Questar.OneRoster.Client.Test\Questar.OneRoster.Client.Test.csproj", "{B568508D-A4C4-4756-9D17-48643ACEF2DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questar.OneRoster.ClientApp", "Questar.OneRoster.ClientApp\Questar.OneRoster.ClientApp.csproj", "{4776CA71-C6E6-4E3E-9626-CCE2595AE5AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.ClientApp", "Questar.OneRoster.ClientApp\Questar.OneRoster.ClientApp.csproj", "{4776CA71-C6E6-4E3E-9626-CCE2595AE5AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
