@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="AutoMapper.Collection.EntityFrameworkCore" Version="0.1.0" />
+    <PackageReference Include="AutoMapper.Collection.EntityFrameworkCore" Version="0.2.0" />
     <ProjectReference Include="..\Questar.OneRoster.DataServices\Questar.OneRoster.DataServices.csproj" />
   </ItemGroup>
 
