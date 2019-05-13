@@ -1,19 +1,14 @@
 namespace Questar.OneRoster.Data.Profiles
 {
     using System.Linq;
-    using AutoMapper;
     using Models;
     using User = Data.User;
 
-    public class UserProfile : Profile
+    public class UserProfile : BaseProfile<User, Models.User>
     {
         public UserProfile()
         {
-            CreateMap<User, Models.User>()
-                .ForMember(target => target.SourcedId, config => config.MapFrom(source => source.Id))
-                .ForMember(target => target.DateLastModified, config => config.MapFrom(source => source.Modified))
-                .ForMember(target => target.StatusType, config => config.MapFrom(source => (StatusType) source.Status))
-                .ForMember(target => target.Metadata, config => config.MapFrom(source => source.MetadataCollection.Metadata))
+            CreateMap()
                 .ForMember(target => target.Username, config => config.MapFrom(source => source.UserName))
                 .ForMember(target => target.UserIds, config => config.MapFrom(source => source.Ids))
                 .ForMember(target => target.EnabledUser, config => config.MapFrom(source => source.Enabled))
