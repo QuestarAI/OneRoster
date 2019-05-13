@@ -43,7 +43,15 @@ namespace Questar.OneRoster.Data.Services
                 Title = "My School Year",
                 StartDate = DateTime.UtcNow,
                 EndDate = DateTime.UtcNow.AddYears(1),
-                SchoolYear = DateTime.UtcNow.Year
+                SchoolYear = DateTime.UtcNow.Year,
+                MetadataCollection =
+                {
+                    Metadata =
+                    {
+                        new Metadata { Key = "Foo", Value = "Bar" },
+                        new Metadata { Key = "Baz", Value = "Qux" }
+                    }
+                }
             };
             var semester = new AcademicSession(AcademicSessionType.Semester)
             {

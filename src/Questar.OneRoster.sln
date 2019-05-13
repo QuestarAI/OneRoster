@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Data", "Q
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Api", "Questar.OneRoster.Api\Questar.OneRoster.Api.csproj", "{7EC7338F-19ED-45F0-A20A-DE85B5DD0CC5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Data.Test", "Test\Questar.OneRoster.Data.Test\Questar.OneRoster.Data.Test.csproj", "{F777FA18-679B-4E9C-A98E-29C49B4E107A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.DataServices", "Questar.OneRoster.DataServices\Questar.OneRoster.DataServices.csproj", "{97323457-6DE2-4FEC-A876-89525AFC0714}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.DataServices.EntityFrameworkCore", "Questar.OneRoster.DataServices.EntityFrameworkCore\Questar.OneRoster.DataServices.EntityFrameworkCore.csproj", "{A79E1022-03D0-45BB-B01B-370FF815A539}"
@@ -63,10 +61,6 @@ Global
 		{7EC7338F-19ED-45F0-A20A-DE85B5DD0CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EC7338F-19ED-45F0-A20A-DE85B5DD0CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EC7338F-19ED-45F0-A20A-DE85B5DD0CC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F777FA18-679B-4E9C-A98E-29C49B4E107A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F777FA18-679B-4E9C-A98E-29C49B4E107A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F777FA18-679B-4E9C-A98E-29C49B4E107A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F777FA18-679B-4E9C-A98E-29C49B4E107A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97323457-6DE2-4FEC-A876-89525AFC0714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97323457-6DE2-4FEC-A876-89525AFC0714}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97323457-6DE2-4FEC-A876-89525AFC0714}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -89,7 +83,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA} = {F3419DBB-B068-48B3-90D1-79C43356A349}
-		{F777FA18-679B-4E9C-A98E-29C49B4E107A} = {F3419DBB-B068-48B3-90D1-79C43356A349}
 		{B568508D-A4C4-4756-9D17-48643ACEF2DA} = {F3419DBB-B068-48B3-90D1-79C43356A349}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
