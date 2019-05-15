@@ -11,7 +11,7 @@ namespace Questar.OneRoster.ClientApp
     {
         private static async Task Main(string[] args)
         {
-            using (var http = new FlurlClient(new HttpClient { BaseAddress = new Uri("http://localhost:14469") }))
+            using (var http = new FlurlClient("http://localhost:14469"))
             using (var client = new OneRosterClient(http))
             {
                 var orgs = await client.Orgs.ToPageAsync();

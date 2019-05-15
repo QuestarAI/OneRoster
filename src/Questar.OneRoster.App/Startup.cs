@@ -1,9 +1,7 @@
 namespace Questar.OneRoster.App
 {
-    using System.Reflection;
     using Api.Extensions;
     using Data.Extensions;
-    using Data.Profiles;
     using JetBrains.Annotations;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
