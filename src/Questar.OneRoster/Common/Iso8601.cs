@@ -99,7 +99,7 @@ namespace Questar.OneRoster.Common
             if (ExcessiveFractions.IsMatch(iso8601String))
                 iso8601String = ExcessiveFractions.Replace(
                     iso8601String,
-                    m => decimal.Round(decimal.Parse(m.Value.Substring(0, Math.Max(m.Value.Length, 10))), 7, rounding).ToString());
+                    m => Math.Round(decimal.Parse(m.Value.Substring(0, Math.Max(m.Value.Length, 10))), 7, rounding).ToString());
 
             if (iso8601String.Contains("T24")) return ParseT24Date(iso8601String, rounding, yearFormat);
 

@@ -66,10 +66,10 @@ namespace Questar.OneRoster.Filtering
             var property = Property.PropertyType;
             var collection = property.Name == typeof(ICollection<>).Name
                 ? property
-                : property.GetInterface(typeof(ICollection<>).Name);
+                : property.GetTypeInfo().GetInterface(typeof(ICollection<>).Name);
             if (collection == null)
                 throw new InvalidOperationException($"Value '{value}' does not implement '{typeof(ICollection<>).Name}'.");
-            var type = collection.GetGenericArguments().Single();
+            var type = collection.GetTypeInfo().GetGenericArguments().Single();
             var converter = TypeDescriptor.GetConverter(type);
             if (converter == null)
                 throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
