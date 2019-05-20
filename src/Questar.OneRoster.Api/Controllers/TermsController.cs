@@ -16,6 +16,7 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
+        protected override IQuery<AcademicSession> Query() => base.Query().Where(session => session.Type == AcademicSessionType.Term);
 
         /// <summary>
         /// Returns the collection of classes taught in this term.
