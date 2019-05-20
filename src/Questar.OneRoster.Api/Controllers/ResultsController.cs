@@ -21,9 +21,9 @@ namespace Questar.OneRoster.Api.Controllers
         protected override IQuery<Result> Query() => Workspace.Results.AsQuery();
 
         [HttpPut("{id}")]
-        public virtual Task<ActionResult<dynamic>> Upsert(UpsertRequest<Result> request) => throw new NotImplementedException();
+        public virtual Task<ActionResult> Upsert(UpsertRequest<Result> request) => throw new NotImplementedException();
 
         [HttpDelete("{id}")]
-        public virtual Task<ActionResult<dynamic>> Delete(DeleteRequest request) => throw new NotImplementedException();
+        public virtual Task<ActionResult> Delete(DeleteRequest request) => throw new NotImplementedException();
     }
 }

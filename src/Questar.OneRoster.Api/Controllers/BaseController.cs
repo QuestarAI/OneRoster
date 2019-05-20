@@ -35,6 +35,7 @@ namespace Questar.OneRoster.Api.Controllers
 
         protected BaseControllerOptions Options { get; }
 
+        [NonAction]
         protected abstract IQuery<T> Query();
 
         [HttpGet]

@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Api.Controllers
 {
     using System;
+    using System.Threading.Tasks;
     using DataServices;
     using Microsoft.AspNetCore.Mvc;
     using OneRoster.Models;
@@ -22,6 +23,6 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes this student is taking.
         /// </summary>
         [HttpGet("{userId}/classes")]
-        public object GetClassesForStudent(string userId) => throw new NotImplementedException();
+        public Task<ActionResult> GetClassesForStudent(string userId) => throw new NotImplementedException();
     }
 }

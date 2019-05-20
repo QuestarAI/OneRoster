@@ -13,8 +13,8 @@ namespace Questar.OneRoster.Api.Controllers
     {
         public TermsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
-            Plural = "Terms",
-            Singular = "Term"
+            Plural = "AcademicSessions",
+            Singular = "AcademicSession"
         })
         {
         }
@@ -25,7 +25,7 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes taught in this term.
         /// </summary>
         [HttpGet("{academicSessionId}/classes")]
-        public async Task<ActionResult<OneRosterCollection<Class>>> GetClassesForTerm(string academicSessionId)
+        public async Task<ActionResult> GetClassesForTerm(string academicSessionId)
         {
             // TODO serialization
             var classes = await Workspace.Terms.GetClassesForTerm(academicSessionId).ToPageAsync(0, 100);
@@ -41,7 +41,7 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of grading periods which are part of this term.
         /// </summary>
         [HttpGet("{academicSessionId}/gradingPeriods")]
-        public async Task<ActionResult<OneRosterCollection<AcademicSession>>> GetGradingPeriodsForTerm(string academicSessionId)
+        public async Task<ActionResult> GetGradingPeriodsForTerm(string academicSessionId)
         {
             // TODO serialization
             var sessions = await Workspace.Terms.GetGradingPeriodsForTerm(academicSessionId).ToPageAsync(0, 100);
