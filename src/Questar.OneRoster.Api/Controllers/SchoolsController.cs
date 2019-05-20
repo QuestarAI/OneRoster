@@ -16,6 +16,8 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
+        protected override IQuery<Org> Query() => base.Query().Where(user => user.Type == OrgType.School);
+
         /// <summary>
         /// Returns the collection of courses taught in this school.
         /// </summary>

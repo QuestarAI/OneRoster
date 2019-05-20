@@ -35,6 +35,11 @@ namespace Questar.OneRoster.Api.Controllers
 
         protected IWorkspace Workspace { get; }
 
+        protected virtual IQuery<T> Query()
+        {
+            return Workspace.GetRepository<T>().AsQuery();
+        }
+
         [HttpGet]
         public virtual async Task<ActionResult<dynamic>> Select(SelectRequest request)
         {
@@ -82,7 +87,7 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(result);
 
-            IQuery query = Workspace.GetRepository<T>().AsQuery();
+            IQuery query = Query();
 
             // filter, only if requested
             if (filter != null)
@@ -133,7 +138,7 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(result);
 
-            IQuery query = Workspace.GetRepository<T>().AsQuery().WhereHasKey(request.SourcedId);
+            IQuery query = Query().WhereHasKey(request.SourcedId);
 
             // dynamic select, only if requested
             var selectors = fields?.Where(field => Properties.Contains(field)).ToList();

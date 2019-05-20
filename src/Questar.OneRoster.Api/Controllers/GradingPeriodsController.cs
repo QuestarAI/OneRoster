@@ -14,5 +14,7 @@ namespace Questar.OneRoster.Api.Controllers
         })
         {
         }
+
+        protected override IQuery<AcademicSession> Query() => base.Query().Where(session => session.Type == AcademicSessionType.GradingPeriod);
     }
 }

@@ -16,6 +16,8 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
+        protected override IQuery<User> Query() => base.Query().Where(user => user.Role == RoleType.Teacher);
+
         /// <summary>
         /// Returns the collection of classes this student is taking.
         /// </summary>

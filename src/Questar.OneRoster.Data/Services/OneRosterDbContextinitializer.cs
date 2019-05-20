@@ -53,6 +53,14 @@ namespace Questar.OneRoster.Data.Services
                     }
                 }
             };
+            var term = new AcademicSession(AcademicSessionType.Term)
+            {
+                Title = "My Term",
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddYears(1),
+                SchoolYear = DateTime.UtcNow.Year,
+                Parent = schoolYear
+            };
             var semester = new AcademicSession(AcademicSessionType.Semester)
             {
                 Title = "My Semester",
@@ -129,7 +137,7 @@ namespace Questar.OneRoster.Data.Services
                 School = school,
                 Terms =
                 {
-                    new ClassAcademicSession(semester)
+                    new ClassAcademicSession(term)
                 },
                 LineItems =
                 {
