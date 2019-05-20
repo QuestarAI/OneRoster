@@ -8,13 +8,15 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/courses")]
     public class CoursesController : BaseController<Course>
     {
-        public CoursesController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public CoursesController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "Courses",
             Singular = "Course"
         })
         {
         }
+
+        protected override IQuery<Course> Query() => Workspace.Courses.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes teaching this course.

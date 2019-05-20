@@ -10,13 +10,15 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/lineItems")]
     public class LineItemsController : BaseController<LineItem>
     {
-        public LineItemsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public LineItemsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "LineItems",
             Singular = "LineItem"
         })
         {
         }
+
+        protected override IQuery<LineItem> Query() => Workspace.LineItems.AsQuery();
 
         [HttpPut("{id}")]
         public virtual Task<ActionResult<dynamic>> Upsert(UpsertRequest<LineItem> request) => throw new NotImplementedException();

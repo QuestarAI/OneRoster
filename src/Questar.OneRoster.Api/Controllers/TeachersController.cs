@@ -8,7 +8,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/teachers")]
     public class TeachersController : BaseController<User>
     {
-        public TeachersController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public TeachersController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "Users",
             Singular = "User"
@@ -16,7 +16,7 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<User> Query() => base.Query().Where(user => user.Role == RoleType.Teacher);
+        protected override IQuery<User> Query() => Workspace.Teachers.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes this teacher is teaching.

@@ -7,7 +7,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/gradingPeriods")]
     public class GradingPeriodsController : BaseController<AcademicSession>
     {
-        public GradingPeriodsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public GradingPeriodsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "AcademicSessions",
             Singular = "AcademicSession"
@@ -15,6 +15,6 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<AcademicSession> Query() => base.Query().Where(session => session.Type == AcademicSessionType.GradingPeriod);
+        protected override IQuery<AcademicSession> Query() => Workspace.AcademicSessions.AsQuery().Where(session => session.Type == AcademicSessionType.GradingPeriod);
     }
 }

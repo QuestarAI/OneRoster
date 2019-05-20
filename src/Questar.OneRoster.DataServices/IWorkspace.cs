@@ -4,8 +4,6 @@ namespace Questar.OneRoster.DataServices
 
     public interface IWorkspace
     {
-        IRepository<T> GetRepository<T>();
-
         void Save();
 
         Task SaveAsync();

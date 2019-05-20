@@ -8,7 +8,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/schools")]
     public class SchoolsController : BaseController<Org>
     {
-        public SchoolsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public SchoolsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "Orgs",
             Singular = "Org"
@@ -16,7 +16,7 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<Org> Query() => base.Query().Where(user => user.Type == OrgType.School);
+        protected override IQuery<Org> Query() => Workspace.Schools.AsQuery();
 
         /// <summary>
         /// Returns the collection of courses taught in this school.

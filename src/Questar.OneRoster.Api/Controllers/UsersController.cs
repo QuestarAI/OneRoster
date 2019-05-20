@@ -8,13 +8,15 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/users")]
     public class UsersController : BaseController<User>
     {
-        public UsersController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public UsersController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "Users",
             Singular = "User"
         })
         {
         }
+
+        protected override IQuery<User> Query() => Workspace.Users.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes enrolled by this user.

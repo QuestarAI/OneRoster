@@ -8,7 +8,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/classes")]
     public class ClassesController : BaseController<Class>
     {
-        public ClassesController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public ClassesController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "Classes",
             Singular = "Class"
@@ -16,8 +16,9 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
+        protected override IQuery<Class> Query() => Workspace.Classes.AsQuery();
 
-        /// <summary>
+            /// <summary>
         /// Returns the collection of line items (columns) in the gradebook for this class.
         /// </summary>
         [HttpGet("{classId}/lineItems")]

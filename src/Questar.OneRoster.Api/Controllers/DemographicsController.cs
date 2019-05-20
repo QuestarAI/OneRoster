@@ -7,12 +7,14 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/demographics")]
     public class DemographicsController : BaseController<Demographics>
     {
-        public DemographicsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public DemographicsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "Demographics",
             Singular = "Demographic"
         })
         {
         }
+
+        protected override IQuery<Demographics> Query() => Workspace.Demographics.AsQuery();
     }
 }

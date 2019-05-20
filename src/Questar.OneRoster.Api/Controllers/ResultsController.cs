@@ -10,13 +10,15 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/results")]
     public class ResultsController : BaseController<Result>
     {
-        public ResultsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public ResultsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "Results",
             Singular = "Result"
         })
         {
         }
+
+        protected override IQuery<Result> Query() => Workspace.Results.AsQuery();
 
         [HttpPut("{id}")]
         public virtual Task<ActionResult<dynamic>> Upsert(UpsertRequest<Result> request) => throw new NotImplementedException();

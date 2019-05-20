@@ -25,20 +25,17 @@ namespace Questar.OneRoster.Api.Controllers
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
 
-        protected BaseController(IWorkspace workspace, BaseControllerOptions options)
+        protected BaseController(IOneRosterWorkspace workspace, BaseControllerOptions options)
         {
             Workspace = workspace;
             Options = options;
         }
 
-        public BaseControllerOptions Options { get; }
+        protected IOneRosterWorkspace Workspace { get; }
 
-        protected IWorkspace Workspace { get; }
+        protected BaseControllerOptions Options { get; }
 
-        protected virtual IQuery<T> Query()
-        {
-            return Workspace.GetRepository<T>().AsQuery();
-        }
+        protected abstract IQuery<T> Query();
 
         [HttpGet]
         public virtual async Task<ActionResult<dynamic>> Select(SelectRequest request)

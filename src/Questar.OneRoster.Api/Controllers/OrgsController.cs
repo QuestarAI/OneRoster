@@ -7,12 +7,14 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/orgs")]
     public class OrgsController : BaseController<Org>
     {
-        public OrgsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
+        public OrgsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
         {
             Plural = "Orgs",
             Singular = "Org"
         })
         {
         }
+
+        protected override IQuery<Org> Query() => Workspace.Orgs.AsQuery();
     }
 }
