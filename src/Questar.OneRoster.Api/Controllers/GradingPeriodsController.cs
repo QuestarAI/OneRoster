@@ -7,11 +7,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/gradingPeriods")]
     public class GradingPeriodsController : BaseController<AcademicSession>
     {
-        public GradingPeriodsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "AcademicSessions",
-            Singular = "AcademicSession"
-        })
+        public GradingPeriodsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 

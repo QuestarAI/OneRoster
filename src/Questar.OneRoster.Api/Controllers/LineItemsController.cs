@@ -10,11 +10,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/lineItems")]
     public class LineItemsController : BaseController<LineItem>
     {
-        public LineItemsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "LineItems",
-            Singular = "LineItem"
-        })
+        public LineItemsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 

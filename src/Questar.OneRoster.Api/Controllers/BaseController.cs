@@ -4,6 +4,8 @@ namespace Questar.OneRoster.Api.Controllers
     using System.Collections.Generic;
     using System.Dynamic;
     using System.Linq;
+    using System.Net;
+    using System.Net.Mime;
     using System.Reflection;
     using System.Threading.Tasks;
     using DataServices;
@@ -11,29 +13,26 @@ namespace Questar.OneRoster.Api.Controllers
     using Helpers;
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using Newtonsoft.Json;
     using OneRoster.Models;
     using OneRoster.Models.Errors;
+    using Serialization;
     using Sorting;
 
     [Produces("application/json")]
     public abstract class BaseController<T> : ControllerBase where T : Base
     {
-        protected const string StatusInfoSet = "StatusInfoSet";
-
         protected static readonly HashSet<string> Properties =
             new HashSet<string>(typeof(T)
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
 
-        protected BaseController(IOneRosterWorkspace workspace, BaseControllerOptions options)
+        protected BaseController(IOneRosterWorkspace workspace)
         {
             Workspace = workspace;
-            Options = options;
         }
 
         protected IOneRosterWorkspace Workspace { get; }
-
-        protected BaseControllerOptions Options { get; }
 
         [NonAction]
         protected abstract IQuery<T> Query();
@@ -41,8 +40,14 @@ namespace Questar.OneRoster.Api.Controllers
         [HttpGet]
         public virtual async Task<ActionResult<dynamic>> Select(SelectRequest request)
         {
-            var result = (IDictionary<string, object>) new ExpandoObject();
-            var statuses = (StatusInfoList) (result[StatusInfoSet] = new StatusInfoList());
+            var resolver = new OneRosterContractResolver(typeof(T));
+            var settings = new JsonSerializerSettings { ContractResolver = resolver };
+
+            var statuses = new StatusInfoList();
+            var result = new OneRosterCollection<dynamic>
+            {
+                StatusInfoSet = statuses
+            };
 
             var fields =
                 request.Fields?
@@ -83,7 +88,7 @@ namespace Questar.OneRoster.Api.Controllers
                 statuses.Add(StatusInfo.InvalidOffsetField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(result);
+                return BadRequest(JsonConvert.SerializeObject(result, settings));
 
             IQuery query = Query();
 
@@ -109,16 +114,24 @@ namespace Questar.OneRoster.Api.Controllers
             if (!string.IsNullOrEmpty(link))
                 HttpContext.Response.Headers.Add("Link", link);
 
-            result[Options.Plural] = data.Items;
+            result.Results = data.Items.OfType<dynamic>().ToArray();
 
-            return Ok(result); // TODO data name
+            var content = JsonConvert.SerializeObject(result, settings);
+
+            return Content(content, "application/json");
         }
 
         [HttpGet("{SourcedId}")]
         public virtual async Task<ActionResult<dynamic>> Single(SingleRequest request)
         {
-            var result = (IDictionary<string, object>) new ExpandoObject();
-            var statuses = (StatusInfoList) (result[StatusInfoSet] = new StatusInfoList());
+            var resolver = new OneRosterContractResolver(typeof(T));
+            var settings = new JsonSerializerSettings { ContractResolver = resolver };
+
+            var statuses = new StatusInfoList();
+            var result = new OneRosterSingle<dynamic>
+            {
+                StatusInfoSet = statuses
+            };
 
             var fields =
                 request.Fields?
@@ -134,7 +147,7 @@ namespace Questar.OneRoster.Api.Controllers
                     statuses.Add(StatusInfo.InvalidBlankSelectionField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(result);
+                return BadRequest(JsonConvert.SerializeObject(result, settings));
 
             IQuery query = Query().WhereHasKey(request.SourcedId);
 
@@ -145,9 +158,11 @@ namespace Questar.OneRoster.Api.Controllers
 
             var data = await query.SingleAsync();
 
-            result[Options.Singular] = data;
+            result.Result = data;
 
-            return Ok(result); // TODO data name
+            var content = JsonConvert.SerializeObject(result, settings);
+
+            return Content(content, "application/json");
         }
 
         // IUpsertable<T>

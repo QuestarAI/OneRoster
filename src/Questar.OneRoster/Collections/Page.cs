@@ -16,8 +16,11 @@ namespace Questar.OneRoster.Collections
         }
 
         public T this[int index] => Items[index];
+
         public int Count { get; }
+
         IEnumerable IPage.Items => Items;
+
         public IReadOnlyList<T> Items { get; }
     }
 }

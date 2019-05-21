@@ -10,11 +10,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/categories")]
     public class CategoriesController : BaseController<Category>
     {
-        public CategoriesController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Categories",
-            Singular = "Category"
-        })
+        public CategoriesController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 

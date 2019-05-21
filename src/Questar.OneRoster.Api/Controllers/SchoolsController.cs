@@ -9,11 +9,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/schools")]
     public class SchoolsController : BaseController<Org>
     {
-        public SchoolsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Orgs",
-            Singular = "Org"
-        })
+        public SchoolsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 

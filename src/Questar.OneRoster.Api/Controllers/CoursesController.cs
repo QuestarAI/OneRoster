@@ -9,11 +9,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/courses")]
     public class CoursesController : BaseController<Course>
     {
-        public CoursesController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Courses",
-            Singular = "Course"
-        })
+        public CoursesController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 

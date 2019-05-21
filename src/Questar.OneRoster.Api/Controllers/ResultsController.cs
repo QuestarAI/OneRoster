@@ -10,11 +10,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/results")]
     public class ResultsController : BaseController<Result>
     {
-        public ResultsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Results",
-            Singular = "Result"
-        })
+        public ResultsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 

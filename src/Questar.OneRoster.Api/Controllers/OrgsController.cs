@@ -7,11 +7,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/orgs")]
     public class OrgsController : BaseController<Org>
     {
-        public OrgsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Orgs",
-            Singular = "Org"
-        })
+        public OrgsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 

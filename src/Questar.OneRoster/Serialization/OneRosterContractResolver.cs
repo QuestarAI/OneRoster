@@ -21,7 +21,7 @@ namespace Questar.OneRoster.Serialization
             var property = base.CreateProperty(member, memberSerialization);
             var attribute = member.GetCustomAttribute<OneRosterContractAttribute>();
             if (attribute != null)
-                property.PropertyName = attribute.Pluralize ? Pluralize(Type.Name) : Type.Name;
+                property.PropertyName = NamingStrategy.GetPropertyName(attribute.Pluralize ? Pluralize(Type.Name) : Type.Name, false);
             return property;
         }
 

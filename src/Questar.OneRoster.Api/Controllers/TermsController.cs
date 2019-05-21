@@ -11,11 +11,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/terms")]
     public class TermsController : BaseController<AcademicSession>
     {
-        public TermsController(IOneRosterWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "AcademicSessions",
-            Singular = "AcademicSession"
-        })
+        public TermsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 
