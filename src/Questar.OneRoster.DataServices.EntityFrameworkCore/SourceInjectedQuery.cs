@@ -36,7 +36,6 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 
         public virtual IQuery<dynamic> Select(PropertyInfo[] properties)
         {
-            // TODO assembly management - can we reuse these types?
             var assembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString()), AssemblyBuilderAccess.Run);
             var module = assembly.DefineDynamicModule("DynamicQueryable");
             var type = module.DefineType("Anonymous", TypeAttributes.Public | TypeAttributes.Sealed);
@@ -66,7 +65,6 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 
         public virtual IQuery<T> WhereHasKey(object key)
         {
-            // delegate invocation creates an invalid expression, so we have to rearrange the expression tree
             var value = Expression.Convert(Expression.Constant(key), typeof(object));
             var parameter = Expression.Parameter(Source.ElementType);
             var select = ReplacingExpressionVisitor.Replace(KeySelector.Parameters.Single(), parameter, KeySelector.Body);

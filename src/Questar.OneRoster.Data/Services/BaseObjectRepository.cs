@@ -7,19 +7,19 @@ namespace Questar.OneRoster.Data.Services
     using DataServices.EntityFrameworkCore;
     using Models;
 
-    public class BaseRepository<TModel, TSource> : SourceInjectedRepository<TModel, TSource>
+    public class BaseObjectRepository<TModel, TSource> : BaseRepository<TModel, TSource>
         where TModel : Base
         where TSource : class, IBaseObject
     {
-        public BaseRepository(OneRosterDbContext context, IMapper mapper)
+        public BaseObjectRepository(OneRosterDbContext context, IMapper mapper)
             : this(context, mapper, context.Set<TSource>())
         {
             Context = context;
             Mapper = mapper;
         }
 
-        public BaseRepository(OneRosterDbContext context, IMapper mapper, IQueryable<TSource> query)
-            : base(query.UseAsDataSource(mapper).For<TModel>(), context.Set<TSource>().Persist(mapper), model => model.SourcedId, (x, y) => (string) x == (string) y)
+        public BaseObjectRepository(OneRosterDbContext context, IMapper mapper, IQueryable<TSource> query)
+            : base(query.UseAsDataSource(mapper).For<TModel>(), context.Set<TSource>().Persist(mapper))
         {
             Context = context;
             Mapper = mapper;

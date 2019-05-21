@@ -5,7 +5,7 @@ namespace Questar.OneRoster.Data.Services
     using Models;
     using Org = Data.Org;
 
-    public class OrgRepository : BaseRepository<Models.Org, Org>, IOrgRepository
+    public class OrgRepository : BaseObjectRepository<Models.Org, Org>, IOrgRepository
     {
         public OrgRepository(OneRosterDbContext context, IMapper mapper)
             : base(context, mapper)

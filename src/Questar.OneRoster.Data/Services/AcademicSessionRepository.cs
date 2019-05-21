@@ -5,7 +5,7 @@ namespace Questar.OneRoster.Data.Services
     using Models;
     using AcademicSession = Data.AcademicSession;
 
-    public class AcademicSessionRepository : BaseRepository<Models.AcademicSession, AcademicSession>, IAcademicSessionRepository
+    public class AcademicSessionRepository : BaseObjectRepository<Models.AcademicSession, AcademicSession>, IAcademicSessionRepository
     {
         public AcademicSessionRepository(OneRosterDbContext context, IMapper mapper)
             : base(context, mapper)

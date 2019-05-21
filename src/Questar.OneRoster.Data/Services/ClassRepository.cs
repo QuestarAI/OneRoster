@@ -9,7 +9,7 @@ namespace Questar.OneRoster.Data.Services
     using Models;
     using Class = Data.Class;
 
-    public class ClassRepository : BaseRepository<Models.Class, Class>, IClassRepository
+    public class ClassRepository : BaseObjectRepository<Models.Class, Class>, IClassRepository
     {
         public ClassRepository(OneRosterDbContext context, IMapper mapper)
             : base(context, mapper)

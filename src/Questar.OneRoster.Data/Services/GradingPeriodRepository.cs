@@ -7,7 +7,7 @@ namespace Questar.OneRoster.Data.Services
     using AcademicSession = Data.AcademicSession;
     using AcademicSessionType = Data.AcademicSessionType;
 
-    public class GradingPeriodRepository : BaseRepository<Models.AcademicSession, AcademicSession>, IGradingPeriodRepository
+    public class GradingPeriodRepository : BaseObjectRepository<Models.AcademicSession, AcademicSession>, IGradingPeriodRepository
     {
         public GradingPeriodRepository(OneRosterDbContext context, IMapper mapper)
             : base(context, mapper, context.Set<AcademicSession>().Where(session => session.Type == AcademicSessionType.GradingPeriod))

@@ -11,7 +11,7 @@ namespace Questar.OneRoster.Data.Services
     using Org = Data.Org;
     using OrgType = Data.OrgType;
 
-    public class SchoolRepository : BaseRepository<Models.Org, Org>, ISchoolRepository
+    public class SchoolRepository : BaseObjectRepository<Models.Org, Org>, ISchoolRepository
     {
         public SchoolRepository(OneRosterDbContext context, IMapper mapper)
             : base(context, mapper, context.Set<Org>().Where(org => org.Type == OrgType.School))

@@ -9,7 +9,7 @@ namespace Questar.OneRoster.Data.Services
     using Models;
     using User = Data.User;
 
-    public class TeacherRepository : BaseRepository<Models.User, User>, ITeacherRepository
+    public class TeacherRepository : BaseObjectRepository<Models.User, User>, ITeacherRepository
     {
         public TeacherRepository(OneRosterDbContext context, IMapper mapper)
             : base(context, mapper, context.Set<User>().Where(user => user.Type == UserType.Teacher))

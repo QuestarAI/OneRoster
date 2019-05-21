@@ -10,7 +10,7 @@ namespace Questar.OneRoster.Data.Services
     using AcademicSession = Data.AcademicSession;
     using AcademicSessionType = Data.AcademicSessionType;
 
-    public class TermRepository : BaseRepository<Models.AcademicSession, AcademicSession>, ITermRepository
+    public class TermRepository : BaseObjectRepository<Models.AcademicSession, AcademicSession>, ITermRepository
     {
         public TermRepository(OneRosterDbContext context, IMapper mapper)
             : base(context, mapper, context.Set<AcademicSession>().Where(session => session.Type == AcademicSessionType.Term))
