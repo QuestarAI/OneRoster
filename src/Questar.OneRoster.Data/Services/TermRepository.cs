@@ -6,6 +6,9 @@ namespace Questar.OneRoster.Data.Services
     using AutoMapper.Extensions.ExpressionMapping;
     using DataServices;
     using DataServices.EntityFrameworkCore;
+    using Models;
+    using AcademicSession = Data.AcademicSession;
+    using AcademicSessionType = Data.AcademicSessionType;
 
     public class TermRepository : BaseRepository<Models.AcademicSession, AcademicSession>, ITermRepository
     {
@@ -14,24 +17,19 @@ namespace Questar.OneRoster.Data.Services
         {
         }
 
-        public IQuery<Models.Class> GetClassesForTerm(string academicSessionId)
-        {
-            var source =
-                Context.Classes
-                    .Where(@class => @class.Terms.Select(term => term.AcademicSessionId).Contains(Guid.Parse(academicSessionId)))
-                    .UseAsDataSource(Mapper)
-                    .For<Models.Class>();
-            return new SourceInjectedQuery<Models.Class>(source, model => model.SourcedId, (x, y) => (string) x == (string) y);
-        }
+        public IQuery<Class> GetClassesForTerm(string academicSessionId)
+            => Context.Classes
+                .Where(@class => @class.Terms.Select(term => term.AcademicSessionId).Contains(Guid.Parse(academicSessionId)))
+                .UseAsDataSource(Mapper)
+                .For<Class>()
+                .ToQuery();
+
 
         public IQuery<Models.AcademicSession> GetGradingPeriodsForTerm(string academicSessionId)
-        {
-            var source =
-                Context.AcademicSessions
-                    .Where(session => session.ParentId == Guid.Parse(academicSessionId))
-                    .UseAsDataSource(Mapper)
-                    .For<Models.AcademicSession>();
-            return new SourceInjectedQuery<Models.AcademicSession>(source, model => model.SourcedId, (x, y) => (string) x == (string) y);
-        }
+            => Context.AcademicSessions
+                .Where(session => session.ParentId == Guid.Parse(academicSessionId))
+                .UseAsDataSource(Mapper)
+                .For<Models.AcademicSession>()
+                .ToQuery();
     }
 }

@@ -45,7 +45,7 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             var bindings = properties.Select(property => Expression.Bind(instance.Type.GetField(property.Name), Expression.Property(parameter, property)));
             var body = Expression.MemberInit(instance, bindings);
             var selector = Expression.Lambda(body, parameter);
-            var call = Expression.Call(typeof(Queryable), "Select", new[] { parameter.Type, instance.Type }, Source.Expression, selector);
+            var call = Expression.Call(typeof(Queryable), "Select", new[] {parameter.Type, instance.Type}, Source.Expression, selector);
             var query = Source.Provider.CreateQuery<dynamic>(call);
             return new DynamicSourceInjectedQuery((ISourceInjectedQueryable<dynamic>) query);
         }
@@ -69,7 +69,7 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             var compare1 = ReplacingExpressionVisitor.Replace(KeyComparer.Parameters.ElementAt(0), select, KeyComparer.Body);
             var compare2 = ReplacingExpressionVisitor.Replace(KeyComparer.Parameters.ElementAt(1), value, compare1);
             var predicate = Expression.Lambda(compare2, parameter);
-            var call = Expression.Call(typeof(Queryable), "Where", new[] { parameter.Type }, Source.Expression, predicate);
+            var call = Expression.Call(typeof(Queryable), "Where", new[] {parameter.Type}, Source.Expression, predicate);
             var query = Source.Provider.CreateQuery<T>(call);
             return new SourceInjectedQuery<T>((ISourceInjectedQueryable<T>) query, KeySelector, KeyComparer);
         }

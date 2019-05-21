@@ -1,7 +1,13 @@
 namespace Questar.OneRoster.Data.Services
 {
+    using System;
+    using System.Linq;
     using AutoMapper;
+    using AutoMapper.Extensions.ExpressionMapping;
     using DataServices;
+    using DataServices.EntityFrameworkCore;
+    using Models;
+    using Course = Data.Course;
 
     public class CourseRepository : BaseRepository<Models.Course, Course>, ICourseRepository
     {
@@ -9,5 +15,19 @@ namespace Questar.OneRoster.Data.Services
             : base(context, mapper)
         {
         }
+
+        public IQuery<Class> GetClassesForCourse(string courseId)
+            => Context.Classes
+                .Where(@class => @class.CourseId == Guid.Parse(courseId))
+                .UseAsDataSource(Mapper)
+                .For<Class>()
+                .ToQuery();
+
+        public IQuery<Resource> GetResourcesForCourse(string courseId)
+            => Context.Resources
+                .Where(resource => resource.Courses.Any(course => course.CourseId == Guid.Parse(courseId)))
+                .UseAsDataSource(Mapper)
+                .For<Resource>()
+                .ToQuery();
     }
 }

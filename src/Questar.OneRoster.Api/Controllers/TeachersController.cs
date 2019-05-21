@@ -4,6 +4,7 @@ namespace Questar.OneRoster.Api.Controllers
     using System.Threading.Tasks;
     using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/teachers")]
@@ -19,6 +20,7 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes this teacher is teaching.
         /// </summary>
         [HttpGet("{userId}/classes")]
-        public Task<ActionResult> GetClassesForTeacher(string userId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetClassesForTeacher(string userId, SelectRequest request)
+            => Select(() => Workspace.Teachers.GetClassesForTeacher(userId), request);
     }
 }

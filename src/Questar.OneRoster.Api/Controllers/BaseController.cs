@@ -113,7 +113,7 @@ namespace Questar.OneRoster.Api.Controllers
 
             result.Results = data.Items.OfType<dynamic>().ToArray();
 
-            var content = JsonConvert.SerializeObject(result, settings);
+            var content = JsonConvert.SerializeObject(result, Formatting.Indented, settings);
 
             return Content(content);
         }
@@ -161,7 +161,7 @@ namespace Questar.OneRoster.Api.Controllers
 
             result.Result = data;
 
-            var content = JsonConvert.SerializeObject(result, settings);
+            var content = JsonConvert.SerializeObject(result, Formatting.Indented, settings);
 
             return Content(content);
         }
