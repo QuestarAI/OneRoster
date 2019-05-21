@@ -21,6 +21,6 @@ namespace Questar.OneRoster.Data.Services
                 .Where(@class => @class.Enrollments.Select(enrollment => enrollment.UserId).Contains(Guid.Parse(userId)))
                 .UseAsDataSource(Mapper)
                 .For<Class>()
-                .ToQuery();
+                .ToBaseQuery();
     }
 }

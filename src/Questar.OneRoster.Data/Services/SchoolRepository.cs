@@ -23,62 +23,62 @@ namespace Questar.OneRoster.Data.Services
                 .Where(course => course.OrgId == Guid.Parse(orgId))
                 .UseAsDataSource(Mapper)
                 .For<Course>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<Class> GetClassesForSchool(string orgId)
             => Context.Classes
                 .Where(@class => @class.SchoolId == Guid.Parse(orgId))
                 .UseAsDataSource(Mapper)
                 .For<Class>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<Enrollment> GetEnrollmentsForClassInSchool(string orgId, string classId)
             => Context.Enrollments
                 .Where(enrollment => enrollment.Class.SchoolId == Guid.Parse(orgId) && enrollment.ClassId == Guid.Parse(classId))
                 .UseAsDataSource(Mapper)
                 .For<Enrollment>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<User> GetStudentsForClassInSchool(string orgId, string classId)
             => Context.Users
                 .Where(user => user.Type == UserType.Student && user.Enrollments.Any(enrollment => enrollment.Class.SchoolId == Guid.Parse(orgId) && enrollment.ClassId == Guid.Parse(classId)))
                 .UseAsDataSource(Mapper)
                 .For<User>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<User> GetTeachersForClassInSchool(string orgId, string classId)
             => Context.Users
                 .Where(user => user.Type == UserType.Teacher && user.Enrollments.Any(enrollment => enrollment.Class.SchoolId == Guid.Parse(orgId) && enrollment.ClassId == Guid.Parse(classId)))
                 .UseAsDataSource(Mapper)
                 .For<User>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<Enrollment> GetEnrollmentsForSchool(string orgId)
             => Context.Enrollments
                 .Where(enrollment => enrollment.Class.SchoolId == Guid.Parse(orgId))
                 .UseAsDataSource(Mapper)
                 .For<Enrollment>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<User> GetStudentsForSchool(string orgId)
             => Context.Users
                 .Where(user => user.Type == UserType.Student && user.Orgs.Any(org => org.OrgId == Guid.Parse(orgId)))
                 .UseAsDataSource(Mapper)
                 .For<User>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<User> GetTeachersForSchool(string orgId)
             => Context.Users
                 .Where(user => user.Type == UserType.Teacher && user.Orgs.Any(org => org.OrgId == Guid.Parse(orgId)))
                 .UseAsDataSource(Mapper)
                 .For<User>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<AcademicSession> GetTermsForSchool(string orgId)
             => Context.AcademicSessions
                 .Where(session => session.Type == AcademicSessionType.Term && session.Classes.Any(org => org.Class.SchoolId == Guid.Parse(orgId)))
                 .UseAsDataSource(Mapper)
                 .For<AcademicSession>()
-                .ToQuery();
+                .ToBaseQuery();
     }
 }

@@ -5,7 +5,7 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 
     public static class BaseQueryExtensions
     {
-        public static IQuery<T> ToQuery<T>(this ISourceInjectedQueryable<T> source)
+        public static BaseQuery<T> ToBaseQuery<T>(this ISourceInjectedQueryable<T> source)
             where T : Base
             => new BaseQuery<T>(source);
     }

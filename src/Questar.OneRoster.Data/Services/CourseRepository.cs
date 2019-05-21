@@ -21,13 +21,13 @@ namespace Questar.OneRoster.Data.Services
                 .Where(@class => @class.CourseId == Guid.Parse(courseId))
                 .UseAsDataSource(Mapper)
                 .For<Class>()
-                .ToQuery();
+                .ToBaseQuery();
 
         public IQuery<Resource> GetResourcesForCourse(string courseId)
             => Context.Resources
                 .Where(resource => resource.Courses.Any(course => course.CourseId == Guid.Parse(courseId)))
                 .UseAsDataSource(Mapper)
                 .For<Resource>()
-                .ToQuery();
+                .ToBaseQuery();
     }
 }
