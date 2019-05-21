@@ -69,7 +69,8 @@ namespace Questar.OneRoster.Filtering
 
         public override Expression Visit(Expression node)
         {
-            if (IsTerminal(node)) return node;
+            if (IsTerminal(node))
+                return node;
             switch (node.NodeType)
             {
                 case ExpressionType.AndAlso:

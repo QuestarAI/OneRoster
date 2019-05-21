@@ -5,7 +5,8 @@ namespace Questar.OneRoster.Models
 
     public class OneRosterSingle<T>
     {
-        [OneRosterContract] public T Result { get; set; }
+        [OneRosterContract]
+        public T Result { get; set; }
 
         public StatusInfoList StatusInfoSet { get; set; }
     }

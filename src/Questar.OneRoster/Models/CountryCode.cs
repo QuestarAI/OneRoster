@@ -11,502 +11,751 @@ namespace Questar.OneRoster.Models
     /// </summary>
     public enum CountryCode
     {
-        [SerializationToken("AF")] Afghanistan,
+        [SerializationToken("AF")]
+        Afghanistan,
 
-        [SerializationToken("AX")] AlandIslands,
+        [SerializationToken("AX")]
+        AlandIslands,
 
-        [SerializationToken("AL")] Albania,
+        [SerializationToken("AL")]
+        Albania,
 
-        [SerializationToken("DZ")] Algeria,
+        [SerializationToken("DZ")]
+        Algeria,
 
-        [SerializationToken("AS")] AmericanSamoa,
+        [SerializationToken("AS")]
+        AmericanSamoa,
 
-        [SerializationToken("AD")] Andorra,
+        [SerializationToken("AD")]
+        Andorra,
 
-        [SerializationToken("AO")] Angola,
+        [SerializationToken("AO")]
+        Angola,
 
-        [SerializationToken("AI")] Anguilla,
+        [SerializationToken("AI")]
+        Anguilla,
 
-        [SerializationToken("AQ")] Antarctica,
+        [SerializationToken("AQ")]
+        Antarctica,
 
-        [SerializationToken("AG")] AntiguaAndBarbuda,
+        [SerializationToken("AG")]
+        AntiguaAndBarbuda,
 
-        [SerializationToken("AR")] Argentina,
+        [SerializationToken("AR")]
+        Argentina,
 
-        [SerializationToken("AM")] Armenia,
+        [SerializationToken("AM")]
+        Armenia,
 
-        [SerializationToken("AW")] Aruba,
+        [SerializationToken("AW")]
+        Aruba,
 
-        [SerializationToken("AU")] Australia,
+        [SerializationToken("AU")]
+        Australia,
 
-        [SerializationToken("AT")] Austria,
+        [SerializationToken("AT")]
+        Austria,
 
-        [SerializationToken("AZ")] Azerbaijan,
+        [SerializationToken("AZ")]
+        Azerbaijan,
 
-        [SerializationToken("BS")] Bahamas,
+        [SerializationToken("BS")]
+        Bahamas,
 
-        [SerializationToken("BH")] Bahrain,
+        [SerializationToken("BH")]
+        Bahrain,
 
-        [SerializationToken("BD")] Bangladesh,
+        [SerializationToken("BD")]
+        Bangladesh,
 
-        [SerializationToken("BB")] Barbados,
+        [SerializationToken("BB")]
+        Barbados,
 
-        [SerializationToken("BY")] Belarus,
+        [SerializationToken("BY")]
+        Belarus,
 
-        [SerializationToken("BE")] Belgium,
+        [SerializationToken("BE")]
+        Belgium,
 
-        [SerializationToken("BZ")] Belize,
+        [SerializationToken("BZ")]
+        Belize,
 
-        [SerializationToken("BJ")] Benin,
+        [SerializationToken("BJ")]
+        Benin,
 
-        [SerializationToken("BM")] Bermuda,
+        [SerializationToken("BM")]
+        Bermuda,
 
-        [SerializationToken("BT")] Bhutan,
+        [SerializationToken("BT")]
+        Bhutan,
 
-        [SerializationToken("BO")] BoliviaPlurinationalStateOf,
+        [SerializationToken("BO")]
+        BoliviaPlurinationalStateOf,
 
-        [SerializationToken("BQ")] BonaireSintEustatiusAndSaba,
+        [SerializationToken("BQ")]
+        BonaireSintEustatiusAndSaba,
 
-        [SerializationToken("BA")] BosniaAndHerzegovina,
+        [SerializationToken("BA")]
+        BosniaAndHerzegovina,
 
-        [SerializationToken("BW")] Botswana,
+        [SerializationToken("BW")]
+        Botswana,
 
-        [SerializationToken("BV")] BouvetIsland,
+        [SerializationToken("BV")]
+        BouvetIsland,
 
-        [SerializationToken("BR")] Brazil,
+        [SerializationToken("BR")]
+        Brazil,
 
-        [SerializationToken("IO")] BritishIndianOceanTerritory,
+        [SerializationToken("IO")]
+        BritishIndianOceanTerritory,
 
-        [SerializationToken("BN")] BruneiDarussalam,
+        [SerializationToken("BN")]
+        BruneiDarussalam,
 
-        [SerializationToken("BG")] Bulgaria,
+        [SerializationToken("BG")]
+        Bulgaria,
 
-        [SerializationToken("BF")] BurkinaFaso,
+        [SerializationToken("BF")]
+        BurkinaFaso,
 
-        [SerializationToken("BI")] Burundi,
+        [SerializationToken("BI")]
+        Burundi,
 
-        [SerializationToken("KH")] Cambodia,
+        [SerializationToken("KH")]
+        Cambodia,
 
-        [SerializationToken("CM")] Cameroon,
+        [SerializationToken("CM")]
+        Cameroon,
 
-        [SerializationToken("CA")] Canada,
+        [SerializationToken("CA")]
+        Canada,
 
-        [SerializationToken("CV")] CaboVerde,
+        [SerializationToken("CV")]
+        CaboVerde,
 
-        [SerializationToken("KY")] CaymanIslands,
+        [SerializationToken("KY")]
+        CaymanIslands,
 
-        [SerializationToken("CF")] CentralAfricanRepublic,
+        [SerializationToken("CF")]
+        CentralAfricanRepublic,
 
-        [SerializationToken("TD")] Chad,
+        [SerializationToken("TD")]
+        Chad,
 
-        [SerializationToken("CL")] Chile,
+        [SerializationToken("CL")]
+        Chile,
 
-        [SerializationToken("CN")] China,
+        [SerializationToken("CN")]
+        China,
 
-        [SerializationToken("CX")] ChristmasIsland,
+        [SerializationToken("CX")]
+        ChristmasIsland,
 
-        [SerializationToken("CC")] CocosKeelingIslands,
+        [SerializationToken("CC")]
+        CocosKeelingIslands,
 
-        [SerializationToken("CO")] Colombia,
+        [SerializationToken("CO")]
+        Colombia,
 
-        [SerializationToken("KM")] Comoros,
+        [SerializationToken("KM")]
+        Comoros,
 
-        [SerializationToken("CG")] Congo,
+        [SerializationToken("CG")]
+        Congo,
 
-        [SerializationToken("CD")] CongoDemocraticRepublicOfThe,
+        [SerializationToken("CD")]
+        CongoDemocraticRepublicOfThe,
 
-        [SerializationToken("CK")] CookIslands,
+        [SerializationToken("CK")]
+        CookIslands,
 
-        [SerializationToken("CR")] CostaRica,
+        [SerializationToken("CR")]
+        CostaRica,
 
-        [SerializationToken("CI")] CoteDivoire,
+        [SerializationToken("CI")]
+        CoteDivoire,
 
-        [SerializationToken("HR")] Croatia,
+        [SerializationToken("HR")]
+        Croatia,
 
-        [SerializationToken("CU")] Cuba,
+        [SerializationToken("CU")]
+        Cuba,
 
-        [SerializationToken("CW")] Curacao,
+        [SerializationToken("CW")]
+        Curacao,
 
-        [SerializationToken("CY")] Cyprus,
+        [SerializationToken("CY")]
+        Cyprus,
 
-        [SerializationToken("CZ")] CzechRepublic,
+        [SerializationToken("CZ")]
+        CzechRepublic,
 
-        [SerializationToken("DK")] Denmark,
+        [SerializationToken("DK")]
+        Denmark,
 
-        [SerializationToken("DJ")] Djibouti,
+        [SerializationToken("DJ")]
+        Djibouti,
 
-        [SerializationToken("DM")] Dominica,
+        [SerializationToken("DM")]
+        Dominica,
 
-        [SerializationToken("DO")] DominicanRepublic,
+        [SerializationToken("DO")]
+        DominicanRepublic,
 
-        [SerializationToken("EC")] Ecuador,
+        [SerializationToken("EC")]
+        Ecuador,
 
-        [SerializationToken("EG")] Egypt,
+        [SerializationToken("EG")]
+        Egypt,
 
-        [SerializationToken("SV")] ElSalvador,
+        [SerializationToken("SV")]
+        ElSalvador,
 
-        [SerializationToken("GQ")] EquatorialGuinea,
+        [SerializationToken("GQ")]
+        EquatorialGuinea,
 
-        [SerializationToken("ER")] Eritrea,
+        [SerializationToken("ER")]
+        Eritrea,
 
-        [SerializationToken("EE")] Estonia,
+        [SerializationToken("EE")]
+        Estonia,
 
-        [SerializationToken("ET")] Ethiopia,
+        [SerializationToken("ET")]
+        Ethiopia,
 
-        [SerializationToken("FK")] FalklandIslandsMalvinas,
+        [SerializationToken("FK")]
+        FalklandIslandsMalvinas,
 
-        [SerializationToken("FO")] FaroeIslands,
+        [SerializationToken("FO")]
+        FaroeIslands,
 
-        [SerializationToken("FJ")] Fiji,
+        [SerializationToken("FJ")]
+        Fiji,
 
-        [SerializationToken("FI")] Finland,
+        [SerializationToken("FI")]
+        Finland,
 
-        [SerializationToken("FR")] France,
+        [SerializationToken("FR")]
+        France,
 
-        [SerializationToken("GF")] FrenchGuiana,
+        [SerializationToken("GF")]
+        FrenchGuiana,
 
-        [SerializationToken("PF")] FrenchPolynesia,
+        [SerializationToken("PF")]
+        FrenchPolynesia,
 
-        [SerializationToken("TF")] FrenchSouthernTerritories,
+        [SerializationToken("TF")]
+        FrenchSouthernTerritories,
 
-        [SerializationToken("GA")] Gabon,
+        [SerializationToken("GA")]
+        Gabon,
 
-        [SerializationToken("GM")] Gambia,
+        [SerializationToken("GM")]
+        Gambia,
 
-        [SerializationToken("GE")] Georgia,
+        [SerializationToken("GE")]
+        Georgia,
 
-        [SerializationToken("DE")] Germany,
+        [SerializationToken("DE")]
+        Germany,
 
-        [SerializationToken("GH")] Ghana,
+        [SerializationToken("GH")]
+        Ghana,
 
-        [SerializationToken("GI")] Gibraltar,
+        [SerializationToken("GI")]
+        Gibraltar,
 
-        [SerializationToken("GR")] Greece,
+        [SerializationToken("GR")]
+        Greece,
 
-        [SerializationToken("GL")] Greenland,
+        [SerializationToken("GL")]
+        Greenland,
 
-        [SerializationToken("GD")] Grenada,
+        [SerializationToken("GD")]
+        Grenada,
 
-        [SerializationToken("GP")] Guadeloupe,
+        [SerializationToken("GP")]
+        Guadeloupe,
 
-        [SerializationToken("GU")] Guam,
+        [SerializationToken("GU")]
+        Guam,
 
-        [SerializationToken("GT")] Guatemala,
+        [SerializationToken("GT")]
+        Guatemala,
 
-        [SerializationToken("GG")] Guernsey,
+        [SerializationToken("GG")]
+        Guernsey,
 
-        [SerializationToken("GN")] Guinea,
+        [SerializationToken("GN")]
+        Guinea,
 
-        [SerializationToken("GW")] GuineaBissau,
+        [SerializationToken("GW")]
+        GuineaBissau,
 
-        [SerializationToken("GY")] Guyana,
+        [SerializationToken("GY")]
+        Guyana,
 
-        [SerializationToken("HT")] Haiti,
+        [SerializationToken("HT")]
+        Haiti,
 
-        [SerializationToken("HM")] HeardIslandAndMcdonaldIslands,
+        [SerializationToken("HM")]
+        HeardIslandAndMcdonaldIslands,
 
-        [SerializationToken("VA")] HolySee,
+        [SerializationToken("VA")]
+        HolySee,
 
-        [SerializationToken("HN")] Honduras,
+        [SerializationToken("HN")]
+        Honduras,
 
-        [SerializationToken("HK")] HongKong,
+        [SerializationToken("HK")]
+        HongKong,
 
-        [SerializationToken("HU")] Hungary,
+        [SerializationToken("HU")]
+        Hungary,
 
-        [SerializationToken("IS")] Iceland,
+        [SerializationToken("IS")]
+        Iceland,
 
-        [SerializationToken("IN")] India,
+        [SerializationToken("IN")]
+        India,
 
-        [SerializationToken("ID")] Indonesia,
+        [SerializationToken("ID")]
+        Indonesia,
 
-        [SerializationToken("IR")] IranIslamicRepublicOf,
+        [SerializationToken("IR")]
+        IranIslamicRepublicOf,
 
-        [SerializationToken("IQ")] Iraq,
+        [SerializationToken("IQ")]
+        Iraq,
 
-        [SerializationToken("IE")] Ireland,
+        [SerializationToken("IE")]
+        Ireland,
 
-        [SerializationToken("IM")] IsleOfMan,
+        [SerializationToken("IM")]
+        IsleOfMan,
 
-        [SerializationToken("IL")] Israel,
+        [SerializationToken("IL")]
+        Israel,
 
-        [SerializationToken("IT")] Italy,
+        [SerializationToken("IT")]
+        Italy,
 
-        [SerializationToken("JM")] Jamaica,
+        [SerializationToken("JM")]
+        Jamaica,
 
-        [SerializationToken("JP")] Japan,
+        [SerializationToken("JP")]
+        Japan,
 
-        [SerializationToken("JE")] Jersey,
+        [SerializationToken("JE")]
+        Jersey,
 
-        [SerializationToken("JO")] Jordan,
+        [SerializationToken("JO")]
+        Jordan,
 
-        [SerializationToken("KZ")] Kazakhstan,
+        [SerializationToken("KZ")]
+        Kazakhstan,
 
-        [SerializationToken("KE")] Kenya,
+        [SerializationToken("KE")]
+        Kenya,
 
-        [SerializationToken("KI")] Kiribati,
+        [SerializationToken("KI")]
+        Kiribati,
 
-        [SerializationToken("KP")] KoreaDemocraticPeoplesRepublicOf,
+        [SerializationToken("KP")]
+        KoreaDemocraticPeoplesRepublicOf,
 
-        [SerializationToken("KR")] KoreaRepublicOf,
+        [SerializationToken("KR")]
+        KoreaRepublicOf,
 
-        [SerializationToken("KW")] Kuwait,
+        [SerializationToken("KW")]
+        Kuwait,
 
-        [SerializationToken("KG")] Kyrgyzstan,
+        [SerializationToken("KG")]
+        Kyrgyzstan,
 
-        [SerializationToken("LA")] LaoPeoplesDemocraticRepublic,
+        [SerializationToken("LA")]
+        LaoPeoplesDemocraticRepublic,
 
-        [SerializationToken("LV")] Latvia,
+        [SerializationToken("LV")]
+        Latvia,
 
-        [SerializationToken("LB")] Lebanon,
+        [SerializationToken("LB")]
+        Lebanon,
 
-        [SerializationToken("LS")] Lesotho,
+        [SerializationToken("LS")]
+        Lesotho,
 
-        [SerializationToken("LR")] Liberia,
+        [SerializationToken("LR")]
+        Liberia,
 
-        [SerializationToken("LY")] Libya,
+        [SerializationToken("LY")]
+        Libya,
 
-        [SerializationToken("LI")] Liechtenstein,
+        [SerializationToken("LI")]
+        Liechtenstein,
 
-        [SerializationToken("LT")] Lithuania,
+        [SerializationToken("LT")]
+        Lithuania,
 
-        [SerializationToken("LU")] Luxembourg,
+        [SerializationToken("LU")]
+        Luxembourg,
 
-        [SerializationToken("MO")] Macao,
+        [SerializationToken("MO")]
+        Macao,
 
-        [SerializationToken("MK")] MacedoniaTheFormerYugoslavRepublicOf,
+        [SerializationToken("MK")]
+        MacedoniaTheFormerYugoslavRepublicOf,
 
-        [SerializationToken("MG")] Madagascar,
+        [SerializationToken("MG")]
+        Madagascar,
 
-        [SerializationToken("MW")] Malawi,
+        [SerializationToken("MW")]
+        Malawi,
 
-        [SerializationToken("MY")] Malaysia,
+        [SerializationToken("MY")]
+        Malaysia,
 
-        [SerializationToken("MV")] Maldives,
+        [SerializationToken("MV")]
+        Maldives,
 
-        [SerializationToken("ML")] Mali,
+        [SerializationToken("ML")]
+        Mali,
 
-        [SerializationToken("MT")] Malta,
+        [SerializationToken("MT")]
+        Malta,
 
-        [SerializationToken("MH")] MarshallIslands,
+        [SerializationToken("MH")]
+        MarshallIslands,
 
-        [SerializationToken("MQ")] Martinique,
+        [SerializationToken("MQ")]
+        Martinique,
 
-        [SerializationToken("MR")] Mauritania,
+        [SerializationToken("MR")]
+        Mauritania,
 
-        [SerializationToken("MU")] Mauritius,
+        [SerializationToken("MU")]
+        Mauritius,
 
-        [SerializationToken("YT")] Mayotte,
+        [SerializationToken("YT")]
+        Mayotte,
 
-        [SerializationToken("MX")] Mexico,
+        [SerializationToken("MX")]
+        Mexico,
 
-        [SerializationToken("FM")] MicronesiaFederatedStatesOf,
+        [SerializationToken("FM")]
+        MicronesiaFederatedStatesOf,
 
-        [SerializationToken("MD")] MoldovaRepublicOf,
+        [SerializationToken("MD")]
+        MoldovaRepublicOf,
 
-        [SerializationToken("MC")] Monaco,
+        [SerializationToken("MC")]
+        Monaco,
 
-        [SerializationToken("MN")] Mongolia,
+        [SerializationToken("MN")]
+        Mongolia,
 
-        [SerializationToken("ME")] Montenegro,
+        [SerializationToken("ME")]
+        Montenegro,
 
-        [SerializationToken("MS")] Montserrat,
+        [SerializationToken("MS")]
+        Montserrat,
 
-        [SerializationToken("MA")] Morocco,
+        [SerializationToken("MA")]
+        Morocco,
 
-        [SerializationToken("MZ")] Mozambique,
+        [SerializationToken("MZ")]
+        Mozambique,
 
-        [SerializationToken("MM")] Myanmar,
+        [SerializationToken("MM")]
+        Myanmar,
 
-        [SerializationToken("NA")] Namibia,
+        [SerializationToken("NA")]
+        Namibia,
 
-        [SerializationToken("NR")] Nauru,
+        [SerializationToken("NR")]
+        Nauru,
 
-        [SerializationToken("NP")] Nepal,
+        [SerializationToken("NP")]
+        Nepal,
 
-        [SerializationToken("NL")] Netherlands,
+        [SerializationToken("NL")]
+        Netherlands,
 
-        [SerializationToken("NC")] NewCaledonia,
+        [SerializationToken("NC")]
+        NewCaledonia,
 
-        [SerializationToken("NZ")] NewZealand,
+        [SerializationToken("NZ")]
+        NewZealand,
 
-        [SerializationToken("NI")] Nicaragua,
+        [SerializationToken("NI")]
+        Nicaragua,
 
-        [SerializationToken("NE")] Niger,
+        [SerializationToken("NE")]
+        Niger,
 
-        [SerializationToken("NG")] Nigeria,
+        [SerializationToken("NG")]
+        Nigeria,
 
-        [SerializationToken("NU")] Niue,
+        [SerializationToken("NU")]
+        Niue,
 
-        [SerializationToken("NF")] NorfolkIsland,
+        [SerializationToken("NF")]
+        NorfolkIsland,
 
-        [SerializationToken("MP")] NorthernMarianaIslands,
+        [SerializationToken("MP")]
+        NorthernMarianaIslands,
 
-        [SerializationToken("NO")] Norway,
+        [SerializationToken("NO")]
+        Norway,
 
-        [SerializationToken("OM")] Oman,
+        [SerializationToken("OM")]
+        Oman,
 
-        [SerializationToken("PK")] Pakistan,
+        [SerializationToken("PK")]
+        Pakistan,
 
-        [SerializationToken("PW")] Palau,
+        [SerializationToken("PW")]
+        Palau,
 
-        [SerializationToken("PS")] PalestineStateOf,
+        [SerializationToken("PS")]
+        PalestineStateOf,
 
-        [SerializationToken("PA")] Panama,
+        [SerializationToken("PA")]
+        Panama,
 
-        [SerializationToken("PG")] PapuaNewGuinea,
+        [SerializationToken("PG")]
+        PapuaNewGuinea,
 
-        [SerializationToken("PY")] Paraguay,
+        [SerializationToken("PY")]
+        Paraguay,
 
-        [SerializationToken("PE")] Peru,
+        [SerializationToken("PE")]
+        Peru,
 
-        [SerializationToken("PH")] Philippines,
+        [SerializationToken("PH")]
+        Philippines,
 
-        [SerializationToken("PN")] Pitcairn,
+        [SerializationToken("PN")]
+        Pitcairn,
 
-        [SerializationToken("PL")] Poland,
+        [SerializationToken("PL")]
+        Poland,
 
-        [SerializationToken("PT")] Portugal,
+        [SerializationToken("PT")]
+        Portugal,
 
-        [SerializationToken("PR")] PuertoRico,
+        [SerializationToken("PR")]
+        PuertoRico,
 
-        [SerializationToken("QA")] Qatar,
+        [SerializationToken("QA")]
+        Qatar,
 
-        [SerializationToken("RE")] Reunion,
+        [SerializationToken("RE")]
+        Reunion,
 
-        [SerializationToken("RO")] Romania,
+        [SerializationToken("RO")]
+        Romania,
 
-        [SerializationToken("RU")] RussianFederation,
+        [SerializationToken("RU")]
+        RussianFederation,
 
-        [SerializationToken("RW")] Rwanda,
+        [SerializationToken("RW")]
+        Rwanda,
 
-        [SerializationToken("BL")] SaintBarthelemy,
+        [SerializationToken("BL")]
+        SaintBarthelemy,
 
-        [SerializationToken("SH")] SaintHelenaAscensionAndTristanDaCunha,
+        [SerializationToken("SH")]
+        SaintHelenaAscensionAndTristanDaCunha,
 
-        [SerializationToken("KN")] SaintKittsAndNevis,
+        [SerializationToken("KN")]
+        SaintKittsAndNevis,
 
-        [SerializationToken("LC")] SaintLucia,
+        [SerializationToken("LC")]
+        SaintLucia,
 
-        [SerializationToken("MF")] SaintMartinFrenchPart,
+        [SerializationToken("MF")]
+        SaintMartinFrenchPart,
 
-        [SerializationToken("PM")] SaintPierreAndMiquelon,
+        [SerializationToken("PM")]
+        SaintPierreAndMiquelon,
 
-        [SerializationToken("VC")] SaintVincentAndTheGrenadines,
+        [SerializationToken("VC")]
+        SaintVincentAndTheGrenadines,
 
-        [SerializationToken("WS")] Samoa,
+        [SerializationToken("WS")]
+        Samoa,
 
-        [SerializationToken("SM")] SanMarino,
+        [SerializationToken("SM")]
+        SanMarino,
 
-        [SerializationToken("ST")] SaoTomeAndPrincipe,
+        [SerializationToken("ST")]
+        SaoTomeAndPrincipe,
 
-        [SerializationToken("SA")] SaudiArabia,
+        [SerializationToken("SA")]
+        SaudiArabia,
 
-        [SerializationToken("SN")] Senegal,
+        [SerializationToken("SN")]
+        Senegal,
 
-        [SerializationToken("RS")] Serbia,
+        [SerializationToken("RS")]
+        Serbia,
 
-        [SerializationToken("SC")] Seychelles,
+        [SerializationToken("SC")]
+        Seychelles,
 
-        [SerializationToken("SL")] SierraLeone,
+        [SerializationToken("SL")]
+        SierraLeone,
 
-        [SerializationToken("SG")] Singapore,
+        [SerializationToken("SG")]
+        Singapore,
 
-        [SerializationToken("SX")] SintMaartenDutchPart,
+        [SerializationToken("SX")]
+        SintMaartenDutchPart,
 
-        [SerializationToken("SK")] Slovakia,
+        [SerializationToken("SK")]
+        Slovakia,
 
-        [SerializationToken("SI")] Slovenia,
+        [SerializationToken("SI")]
+        Slovenia,
 
-        [SerializationToken("SB")] SolomonIslands,
+        [SerializationToken("SB")]
+        SolomonIslands,
 
-        [SerializationToken("SO")] Somalia,
+        [SerializationToken("SO")]
+        Somalia,
 
-        [SerializationToken("ZA")] SouthAfrica,
+        [SerializationToken("ZA")]
+        SouthAfrica,
 
-        [SerializationToken("GS")] SouthGeorgiaAndTheSouthSandwichIslands,
+        [SerializationToken("GS")]
+        SouthGeorgiaAndTheSouthSandwichIslands,
 
-        [SerializationToken("SS")] SouthSudan,
+        [SerializationToken("SS")]
+        SouthSudan,
 
-        [SerializationToken("ES")] Spain,
+        [SerializationToken("ES")]
+        Spain,
 
-        [SerializationToken("LK")] SriLanka,
+        [SerializationToken("LK")]
+        SriLanka,
 
-        [SerializationToken("SD")] Sudan,
+        [SerializationToken("SD")]
+        Sudan,
 
-        [SerializationToken("SR")] Suriname,
+        [SerializationToken("SR")]
+        Suriname,
 
-        [SerializationToken("SJ")] SvalbardAndJanMayen,
+        [SerializationToken("SJ")]
+        SvalbardAndJanMayen,
 
-        [SerializationToken("SZ")] Swaziland,
+        [SerializationToken("SZ")]
+        Swaziland,
 
-        [SerializationToken("SE")] Sweden,
+        [SerializationToken("SE")]
+        Sweden,
 
-        [SerializationToken("CH")] Switzerland,
+        [SerializationToken("CH")]
+        Switzerland,
 
-        [SerializationToken("SY")] SyrianArabRepublic,
+        [SerializationToken("SY")]
+        SyrianArabRepublic,
 
-        [SerializationToken("TW")] Taiwan,
+        [SerializationToken("TW")]
+        Taiwan,
 
-        [SerializationToken("TJ")] Tajikistan,
+        [SerializationToken("TJ")]
+        Tajikistan,
 
-        [SerializationToken("TZ")] TanzaniaUnitedRepublicOf,
+        [SerializationToken("TZ")]
+        TanzaniaUnitedRepublicOf,
 
-        [SerializationToken("TH")] Thailand,
+        [SerializationToken("TH")]
+        Thailand,
 
-        [SerializationToken("TL")] TimorLeste,
+        [SerializationToken("TL")]
+        TimorLeste,
 
-        [SerializationToken("TG")] Togo,
+        [SerializationToken("TG")]
+        Togo,
 
-        [SerializationToken("TK")] Tokelau,
+        [SerializationToken("TK")]
+        Tokelau,
 
-        [SerializationToken("TO")] Tonga,
+        [SerializationToken("TO")]
+        Tonga,
 
-        [SerializationToken("TT")] TrinidadAndTobago,
+        [SerializationToken("TT")]
+        TrinidadAndTobago,
 
-        [SerializationToken("TN")] Tunisia,
+        [SerializationToken("TN")]
+        Tunisia,
 
-        [SerializationToken("TR")] Turkey,
+        [SerializationToken("TR")]
+        Turkey,
 
-        [SerializationToken("TM")] Turkmenistan,
+        [SerializationToken("TM")]
+        Turkmenistan,
 
-        [SerializationToken("TC")] TurksAndCaicosIslands,
+        [SerializationToken("TC")]
+        TurksAndCaicosIslands,
 
-        [SerializationToken("TV")] Tuvalu,
+        [SerializationToken("TV")]
+        Tuvalu,
 
-        [SerializationToken("UG")] Uganda,
+        [SerializationToken("UG")]
+        Uganda,
 
-        [SerializationToken("UA")] Ukraine,
+        [SerializationToken("UA")]
+        Ukraine,
 
-        [SerializationToken("AE")] UnitedArabEmirates,
+        [SerializationToken("AE")]
+        UnitedArabEmirates,
 
-        [SerializationToken("GB")] UnitedKingdomOfGreatBritainAndNorthernIreland,
+        [SerializationToken("GB")]
+        UnitedKingdomOfGreatBritainAndNorthernIreland,
 
-        [SerializationToken("US")] UnitedStatesOfAmerica,
+        [SerializationToken("US")]
+        UnitedStatesOfAmerica,
 
-        [SerializationToken("UM")] UnitedStatesMinorOutlyingIslands,
+        [SerializationToken("UM")]
+        UnitedStatesMinorOutlyingIslands,
 
-        [SerializationToken("UY")] Uruguay,
+        [SerializationToken("UY")]
+        Uruguay,
 
-        [SerializationToken("UZ")] Uzbekistan,
+        [SerializationToken("UZ")]
+        Uzbekistan,
 
-        [SerializationToken("VU")] Vanuatu,
+        [SerializationToken("VU")]
+        Vanuatu,
 
-        [SerializationToken("VE")] VenezuelaBolivarianRepublicOf,
+        [SerializationToken("VE")]
+        VenezuelaBolivarianRepublicOf,
 
-        [SerializationToken("VN")] Vietnam,
+        [SerializationToken("VN")]
+        Vietnam,
 
-        [SerializationToken("VG")] VirginIslandsBritish,
+        [SerializationToken("VG")]
+        VirginIslandsBritish,
 
-        [SerializationToken("VI")] VirginIslandsUS,
+        [SerializationToken("VI")]
+        VirginIslandsUS,
 
-        [SerializationToken("WF")] WallisAndFutuna,
+        [SerializationToken("WF")]
+        WallisAndFutuna,
 
-        [SerializationToken("EH")] WesternSahara,
+        [SerializationToken("EH")]
+        WesternSahara,
 
-        [SerializationToken("YE")] Yemen,
+        [SerializationToken("YE")]
+        Yemen,
 
-        [SerializationToken("ZM")] Zambia,
+        [SerializationToken("ZM")]
+        Zambia,
 
-        [SerializationToken("ZW")] Zimbabwe
+        [SerializationToken("ZW")]
+        Zimbabwe
     }
 }

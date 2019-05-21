@@ -30,11 +30,12 @@ namespace Questar.OneRoster.Filtering
                 throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             var values = value.Value.Split(',');
             var vector = Array.CreateInstance(type, values.Length);
-            for (var index = 0; index < values.Length; index++) vector.SetValue(converter.ConvertFromString(values[index]), index);
+            for (var index = 0; index < values.Length; index++)
+                vector.SetValue(converter.ConvertFromString(values[index]), index);
             return Expression.Constant(vector);
         }
 
-        public FilterExpression<T> ToExpression() =>
+        public FilterExpression<T> ToFilterExpression() =>
             (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), false, Parameter);
 
         public override void Visit(LogicalFilter filter)
@@ -85,7 +86,6 @@ namespace Questar.OneRoster.Filtering
                 expression = Expression.Property(expression, info);
                 type = info.PropertyType;
             }
-
             return expression as MemberExpression;
         }
 
@@ -143,7 +143,6 @@ namespace Questar.OneRoster.Filtering
             {
                 expression = fallback?.Invoke() ?? throw e;
             }
-
             _expressions.Push(expression);
             return this;
         }

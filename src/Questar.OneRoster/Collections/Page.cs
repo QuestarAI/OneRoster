@@ -12,7 +12,7 @@ namespace Questar.OneRoster.Collections
             if (count < 0) throw new ArgumentException($"'{nameof(count)}' must be greater than or equal to 0.");
 
             Count = count;
-            Items = items.ToList();
+            Items = items.ToList().AsReadOnly();
         }
 
         public T this[int index] => Items[index];

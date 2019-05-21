@@ -53,7 +53,7 @@ namespace Questar.OneRoster.Filtering
         {
             var builder = new FilterExpressionBuilder<T>();
             Accept(builder);
-            return builder.ToExpression();
+            return builder.ToFilterExpression();
         }
 
         public FilterString ToFilterString()
@@ -63,7 +63,6 @@ namespace Questar.OneRoster.Filtering
             return builder.ToFilterString();
         }
 
-        public override string ToString()
-            => ToFilterString();
+        public override string ToString() => ToFilterString();
     }
 }

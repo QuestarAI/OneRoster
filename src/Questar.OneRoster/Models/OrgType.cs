@@ -4,16 +4,22 @@ namespace Questar.OneRoster.Models
 
     public enum OrgType
     {
-        [SerializationToken("department")] Department,
+        [SerializationToken("department")]
+        Department,
 
-        [SerializationToken("school")] School,
+        [SerializationToken("school")]
+        School,
 
-        [SerializationToken("district")] District,
+        [SerializationToken("district")]
+        District,
 
-        [SerializationToken("local")] Local,
+        [SerializationToken("local")]
+        Local,
 
-        [SerializationToken("state")] State,
+        [SerializationToken("state")]
+        State,
 
-        [SerializationToken("national")] National
+        [SerializationToken("national")]
+        National
     }
 }

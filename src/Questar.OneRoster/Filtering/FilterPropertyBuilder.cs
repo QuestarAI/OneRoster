@@ -17,7 +17,8 @@ namespace Questar.OneRoster.Filtering
 
         public override Expression Visit(Expression node)
         {
-            if (IsTerminal(node)) return node;
+            if (IsTerminal(node))
+                return node;
             switch (node.NodeType)
             {
                 case ExpressionType.Convert:
@@ -46,7 +47,6 @@ namespace Questar.OneRoster.Filtering
                 default:
                     throw new NotSupportedException($"Member expression '{node}' not supported.");
             }
-
             Property = new FilterProperty(property.Name, Property);
             PropertyInfo = property;
             return node;

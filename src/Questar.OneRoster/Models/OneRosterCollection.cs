@@ -6,7 +6,8 @@ namespace Questar.OneRoster.Models
 
     public sealed class OneRosterCollection<T>
     {
-        [OneRosterContract(Pluralize = true)] public List<T> Results { get; set; }
+        [OneRosterContract(Pluralize = true)]
+        public List<T> Results { get; set; }
 
         public StatusInfoList StatusInfoSet { get; set; }
     }

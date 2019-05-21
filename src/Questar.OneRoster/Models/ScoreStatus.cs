@@ -4,15 +4,19 @@ namespace Questar.OneRoster.Models
 
     public enum ScoreStatus
     {
-        [SerializationToken("exempt")] Exempt,
+        [SerializationToken("exempt")]
+        Exempt,
 
-        [SerializationToken("fully graded")] FullyGraded,
+        [SerializationToken("fully graded")]
+        FullyGraded,
 
-        [SerializationToken("not submitted")] NotSubmitted,
+        [SerializationToken("not submitted")]
+        NotSubmitted,
 
         [SerializationToken("partially graded")]
         PartiallyGraded,
 
-        [SerializationToken("submitted")] Submitted
+        [SerializationToken("submitted")]
+        Submitted
     }
 }

@@ -12,122 +12,181 @@ namespace Questar.OneRoster.Models
     /// </summary>
     public enum StateCode
     {
-        [SerializationToken("AK")] Alaska,
+        [SerializationToken("AK")]
+        Alaska,
 
-        [SerializationToken("AL")] Alabama,
+        [SerializationToken("AL")]
+        Alabama,
 
-        [SerializationToken("AR")] Arkansas,
+        [SerializationToken("AR")]
+        Arkansas,
 
-        [SerializationToken("AS")] AmericanSamoa,
+        [SerializationToken("AS")]
+        AmericanSamoa,
 
-        [SerializationToken("AZ")] Arizona,
+        [SerializationToken("AZ")]
+        Arizona,
 
-        [SerializationToken("CA")] California,
+        [SerializationToken("CA")]
+        California,
 
-        [SerializationToken("CO")] Colorado,
+        [SerializationToken("CO")]
+        Colorado,
 
-        [SerializationToken("CT")] Connecticut,
+        [SerializationToken("CT")]
+        Connecticut,
 
-        [SerializationToken("DC")] DistrictOfColumbia,
+        [SerializationToken("DC")]
+        DistrictOfColumbia,
 
-        [SerializationToken("DE")] Delaware,
+        [SerializationToken("DE")]
+        Delaware,
 
-        [SerializationToken("FL")] Florida,
+        [SerializationToken("FL")]
+        Florida,
 
-        [SerializationToken("FM")] FederatedStatesOfMicronesia,
+        [SerializationToken("FM")]
+        FederatedStatesOfMicronesia,
 
-        [SerializationToken("GA")] Georgia,
+        [SerializationToken("GA")]
+        Georgia,
 
-        [SerializationToken("GU")] Guam,
+        [SerializationToken("GU")]
+        Guam,
 
-        [SerializationToken("HI")] Hawaii,
+        [SerializationToken("HI")]
+        Hawaii,
 
-        [SerializationToken("IA")] Iowa,
+        [SerializationToken("IA")]
+        Iowa,
 
-        [SerializationToken("ID")] Idaho,
+        [SerializationToken("ID")]
+        Idaho,
 
-        [SerializationToken("IL")] Illinois,
+        [SerializationToken("IL")]
+        Illinois,
 
-        [SerializationToken("IN")] Indiana,
+        [SerializationToken("IN")]
+        Indiana,
 
-        [SerializationToken("KS")] Kansas,
+        [SerializationToken("KS")]
+        Kansas,
 
-        [SerializationToken("KY")] Kentucky,
+        [SerializationToken("KY")]
+        Kentucky,
 
-        [SerializationToken("LA")] Louisiana,
+        [SerializationToken("LA")]
+        Louisiana,
 
-        [SerializationToken("MA")] Massachusetts,
+        [SerializationToken("MA")]
+        Massachusetts,
 
-        [SerializationToken("MD")] Maryland,
+        [SerializationToken("MD")]
+        Maryland,
 
-        [SerializationToken("ME")] Maine,
+        [SerializationToken("ME")]
+        Maine,
 
-        [SerializationToken("MH")] MarshallIslands,
+        [SerializationToken("MH")]
+        MarshallIslands,
 
-        [SerializationToken("MI")] Michigan,
+        [SerializationToken("MI")]
+        Michigan,
 
-        [SerializationToken("MN")] Minnesota,
+        [SerializationToken("MN")]
+        Minnesota,
 
-        [SerializationToken("MO")] Missouri,
+        [SerializationToken("MO")]
+        Missouri,
 
-        [SerializationToken("MP")] NorthernMarianas,
+        [SerializationToken("MP")]
+        NorthernMarianas,
 
-        [SerializationToken("MS")] Mississippi,
+        [SerializationToken("MS")]
+        Mississippi,
 
-        [SerializationToken("MT")] Montana,
+        [SerializationToken("MT")]
+        Montana,
 
-        [SerializationToken("NC")] NorthCarolina,
+        [SerializationToken("NC")]
+        NorthCarolina,
 
-        [SerializationToken("ND")] NorthDakota,
+        [SerializationToken("ND")]
+        NorthDakota,
 
-        [SerializationToken("NE")] Nebraska,
+        [SerializationToken("NE")]
+        Nebraska,
 
-        [SerializationToken("NH")] NewHampshire,
+        [SerializationToken("NH")]
+        NewHampshire,
 
-        [SerializationToken("NJ")] NewJersey,
+        [SerializationToken("NJ")]
+        NewJersey,
 
-        [SerializationToken("NM")] NewMexico,
+        [SerializationToken("NM")]
+        NewMexico,
 
-        [SerializationToken("NV")] Nevada,
+        [SerializationToken("NV")]
+        Nevada,
 
-        [SerializationToken("NY")] NewYork,
+        [SerializationToken("NY")]
+        NewYork,
 
-        [SerializationToken("OH")] Ohio,
+        [SerializationToken("OH")]
+        Ohio,
 
-        [SerializationToken("OK")] Oklahoma,
+        [SerializationToken("OK")]
+        Oklahoma,
 
-        [SerializationToken("OR")] Oregon,
+        [SerializationToken("OR")]
+        Oregon,
 
-        [SerializationToken("PA")] Pennsylvania,
+        [SerializationToken("PA")]
+        Pennsylvania,
 
-        [SerializationToken("PR")] PuertoRico,
+        [SerializationToken("PR")]
+        PuertoRico,
 
-        [SerializationToken("PW")] Palau,
+        [SerializationToken("PW")]
+        Palau,
 
-        [SerializationToken("RI")] RhodeIsland,
+        [SerializationToken("RI")]
+        RhodeIsland,
 
-        [SerializationToken("SC")] SouthCarolina,
+        [SerializationToken("SC")]
+        SouthCarolina,
 
-        [SerializationToken("SD")] SouthDakota,
+        [SerializationToken("SD")]
+        SouthDakota,
 
-        [SerializationToken("TN")] Tennessee,
+        [SerializationToken("TN")]
+        Tennessee,
 
-        [SerializationToken("TX")] Texas,
+        [SerializationToken("TX")]
+        Texas,
 
-        [SerializationToken("UT")] Utah,
+        [SerializationToken("UT")]
+        Utah,
 
-        [SerializationToken("VA")] Virginia,
+        [SerializationToken("VA")]
+        Virginia,
 
-        [SerializationToken("VI")] VirginIslands,
+        [SerializationToken("VI")]
+        VirginIslands,
 
-        [SerializationToken("VT")] Vermont,
+        [SerializationToken("VT")]
+        Vermont,
 
-        [SerializationToken("WA")] Washington,
+        [SerializationToken("WA")]
+        Washington,
 
-        [SerializationToken("WI")] Wisconsin,
+        [SerializationToken("WI")]
+        Wisconsin,
 
-        [SerializationToken("WV")] WestVirginia,
+        [SerializationToken("WV")]
+        WestVirginia,
 
-        [SerializationToken("WY")] Wyoming
+        [SerializationToken("WY")]
+        Wyoming
     }
 }

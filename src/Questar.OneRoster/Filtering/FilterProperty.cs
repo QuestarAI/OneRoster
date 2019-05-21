@@ -11,9 +11,9 @@ namespace Questar.OneRoster.Filtering
             Caller = caller;
         }
 
-        public FilterProperty Caller { get; private set; }
+        public FilterProperty Caller { get; }
 
-        public string Name { get; private set; }
+        public string Name { get; }
 
         public static FilterProperty Parse(string text)
         {
@@ -21,7 +21,8 @@ namespace Questar.OneRoster.Filtering
             {
                 properties.MoveNext();
                 var property = new FilterProperty(properties.Current);
-                while (properties.MoveNext()) property = new FilterProperty(properties.Current, property);
+                while (properties.MoveNext())
+                    property = new FilterProperty(properties.Current, property);
                 return property;
             }
         }
