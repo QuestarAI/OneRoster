@@ -7,6 +7,6 @@ namespace Questar.OneRoster.Api.Models
     {
         [Required]
         [FromRoute]
-        public string Id { get; set; }
+        public string SourcedId { get; set; }
     }
 }

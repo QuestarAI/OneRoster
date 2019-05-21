@@ -164,13 +164,5 @@ namespace Questar.OneRoster.Api.Controllers
         [HttpGet("{SourcedId}")]
         public virtual Task<ActionResult<dynamic>> Single(SingleRequest request)
             => Single(Query, request);
-
-        // IUpsertable<T>
-        //[HttpPut("{id}")]
-        //public virtual async Task<ActionResult<UpsertResponse<T>>> Upsert(UpsertRequest<T> request) => throw new NotImplementedException();
-
-        // IDeletable<T>
-        //[HttpDelete("{id}")]
-        //public virtual async Task<ActionResult<DeleteResponse<T>>> Delete(DeleteRequest request) => throw new NotImplementedException();
     }
 }

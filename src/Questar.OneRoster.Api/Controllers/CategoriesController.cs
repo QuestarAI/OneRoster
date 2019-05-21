@@ -1,6 +1,5 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
     using System.Threading.Tasks;
     using DataServices;
     using Microsoft.AspNetCore.Mvc;
@@ -16,10 +15,23 @@ namespace Questar.OneRoster.Api.Controllers
 
         protected override IQuery<Category> Query() => Workspace.Categories.AsQuery();
 
-        [HttpPut("{id}")]
-        public virtual Task<ActionResult> Upsert(UpsertRequest<Category> request) => throw new NotImplementedException();
+        [HttpPut("{SourcedId}")]
+        public virtual async Task<ActionResult> Upsert(UpsertRequest<Category> request)
+        {
+            await Workspace.Categories.UpsertAsync(request.Data);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
 
-        [HttpDelete("{id}")]
-        public virtual Task<ActionResult> Delete(DeleteRequest request) => throw new NotImplementedException();
+        [HttpDelete("{SourcedId}")]
+        public virtual async Task<ActionResult> Delete(DeleteRequest request)
+        {
+            var category = await Workspace.Categories.AsQuery().WhereHasKey(request.SourcedId).SingleAsync();
+            if (category == null)
+                return NotFound();
+            await Workspace.Categories.DeleteAsync(category);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
     }
 }
