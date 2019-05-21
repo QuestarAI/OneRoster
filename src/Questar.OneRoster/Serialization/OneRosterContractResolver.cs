@@ -6,7 +6,7 @@ namespace Questar.OneRoster.Serialization
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
-    public class OneRosterContractResolver : CamelCasePropertyNamesContractResolver
+    public class OneRosterContractResolver : DefaultContractResolver
     {
         public OneRosterContractResolver(Type type)
         {
@@ -15,13 +15,13 @@ namespace Questar.OneRoster.Serialization
         }
 
         public Type Type { get; }
-
+        
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             var property = base.CreateProperty(member, memberSerialization);
             var attribute = member.GetCustomAttribute<OneRosterContractAttribute>();
             if (attribute != null)
-                property.PropertyName = NamingStrategy.GetPropertyName(attribute.Pluralize ? Pluralize(Type.Name) : Type.Name, false);
+                property.PropertyName = ResolvePropertyName(attribute.Pluralize ? Pluralize(Type.Name) : Type.Name);
             return property;
         }
 

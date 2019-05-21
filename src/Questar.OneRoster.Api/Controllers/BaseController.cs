@@ -2,10 +2,7 @@ namespace Questar.OneRoster.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Dynamic;
     using System.Linq;
-    using System.Net;
-    using System.Net.Mime;
     using System.Reflection;
     using System.Threading.Tasks;
     using DataServices;
@@ -14,6 +11,7 @@ namespace Questar.OneRoster.Api.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
     using OneRoster.Models;
     using OneRoster.Models.Errors;
     using Serialization;
@@ -22,11 +20,6 @@ namespace Questar.OneRoster.Api.Controllers
     [Produces("application/json")]
     public abstract class BaseController<T> : ControllerBase where T : Base
     {
-        protected static readonly HashSet<string> Properties =
-            new HashSet<string>(typeof(T)
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
-
         protected BaseController(IOneRosterWorkspace workspace)
         {
             Workspace = workspace;
@@ -37,11 +30,15 @@ namespace Questar.OneRoster.Api.Controllers
         [NonAction]
         protected abstract IQuery<T> Query();
 
-        [HttpGet]
-        public virtual async Task<ActionResult<dynamic>> Select(SelectRequest request)
+        [NonAction]
+        protected async Task<ActionResult<dynamic>> Select<TSource>(Func<IQuery<TSource>> querier, SelectRequest request)
         {
-            var resolver = new OneRosterContractResolver(typeof(T));
-            var settings = new JsonSerializerSettings { ContractResolver = resolver };
+            var properties =
+                new HashSet<string>(typeof(TSource)
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
+            var resolver = new OneRosterContractResolver(typeof(TSource));
+            var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var statuses = new StatusInfoList();
             var result = new OneRosterCollection<dynamic>
@@ -51,13 +48,13 @@ namespace Questar.OneRoster.Api.Controllers
 
             var fields =
                 request.Fields?
-                    .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(field => field.Trim())
                     .ToList();
             if (fields != null)
                 if (fields.Any())
                     statuses.AddRange(fields
-                        .Where(field => !Properties.Contains(field))
+                        .Where(field => !properties.Contains(field))
                         .Select(StatusInfo.InvalidSelectionField));
                 else
                     statuses.Add(StatusInfo.InvalidBlankSelectionField());
@@ -67,12 +64,12 @@ namespace Questar.OneRoster.Api.Controllers
                 statuses.AddRange(filter
                     .GetProperties()
                     .Select(property => property.Name)
-                    .Where(property => !Properties.Contains(property))
+                    .Where(property => !properties.Contains(property))
                     .Select(StatusInfo.InvalidFilterField));
 
             var sortName = request.Sort;
             var sortDirection = request.OrderBy;
-            if (sortName != null && !Properties.Contains(sortName))
+            if (sortName != null && !properties.Contains(sortName))
             {
                 statuses.Add(StatusInfo.InvalidSortField(sortName));
                 sortName = nameof(Base.SourcedId);
@@ -90,7 +87,7 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(JsonConvert.SerializeObject(result, settings));
 
-            IQuery query = Query();
+            IQuery query = querier();
 
             // filter, only if requested
             if (filter != null)
@@ -100,7 +97,7 @@ namespace Questar.OneRoster.Api.Controllers
             query = query.Sort(sortName ?? nameof(Base.SourcedId), sortDirection);
 
             // dynamic select, after sorting, only if requested
-            var selectors = fields?.Where(field => Properties.Contains(field)).ToList();
+            var selectors = fields?.Where(properties.Contains).ToList();
             if (selectors != null)
                 query = query.Select(selectors);
 
@@ -118,14 +115,18 @@ namespace Questar.OneRoster.Api.Controllers
 
             var content = JsonConvert.SerializeObject(result, settings);
 
-            return Content(content, "application/json");
+            return Content(content);
         }
 
-        [HttpGet("{SourcedId}")]
-        public virtual async Task<ActionResult<dynamic>> Single(SingleRequest request)
+        [NonAction]
+        protected virtual async Task<ActionResult<dynamic>> Single<TSource>(Func<IQuery<TSource>> querier, SingleRequest request)
         {
-            var resolver = new OneRosterContractResolver(typeof(T));
-            var settings = new JsonSerializerSettings { ContractResolver = resolver };
+            var properties =
+                new HashSet<string>(typeof(TSource)
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
+            var resolver = new OneRosterContractResolver(typeof(TSource));
+            var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var statuses = new StatusInfoList();
             var result = new OneRosterSingle<dynamic>
@@ -135,13 +136,13 @@ namespace Questar.OneRoster.Api.Controllers
 
             var fields =
                 request.Fields?
-                    .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(field => field.Trim())
                     .ToList();
             if (fields != null)
                 if (fields.Any())
                     statuses.AddRange(fields
-                        .Where(field => !Properties.Contains(field))
+                        .Where(field => !properties.Contains(field))
                         .Select(StatusInfo.InvalidSelectionField));
                 else
                     statuses.Add(StatusInfo.InvalidBlankSelectionField());
@@ -149,10 +150,10 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(JsonConvert.SerializeObject(result, settings));
 
-            IQuery query = Query().WhereHasKey(request.SourcedId);
+            IQuery query = querier().WhereHasKey(request.SourcedId);
 
             // dynamic select, only if requested
-            var selectors = fields?.Where(field => Properties.Contains(field)).ToList();
+            var selectors = fields?.Where(field => properties.Contains(field)).ToList();
             if (selectors != null)
                 query = query.Select(selectors);
 
@@ -162,8 +163,16 @@ namespace Questar.OneRoster.Api.Controllers
 
             var content = JsonConvert.SerializeObject(result, settings);
 
-            return Content(content, "application/json");
+            return Content(content);
         }
+        
+        [HttpGet]
+        public virtual Task<ActionResult<dynamic>> Select(SelectRequest request)
+            => Select(Query, request);
+
+        [HttpGet("{SourcedId}")]
+        public virtual Task<ActionResult<dynamic>> Single(SingleRequest request)
+            => Single(Query, request);
 
         // IUpsertable<T>
         //[HttpPut("{id}")]
