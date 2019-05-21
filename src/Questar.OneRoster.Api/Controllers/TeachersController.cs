@@ -19,7 +19,7 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes this teacher is teaching.
         /// </summary>
         [HttpGet("{userId}/classes")]
-        public Task<ActionResult<dynamic>> GetClassesForTeacher(string userId, SelectRequest request)
-            => Select(() => Workspace.Teachers.GetClassesForTeacher(userId), request);
+        public Task<ActionResult<dynamic>> GetClassesForTeacher(string userId, SelectParams @params)
+            => Select(() => Workspace.Teachers.GetClassesForTeacher(userId), @params);
     }
 }

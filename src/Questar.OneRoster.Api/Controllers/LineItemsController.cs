@@ -17,17 +17,17 @@ namespace Questar.OneRoster.Api.Controllers
         protected override IQuery<LineItem> Query() => Workspace.LineItems.AsQuery();
 
         [HttpPut("{SourcedId}")]
-        public virtual async Task<ActionResult> Upsert(UpsertRequest<LineItem> request)
+        public virtual async Task<ActionResult> Upsert(UpsertParams<LineItem> @params)
         {
-            await Workspace.LineItems.UpsertAsync(request.Data);
+            await Workspace.LineItems.UpsertAsync(@params.Data);
             await Workspace.SaveAsync();
             return Ok();
         }
 
         [HttpDelete("{SourcedId}")]
-        public virtual async Task<ActionResult> Delete(DeleteRequest request)
+        public virtual async Task<ActionResult> Delete(DeleteParams @params)
         {
-            var item = await Workspace.LineItems.AsQuery().WhereHasKey(request.SourcedId).SingleAsync();
+            var item = await Workspace.LineItems.AsQuery().WhereHasKey(@params.SourcedId).SingleAsync();
             if (item == null)
                 return NotFound();
             await Workspace.LineItems.DeleteAsync(item);

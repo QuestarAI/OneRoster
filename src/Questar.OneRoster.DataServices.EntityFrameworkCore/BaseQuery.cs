@@ -6,7 +6,7 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
     public class BaseQuery<T> : SourceInjectedQuery<T> where T : Base
     {
         public BaseQuery(ISourceInjectedQueryable<T> source)
-            : base(source, model => model.SourcedId, (x, y) => (string) x == (string) y)
+            : base(source, @base => @base.SourcedId, (x, y) => (string) x == (string) y)
         {
         }
     }

@@ -9,6 +9,7 @@ namespace Questar.OneRoster.Api.Controllers
     using Filtering;
     using Helpers;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
     using Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -28,7 +29,7 @@ namespace Questar.OneRoster.Api.Controllers
         protected abstract IQuery<T> Query();
 
         [NonAction]
-        protected async Task<ActionResult<dynamic>> Select<TSource>(Func<IQuery<TSource>> querier, SelectRequest request)
+        protected async Task<ActionResult<dynamic>> Select<TSource>(Func<IQuery<TSource>> querier, SelectParams @params)
         {
             var properties =
                 new HashSet<string>(typeof(TSource)
@@ -41,7 +42,7 @@ namespace Questar.OneRoster.Api.Controllers
             var result = new OneRosterCollection<dynamic> { StatusInfoSet = statuses };
 
             var fields =
-                request.Fields?
+                @params.Fields?
                     .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(field => field.Trim())
                     .ToList();
@@ -53,7 +54,7 @@ namespace Questar.OneRoster.Api.Controllers
                 else
                     statuses.Add(StatusInfo.InvalidBlankSelectionField());
 
-            var filter = request.Filter != null ? Filter.Parse(request.Filter) : null;
+            var filter = @params.Filter != null ? Filter.Parse(@params.Filter) : null;
             if (filter != null)
                 statuses.AddRange(filter
                     .GetProperties()
@@ -61,8 +62,8 @@ namespace Questar.OneRoster.Api.Controllers
                     .Where(property => !properties.Contains(property))
                     .Select(StatusInfo.InvalidFilterField));
 
-            var sortName = request.Sort;
-            var sortDirection = request.OrderBy;
+            var sortName = @params.Sort;
+            var sortDirection = @params.OrderBy;
             if (sortName != null && !properties.Contains(sortName))
             {
                 statuses.Add(StatusInfo.InvalidSortField(sortName));
@@ -70,11 +71,11 @@ namespace Questar.OneRoster.Api.Controllers
                 sortDirection = default(SortDirection);
             }
 
-            var pageLimit = request.Limit;
+            var pageLimit = @params.Limit;
             if (pageLimit < 0)
                 statuses.Add(StatusInfo.InvalidLimitField());
 
-            var pageOffset = request.Offset;
+            var pageOffset = @params.Offset;
             if (pageOffset < 0)
                 statuses.Add(StatusInfo.InvalidOffsetField());
 
@@ -100,7 +101,7 @@ namespace Questar.OneRoster.Api.Controllers
 
             HttpContext.Response.Headers.Add("X-Total-Count", count.ToString());
 
-            var linkFactory = new LinkHeaderFactory(HttpContext);
+            var linkFactory = Request.HttpContext.RequestServices.GetService<LinkHeaderFactory>();
             var link = linkFactory.Create(pageOffset, pageLimit, count);
             if (!string.IsNullOrEmpty(link))
                 HttpContext.Response.Headers.Add("Link", link);
@@ -113,7 +114,7 @@ namespace Questar.OneRoster.Api.Controllers
         }
 
         [NonAction]
-        protected virtual async Task<ActionResult<dynamic>> Single<TSource>(Func<IQuery<TSource>> querier, SingleRequest request)
+        protected virtual async Task<ActionResult<dynamic>> Single<TSource>(Func<IQuery<TSource>> querier, SingleParams @params)
         {
             var properties =
                 new HashSet<string>(typeof(TSource)
@@ -126,7 +127,7 @@ namespace Questar.OneRoster.Api.Controllers
             var result = new OneRosterSingle<dynamic> { StatusInfoSet = statuses };
 
             var fields =
-                request.Fields?
+                @params.Fields?
                     .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(field => field.Trim())
                     .ToList();
@@ -141,7 +142,7 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(JsonConvert.SerializeObject(result, settings));
 
-            IQuery query = querier().WhereHasKey(request.SourcedId);
+            IQuery query = querier().WhereHasKey(@params.SourcedId);
 
             // dynamic select, only if requested
             var selectors = fields?.Where(field => properties.Contains(field)).ToList();
@@ -158,11 +159,11 @@ namespace Questar.OneRoster.Api.Controllers
         }
 
         [HttpGet]
-        public virtual Task<ActionResult<dynamic>> Select(SelectRequest request)
-            => Select(Query, request);
+        public virtual Task<ActionResult<dynamic>> Select(SelectParams @params)
+            => Select(Query, @params);
 
         [HttpGet("{SourcedId}")]
-        public virtual Task<ActionResult<dynamic>> Single(SingleRequest request)
-            => Single(Query, request);
+        public virtual Task<ActionResult<dynamic>> Single(SingleParams @params)
+            => Single(Query, @params);
     }
 }

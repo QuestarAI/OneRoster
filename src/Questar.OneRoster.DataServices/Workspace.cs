@@ -7,5 +7,9 @@ namespace Questar.OneRoster.DataServices
         public abstract void Save();
 
         public abstract Task SaveAsync();
+
+        public virtual void Dispose()
+        {
+        }
     }
 }

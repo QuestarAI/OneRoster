@@ -3,7 +3,7 @@ namespace Questar.OneRoster.Api.Models
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc;
 
-    public class DeleteRequest : Request
+    public class DeleteParams : Params
     {
         [Required]
         [FromRoute]

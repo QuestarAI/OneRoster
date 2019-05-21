@@ -19,14 +19,14 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes taught in this term.
         /// </summary>
         [HttpGet("{academicSessionId}/classes")]
-        public Task<ActionResult<dynamic>> GetClassesForTerm(string academicSessionId, SelectRequest request)
-            => Select(() => Workspace.Terms.GetClassesForTerm(academicSessionId), request);
+        public Task<ActionResult<dynamic>> GetClassesForTerm(string academicSessionId, SelectParams @params)
+            => Select(() => Workspace.Terms.GetClassesForTerm(academicSessionId), @params);
 
         /// <summary>
         /// Returns the collection of grading periods which are part of this term.
         /// </summary>
         [HttpGet("{academicSessionId}/gradingPeriods")]
-        public Task<ActionResult<dynamic>> GetGradingPeriodsForTerm(string academicSessionId, SelectRequest request)
-            => Select(() => Workspace.Terms.GetGradingPeriodsForTerm(academicSessionId), request);
+        public Task<ActionResult<dynamic>> GetGradingPeriodsForTerm(string academicSessionId, SelectParams @params)
+            => Select(() => Workspace.Terms.GetGradingPeriodsForTerm(academicSessionId), @params);
     }
 }

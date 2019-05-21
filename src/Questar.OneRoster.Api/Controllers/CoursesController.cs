@@ -19,14 +19,14 @@ namespace Questar.OneRoster.Api.Controllers
         /// Returns the collection of classes teaching this course.
         /// </summary>
         [HttpGet("{courseId}/classes")]
-        public Task<ActionResult<dynamic>> GetClassesForCourse(string courseId, SelectRequest request)
-            => Select(() => Workspace.Courses.GetClassesForCourse(courseId), request);
+        public Task<ActionResult<dynamic>> GetClassesForCourse(string courseId, SelectParams @params)
+            => Select(() => Workspace.Courses.GetClassesForCourse(courseId), @params);
 
         /// <summary>
         /// Returns the collection of resources associated with this course.
         /// </summary>
         [HttpGet("{courseId}/resources")]
-        public Task<ActionResult<dynamic>> GetResourcesForCourse(string courseId, SelectRequest request)
-            => Select(() => Workspace.Courses.GetResourcesForCourse(courseId), request);
+        public Task<ActionResult<dynamic>> GetResourcesForCourse(string courseId, SelectParams @params)
+            => Select(() => Workspace.Courses.GetResourcesForCourse(courseId), @params);
     }
 }

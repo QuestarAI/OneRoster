@@ -1,8 +1,9 @@
 namespace Questar.OneRoster.DataServices
 {
+    using System;
     using System.Threading.Tasks;
 
-    public interface IWorkspace
+    public interface IWorkspace : IDisposable
     {
         void Save();
 

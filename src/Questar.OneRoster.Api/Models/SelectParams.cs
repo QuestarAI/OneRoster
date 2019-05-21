@@ -4,7 +4,7 @@ namespace Questar.OneRoster.Api.Models
     using Microsoft.AspNetCore.Mvc;
     using Sorting;
 
-    public class SelectRequest : Request
+    public class SelectParams : Params
     {
         [FromQuery]
         public int Offset { get; set; } = 0;

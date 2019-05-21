@@ -31,7 +31,8 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 
         protected ISourceInjectedQueryable<T> Source { get; }
 
-        public virtual IQuery<dynamic> Select(IEnumerable<string> properties) => Select(properties.Select(property => typeof(T).GetProperty(property, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)).ToArray());
+        public virtual IQuery<dynamic> Select(IEnumerable<string> properties)
+            => Select(properties.Select(property => typeof(T).GetProperty(property, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)).ToArray());
 
         public virtual IQuery<dynamic> Select(PropertyInfo[] properties)
         {
@@ -39,7 +40,8 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             var assembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString()), AssemblyBuilderAccess.Run);
             var module = assembly.DefineDynamicModule("DynamicQueryable");
             var type = module.DefineType("Anonymous", TypeAttributes.Public | TypeAttributes.Sealed);
-            foreach (var property in properties) type.DefineField(property.Name, property.PropertyType, FieldAttributes.Public);
+            foreach (var property in properties)
+                type.DefineField(property.Name, property.PropertyType, FieldAttributes.Public);
             var parameter = Expression.Parameter(typeof(T));
             var instance = Expression.New(type.CreateTypeInfo());
             var bindings = properties.Select(property => Expression.Bind(instance.Type.GetField(property.Name), Expression.Property(parameter, property)));
@@ -50,9 +52,11 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             return new DynamicSourceInjectedQuery((ISourceInjectedQueryable<dynamic>) query);
         }
 
-        public virtual T Single() => Source.Single();
+        public virtual T Single()
+            => Source.Single();
 
-        public virtual Task<T> SingleAsync() => Task.FromResult(Source.Single());
+        public virtual Task<T> SingleAsync()
+            => Task.FromResult(Source.Single());
 
         public virtual IQuery<T> Sort(string field, SortDirection? direction)
             => new SourceInjectedQuery<T>((ISourceInjectedQueryable<T>) Source.SortBy(field, direction), KeySelector, KeyComparer);
@@ -74,9 +78,11 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             return new SourceInjectedQuery<T>((ISourceInjectedQueryable<T>) query, KeySelector, KeyComparer);
         }
 
-        public virtual List<T> ToList() => Source.ToList();
+        public virtual List<T> ToList()
+            => Source.ToList();
 
-        public virtual Task<List<T>> ToListAsync() => Source.ToAsyncEnumerable().ToList();
+        public virtual Task<List<T>> ToListAsync()
+            => Source.ToAsyncEnumerable().ToList();
 
         public Page<T> ToPage(int offset, int limit)
         {
@@ -94,35 +100,48 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 
         #region IQuery<T>
 
-        IList<T> IQuery<T>.ToList() => ToList();
+        IList<T> IQuery<T>.ToList()
+            => ToList();
 
-        async Task<IList<T>> IQuery<T>.ToListAsync() => await ToListAsync();
+        async Task<IList<T>> IQuery<T>.ToListAsync()
+            => await ToListAsync();
 
-        IPage<T> IQuery<T>.ToPage(int offset, int limit) => ToPage(offset, limit);
+        IPage<T> IQuery<T>.ToPage(int offset, int limit)
+            => ToPage(offset, limit);
 
-        async Task<IPage<T>> IQuery<T>.ToPageAsync(int offset, int limit) => await ToPageAsync(offset, limit);
+        async Task<IPage<T>> IQuery<T>.ToPageAsync(int offset, int limit)
+            => await ToPageAsync(offset, limit);
 
         #endregion
 
         #region IQuery
 
-        IQuery IQuery.Sort(string field, SortDirection? direction) => Sort(field, direction);
+        IQuery IQuery.Sort(string field, SortDirection? direction)
+            => Sort(field, direction);
 
-        object IQuery.Single() => Single();
+        object IQuery.Single()
+            => Single();
 
-        async Task<object> IQuery.SingleAsync() => await SingleAsync();
+        async Task<object> IQuery.SingleAsync()
+            => await SingleAsync();
 
-        IList IQuery.ToList() => ToList();
+        IList IQuery.ToList()
+            => ToList();
 
-        async Task<IList> IQuery.ToListAsync() => await ToListAsync();
+        async Task<IList> IQuery.ToListAsync()
+            => await ToListAsync();
 
-        IPage IQuery.ToPage(int offset, int limit) => ToPage(offset, limit);
+        IPage IQuery.ToPage(int offset, int limit)
+            => ToPage(offset, limit);
 
-        async Task<IPage> IQuery.ToPageAsync(int offset, int limit) => await ToPageAsync(offset, limit);
+        async Task<IPage> IQuery.ToPageAsync(int offset, int limit)
+            => await ToPageAsync(offset, limit);
 
-        IQuery IQuery.Where(Filter filter) => Where(filter);
+        IQuery IQuery.Where(Filter filter)
+            => Where(filter);
 
-        IQuery IQuery.WhereHasKey(object key) => WhereHasKey(key);
+        IQuery IQuery.WhereHasKey(object key)
+            => WhereHasKey(key);
 
         #endregion
     }

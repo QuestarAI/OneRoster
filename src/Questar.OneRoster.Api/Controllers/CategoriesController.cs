@@ -16,17 +16,17 @@ namespace Questar.OneRoster.Api.Controllers
         protected override IQuery<Category> Query() => Workspace.Categories.AsQuery();
 
         [HttpPut("{SourcedId}")]
-        public virtual async Task<ActionResult> Upsert(UpsertRequest<Category> request)
+        public virtual async Task<ActionResult> Upsert(UpsertParams<Category> @params)
         {
-            await Workspace.Categories.UpsertAsync(request.Data);
+            await Workspace.Categories.UpsertAsync(@params.Data);
             await Workspace.SaveAsync();
             return Ok();
         }
 
         [HttpDelete("{SourcedId}")]
-        public virtual async Task<ActionResult> Delete(DeleteRequest request)
+        public virtual async Task<ActionResult> Delete(DeleteParams @params)
         {
-            var category = await Workspace.Categories.AsQuery().WhereHasKey(request.SourcedId).SingleAsync();
+            var category = await Workspace.Categories.AsQuery().WhereHasKey(@params.SourcedId).SingleAsync();
             if (category == null)
                 return NotFound();
             await Workspace.Categories.DeleteAsync(category);
