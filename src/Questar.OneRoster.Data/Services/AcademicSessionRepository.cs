@@ -2,6 +2,8 @@ namespace Questar.OneRoster.Data.Services
 {
     using AutoMapper;
     using DataServices;
+    using Models;
+    using AcademicSession = Data.AcademicSession;
 
     public class AcademicSessionRepository : BaseRepository<Models.AcademicSession, AcademicSession>, IAcademicSessionRepository
     {

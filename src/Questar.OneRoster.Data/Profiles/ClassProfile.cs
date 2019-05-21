@@ -1,7 +1,6 @@
 namespace Questar.OneRoster.Data.Profiles
 {
     using System.Linq;
-    using AutoMapper;
     using Models;
     using Class = Data.Class;
 

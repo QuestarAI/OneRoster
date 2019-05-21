@@ -1,6 +1,5 @@
 namespace Questar.OneRoster.Client
 {
-    using System;
     using Flurl.Http;
     using Infrastructure;
     using Models;

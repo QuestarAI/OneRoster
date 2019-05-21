@@ -15,71 +15,9 @@ namespace Questar.OneRoster.Common
         private static readonly Regex ExcessiveFractions = new Regex(@"(\d(\.|,‎)\d{8,})", RegexOptions.Compiled);
         private static readonly Regex LeapSecond = new Regex("T23:?59:?60", RegexOptions.Compiled);
 
-        private static readonly string[] FourYearFormats =
-{
-            "yyyy-MM-ddK", "yyyyMMddK",
-            "yyyy-MM-ddTHH:mm:ss.fffffffK", "yyyyMMddTHH:mm:ss.fffffffK",
-            "yyyy-MM-ddTHH:mm:ss,fffffffK", "yyyyMMddTHH:mm:ss,fffffffK",
-            "yyyy-MM-ddTHH:mm:ss.ffffffK", "yyyyMMddTHH:mm:ss.ffffffK",
-            "yyyy-MM-ddTHH:mm:ss,ffffffK", "yyyyMMddTHH:mm:ss,ffffffK",
-            "yyyy-MM-ddTHH:mm:ss.fffffK", "yyyyMMddTHH:mm:ss.fffffK",
-            "yyyy-MM-ddTHH:mm:ss,fffffK", "yyyyMMddTHH:mm:ss,fffffK",
-            "yyyy-MM-ddTHH:mm:ss.ffffK", "yyyyMMddTHH:mm:ss.ffffK",
-            "yyyy-MM-ddTHH:mm:ss,ffffK", "yyyyMMddTHH:mm:ss,ffffK",
-            "yyyy-MM-ddTHH:mm:ss.ffK", "yyyyMMddTHH:mm:ss.ffK",
-            "yyyy-MM-ddTHH:mm:ss,ffK", "yyyyMMddTHH:mm:ss,ffK",
-            "yyyy-MM-ddTHH:mm:ss.fK", "yyyyMMddTHH:mm:ss.fK",
-            "yyyy-MM-ddTHH:mm:ss,fK", "yyyyMMddTHH:mm:ss,fK",
-            "yyyy-MM-ddTHH:mm:ssK", "yyyyMMddTHH:mm:ssK",
-            "yyyy-MM-ddTHHmmss.fffffffK", "yyyyMMddTHHmmss.fffffffK",
-            "yyyy-MM-ddTHHmmss,fffffffK", "yyyyMMddTHHmmss,fffffffK",
-            "yyyy-MM-ddTHHmmss.ffffffK", "yyyyMMddTHHmmss.ffffffK",
-            "yyyy-MM-ddTHHmmss,ffffffK", "yyyyMMddTHHmmss,ffffffK",
-            "yyyy-MM-ddTHHmmss.fffffK", "yyyyMMddTHHmmss.fffffK",
-            "yyyy-MM-ddTHHmmss,fffffK", "yyyyMMddTHHmmss,fffffK",
-            "yyyy-MM-ddTHHmmss.ffffK", "yyyyMMddTHHmmss.ffffK",
-            "yyyy-MM-ddTHHmmss,ffffK", "yyyyMMddTHHmmss,ffffK",
-            "yyyy-MM-ddTHHmmss.ffK", "yyyyMMddTHHmmss.ffK",
-            "yyyy-MM-ddTHHmmss,ffK", "yyyyMMddTHHmmss,ffK",
-            "yyyy-MM-ddTHHmmss.fK", "yyyyMMddTHHmmss.fK",
-            "yyyy-MM-ddTHHmmss,fK", "yyyyMMddTHHmmss,fK",
-            "yyyy-MM-ddTHHmmssK", "yyyyMMddTHHmmssK",
-            "yyyy-MM-ddTHH:mmK", "yyyyMMddTHH:mmK",
-            "yyyy-MM-ddTHHK", "yyyyMMddTHHK"
-        };
+        private static readonly string[] FourYearFormats = { "yyyy-MM-ddK", "yyyyMMddK", "yyyy-MM-ddTHH:mm:ss.fffffffK", "yyyyMMddTHH:mm:ss.fffffffK", "yyyy-MM-ddTHH:mm:ss,fffffffK", "yyyyMMddTHH:mm:ss,fffffffK", "yyyy-MM-ddTHH:mm:ss.ffffffK", "yyyyMMddTHH:mm:ss.ffffffK", "yyyy-MM-ddTHH:mm:ss,ffffffK", "yyyyMMddTHH:mm:ss,ffffffK", "yyyy-MM-ddTHH:mm:ss.fffffK", "yyyyMMddTHH:mm:ss.fffffK", "yyyy-MM-ddTHH:mm:ss,fffffK", "yyyyMMddTHH:mm:ss,fffffK", "yyyy-MM-ddTHH:mm:ss.ffffK", "yyyyMMddTHH:mm:ss.ffffK", "yyyy-MM-ddTHH:mm:ss,ffffK", "yyyyMMddTHH:mm:ss,ffffK", "yyyy-MM-ddTHH:mm:ss.ffK", "yyyyMMddTHH:mm:ss.ffK", "yyyy-MM-ddTHH:mm:ss,ffK", "yyyyMMddTHH:mm:ss,ffK", "yyyy-MM-ddTHH:mm:ss.fK", "yyyyMMddTHH:mm:ss.fK", "yyyy-MM-ddTHH:mm:ss,fK", "yyyyMMddTHH:mm:ss,fK", "yyyy-MM-ddTHH:mm:ssK", "yyyyMMddTHH:mm:ssK", "yyyy-MM-ddTHHmmss.fffffffK", "yyyyMMddTHHmmss.fffffffK", "yyyy-MM-ddTHHmmss,fffffffK", "yyyyMMddTHHmmss,fffffffK", "yyyy-MM-ddTHHmmss.ffffffK", "yyyyMMddTHHmmss.ffffffK", "yyyy-MM-ddTHHmmss,ffffffK", "yyyyMMddTHHmmss,ffffffK", "yyyy-MM-ddTHHmmss.fffffK", "yyyyMMddTHHmmss.fffffK", "yyyy-MM-ddTHHmmss,fffffK", "yyyyMMddTHHmmss,fffffK", "yyyy-MM-ddTHHmmss.ffffK", "yyyyMMddTHHmmss.ffffK", "yyyy-MM-ddTHHmmss,ffffK", "yyyyMMddTHHmmss,ffffK", "yyyy-MM-ddTHHmmss.ffK", "yyyyMMddTHHmmss.ffK", "yyyy-MM-ddTHHmmss,ffK", "yyyyMMddTHHmmss,ffK", "yyyy-MM-ddTHHmmss.fK", "yyyyMMddTHHmmss.fK", "yyyy-MM-ddTHHmmss,fK", "yyyyMMddTHHmmss,fK", "yyyy-MM-ddTHHmmssK", "yyyyMMddTHHmmssK", "yyyy-MM-ddTHH:mmK", "yyyyMMddTHH:mmK", "yyyy-MM-ddTHHK", "yyyyMMddTHHK" };
 
-        private static readonly string[] TwoYearFormats =
-        {
-            "yy-MM-ddK", "yyMMddK",
-            "yy-MM-ddTHH:mm:ss.fffffffK", "yyMMddTHH:mm:ss.fffffffK",
-            "yy-MM-ddTHH:mm:ss,fffffffK", "yyMMddTHH:mm:ss,fffffffK",
-            "yy-MM-ddTHH:mm:ss.ffffffK", "yyMMddTHH:mm:ss.ffffffK",
-            "yy-MM-ddTHH:mm:ss,ffffffK", "yyMMddTHH:mm:ss,ffffffK",
-            "yy-MM-ddTHH:mm:ss.fffffK", "yyMMddTHH:mm:ss.fffffK",
-            "yy-MM-ddTHH:mm:ss,fffffK", "yyMMddTHH:mm:ss,fffffK",
-            "yy-MM-ddTHH:mm:ss.ffffK", "yyMMddTHH:mm:ss.ffffK",
-            "yy-MM-ddTHH:mm:ss,ffffK", "yyMMddTHH:mm:ss,ffffK",
-            "yy-MM-ddTHH:mm:ss.ffK", "yyMMddTHH:mm:ss.ffK",
-            "yy-MM-ddTHH:mm:ss,ffK", "yyMMddTHH:mm:ss,ffK",
-            "yy-MM-ddTHH:mm:ss.fK", "yyMMddTHH:mm:ss.fK",
-            "yy-MM-ddTHH:mm:ss,fK", "yyMMddTHH:mm:ss,fK",
-            "yy-MM-ddTHH:mm:ssK", "yyMMddTHH:mm:ss‎K",
-            "yy-MM-ddTHHmmss.fffffffK", "yyMMddTHHmmss.fffffffK",
-            "yy-MM-ddTHHmmss,fffffffK", "yyMMddTHHmmss,fffffffK",
-            "yy-MM-ddTHHmmss.ffffffK", "yyMMddTHHmmss.ffffffK",
-            "yy-MM-ddTHHmmss,ffffffK", "yyMMddTHHmmss,ffffffK",
-            "yy-MM-ddTHHmmss.fffffK", "yyMMddTHHmmss.fffffK",
-            "yy-MM-ddTHHmmss,fffffK", "yyMMddTHHmmss,fffffK",
-            "yy-MM-ddTHHmmss.ffffK", "yyMMddTHHmmss.ffffK",
-            "yy-MM-ddTHHmmss,ffffK", "yyMMddTHHmmss,ffffK",
-            "yy-MM-ddTHHmmss.ffK", "yyMMddTHHmmss.ffK",
-            "yy-MM-ddTHHmmss,ffK", "yyMMddTHHmmss,ffK",
-            "yy-MM-ddTHHmmss.fK", "yyMMddTHHmmss.fK",
-            "yy-MM-ddTHHmmss,fK", "yyMMddTHHmmss,fK",
-            "yy-MM-ddTHHmmssK", "yyMMddTHHmmss‎K",
-            "yy-MM-ddTHH:mmK", "yyMMddTHH:mmK",
-            "yy-MM-ddTHHK", "yyMMddTHHK"
-        };
+        private static readonly string[] TwoYearFormats = { "yy-MM-ddK", "yyMMddK", "yy-MM-ddTHH:mm:ss.fffffffK", "yyMMddTHH:mm:ss.fffffffK", "yy-MM-ddTHH:mm:ss,fffffffK", "yyMMddTHH:mm:ss,fffffffK", "yy-MM-ddTHH:mm:ss.ffffffK", "yyMMddTHH:mm:ss.ffffffK", "yy-MM-ddTHH:mm:ss,ffffffK", "yyMMddTHH:mm:ss,ffffffK", "yy-MM-ddTHH:mm:ss.fffffK", "yyMMddTHH:mm:ss.fffffK", "yy-MM-ddTHH:mm:ss,fffffK", "yyMMddTHH:mm:ss,fffffK", "yy-MM-ddTHH:mm:ss.ffffK", "yyMMddTHH:mm:ss.ffffK", "yy-MM-ddTHH:mm:ss,ffffK", "yyMMddTHH:mm:ss,ffffK", "yy-MM-ddTHH:mm:ss.ffK", "yyMMddTHH:mm:ss.ffK", "yy-MM-ddTHH:mm:ss,ffK", "yyMMddTHH:mm:ss,ffK", "yy-MM-ddTHH:mm:ss.fK", "yyMMddTHH:mm:ss.fK", "yy-MM-ddTHH:mm:ss,fK", "yyMMddTHH:mm:ss,fK", "yy-MM-ddTHH:mm:ssK", "yyMMddTHH:mm:ss‎K", "yy-MM-ddTHHmmss.fffffffK", "yyMMddTHHmmss.fffffffK", "yy-MM-ddTHHmmss,fffffffK", "yyMMddTHHmmss,fffffffK", "yy-MM-ddTHHmmss.ffffffK", "yyMMddTHHmmss.ffffffK", "yy-MM-ddTHHmmss,ffffffK", "yyMMddTHHmmss,ffffffK", "yy-MM-ddTHHmmss.fffffK", "yyMMddTHHmmss.fffffK", "yy-MM-ddTHHmmss,fffffK", "yyMMddTHHmmss,fffffK", "yy-MM-ddTHHmmss.ffffK", "yyMMddTHHmmss.ffffK", "yy-MM-ddTHHmmss,ffffK", "yyMMddTHHmmss,ffffK", "yy-MM-ddTHHmmss.ffK", "yyMMddTHHmmss.ffK", "yy-MM-ddTHHmmss,ffK", "yyMMddTHHmmss,ffK", "yy-MM-ddTHHmmss.fK", "yyMMddTHHmmss.fK", "yy-MM-ddTHHmmss,fK", "yyMMddTHHmmss,fK", "yy-MM-ddTHHmmssK", "yyMMddTHHmmss‎K", "yy-MM-ddTHH:mmK", "yyMMddTHH:mmK", "yy-MM-ddTHHK", "yyMMddTHHK" };
 
         private static readonly string[] AllYearFormats = FourYearFormats.Concat(TwoYearFormats).ToArray();
 

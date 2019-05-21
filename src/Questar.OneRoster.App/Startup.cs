@@ -46,17 +46,8 @@ namespace Questar.OneRoster.App
                     Title = "OneRoster® IMS Final Release Version 1.1",
                     Description = @"<a href=""https://www.imsglobal.org/oneroster-v11-final-specification"">Developer Documentation</a>",
                     Version = "v1p1",
-                    Contact = new Contact
-                    {
-                        Name = "Questar Assessment Inc.",
-                        Email = "oneroster@questarai.com",
-                        Url = "https://www.questarai.com"
-                    },
-                    License = new License
-                    {
-                        Name = "IMS Global Learning Consortium, Inc. Specification Document License",
-                        Url = "https://www.imsglobal.org/speclicense.html"
-                    }
+                    Contact = new Contact { Name = "Questar Assessment Inc.", Email = "oneroster@questarai.com", Url = "https://www.questarai.com" },
+                    License = new License { Name = "IMS Global Learning Consortium, Inc. Specification Document License", Url = "https://www.imsglobal.org/speclicense.html" }
                 });
             });
         }

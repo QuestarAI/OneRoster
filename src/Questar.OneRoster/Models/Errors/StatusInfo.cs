@@ -27,59 +27,18 @@ namespace Questar.OneRoster.Models.Errors
         [JsonProperty("imsx_operationRefIdentifier")]
         public string OperationRefIdentifier { get; set; }
 
-        public static StatusInfo InvalidSortField(string property) => new StatusInfo
-        {
-            CodeMajor = CodeMajor.Success,
-            CodeMinor = CodeMinor.InvalidSortField,
-            Severity = Severity.Warning,
-            Description = property
-        };
+        public static StatusInfo InvalidSortField(string property) => new StatusInfo { CodeMajor = CodeMajor.Success, CodeMinor = CodeMinor.InvalidSortField, Severity = Severity.Warning, Description = property };
 
-        public static StatusInfo InvalidSelectionField(string property) => new StatusInfo
-        {
-            CodeMajor = CodeMajor.Success,
-            CodeMinor = CodeMinor.InvalidSelectionField,
-            Severity = Severity.Warning,
-            Description = property
-        };
+        public static StatusInfo InvalidSelectionField(string property) => new StatusInfo { CodeMajor = CodeMajor.Success, CodeMinor = CodeMinor.InvalidSelectionField, Severity = Severity.Warning, Description = property };
 
-        public static StatusInfo InvalidData(string property) => new StatusInfo
-        {
-            CodeMajor = CodeMajor.Success,
-            CodeMinor = CodeMinor.InvalidData,
-            Severity = Severity.Error,
-            Description = property
-        };
+        public static StatusInfo InvalidData(string property) => new StatusInfo { CodeMajor = CodeMajor.Success, CodeMinor = CodeMinor.InvalidData, Severity = Severity.Error, Description = property };
 
-        public static StatusInfo InvalidFilterField(string property) => new StatusInfo
-        {
-            CodeMajor = CodeMajor.Success,
-            CodeMinor = CodeMinor.InvalidFilterField,
-            Severity = Severity.Error,
-            Description = property
-        };
+        public static StatusInfo InvalidFilterField(string property) => new StatusInfo { CodeMajor = CodeMajor.Success, CodeMinor = CodeMinor.InvalidFilterField, Severity = Severity.Error, Description = property };
 
-        public static StatusInfo InvalidLimitField() => new StatusInfo
-        {
-            CodeMajor = CodeMajor.Failure,
-            CodeMinor = CodeMinor.InvalidLimitField,
-            Severity = Severity.Warning,
-            Description = "Limit query parameter must be greater than 0."
-        };
+        public static StatusInfo InvalidLimitField() => new StatusInfo { CodeMajor = CodeMajor.Failure, CodeMinor = CodeMinor.InvalidLimitField, Severity = Severity.Warning, Description = "Limit query parameter must be greater than 0." };
 
-        public static StatusInfo InvalidOffsetField() => new StatusInfo
-        {
-            CodeMajor = CodeMajor.Failure,
-            CodeMinor = CodeMinor.InvalidOffsetField,
-            Severity = Severity.Warning,
-            Description = "Offset query parameter must be greater than or equal to 0."
-        };
+        public static StatusInfo InvalidOffsetField() => new StatusInfo { CodeMajor = CodeMajor.Failure, CodeMinor = CodeMinor.InvalidOffsetField, Severity = Severity.Warning, Description = "Offset query parameter must be greater than or equal to 0." };
 
-        public static StatusInfo InvalidBlankSelectionField() => new StatusInfo
-        {
-            CodeMajor = CodeMajor.Failure,
-            CodeMinor = CodeMinor.InvalidBlankSelectionField,
-            Severity = Severity.Error
-        };
+        public static StatusInfo InvalidBlankSelectionField() => new StatusInfo { CodeMajor = CodeMajor.Failure, CodeMinor = CodeMinor.InvalidBlankSelectionField, Severity = Severity.Error };
     }
 }

@@ -4,7 +4,7 @@ namespace Questar.OneRoster.Sorting
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    
+
     public static class Sort
     {
         internal static readonly MethodInfo Info =

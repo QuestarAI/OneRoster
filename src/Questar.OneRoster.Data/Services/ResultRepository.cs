@@ -2,6 +2,8 @@ namespace Questar.OneRoster.Data.Services
 {
     using AutoMapper;
     using DataServices;
+    using Models;
+    using Result = Data.Result;
 
     public class ResultRepository : BaseRepository<Models.Result, Result>, IResultRepository
     {

@@ -19,7 +19,7 @@ namespace Questar.OneRoster.Data.Services
         }
 
         public BaseRepository(OneRosterDbContext context, IMapper mapper, IQueryable<TSource> query)
-            : base(query.UseAsDataSource(mapper).For<TModel>(), context.Set<TSource>().Persist(mapper), model => model.SourcedId, (x, y) => (string)x == (string)y)
+            : base(query.UseAsDataSource(mapper).For<TModel>(), context.Set<TSource>().Persist(mapper), model => model.SourcedId, (x, y) => (string) x == (string) y)
         {
             Context = context;
             Mapper = mapper;

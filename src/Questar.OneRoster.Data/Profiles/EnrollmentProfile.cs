@@ -1,6 +1,5 @@
 namespace Questar.OneRoster.Data.Profiles
 {
-    using AutoMapper;
     using Models;
     using Enrollment = Data.Enrollment;
 

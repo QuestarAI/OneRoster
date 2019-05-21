@@ -20,10 +20,7 @@ namespace Questar.OneRoster.Api.Controllers
     [Produces("application/json")]
     public abstract class BaseController<T> : ControllerBase where T : Base
     {
-        protected BaseController(IOneRosterWorkspace workspace)
-        {
-            Workspace = workspace;
-        }
+        protected BaseController(IOneRosterWorkspace workspace) => Workspace = workspace;
 
         protected IOneRosterWorkspace Workspace { get; }
 
@@ -41,10 +38,7 @@ namespace Questar.OneRoster.Api.Controllers
             var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var statuses = new StatusInfoList();
-            var result = new OneRosterCollection<dynamic>
-            {
-                StatusInfoSet = statuses
-            };
+            var result = new OneRosterCollection<dynamic> { StatusInfoSet = statuses };
 
             var fields =
                 request.Fields?
@@ -129,10 +123,7 @@ namespace Questar.OneRoster.Api.Controllers
             var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var statuses = new StatusInfoList();
-            var result = new OneRosterSingle<dynamic>
-            {
-                StatusInfoSet = statuses
-            };
+            var result = new OneRosterSingle<dynamic> { StatusInfoSet = statuses };
 
             var fields =
                 request.Fields?
@@ -165,7 +156,7 @@ namespace Questar.OneRoster.Api.Controllers
 
             return Content(content);
         }
-        
+
         [HttpGet]
         public virtual Task<ActionResult<dynamic>> Select(SelectRequest request)
             => Select(Query, request);

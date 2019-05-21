@@ -12,7 +12,7 @@ namespace Questar.OneRoster.Data.Migrations
                 "DataProtectionKey",
                 table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FriendlyName = table.Column<string>(nullable: true),
                     Xml = table.Column<string>(nullable: true)
@@ -21,56 +21,38 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "Grade",
-                table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Code = table.Column<string>(nullable: false)
-                },
+                table => new { Id = table.Column<Guid>(), Code = table.Column<string>() },
                 constraints: table => { table.PrimaryKey("PK_Grade", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 "MetadataCollection",
-                table => new
-                {
-                    MetadataCollectionId = table.Column<Guid>(nullable: false)
-                },
+                table => new { MetadataCollectionId = table.Column<Guid>() },
                 constraints: table => { table.PrimaryKey("PK_MetadataCollection", x => x.MetadataCollectionId); });
 
             migrationBuilder.CreateTable(
                 "Role",
-                table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
-                },
+                table => new { Id = table.Column<Guid>(), Name = table.Column<string>(maxLength: 256, nullable: true), NormalizedName = table.Column<string>(maxLength: 256, nullable: true), ConcurrencyStamp = table.Column<string>(nullable: true) },
                 constraints: table => { table.PrimaryKey("PK_Role", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 "Subject",
-                table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Code = table.Column<string>(nullable: false)
-                },
+                table => new { Id = table.Column<Guid>(), Name = table.Column<string>(), Code = table.Column<string>() },
                 constraints: table => { table.PrimaryKey("PK_Subject", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 "AcademicSession",
                 table => new
                 {
-                    Type = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 256, nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
+                    Type = table.Column<int>(),
+                    Title = table.Column<string>(maxLength: 256),
+                    StartDate = table.Column<DateTime>(),
+                    EndDate = table.Column<DateTime>(),
                     ParentId = table.Column<Guid>(nullable: true),
-                    SchoolYear = table.Column<int>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
+                    SchoolYear = table.Column<int>(),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -93,11 +75,11 @@ namespace Questar.OneRoster.Data.Migrations
                 "Category",
                 table => new
                 {
-                    Title = table.Column<string>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
+                    Title = table.Column<string>(),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -112,12 +94,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "Metadata",
-                table => new
-                {
-                    CollectionId = table.Column<Guid>(nullable: false),
-                    Key = table.Column<string>(maxLength: 64, nullable: false),
-                    Value = table.Column<string>(maxLength: 256, nullable: true)
-                },
+                table => new { CollectionId = table.Column<Guid>(), Key = table.Column<string>(maxLength: 64), Value = table.Column<string>(maxLength: 256, nullable: true) },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Metadata", x => new { x.CollectionId, x.Key });
@@ -133,14 +110,14 @@ namespace Questar.OneRoster.Data.Migrations
                 "Org",
                 table => new
                 {
-                    Name = table.Column<string>(maxLength: 256, nullable: false),
-                    Type = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 256),
+                    Type = table.Column<int>(),
                     Identifier = table.Column<string>(maxLength: 256, nullable: true),
                     ParentId = table.Column<Guid>(nullable: true),
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -164,14 +141,14 @@ namespace Questar.OneRoster.Data.Migrations
                 table => new
                 {
                     Title = table.Column<string>(maxLength: 64, nullable: true),
-                    Importance = table.Column<int>(nullable: false),
-                    VendorResourceId = table.Column<string>(maxLength: 256, nullable: false),
+                    Importance = table.Column<int>(),
+                    VendorResourceId = table.Column<string>(maxLength: 256),
                     VendorId = table.Column<string>(maxLength: 256, nullable: true),
                     ApplicationId = table.Column<string>(maxLength: 256, nullable: true),
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -192,28 +169,28 @@ namespace Questar.OneRoster.Data.Migrations
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    EmailConfirmed = table.Column<bool>(),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    PhoneNumberConfirmed = table.Column<bool>(),
+                    TwoFactorEnabled = table.Column<bool>(),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
-                    Type = table.Column<int>(nullable: false),
-                    Enabled = table.Column<bool>(nullable: false),
-                    GivenName = table.Column<string>(maxLength: 64, nullable: false),
+                    LockoutEnabled = table.Column<bool>(),
+                    AccessFailedCount = table.Column<int>(),
+                    Id = table.Column<Guid>(),
+                    Type = table.Column<int>(),
+                    Enabled = table.Column<bool>(),
+                    GivenName = table.Column<string>(maxLength: 64),
                     MiddleName = table.Column<string>(maxLength: 64, nullable: true),
-                    FamilyName = table.Column<string>(maxLength: 64, nullable: false),
+                    FamilyName = table.Column<string>(maxLength: 64),
                     Identifier = table.Column<string>(nullable: true),
                     Sms = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -230,9 +207,9 @@ namespace Questar.OneRoster.Data.Migrations
                 "RoleClaim",
                 table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -251,14 +228,14 @@ namespace Questar.OneRoster.Data.Migrations
                 "Course",
                 table => new
                 {
-                    Title = table.Column<string>(maxLength: 256, nullable: false),
+                    Title = table.Column<string>(maxLength: 256),
                     Code = table.Column<string>(maxLength: 256, nullable: true),
-                    SchoolYearId = table.Column<Guid>(nullable: false),
-                    OrgId = table.Column<Guid>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
+                    SchoolYearId = table.Column<Guid>(),
+                    OrgId = table.Column<Guid>(),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -285,11 +262,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "ResourceRole",
-                table => new
-                {
-                    ResourceId = table.Column<Guid>(nullable: false),
-                    Role = table.Column<int>(nullable: false)
-                },
+                table => new { ResourceId = table.Column<Guid>(), Role = table.Column<int>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ResourceRole", x => new { x.ResourceId, x.Role });
@@ -319,10 +292,10 @@ namespace Questar.OneRoster.Data.Migrations
                     StateOfBirthAbbreviation = table.Column<string>(nullable: true),
                     CityOfBirth = table.Column<string>(nullable: true),
                     PublicSchoolResidenceStatus = table.Column<string>(nullable: true),
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -349,11 +322,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "UserAgent",
-                table => new
-                {
-                    UserId = table.Column<Guid>(nullable: false),
-                    AgentId = table.Column<Guid>(nullable: false)
-                },
+                table => new { UserId = table.Column<Guid>(), AgentId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserAgent", x => new { x.UserId, x.AgentId });
@@ -375,10 +344,10 @@ namespace Questar.OneRoster.Data.Migrations
                 "UserClaim",
                 table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
@@ -394,11 +363,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "UserGrade",
-                table => new
-                {
-                    UserId = table.Column<Guid>(nullable: false),
-                    GradeId = table.Column<Guid>(nullable: false)
-                },
+                table => new { UserId = table.Column<Guid>(), GradeId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserGrade", x => new { x.UserId, x.GradeId });
@@ -418,12 +383,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "UserIdentifier",
-                table => new
-                {
-                    UserId = table.Column<Guid>(nullable: false),
-                    Type = table.Column<string>(maxLength: 256, nullable: false),
-                    Identifier = table.Column<string>(maxLength: 256, nullable: false)
-                },
+                table => new { UserId = table.Column<Guid>(), Type = table.Column<string>(maxLength: 256), Identifier = table.Column<string>(maxLength: 256) },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserIdentifier", x => new { x.UserId, x.Type, x.Identifier });
@@ -437,13 +397,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "UserLogin",
-                table => new
-                {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false)
-                },
+                table => new { LoginProvider = table.Column<string>(), ProviderKey = table.Column<string>(), ProviderDisplayName = table.Column<string>(nullable: true), UserId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserLogin", x => new { x.LoginProvider, x.ProviderKey });
@@ -457,11 +411,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "UserOrg",
-                table => new
-                {
-                    UserId = table.Column<Guid>(nullable: false),
-                    OrgId = table.Column<Guid>(nullable: false)
-                },
+                table => new { UserId = table.Column<Guid>(), OrgId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserOrg", x => new { x.UserId, x.OrgId });
@@ -481,11 +431,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "UserRole",
-                table => new
-                {
-                    UserId = table.Column<Guid>(nullable: false),
-                    RoleId = table.Column<Guid>(nullable: false)
-                },
+                table => new { UserId = table.Column<Guid>(), RoleId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRole", x => new { x.UserId, x.RoleId });
@@ -505,13 +451,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "UserToken",
-                table => new
-                {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false)
-                },
+                table => new { LoginProvider = table.Column<string>(), Name = table.Column<string>(), Value = table.Column<string>(nullable: true), UserId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserToken", x => new { x.UserId, x.LoginProvider, x.Name });
@@ -527,16 +467,16 @@ namespace Questar.OneRoster.Data.Migrations
                 "Class",
                 table => new
                 {
-                    Type = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 256, nullable: false),
+                    Type = table.Column<int>(),
+                    Title = table.Column<string>(maxLength: 256),
                     Code = table.Column<string>(maxLength: 32, nullable: true),
                     Location = table.Column<string>(maxLength: 256, nullable: true),
-                    CourseId = table.Column<Guid>(nullable: false),
-                    SchoolId = table.Column<Guid>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
+                    CourseId = table.Column<Guid>(),
+                    SchoolId = table.Column<Guid>(),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -563,11 +503,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "CourseGrade",
-                table => new
-                {
-                    CourseId = table.Column<Guid>(nullable: false),
-                    GradeId = table.Column<Guid>(nullable: false)
-                },
+                table => new { CourseId = table.Column<Guid>(), GradeId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CourseGrade", x => new { x.CourseId, x.GradeId });
@@ -587,11 +523,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "CourseResource",
-                table => new
-                {
-                    CourseId = table.Column<Guid>(nullable: false),
-                    ResourceId = table.Column<Guid>(nullable: false)
-                },
+                table => new { CourseId = table.Column<Guid>(), ResourceId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CourseResource", x => new { x.CourseId, x.ResourceId });
@@ -611,11 +543,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "CourseSubject",
-                table => new
-                {
-                    CourseId = table.Column<Guid>(nullable: false),
-                    SubjectId = table.Column<Guid>(nullable: false)
-                },
+                table => new { CourseId = table.Column<Guid>(), SubjectId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CourseSubject", x => new { x.CourseId, x.SubjectId });
@@ -635,11 +563,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "ClassAcademicSession",
-                table => new
-                {
-                    ClassId = table.Column<Guid>(nullable: false),
-                    AcademicSessionId = table.Column<Guid>(nullable: false)
-                },
+                table => new { ClassId = table.Column<Guid>(), AcademicSessionId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClassAcademicSession", x => new { x.ClassId, x.AcademicSessionId });
@@ -659,11 +583,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "ClassGrade",
-                table => new
-                {
-                    ClassId = table.Column<Guid>(nullable: false),
-                    GradeId = table.Column<Guid>(nullable: false)
-                },
+                table => new { ClassId = table.Column<Guid>(), GradeId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClassGrade", x => new { x.ClassId, x.GradeId });
@@ -683,11 +603,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "ClassPeriod",
-                table => new
-                {
-                    ClassId = table.Column<Guid>(nullable: false),
-                    Period = table.Column<string>(nullable: false)
-                },
+                table => new { ClassId = table.Column<Guid>(), Period = table.Column<string>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClassPeriod", x => new { x.ClassId, x.Period });
@@ -701,11 +617,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "ClassResource",
-                table => new
-                {
-                    ClassId = table.Column<Guid>(nullable: false),
-                    ResourceId = table.Column<Guid>(nullable: false)
-                },
+                table => new { ClassId = table.Column<Guid>(), ResourceId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClassResource", x => new { x.ClassId, x.ResourceId });
@@ -725,11 +637,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             migrationBuilder.CreateTable(
                 "ClassSubject",
-                table => new
-                {
-                    ClassId = table.Column<Guid>(nullable: false),
-                    SubjectId = table.Column<Guid>(nullable: false)
-                },
+                table => new { ClassId = table.Column<Guid>(), SubjectId = table.Column<Guid>() },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClassSubject", x => new { x.ClassId, x.SubjectId });
@@ -753,13 +661,13 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     BeginDate = table.Column<DateTime>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false),
-                    ClassId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(),
+                    ClassId = table.Column<Guid>(),
                     Primary = table.Column<bool>(nullable: true),
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -788,19 +696,19 @@ namespace Questar.OneRoster.Data.Migrations
                 "LineItem",
                 table => new
                 {
-                    Title = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(),
                     Description = table.Column<string>(nullable: true),
-                    AssignDate = table.Column<DateTime>(nullable: false),
-                    DueDate = table.Column<DateTime>(nullable: false),
-                    ClassId = table.Column<Guid>(nullable: false),
-                    CategoryId = table.Column<Guid>(nullable: false),
-                    GradingPeriodId = table.Column<Guid>(nullable: false),
-                    ResultValueMin = table.Column<float>(nullable: false),
-                    ResultValueMax = table.Column<float>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
+                    AssignDate = table.Column<DateTime>(),
+                    DueDate = table.Column<DateTime>(),
+                    ClassId = table.Column<Guid>(),
+                    CategoryId = table.Column<Guid>(),
+                    GradingPeriodId = table.Column<Guid>(),
+                    ResultValueMin = table.Column<float>(),
+                    ResultValueMax = table.Column<float>(),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
@@ -836,15 +744,15 @@ namespace Questar.OneRoster.Data.Migrations
                 table => new
                 {
                     Comment = table.Column<string>(nullable: true),
-                    LineItemId = table.Column<Guid>(nullable: false),
-                    StudentId = table.Column<Guid>(nullable: false),
-                    Score = table.Column<float>(nullable: false),
-                    ScoreDate = table.Column<DateTime>(nullable: false),
-                    ScoreStatus = table.Column<int>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
+                    LineItemId = table.Column<Guid>(),
+                    StudentId = table.Column<Guid>(),
+                    Score = table.Column<float>(),
+                    ScoreDate = table.Column<DateTime>(),
+                    ScoreStatus = table.Column<int>(),
+                    Id = table.Column<Guid>(),
                     MetadataCollectionId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Status = table.Column<int>(),
+                    Modified = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {

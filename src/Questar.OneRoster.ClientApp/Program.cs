@@ -4,7 +4,6 @@ namespace Questar.OneRoster.ClientApp
     using Client;
     using Flurl.Http;
 
-
     internal class Program
     {
         private static async Task Main(string[] args)

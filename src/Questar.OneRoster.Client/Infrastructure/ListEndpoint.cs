@@ -89,7 +89,7 @@ namespace Questar.OneRoster.Client.Infrastructure
                 throw new InvalidOperationException("Content is empty.");
 
             var resolver = new OneRosterContractResolver(typeof(T));
-            var settings = new JsonSerializerSettings {ContractResolver = resolver};
+            var settings = new JsonSerializerSettings { ContractResolver = resolver };
 
             var result = JsonConvert.DeserializeObject<OneRosterCollection<TResult>>(content, settings);
             var statuses = result.StatusInfoSet;

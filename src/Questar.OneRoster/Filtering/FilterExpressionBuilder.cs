@@ -86,6 +86,7 @@ namespace Questar.OneRoster.Filtering
                 expression = Expression.Property(expression, info);
                 type = info.PropertyType;
             }
+
             return expression as MemberExpression;
         }
 
@@ -143,6 +144,7 @@ namespace Questar.OneRoster.Filtering
             {
                 expression = fallback?.Invoke() ?? throw e;
             }
+
             _expressions.Push(expression);
             return this;
         }
@@ -163,6 +165,7 @@ namespace Questar.OneRoster.Filtering
                         default:
                             throw new NotSupportedException($"Predicate operator not supported for scalar value: {filter.Predicate}.");
                     }
+
                 case FilterValueType.Vector:
                     switch (filter.Predicate)
                     {
@@ -171,6 +174,7 @@ namespace Questar.OneRoster.Filtering
                         default:
                             throw new NotSupportedException($"Predicate operator not supported for vector value: {filter.Predicate}.");
                     }
+
                 default:
                     throw new NotSupportedException($"Filter value type not supported '{filter.Value.Type}'.");
             }

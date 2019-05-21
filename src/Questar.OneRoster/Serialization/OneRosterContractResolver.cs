@@ -11,11 +11,11 @@ namespace Questar.OneRoster.Serialization
         public OneRosterContractResolver(Type type)
         {
             Type = type;
-            NamingStrategy = new OneRosterNamingStrategy {ProcessDictionaryKeys = true, OverrideSpecifiedNames = true};
+            NamingStrategy = new OneRosterNamingStrategy { ProcessDictionaryKeys = true, OverrideSpecifiedNames = true };
         }
 
         public Type Type { get; }
-        
+
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             var property = base.CreateProperty(member, memberSerialization);
@@ -27,7 +27,7 @@ namespace Questar.OneRoster.Serialization
 
         protected string Pluralize(string name)
         {
-            if (name.EndsWith("y") && !new[] {"a", "e", "i", "o", "u"}.Any(vowel => name.EndsWith(vowel + "y")))
+            if (name.EndsWith("y") && !new[] { "a", "e", "i", "o", "u" }.Any(vowel => name.EndsWith(vowel + "y")))
                 return name.Substring(0, name.Length - 1) + "ies";
             if (name.EndsWith("s"))
                 return name + "es";

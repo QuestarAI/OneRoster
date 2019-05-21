@@ -47,6 +47,6 @@ namespace Questar.OneRoster.Models.Errors
 
         /// The specification mentions this, but doesn't explicitly define it.
         [EnumMember(Value = "server_busy")]
-        ServerBusy,
+        ServerBusy
     }
 }

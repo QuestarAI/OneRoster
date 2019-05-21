@@ -1,7 +1,5 @@
 namespace Questar.OneRoster.Models
 {
-    using System;
-
     /// <summary>
     /// Represents a reference to an object.
     /// </summary>
