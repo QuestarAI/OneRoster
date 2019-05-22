@@ -27,7 +27,7 @@ namespace Questar.OneRoster.Api.Controllers
         [HttpDelete("{SourcedId}")]
         public virtual async Task<ActionResult> Delete(DeleteParams @params)
         {
-            var item = await Workspace.LineItems.AsQuery().WhereHasKey(@params.SourcedId).SingleAsync();
+            var item = await Workspace.LineItems.AsQuery().WhereHasSourcedId(@params.SourcedId).SingleAsync();
             if (item == null)
                 return NotFound();
             await Workspace.LineItems.DeleteAsync(item);

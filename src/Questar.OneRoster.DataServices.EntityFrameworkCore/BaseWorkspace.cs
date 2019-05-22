@@ -3,9 +3,10 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
 
-    public class DbContextWorkspace<TContext> : Workspace where TContext : DbContext
+    public class BaseWorkspace<TContext> : Workspace
+        where TContext : DbContext
     {
-        public DbContextWorkspace(TContext context)
+        public BaseWorkspace(TContext context)
             => Context = context;
 
         protected TContext Context { get; }

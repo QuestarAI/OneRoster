@@ -30,6 +30,6 @@ namespace Questar.OneRoster.DataServices
 
         IQuery Where(Filter filter);
 
-        IQuery WhereHasKey(object key);
+        IQuery WhereHasSourcedId(string sourcedId);
     }
 }

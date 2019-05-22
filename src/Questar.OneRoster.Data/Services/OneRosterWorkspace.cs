@@ -4,9 +4,9 @@ namespace Questar.OneRoster.Data.Services
     using DataServices;
     using DataServices.EntityFrameworkCore;
 
-    public class OneRosterDbContextWorkspace : DbContextWorkspace<OneRosterDbContext>, IOneRosterWorkspace
+    public class OneRosterWorkspace : BaseWorkspace<OneRosterDbContext>, IOneRosterWorkspace
     {
-        public OneRosterDbContextWorkspace(OneRosterDbContext context, IMapper mapper) : base(context)
+        public OneRosterWorkspace(OneRosterDbContext context, IMapper mapper) : base(context)
         {
             AcademicSessions = new AcademicSessionRepository(Context, mapper);
             Categories = new CategoryRepository(Context, mapper);

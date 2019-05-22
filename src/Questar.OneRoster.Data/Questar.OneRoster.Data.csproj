@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Questar.OneRoster.DataServices.EntityFrameworkCore\Questar.OneRoster.DataServices.EntityFrameworkCore.csproj" />
+    <ProjectReference
+      Include="..\Questar.OneRoster.DataServices.EntityFrameworkCore\Questar.OneRoster.DataServices.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Questar.OneRoster\Questar.OneRoster.csproj" />
   </ItemGroup>
 

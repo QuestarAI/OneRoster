@@ -142,7 +142,7 @@ namespace Questar.OneRoster.Api.Controllers
             if (statuses.Any(status => status.Severity == Severity.Error))
                 return BadRequest(JsonConvert.SerializeObject(result, settings));
 
-            IQuery query = querier().WhereHasKey(@params.SourcedId);
+            IQuery query = querier().WhereHasSourcedId(@params.SourcedId);
 
             // dynamic select, only if requested
             var selectors = fields?.Where(field => properties.Contains(field)).ToList();
