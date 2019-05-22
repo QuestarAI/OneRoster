@@ -21,11 +21,11 @@ namespace Questar.OneRoster.Data
 
         public virtual Guid ClassId { get; private set; }
 
-        public virtual Category Category { get; set; } // TODO one-time only?
+        public virtual Category Category { get; set; }
 
         public virtual Guid CategoryId { get; private set; }
 
-        public virtual AcademicSession GradingPeriod { get; set; } // TODO one-time only?
+        public virtual AcademicSession GradingPeriod { get; set; }
 
         public virtual Guid GradingPeriodId { get; private set; }
 

@@ -1,5 +1,6 @@
 namespace Questar.OneRoster.App
 {
+    using Api.Extensions;
     using Data.Extensions;
     using JetBrains.Annotations;
     using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ namespace Questar.OneRoster.App
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json.Converters;
+    using Swashbuckle.AspNetCore.Swagger;
 
     public class Startup
     {
@@ -34,8 +36,6 @@ namespace Questar.OneRoster.App
                 .AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()))
                 .AddOneRosterApi();
-
-            // TODO: Consolidate where this connection string comes from.
 
             services.AddSwaggerGen(c =>
             {

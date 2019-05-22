@@ -3,10 +3,11 @@ namespace Questar.OneRoster.Test
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Expressions;
+    using Comparers;
     using Filtering;
-    using Mock;
-    using static Mock.Util;
+    using Mocks;
+    using Xunit;
+    using static Mocks.Util;
 
     public class FilterExpressionParserTest
     {

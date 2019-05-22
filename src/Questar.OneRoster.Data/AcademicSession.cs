@@ -26,14 +26,14 @@ namespace Questar.OneRoster.Data
         [Required]
         public virtual DateTime? EndDate { get; set; }
 
-        public virtual AcademicSession Parent { get; set; } // TODO one-time only?
+        public virtual AcademicSession Parent { get; set; }
 
         public virtual Guid? ParentId { get; private set; }
 
         public virtual ICollection<AcademicSession> Children { get; } = new HashSet<AcademicSession>();
 
         [Required]
-        public virtual int? SchoolYear { get; set; } // TODO one-time only?
+        public virtual int? SchoolYear { get; set; }
 
         // term or semester only
         public virtual IReadOnlyCollection<ClassAcademicSession> Classes { get; } = new HashSet<ClassAcademicSession>();

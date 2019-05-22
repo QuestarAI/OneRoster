@@ -9,8 +9,8 @@ namespace Questar.OneRoster.Collections
     {
         public Page(int count, IEnumerable<T> items)
         {
-            if (count < 0) throw new ArgumentException($"'{nameof(count)}' must be greater than or equal to 0.");
-
+            if (count < 0)
+                throw new ArgumentException($"'{nameof(count)}' must be greater than or equal to 0.");
             Count = count;
             Items = items.ToList().AsReadOnly();
         }

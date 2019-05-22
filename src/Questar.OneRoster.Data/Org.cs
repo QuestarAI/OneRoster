@@ -23,7 +23,7 @@ namespace Questar.OneRoster.Data
         [MaxLength(256)]
         public virtual string Identifier { get; set; }
 
-        public virtual Org Parent { get; set; } // TODO one-time only? no...
+        public virtual Org Parent { get; set; }
 
         public virtual Guid? ParentId { get; private set; }
 

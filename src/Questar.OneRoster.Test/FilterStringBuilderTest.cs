@@ -3,8 +3,9 @@ namespace Questar.OneRoster.Test
     using System;
     using System.Linq.Expressions;
     using Filtering;
-    using Mock;
-    using static Mock.Util;
+    using Mocks;
+    using Xunit;
+    using static Mocks.Util;
 
     public class FilterStringBuilderTest
     {
@@ -66,25 +67,11 @@ namespace Questar.OneRoster.Test
             CanApplyFilter("CorgeEnum='One'", e => e.CorgeEnum == Count.One);
         }
 
-        // do not explicitly support this
-        //[Fact]
-        //public void CanApplyEnumEqualExpressionWithInvalidValue()
-        //{
-        //    CanApplyFilter("CorgeEnum='OutOfRange'", e => e.CorgeEnum == Enum.Parse<Count>("OutOfRange"));
-        //}
-
         [Fact]
         public void CanApplyEnumNotEqualExpression()
         {
             CanApplyFilter("CorgeEnum!='One'", e => e.CorgeEnum != Count.One);
         }
-
-        // do not explicitly support this
-        //[Fact]
-        //public void CanApplyEnumNotEqualExpressionWithInvalidValue()
-        //{
-        //    CanApplyFilter("CorgeEnum!='OutOfRange'", e => e.CorgeEnum != Enum.Parse<Count>("OutOfRange"));
-        //}
 
         [Fact]
         public void CanApplyGuidEqualExpression()

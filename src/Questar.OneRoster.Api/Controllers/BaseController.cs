@@ -14,7 +14,7 @@ namespace Questar.OneRoster.Api.Controllers
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using OneRoster.Models;
-    using OneRoster.Models.Errors;
+    using Payloads;
     using Serialization;
     using Sorting;
 
@@ -40,7 +40,7 @@ namespace Questar.OneRoster.Api.Controllers
             var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var statuses = new StatusInfoList();
-            var result = new OneRosterCollection<dynamic> { StatusInfoSet = statuses };
+            var result = new Payload<dynamic[]> { Statuses = statuses };
 
             var fields =
                 @params.Fields?
@@ -107,7 +107,7 @@ namespace Questar.OneRoster.Api.Controllers
             if (!string.IsNullOrEmpty(link))
                 HttpContext.Response.Headers.Add("Link", link);
 
-            result.Results = data.Items.OfType<dynamic>().ToArray();
+            result.Value = data.Items.OfType<dynamic>().ToArray();
 
             var content = JsonConvert.SerializeObject(result, Formatting.Indented, settings);
 
@@ -125,7 +125,7 @@ namespace Questar.OneRoster.Api.Controllers
             var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var statuses = new StatusInfoList();
-            var result = new OneRosterSingle<dynamic> { StatusInfoSet = statuses };
+            var result = new Payload<dynamic> { Statuses = statuses };
 
             var fields =
                 @params.Fields?
@@ -152,7 +152,7 @@ namespace Questar.OneRoster.Api.Controllers
 
             var data = await query.SingleAsync();
 
-            result.Result = data;
+            result.Value = data;
 
             var content = JsonConvert.SerializeObject(result, Formatting.Indented, settings);
 

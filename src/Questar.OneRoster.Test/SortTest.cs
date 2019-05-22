@@ -2,9 +2,10 @@ namespace Questar.OneRoster.Test
 {
     using System;
     using System.Linq;
-    using Expressions;
-    using Mock;
     using Sorting;
+    using Xunit;
+    using Comparers;
+    using Mocks;
 
     public class SortTest
     {
