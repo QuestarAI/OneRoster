@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Api.Controllers
 {
     using DataServices;
+    using DataServices.Filtering;
     using Microsoft.AspNetCore.Mvc;
     using OneRoster.Models;
 

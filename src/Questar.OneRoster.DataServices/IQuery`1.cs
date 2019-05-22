@@ -3,8 +3,7 @@ namespace Questar.OneRoster.DataServices
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Collections;
-    using Filtering;
-    using Models;
+    using OneRoster.Filtering;
     using Sorting;
 
     public interface IQuery<T> : IQuery

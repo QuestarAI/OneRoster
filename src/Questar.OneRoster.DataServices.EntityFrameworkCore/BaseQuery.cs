@@ -5,8 +5,8 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Reflection.Emit;
-    using Filtering;
     using Models;
+    using OneRoster.Filtering;
     using Sorting;
 
     public class BaseQuery<T> : Query<T>

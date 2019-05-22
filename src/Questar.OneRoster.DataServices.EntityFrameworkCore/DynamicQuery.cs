@@ -3,7 +3,7 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
     using System;
     using System.Linq;
     using System.Reflection;
-    using Filtering;
+    using OneRoster.Filtering;
     using Sorting;
 
     public class DynamicQuery : Query<dynamic>

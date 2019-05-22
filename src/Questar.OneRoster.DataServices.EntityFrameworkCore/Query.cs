@@ -6,7 +6,7 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
     using System.Reflection;
     using System.Threading.Tasks;
     using Collections;
-    using Filtering;
+    using OneRoster.Filtering;
     using Sorting;
 
     public abstract class Query<T> : IQuery<T>

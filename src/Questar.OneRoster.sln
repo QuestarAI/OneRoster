@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.gitignore = ..\.gitignore
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F3419DBB-B068-48B3-90D1-79C43356A349}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F3419DBB-B068-48B3-90D1-79C43356A349}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Test", "Test\Questar.OneRoster.Test\Questar.OneRoster.Test.csproj", "{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA}"
 EndProject
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.DataServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Client.Test", "Test\Questar.OneRoster.Client.Test\Questar.OneRoster.Client.Test.csproj", "{B568508D-A4C4-4756-9D17-48643ACEF2DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.ClientApp", "Questar.OneRoster.ClientApp\Questar.OneRoster.ClientApp.csproj", "{4776CA71-C6E6-4E3E-9626-CCE2595AE5AB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A0F720C3-CEAC-49D5-937D-0787A8DC00FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,16 +73,14 @@ Global
 		{B568508D-A4C4-4756-9D17-48643ACEF2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B568508D-A4C4-4756-9D17-48643ACEF2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B568508D-A4C4-4756-9D17-48643ACEF2DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4776CA71-C6E6-4E3E-9626-CCE2595AE5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4776CA71-C6E6-4E3E-9626-CCE2595AE5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4776CA71-C6E6-4E3E-9626-CCE2595AE5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4776CA71-C6E6-4E3E-9626-CCE2595AE5AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{8E07FAD9-4E9E-4E00-910B-01E846ED75F7} = {A0F720C3-CEAC-49D5-937D-0787A8DC00FD}
 		{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA} = {F3419DBB-B068-48B3-90D1-79C43356A349}
+		{10B775E0-19E7-449C-A058-61EDD664EBF5} = {A0F720C3-CEAC-49D5-937D-0787A8DC00FD}
 		{B568508D-A4C4-4756-9D17-48643ACEF2DA} = {F3419DBB-B068-48B3-90D1-79C43356A349}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

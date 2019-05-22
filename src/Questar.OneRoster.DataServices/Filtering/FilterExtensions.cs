@@ -1,8 +1,8 @@
-namespace Questar.OneRoster.DataServices
+namespace Questar.OneRoster.DataServices.Filtering
 {
     using System;
     using System.Linq.Expressions;
-    using Filtering;
+    using OneRoster.Filtering;
 
     public static class FilterExtensions
     {
