@@ -1,13 +1,13 @@
 namespace Questar.OneRoster.Models
 {
-    using Serialization;
+    using System.Runtime.Serialization;
 
     public enum Gender
     {
-        [SerializationToken("male")]
+        [EnumMember(Value = "male")]
         Male,
 
-        [SerializationToken("female")]
+        [EnumMember(Value = "female")]
         Female
     }
 }

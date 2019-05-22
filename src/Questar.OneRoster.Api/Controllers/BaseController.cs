@@ -40,7 +40,7 @@ namespace Questar.OneRoster.Api.Controllers
             var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var statuses = new StatusInfoList();
-            var result = new Payload<dynamic[]> { Statuses = statuses };
+            var payload = new Payload<dynamic[]> { Statuses = statuses };
 
             var fields =
                 @params.Fields?
@@ -81,7 +81,7 @@ namespace Questar.OneRoster.Api.Controllers
                 statuses.Add(StatusInfo.InvalidOffsetField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(JsonConvert.SerializeObject(result, settings));
+                return BadRequest(JsonConvert.SerializeObject(payload, settings));
 
             IQuery query = querier();
 
@@ -107,9 +107,9 @@ namespace Questar.OneRoster.Api.Controllers
             if (!string.IsNullOrEmpty(link))
                 HttpContext.Response.Headers.Add("Link", link);
 
-            result.Value = data.Items.OfType<dynamic>().ToArray();
+            payload.Value = data.Items.OfType<dynamic>().ToArray();
 
-            var content = JsonConvert.SerializeObject(result, Formatting.Indented, settings);
+            var content = JsonConvert.SerializeObject(payload, Formatting.Indented, settings);
 
             return Content(content);
         }
@@ -125,7 +125,7 @@ namespace Questar.OneRoster.Api.Controllers
             var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var statuses = new StatusInfoList();
-            var result = new Payload<dynamic> { Statuses = statuses };
+            var payload = new Payload<dynamic> { Statuses = statuses };
 
             var fields =
                 @params.Fields?
@@ -141,7 +141,7 @@ namespace Questar.OneRoster.Api.Controllers
                     statuses.Add(StatusInfo.InvalidBlankSelectionField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(JsonConvert.SerializeObject(result, settings));
+                return BadRequest(JsonConvert.SerializeObject(payload, settings));
 
             IQuery query = querier().WhereHasSourcedId(@params.SourcedId);
 
@@ -152,9 +152,9 @@ namespace Questar.OneRoster.Api.Controllers
 
             var data = await query.SingleAsync();
 
-            result.Value = data;
+            payload.Value = data;
 
-            var content = JsonConvert.SerializeObject(result, Formatting.Indented, settings);
+            var content = JsonConvert.SerializeObject(payload, Formatting.Indented, settings);
 
             return Content(content);
         }

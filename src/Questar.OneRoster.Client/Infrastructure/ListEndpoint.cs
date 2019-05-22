@@ -9,6 +9,7 @@ namespace Questar.OneRoster.Client.Infrastructure
     using Flurl.Http;
     using Models;
     using Newtonsoft.Json;
+    using Payloads;
     using Serialization;
     using Sorting;
 
@@ -91,13 +92,14 @@ namespace Questar.OneRoster.Client.Infrastructure
             var resolver = new OneRosterContractResolver(typeof(T));
             var settings = new JsonSerializerSettings { ContractResolver = resolver };
 
-            var result = JsonConvert.DeserializeObject<OneRosterCollection<TResult>>(content, settings);
-            var statuses = result.StatusInfoSet;
+            var payload = JsonConvert.DeserializeObject<Payload<TResult[]>>(content, settings);
+            var statuses = payload.Statuses;
             if (statuses.Any())
-                throw new OneRosterException(statuses);
+                throw new StatusInfoException(statuses);
 
             var total = int.Parse(response.Headers.GetValues("X-Total-Count").Single());
-            var value = result.Results;
+            var value = payload.Value;
+
             return new Page<TResult>(total, value);
         }
 
