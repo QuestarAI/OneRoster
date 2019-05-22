@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Questar.OneRoster\Questar.OneRoster.csproj" />
+    <ProjectReference Include="..\Questar.OneRoster\Questar.OneRoster.csproj" />
   </ItemGroup>
 
 </Project>
