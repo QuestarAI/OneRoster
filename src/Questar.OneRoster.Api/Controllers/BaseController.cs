@@ -21,7 +21,8 @@ namespace Questar.OneRoster.Api.Controllers
     [Produces("application/json")]
     public abstract class BaseController<T> : ControllerBase where T : Base
     {
-        protected BaseController(IOneRosterWorkspace workspace) => Workspace = workspace;
+        protected BaseController(IOneRosterWorkspace workspace) =>
+            Workspace = workspace;
 
         protected IOneRosterWorkspace Workspace { get; }
 
@@ -159,11 +160,11 @@ namespace Questar.OneRoster.Api.Controllers
         }
 
         [HttpGet]
-        public virtual Task<ActionResult<dynamic>> Select(SelectParams @params)
-            => Select(Query, @params);
+        public virtual Task<ActionResult<dynamic>> Select(SelectParams @params) =>
+            Select(Query, @params);
 
         [HttpGet("{SourcedId}")]
-        public virtual Task<ActionResult<dynamic>> Single(SingleParams @params)
-            => Single(Query, @params);
+        public virtual Task<ActionResult<dynamic>> Single(SingleParams @params) =>
+            Single(Query, @params);
     }
 }

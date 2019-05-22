@@ -10,6 +10,7 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public ClassLineItemResultsEndpoint ResultsFor(string id) => new ClassLineItemResultsEndpoint(Http, $"{Path}/{id}/results");
+        public ClassLineItemResultsEndpoint ResultsFor(string id) =>
+            new ClassLineItemResultsEndpoint(Http, $"{Path}/{id}/results");
     }
 }

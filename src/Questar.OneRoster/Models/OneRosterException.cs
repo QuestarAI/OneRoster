@@ -7,7 +7,8 @@ namespace Questar.OneRoster.Models
 
     public class OneRosterException : Exception
     {
-        public OneRosterException(IEnumerable<StatusInfo> statuses) => Statuses = statuses.ToList().AsReadOnly();
+        public OneRosterException(IEnumerable<StatusInfo> statuses) =>
+            Statuses = statuses.ToList().AsReadOnly();
 
         public IReadOnlyCollection<StatusInfo> Statuses { get; }
     }

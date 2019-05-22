@@ -16,11 +16,11 @@ namespace Questar.OneRoster.Client.Infrastructure
         {
         }
 
-        public IItemQuery<T, TResult> Fields<TResult>(Expression<Func<T, TResult>> selector)
-            => Fields<T, TResult>(selector);
+        public IItemQuery<T, TResult> Fields<TResult>(Expression<Func<T, TResult>> selector) =>
+            Fields<T, TResult>(selector);
 
-        public Task<T> SingleAsync()
-            => SingleAsync<T>();
+        public Task<T> SingleAsync() =>
+            SingleAsync<T>();
 
         protected IItemQuery<T, TContext> Append<TContext>(string key, string value)
         {
@@ -63,14 +63,14 @@ namespace Questar.OneRoster.Client.Infrastructure
         {
             private readonly ItemEndpoint<T> _endpoint;
 
-            public ItemQueryAdapter(ItemEndpoint<T> endpoint)
-                => _endpoint = endpoint;
+            public ItemQueryAdapter(ItemEndpoint<T> endpoint) =>
+                _endpoint = endpoint;
 
-            public IItemQuery<T, TResult> Fields<TResult>(Expression<Func<TContext, TResult>> selector)
-                => _endpoint.Fields(selector);
+            public IItemQuery<T, TResult> Fields<TResult>(Expression<Func<TContext, TResult>> selector) =>
+                _endpoint.Fields(selector);
 
-            public Task<TContext> SingleAsync()
-                => _endpoint.SingleAsync<TContext>();
+            public Task<TContext> SingleAsync() =>
+                _endpoint.SingleAsync<TContext>();
         }
     }
 }

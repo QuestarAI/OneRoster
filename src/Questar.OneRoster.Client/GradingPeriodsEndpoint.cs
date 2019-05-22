@@ -10,6 +10,7 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public GradingPeriodEndpoint For(string id) => new GradingPeriodEndpoint(Http, $"{Path}/{id}");
+        public GradingPeriodEndpoint For(string id) =>
+            new GradingPeriodEndpoint(Http, $"{Path}/{id}");
     }
 }

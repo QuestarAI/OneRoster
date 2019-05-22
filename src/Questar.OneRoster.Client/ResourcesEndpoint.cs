@@ -10,6 +10,7 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public ResourceEndpoint For(string id) => new ResourceEndpoint(Http, $"{Path}/{id}");
+        public ResourceEndpoint For(string id) =>
+            new ResourceEndpoint(Http, $"{Path}/{id}");
     }
 }

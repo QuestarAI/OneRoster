@@ -11,6 +11,7 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<Org> Query() => Workspace.Orgs.AsQuery();
+        protected override IQuery<Org> Query() =>
+            Workspace.Orgs.AsQuery();
     }
 }

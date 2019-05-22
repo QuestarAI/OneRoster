@@ -6,8 +6,8 @@ namespace Questar.OneRoster.Filtering
 
     public sealed class FilterPropertyBuilder : ExpressionVisitor
     {
-        public FilterPropertyBuilder(Expression expression)
-            => Expression = expression;
+        public FilterPropertyBuilder(Expression expression) =>
+            Expression = expression;
 
         public Expression Expression { get; }
 
@@ -29,8 +29,8 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        private bool IsTerminal(Expression expression)
-            => Expression?.Equals(expression) == true;
+        private bool IsTerminal(Expression expression) =>
+            Expression?.Equals(expression) == true;
 
         protected override Expression VisitMember(MemberExpression node)
         {

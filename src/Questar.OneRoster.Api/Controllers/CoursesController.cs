@@ -13,20 +13,21 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<Course> Query() => Workspace.Courses.AsQuery();
+        protected override IQuery<Course> Query() =>
+            Workspace.Courses.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes teaching this course.
         /// </summary>
         [HttpGet("{courseId}/classes")]
-        public Task<ActionResult<dynamic>> GetClassesForCourse(string courseId, SelectParams @params)
-            => Select(() => Workspace.Courses.GetClassesForCourse(courseId), @params);
+        public Task<ActionResult<dynamic>> GetClassesForCourse(string courseId, SelectParams @params) =>
+            Select(() => Workspace.Courses.GetClassesForCourse(courseId), @params);
 
         /// <summary>
         /// Returns the collection of resources associated with this course.
         /// </summary>
         [HttpGet("{courseId}/resources")]
-        public Task<ActionResult<dynamic>> GetResourcesForCourse(string courseId, SelectParams @params)
-            => Select(() => Workspace.Courses.GetResourcesForCourse(courseId), @params);
+        public Task<ActionResult<dynamic>> GetResourcesForCourse(string courseId, SelectParams @params) =>
+            Select(() => Workspace.Courses.GetResourcesForCourse(courseId), @params);
     }
 }

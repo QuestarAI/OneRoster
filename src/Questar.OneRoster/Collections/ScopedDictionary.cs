@@ -10,7 +10,8 @@ namespace Questar.OneRoster.Collections
 
         private readonly ScopedDictionary<TKey, TValue> _parent;
 
-        public ScopedDictionary(ScopedDictionary<TKey, TValue> previous = null) => _parent = previous;
+        public ScopedDictionary(ScopedDictionary<TKey, TValue> previous = null) =>
+            _parent = previous;
 
         public TValue this[TKey key]
         {
@@ -20,36 +21,45 @@ namespace Questar.OneRoster.Collections
 
         public int Count => _items.Count + _parent?.Count ?? 0;
 
-        public void Add(TKey key, TValue value) => _items.Add(key, value);
+        public void Add(TKey key, TValue value) =>
+            _items.Add(key, value);
 
-        public bool Remove(TKey key) => _items.Remove(key) || _parent.Remove(key);
+        public bool Remove(TKey key) =>
+            _items.Remove(key) || _parent.Remove(key);
 
-        public bool TryGetValue(TKey key, out TValue value) => _items.TryGetValue(key, out value) || _parent?.TryGetValue(key, out value) == true;
+        public bool TryGetValue(TKey key, out TValue value) =>
+            _items.TryGetValue(key, out value) || _parent?.TryGetValue(key, out value) == true;
 
         public ICollection<TKey> Keys => _items.Keys.Concat(_parent?.Keys ?? Enumerable.Empty<TKey>()).ToList();
 
         public ICollection<TValue> Values => _items.Values.Concat(_parent?.Values ?? Enumerable.Empty<TValue>()).ToList();
 
-        public void Clear() => _items.Clear();
+        public void Clear() =>
+            _items.Clear();
 
-        public bool ContainsKey(TKey key) => _items.ContainsKey(key) || _parent?.ContainsKey(key) == true;
+        public bool ContainsKey(TKey key) =>
+            _items.ContainsKey(key) || _parent?.ContainsKey(key) == true;
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
         {
-            foreach (var item in _items) yield return item;
-
-            if (_parent == null) yield break;
-
-            foreach (var item in _parent) yield return item;
+            foreach (var item in _items)
+                yield return item;
+            if (_parent == null)
+                yield break;
+            foreach (var item in _parent)
+                yield return item;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<KeyValuePair<TKey, TValue>>) this).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() =>
+            ((IEnumerable<KeyValuePair<TKey, TValue>>) this).GetEnumerator();
 
         bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => false;
 
-        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) => _items.Add(item);
+        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) =>
+            _items.Add(item);
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item) => _items.Contains(item) || _parent.Contains(item);
+        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item) =>
+            _items.Contains(item) || _parent.Contains(item);
 
         void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
@@ -57,6 +67,7 @@ namespace Questar.OneRoster.Collections
             _items.CopyTo(array, arrayIndex);
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) => _items.Remove(item) || ((ICollection<KeyValuePair<TKey, TValue>>) _parent).Remove(item);
+        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) =>
+            _items.Remove(item) || ((ICollection<KeyValuePair<TKey, TValue>>) _parent).Remove(item);
     }
 }

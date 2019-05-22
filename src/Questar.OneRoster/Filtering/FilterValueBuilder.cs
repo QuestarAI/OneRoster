@@ -44,8 +44,8 @@ namespace Questar.OneRoster.Filtering
             return getter();
         }
 
-        private bool IsTerminal(Expression expression)
-            => Expression?.Equals(expression) == true;
+        private bool IsTerminal(Expression expression) =>
+            Expression?.Equals(expression) == true;
 
         private string FormatScalar(object value)
         {
@@ -79,8 +79,8 @@ namespace Questar.OneRoster.Filtering
             throw new InvalidOperationException($"Value '{value}' does not implement '{typeof(IEnumerable).Name}'.");
         }
 
-        private FilterValue GetValue(object value)
-            => value is ICollection
+        private FilterValue GetValue(object value) =>
+            value is ICollection
                 ? new FilterValue(FilterValueType.Vector, FormatVector(value))
                 : new FilterValue(FilterValueType.Scalar, FormatScalar(value));
 

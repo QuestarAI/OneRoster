@@ -6,7 +6,6 @@ namespace Questar.OneRoster.Test
     using Expressions;
     using Filtering;
     using Mock;
-    using Xunit;
     using static Mock.Util;
 
     public class FilterExpressionParserTest

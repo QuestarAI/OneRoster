@@ -4,7 +4,8 @@ namespace Questar.OneRoster.Data
 
     public class CourseSubject
     {
-        public CourseSubject(Subject subject) => Subject = subject;
+        public CourseSubject(Subject subject) =>
+            Subject = subject;
 
         private CourseSubject()
         {

@@ -4,7 +4,8 @@ namespace Questar.OneRoster.Data
 
     public class CourseGrade
     {
-        public CourseGrade(Grade grade) => Grade = grade;
+        public CourseGrade(Grade grade) =>
+            Grade = grade;
 
         private CourseGrade()
         {

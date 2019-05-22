@@ -6,7 +6,8 @@ namespace Questar.OneRoster.Data
 
     public class Org : IBaseObject
     {
-        public Org(OrgType type) => Type = type;
+        public Org(OrgType type) =>
+            Type = type;
 
         private Org()
         {

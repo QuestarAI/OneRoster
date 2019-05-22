@@ -4,7 +4,6 @@ namespace Questar.OneRoster.Test
     using System.Linq.Expressions;
     using Expressions;
     using Mock;
-    using Xunit;
 
     public class ExpressionComparerTest
     {

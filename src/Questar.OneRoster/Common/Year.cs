@@ -10,8 +10,10 @@ namespace Questar.OneRoster.Common
     {
         private int _year;
 
-        public static implicit operator Year(int year) => new Year { _year = year };
+        public static implicit operator Year(int year) =>
+            new Year { _year = year };
 
-        public static implicit operator int(Year p) => p._year;
+        public static implicit operator int(Year p) =>
+            p._year;
     }
 }

@@ -10,6 +10,7 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public TermEndpoint For(string id) => new TermEndpoint(Http, $"{Path}/{id}");
+        public TermEndpoint For(string id) =>
+            new TermEndpoint(Http, $"{Path}/{id}");
     }
 }

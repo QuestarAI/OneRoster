@@ -10,6 +10,7 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public LineItemEndpoint For(string id) => new LineItemEndpoint(Http, $"{Path}/{id}");
+        public LineItemEndpoint For(string id) =>
+            new LineItemEndpoint(Http, $"{Path}/{id}");
     }
 }

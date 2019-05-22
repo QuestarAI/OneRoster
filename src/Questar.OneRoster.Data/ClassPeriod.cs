@@ -5,7 +5,8 @@ namespace Questar.OneRoster.Data
 
     public class ClassPeriod
     {
-        public ClassPeriod(string period) => Period = period;
+        public ClassPeriod(string period) =>
+            Period = period;
 
         private ClassPeriod()
         {

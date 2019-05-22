@@ -31,10 +31,10 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             return Task.CompletedTask;
         }
 
-        public override IQueryable<TModel> AsQueryable()
-            => Source;
+        public override IQueryable<TModel> AsQueryable() =>
+            Source;
 
-        public override IQuery<TModel> AsQuery()
-            => new BaseQuery<TModel>(Source);
+        public override IQuery<TModel> AsQuery() =>
+            new BaseQuery<TModel>(Source);
     }
 }

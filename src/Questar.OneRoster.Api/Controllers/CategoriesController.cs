@@ -13,7 +13,8 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<Category> Query() => Workspace.Categories.AsQuery();
+        protected override IQuery<Category> Query() =>
+            Workspace.Categories.AsQuery();
 
         [HttpPut("{SourcedId}")]
         public virtual async Task<ActionResult> Upsert(UpsertParams<Category> @params)

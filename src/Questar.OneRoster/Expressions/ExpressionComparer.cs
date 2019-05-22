@@ -18,17 +18,17 @@ namespace Questar.OneRoster.Expressions
 
         protected Func<object, object, bool> FnCompare { get; }
 
-        public static bool AreEqual(Expression a, Expression b)
-            => AreEqual(null, a, b);
+        public static bool AreEqual(Expression a, Expression b) =>
+            AreEqual(null, a, b);
 
-        public static bool AreEqual(Expression a, Expression b, Func<object, object, bool> fnCompare)
-            => AreEqual(null, a, b, fnCompare);
+        public static bool AreEqual(Expression a, Expression b, Func<object, object, bool> fnCompare) =>
+            AreEqual(null, a, b, fnCompare);
 
-        public static bool AreEqual(ScopedDictionary<ParameterExpression, ParameterExpression> parameterScope, Expression a, Expression b)
-            => new ExpressionComparer(parameterScope, null).Compare(a, b);
+        public static bool AreEqual(ScopedDictionary<ParameterExpression, ParameterExpression> parameterScope, Expression a, Expression b) =>
+            new ExpressionComparer(parameterScope, null).Compare(a, b);
 
-        public static bool AreEqual(ScopedDictionary<ParameterExpression, ParameterExpression> parameterScope, Expression a, Expression b, Func<object, object, bool> fnCompare)
-            => new ExpressionComparer(parameterScope, fnCompare).Compare(a, b);
+        public static bool AreEqual(ScopedDictionary<ParameterExpression, ParameterExpression> parameterScope, Expression a, Expression b, Func<object, object, bool> fnCompare) =>
+            new ExpressionComparer(parameterScope, fnCompare).Compare(a, b);
 
         protected virtual bool Compare(Expression a, Expression b)
         {
@@ -107,29 +107,29 @@ namespace Questar.OneRoster.Expressions
             }
         }
 
-        protected virtual bool CompareUnary(UnaryExpression a, UnaryExpression b)
-            => a.NodeType == b.NodeType
-               && a.Method == b.Method
-               && a.IsLifted == b.IsLifted
-               && a.IsLiftedToNull == b.IsLiftedToNull
-               && Compare(a.Operand, b.Operand);
+        protected virtual bool CompareUnary(UnaryExpression a, UnaryExpression b) =>
+            a.NodeType == b.NodeType
+            && a.Method == b.Method
+            && a.IsLifted == b.IsLifted
+            && a.IsLiftedToNull == b.IsLiftedToNull
+            && Compare(a.Operand, b.Operand);
 
-        protected virtual bool CompareBinary(BinaryExpression a, BinaryExpression b)
-            => a.NodeType == b.NodeType
-               && a.Method == b.Method
-               && a.IsLifted == b.IsLifted
-               && a.IsLiftedToNull == b.IsLiftedToNull
-               && Compare(a.Left, b.Left)
-               && Compare(a.Right, b.Right);
+        protected virtual bool CompareBinary(BinaryExpression a, BinaryExpression b) =>
+            a.NodeType == b.NodeType
+            && a.Method == b.Method
+            && a.IsLifted == b.IsLifted
+            && a.IsLiftedToNull == b.IsLiftedToNull
+            && Compare(a.Left, b.Left)
+            && Compare(a.Right, b.Right);
 
-        protected virtual bool CompareTypeIs(TypeBinaryExpression a, TypeBinaryExpression b)
-            => a.TypeOperand == b.TypeOperand && Compare(a.Expression, b.Expression);
+        protected virtual bool CompareTypeIs(TypeBinaryExpression a, TypeBinaryExpression b) =>
+            a.TypeOperand == b.TypeOperand && Compare(a.Expression, b.Expression);
 
-        protected virtual bool CompareConditional(ConditionalExpression a, ConditionalExpression b)
-            => Compare(a.Test, b.Test) && Compare(a.IfTrue, b.IfTrue) && Compare(a.IfFalse, b.IfFalse);
+        protected virtual bool CompareConditional(ConditionalExpression a, ConditionalExpression b) =>
+            Compare(a.Test, b.Test) && Compare(a.IfTrue, b.IfTrue) && Compare(a.IfFalse, b.IfFalse);
 
-        protected virtual bool CompareConstant(ConstantExpression a, ConstantExpression b)
-            => FnCompare?.Invoke(a.Value, b.Value) ?? Equals(a.Value, b.Value);
+        protected virtual bool CompareConstant(ConstantExpression a, ConstantExpression b) =>
+            FnCompare?.Invoke(a.Value, b.Value) ?? Equals(a.Value, b.Value);
 
         protected virtual bool CompareParameter(ParameterExpression a, ParameterExpression b)
         {
@@ -140,11 +140,11 @@ namespace Questar.OneRoster.Expressions
             return a == b;
         }
 
-        protected virtual bool CompareMemberAccess(MemberExpression a, MemberExpression b)
-            => a.Member == b.Member && Compare(a.Expression, b.Expression);
+        protected virtual bool CompareMemberAccess(MemberExpression a, MemberExpression b) =>
+            a.Member == b.Member && Compare(a.Expression, b.Expression);
 
-        protected virtual bool CompareMethodCall(MethodCallExpression a, MethodCallExpression b)
-            => a.Method == b.Method && Compare(a.Object, b.Object) && CompareExpressionList(a.Arguments, b.Arguments);
+        protected virtual bool CompareMethodCall(MethodCallExpression a, MethodCallExpression b) =>
+            a.Method == b.Method && Compare(a.Object, b.Object) && CompareExpressionList(a.Arguments, b.Arguments);
 
         protected virtual bool CompareLambda(LambdaExpression a, LambdaExpression b)
         {
@@ -168,8 +168,8 @@ namespace Questar.OneRoster.Expressions
             }
         }
 
-        protected virtual bool CompareNew(NewExpression a, NewExpression b)
-            => a.Constructor == b.Constructor && CompareExpressionList(a.Arguments, b.Arguments) && CompareMemberList(a.Members, b.Members);
+        protected virtual bool CompareNew(NewExpression a, NewExpression b) =>
+            a.Constructor == b.Constructor && CompareExpressionList(a.Arguments, b.Arguments) && CompareMemberList(a.Members, b.Members);
 
         protected virtual bool CompareExpressionList(ReadOnlyCollection<Expression> a, ReadOnlyCollection<Expression> b)
         {
@@ -199,14 +199,14 @@ namespace Questar.OneRoster.Expressions
             return true;
         }
 
-        protected virtual bool CompareNewArray(NewArrayExpression a, NewArrayExpression b)
-            => CompareExpressionList(a.Expressions, b.Expressions);
+        protected virtual bool CompareNewArray(NewArrayExpression a, NewArrayExpression b) =>
+            CompareExpressionList(a.Expressions, b.Expressions);
 
-        protected virtual bool CompareInvocation(InvocationExpression a, InvocationExpression b)
-            => Compare(a.Expression, b.Expression) && CompareExpressionList(a.Arguments, b.Arguments);
+        protected virtual bool CompareInvocation(InvocationExpression a, InvocationExpression b) =>
+            Compare(a.Expression, b.Expression) && CompareExpressionList(a.Arguments, b.Arguments);
 
-        protected virtual bool CompareMemberInit(MemberInitExpression a, MemberInitExpression b)
-            => Compare(a.NewExpression, b.NewExpression) && CompareBindingList(a.Bindings, b.Bindings);
+        protected virtual bool CompareMemberInit(MemberInitExpression a, MemberInitExpression b) =>
+            Compare(a.NewExpression, b.NewExpression) && CompareBindingList(a.Bindings, b.Bindings);
 
         protected virtual bool CompareBindingList(ReadOnlyCollection<MemberBinding> a, ReadOnlyCollection<MemberBinding> b)
         {
@@ -245,17 +245,17 @@ namespace Questar.OneRoster.Expressions
             }
         }
 
-        protected virtual bool CompareMemberAssignment(MemberAssignment a, MemberAssignment b)
-            => a.Member == b.Member && Compare(a.Expression, b.Expression);
+        protected virtual bool CompareMemberAssignment(MemberAssignment a, MemberAssignment b) =>
+            a.Member == b.Member && Compare(a.Expression, b.Expression);
 
-        protected virtual bool CompareMemberListBinding(MemberListBinding a, MemberListBinding b)
-            => a.Member == b.Member && CompareElementInitList(a.Initializers, b.Initializers);
+        protected virtual bool CompareMemberListBinding(MemberListBinding a, MemberListBinding b) =>
+            a.Member == b.Member && CompareElementInitList(a.Initializers, b.Initializers);
 
-        protected virtual bool CompareMemberMemberBinding(MemberMemberBinding a, MemberMemberBinding b)
-            => a.Member == b.Member && CompareBindingList(a.Bindings, b.Bindings);
+        protected virtual bool CompareMemberMemberBinding(MemberMemberBinding a, MemberMemberBinding b) =>
+            a.Member == b.Member && CompareBindingList(a.Bindings, b.Bindings);
 
-        protected virtual bool CompareListInit(ListInitExpression a, ListInitExpression b)
-            => Compare(a.NewExpression, b.NewExpression) && CompareElementInitList(a.Initializers, b.Initializers);
+        protected virtual bool CompareListInit(ListInitExpression a, ListInitExpression b) =>
+            Compare(a.NewExpression, b.NewExpression) && CompareElementInitList(a.Initializers, b.Initializers);
 
         protected virtual bool CompareElementInitList(ReadOnlyCollection<ElementInit> a, ReadOnlyCollection<ElementInit> b)
         {
@@ -271,7 +271,7 @@ namespace Questar.OneRoster.Expressions
             return true;
         }
 
-        protected virtual bool CompareElementInit(ElementInit a, ElementInit b)
-            => a.AddMethod == b.AddMethod && CompareExpressionList(a.Arguments, b.Arguments);
+        protected virtual bool CompareElementInit(ElementInit a, ElementInit b) =>
+            a.AddMethod == b.AddMethod && CompareExpressionList(a.Arguments, b.Arguments);
     }
 }

@@ -13,13 +13,14 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<User> Query() => Workspace.Users.AsQuery();
+        protected override IQuery<User> Query() =>
+            Workspace.Users.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes enrolled by this user.
         /// </summary>
         [HttpGet("{userId}/classes")]
-        public Task<ActionResult<dynamic>> GetClassesForUser(string userId, SelectParams @params)
-            => Select(() => Workspace.Users.GetClassesForUser(userId), @params);
+        public Task<ActionResult<dynamic>> GetClassesForUser(string userId, SelectParams @params) =>
+            Select(() => Workspace.Users.GetClassesForUser(userId), @params);
     }
 }

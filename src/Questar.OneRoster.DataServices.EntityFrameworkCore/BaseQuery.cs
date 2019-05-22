@@ -34,13 +34,13 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             return new DynamicQuery(query);
         }
 
-        public override IQuery<T> Sort(string field, SortDirection? direction)
-            => new BaseQuery<T>(Source.SortBy(field, direction));
+        public override IQuery<T> Sort(string field, SortDirection? direction) =>
+            new BaseQuery<T>(Source.SortBy(field, direction));
 
-        public override IQuery<T> Where(Filter predicate)
-            => new BaseQuery<T>(Source.Where(predicate.ToFilterExpression<T>()));
+        public override IQuery<T> Where(Filter predicate) =>
+            new BaseQuery<T>(Source.Where(predicate.ToFilterExpression<T>()));
 
-        public override IQuery<T> WhereHasSourcedId(string sourcedId)
-            => new BaseQuery<T>(Source.Where(entity => entity.SourcedId == sourcedId));
+        public override IQuery<T> WhereHasSourcedId(string sourcedId) =>
+            new BaseQuery<T>(Source.Where(entity => entity.SourcedId == sourcedId));
     }
 }

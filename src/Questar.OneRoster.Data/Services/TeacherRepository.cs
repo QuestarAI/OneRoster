@@ -16,8 +16,8 @@ namespace Questar.OneRoster.Data.Services
         {
         }
 
-        public IQuery<Class> GetClassesForTeacher(string userId)
-            => Context.Classes
+        public IQuery<Class> GetClassesForTeacher(string userId) =>
+            Context.Classes
                 .Where(@class => @class.Enrollments.Any(enrollment => enrollment.UserId == Guid.Parse(userId)))
                 .UseAsDataSource(Mapper)
                 .For<Class>()

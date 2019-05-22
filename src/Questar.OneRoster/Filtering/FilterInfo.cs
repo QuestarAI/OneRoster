@@ -11,8 +11,8 @@ namespace Questar.OneRoster.Filtering
 
         internal static MethodInfo Contains { get; } = GetEnumerableMethod(nameof(Enumerable.Contains), 2);
 
-        private static MethodInfo GetEnumerableMethod(string name, int arity)
-            => typeof(Enumerable)
+        private static MethodInfo GetEnumerableMethod(string name, int arity) =>
+            typeof(Enumerable)
                 .GetTypeInfo()
                 .GetMethods()
                 .Single(method => method.Name == name && method.GetParameters().Length == arity);

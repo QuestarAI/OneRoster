@@ -1,6 +1,5 @@
 namespace Questar.OneRoster.App
 {
-    using Api.Extensions;
     using Data.Extensions;
     using JetBrains.Annotations;
     using Microsoft.AspNetCore.Builder;
@@ -8,7 +7,6 @@ namespace Questar.OneRoster.App
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json.Converters;
-    using Swashbuckle.AspNetCore.Swagger;
 
     public class Startup
     {

@@ -6,7 +6,8 @@ namespace Questar.OneRoster.Data
 
     public class AcademicSession : IBaseObject
     {
-        public AcademicSession(AcademicSessionType type) => Type = type;
+        public AcademicSession(AcademicSessionType type) =>
+            Type = type;
 
         private AcademicSession()
         {

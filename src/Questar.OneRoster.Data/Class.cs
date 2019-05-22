@@ -6,7 +6,8 @@ namespace Questar.OneRoster.Data
 
     public class Class : IBaseObject
     {
-        public Class(ClassType type) => Type = type;
+        public Class(ClassType type) =>
+            Type = type;
 
         private Class()
         {

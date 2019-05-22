@@ -4,7 +4,8 @@ namespace Questar.OneRoster.Data
 
     public class Enrollment : IBaseObject
     {
-        public Enrollment(Class @class) => Class = @class;
+        public Enrollment(Class @class) =>
+            Class = @class;
 
         private Enrollment()
         {

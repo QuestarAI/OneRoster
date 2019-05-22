@@ -7,11 +7,11 @@ namespace Questar.OneRoster.Common
 
     public class YearConverter : TypeConverter
     {
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-            => typeof(int).GetTypeInfo().IsAssignableFrom(sourceType) || base.CanConvertFrom(context, sourceType);
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) =>
+            typeof(int).GetTypeInfo().IsAssignableFrom(sourceType) || base.CanConvertFrom(context, sourceType);
 
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-            => typeof(int).GetTypeInfo().IsAssignableFrom(destinationType) || base.CanConvertTo(context, destinationType);
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) =>
+            typeof(int).GetTypeInfo().IsAssignableFrom(destinationType) || base.CanConvertTo(context, destinationType);
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {

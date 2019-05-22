@@ -10,10 +10,13 @@ namespace Questar.OneRoster.Client.Infrastructure
         {
         }
 
-        public Task InsertAsync(T entity) => throw new NotImplementedException();
+        public Task InsertAsync(T entity) =>
+            throw new NotImplementedException();
 
-        public Task UpdateAsync(T entity) => throw new NotImplementedException();
+        public Task UpdateAsync(T entity) =>
+            throw new NotImplementedException();
 
-        public Task DeleteAsync() => throw new NotImplementedException();
+        public Task DeleteAsync() =>
+            throw new NotImplementedException();
     }
 }

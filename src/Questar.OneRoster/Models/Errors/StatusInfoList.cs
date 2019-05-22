@@ -11,7 +11,8 @@ namespace Questar.OneRoster.Models.Errors
         {
         }
 
-        public StatusInfoList(IEnumerable<StatusInfo> collection) : base(collection)
+        public StatusInfoList(IEnumerable<StatusInfo> collection)
+            : base(collection)
         {
         }
 

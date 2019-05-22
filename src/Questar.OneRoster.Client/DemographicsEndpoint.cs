@@ -10,6 +10,7 @@ namespace Questar.OneRoster.Client
         {
         }
 
-        public DemographicEndpoint For(string id) => new DemographicEndpoint(Http, $"{Path}/{id}");
+        public DemographicEndpoint For(string id) =>
+            new DemographicEndpoint(Http, $"{Path}/{id}");
     }
 }

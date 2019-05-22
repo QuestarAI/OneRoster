@@ -5,7 +5,6 @@ namespace Questar.OneRoster.Test
     using Expressions;
     using Mock;
     using Sorting;
-    using Xunit;
 
     public class SortTest
     {

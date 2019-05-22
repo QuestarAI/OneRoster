@@ -8,7 +8,8 @@ namespace Questar.OneRoster.Data
         {
         }
 
-        public ResourceRole(UserType role) => Role = role;
+        public ResourceRole(UserType role) =>
+            Role = role;
 
         public virtual Resource Resource { get; private set; }
 
