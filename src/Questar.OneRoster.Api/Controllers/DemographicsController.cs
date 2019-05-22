@@ -1,22 +1,16 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/demographics")]
-    public class DemographicsController : Controller
+    public class DemographicsController : BaseController<Demographics>
     {
-        /// <summary>
-        /// Returns the collection of demographics.
-        /// </summary>
-        [HttpGet]
-        public object GetAllDemographics() => throw new NotImplementedException();
+        public DemographicsController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Returns a specific demographics object by identifier.
-        /// </summary>
-        [HttpGet("{demographicsId}")]
-        public object GetDemographics(Guid demographicsId) => throw new NotImplementedException();
+        protected override IQuery<Demographics> Query() => Workspace.Demographics.AsQuery();
     }
 }

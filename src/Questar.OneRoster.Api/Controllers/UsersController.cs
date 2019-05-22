@@ -1,28 +1,25 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using System.Threading.Tasks;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/users")]
-    public class UsersController : Controller
+    public class UsersController : BaseController<User>
     {
-        /// <summary>
-        /// Returns the collection of users.
-        /// </summary>
-        [HttpGet]
-        public object GetAllUsers() => throw new NotImplementedException();
+        public UsersController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Returns a specific user by identifier.
-        /// </summary>
-        [HttpGet("{userId}")]
-        public object GetUser(Guid userId) => throw new NotImplementedException();
+        protected override IQuery<User> Query() => Workspace.Users.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes enrolled by this user.
         /// </summary>
         [HttpGet("{userId}/classes")]
-        public object GetClassesForUser(Guid userId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetClassesForUser(string userId, SelectParams @params)
+            => Select(() => Workspace.Users.GetClassesForUser(userId), @params);
     }
 }

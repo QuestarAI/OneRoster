@@ -1,38 +1,37 @@
-
-
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using System.Threading.Tasks;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/categories")]
-    public class CategoriesController : Controller
+    public class CategoriesController : BaseController<Category>
     {
-        /// <summary>
-        /// Returns the collection of grading categories.
-        /// </summary>
-        [HttpGet]
-        public object GetAllCategories() => throw new NotImplementedException();
+        public CategoriesController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Marks a specific grading category as deleted by identifier.
-        /// An immediate GET will result in HTTP 404 code.
-        /// </summary>
-        [HttpDelete("{categoryId}")]
-        public object DeleteCategory(Guid categoryId) => throw new NotImplementedException();
+        protected override IQuery<Category> Query() => Workspace.Categories.AsQuery();
 
-        /// <summary>
-        /// Returns a specific grading category by identifier.
-        /// Returns an HTTP 404 if the grading category is marked as deleted.
-        /// </summary>
-        [HttpGet("{categoryId}")]
-        public object GetCategory(Guid categoryId) => throw new NotImplementedException();
+        [HttpPut("{SourcedId}")]
+        public virtual async Task<ActionResult> Upsert(UpsertParams<Category> @params)
+        {
+            await Workspace.Categories.UpsertAsync(@params.Data);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
 
-        /// <summary>
-        /// Creates or replaces a grading category by identifier.
-        /// </summary>
-        [HttpPut("{categoryId}")]
-        public object PutCategory(Guid categoryId) => throw new NotImplementedException();
+        [HttpDelete("{SourcedId}")]
+        public virtual async Task<ActionResult> Delete(DeleteParams @params)
+        {
+            var category = await Workspace.Categories.AsQuery().WhereHasSourcedId(@params.SourcedId).SingleAsync();
+            if (category == null)
+                return NotFound();
+            await Workspace.Categories.DeleteAsync(category);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
     }
 }

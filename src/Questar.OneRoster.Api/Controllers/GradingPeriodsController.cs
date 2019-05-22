@@ -1,24 +1,17 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using DataServices;
+    using DataServices.Filtering;
     using Microsoft.AspNetCore.Mvc;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/gradingPeriods")]
-    public class GradingPeriodsController : Controller
+    public class GradingPeriodsController : BaseController<AcademicSession>
     {
-        /// <summary>
-        /// Returns the collection of grading periods.
-        /// A grading period is an instance of an academic session.
-        /// </summary>
-        [HttpGet]
-        public object GetAllGradingPeriods() => throw new NotImplementedException();
+        public GradingPeriodsController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Returns specific grading period by identifier.
-        /// A grading period is an instance of an academic session.
-        /// </summary>
-        [HttpGet("{academicSessionId}")]
-        public object GetGradingPeriod(Guid academicSessionId) => throw new NotImplementedException();
+        protected override IQuery<AcademicSession> Query() => Workspace.AcademicSessions.AsQuery().Where(session => session.Type == AcademicSessionType.GradingPeriod);
     }
 }

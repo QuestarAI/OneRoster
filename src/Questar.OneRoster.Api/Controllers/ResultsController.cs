@@ -1,35 +1,37 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using System.Threading.Tasks;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/results")]
-    public class ResultsController : Controller
+    public class ResultsController : BaseController<Result>
     {
-        /// <summary>
-        /// Returns the collection of results.
-        /// </summary>
-        [HttpGet]
-        public object GetAllResults() => throw new NotImplementedException();
+        public ResultsController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Marks a specific result as deleted by identifier.
-        /// An immediate GET will result in HTTP 404 code.
-        /// </summary>
-        [HttpDelete("{resultId}")]
-        public object DeleteResult(Guid resultId) => throw new NotImplementedException();
+        protected override IQuery<Result> Query() => Workspace.Results.AsQuery();
 
-        /// <summary>
-        /// Returns specific result by identifier.
-        /// </summary>
-        [HttpGet("{resultId}")]
-        public object GetResult(Guid resultId) => throw new NotImplementedException();
+        [HttpPut("{SourcedId}")]
+        public virtual async Task<ActionResult> Upsert(UpsertParams<Result> @params)
+        {
+            await Workspace.Results.UpsertAsync(@params.Data);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
 
-        /// <summary>
-        /// Creates or replaces a result by identifier.
-        /// </summary>
-        [HttpPut("{resultId}")]
-        public object PutResult(Guid resultId) => throw new NotImplementedException();
+        [HttpDelete("{SourcedId}")]
+        public virtual async Task<ActionResult> Delete(DeleteParams @params)
+        {
+            var result = await Workspace.Results.AsQuery().WhereHasSourcedId(@params.SourcedId).SingleAsync();
+            if (result == null)
+                return NotFound();
+            await Workspace.Results.DeleteAsync(result);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
     }
 }

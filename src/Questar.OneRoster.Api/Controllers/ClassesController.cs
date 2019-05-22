@@ -1,64 +1,67 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using System.Threading.Tasks;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/classes")]
-    public class ClassesController : Controller
+    public class ClassesController : BaseController<Class>
     {
-        /// <summary>
-        /// Returns the collection of classes.
-        /// </summary>
-        [HttpGet]
-        public object GetAllClasses() => throw new NotImplementedException();
+        public ClassesController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
+
+        protected override IQuery<Class> Query() => Workspace.Classes.AsQuery();
 
         /// <summary>
         /// Returns the collection of line items (columns) in the gradebook for this class.
         /// </summary>
         [HttpGet("{classId}/lineItems")]
-        public object GetLineItemsForClass(Guid classId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetLineItemsForClass(string classId, SelectParams @params)
+            => Select(() => Workspace.Classes.GetLineItemsForClass(classId), @params);
 
         /// <summary>
         /// Returns the collection of results (assessed grades) for this specific line item (column) for this class.
         /// </summary>
         [HttpGet("{classId}/lineItems/{lineItemId}/results")]
-        public object GetResultsForLineItemForClass(Guid classId, Guid lineItemId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetResultsForLineItemForClass(string classId, string lineItemId, SelectParams @params)
+            => Select(() => Workspace.Classes.GetResultsForLineItemForClass(classId, lineItemId), @params);
 
         /// <summary>
         /// Returns the collection of resources associated to this class.
         /// </summary>
         [HttpGet("{classId}/resources")]
-        public object GetResourcesForClass(Guid classId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetResourcesForClass(string classId, SelectParams @params)
+            => Select(() => Workspace.Classes.GetResourcesForClass(classId), @params);
 
         /// <summary>
         /// Returns the collection of results (assessed grades) for this class.
         /// </summary>
         [HttpGet("{classId}/results")]
-        public object GetResultsForClass(Guid classId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetResultsForClass(string classId, SelectParams @params)
+            => Select(() => Workspace.Classes.GetResultsForClass(classId), @params);
 
         /// <summary>
         /// Returns the collection of students who are taking this class.
         /// </summary>
         [HttpGet("{classId}/students")]
-        public object GetStudentsForClass(Guid classId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetStudentsForClass(string classId, SelectParams @params)
+            => Select(() => Workspace.Classes.GetStudentsForClass(classId), @params);
 
         /// <summary>
         /// Returns the collection of results (assessed grades) for this specific student attending this class.
         /// </summary>
         [HttpGet("{classId}/students/{studentId}/results")]
-        public object GetResultsForStudentForClass(Guid classId, Guid studentId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetResultsForStudentForClass(string classId, string studentId, SelectParams @params)
+            => Select(() => Workspace.Classes.GetResultsForStudentForClass(classId, studentId), @params);
 
         /// <summary>
         /// Returns the collection of teachers who are teaching this class.
         /// </summary>
         [HttpGet("{classId}/teachers")]
-        public object GetTeachersForClass(Guid classId) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Returns a specific class by identifier.
-        /// </summary>
-        [HttpGet("{classId}")]
-        public object GetClass(Guid classId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetTeachersForClass(string classId, SelectParams @params)
+            => Select(() => Workspace.Classes.GetTeachersForClass(classId), @params);
     }
 }

@@ -1,23 +1,16 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/academicSessions")]
-    public class AcademicSessionsController : Controller
+    public class AcademicSessionsController : BaseController<AcademicSession>
     {
-        /// <summary>
-        /// Returns the collection of all academic sessions.
-        /// </summary>
-        [HttpGet]
-        public object GetAllAcademicSessions() => throw new NotImplementedException();
+        public AcademicSessionsController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Returns a specific academic session by identifier.
-        /// </summary>
-        /// <param name="academicSessionId">The academic session identifier.</param>
-        [HttpGet("{academicSessionId}")]
-        public object GetAcademicSession(Guid academicSessionId) => throw new NotImplementedException();
+        protected override IQuery<AcademicSession> Query() => Workspace.AcademicSessions.AsQuery();
     }
 }

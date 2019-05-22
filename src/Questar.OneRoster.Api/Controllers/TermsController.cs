@@ -1,36 +1,32 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using System.Threading.Tasks;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/terms")]
-    public class TermsController : Controller
+    public class TermsController : BaseController<AcademicSession>
     {
-        /// <summary>
-        /// Returns the collection of terms.
-        /// A term is an instance of an academic session.
-        /// </summary>
-        [HttpGet]
-        public object GetAllTerms() => throw new NotImplementedException();
+        public TermsController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Returns a specific term by identifier.
-        /// A term is an instance of an academic session.
-        /// </summary>
-        [HttpGet("{academicSessionId}")]
-        public object GetTerm(Guid academicSessionId) => throw new NotImplementedException();
+        protected override IQuery<AcademicSession> Query() => Workspace.Terms.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes taught in this term.
         /// </summary>
         [HttpGet("{academicSessionId}/classes")]
-        public object GetClassesForTerm(Guid academicSessionId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetClassesForTerm(string academicSessionId, SelectParams @params)
+            => Select(() => Workspace.Terms.GetClassesForTerm(academicSessionId), @params);
 
         /// <summary>
         /// Returns the collection of grading periods which are part of this term.
         /// </summary>
         [HttpGet("{academicSessionId}/gradingPeriods")]
-        public object GetGradingPeriodsForTerm(Guid academicSessionId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetGradingPeriodsForTerm(string academicSessionId, SelectParams @params)
+            => Select(() => Workspace.Terms.GetGradingPeriodsForTerm(academicSessionId), @params);
     }
 }

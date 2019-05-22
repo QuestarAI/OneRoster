@@ -1,22 +1,16 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/enrollments")]
-    public class EnrollmentsController : Controller
+    public class EnrollmentsController : BaseController<Enrollment>
     {
-        /// <summary>
-        /// Returns the collection of enrollments.
-        /// </summary>
-        [HttpGet]
-        public object GetAllEnrollments() => throw new NotImplementedException();
+        public EnrollmentsController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Returns a specific enrollment by identifier.
-        /// </summary>
-        [HttpGet("{enrollmentId}")]
-        public object GetEnrollment(Guid enrollmentId) => throw new NotImplementedException();
+        protected override IQuery<Enrollment> Query() => Workspace.Enrollments.AsQuery();
     }
 }

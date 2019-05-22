@@ -1,35 +1,37 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using System.Threading.Tasks;
+    using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
+    using OneRoster.Models;
 
-    [Produces("application/json")]
     [Route("ims/oneroster/v1p1/lineItems")]
-    public class LineItemsController : Controller
+    public class LineItemsController : BaseController<LineItem>
     {
-        /// <summary>
-        /// Returns the collection of line items.
-        /// </summary>
-        [HttpGet]
-        public object GetAllLineItems() => throw new NotImplementedException();
+        public LineItemsController(IOneRosterWorkspace workspace) : base(workspace)
+        {
+        }
 
-        /// <summary>
-        /// Marks a specific line item as deleted by identifier.
-        /// An immediate GET will result in HTTP 404 code.
-        /// </summary>
-        [HttpDelete("{lineItemId}")]
-        public object DeleteLineItem(Guid lineItemId) => throw new NotImplementedException();
+        protected override IQuery<LineItem> Query() => Workspace.LineItems.AsQuery();
 
-        /// <summary>
-        /// Returns a specific line item by identifier.
-        /// </summary>
-        [HttpGet("{lineItemId}")]
-        public object GetLineItem(Guid lineItemId) => throw new NotImplementedException();
+        [HttpPut("{SourcedId}")]
+        public virtual async Task<ActionResult> Upsert(UpsertParams<LineItem> @params)
+        {
+            await Workspace.LineItems.UpsertAsync(@params.Data);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
 
-        /// <summary>
-        /// Creates or replaces a line item by identifier.
-        /// </summary>
-        [HttpPut("{lineItemId}")]
-        public object PutLineItem(Guid lineItemId) => throw new NotImplementedException();
+        [HttpDelete("{SourcedId}")]
+        public virtual async Task<ActionResult> Delete(DeleteParams @params)
+        {
+            var item = await Workspace.LineItems.AsQuery().WhereHasSourcedId(@params.SourcedId).SingleAsync();
+            if (item == null)
+                return NotFound();
+            await Workspace.LineItems.DeleteAsync(item);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
     }
 }
