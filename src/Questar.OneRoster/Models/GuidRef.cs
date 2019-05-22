@@ -1,7 +1,5 @@
 namespace Questar.OneRoster.Models
 {
-    using System;
-
     /// <summary>
     /// Represents a reference to an object.
     /// </summary>
@@ -15,7 +13,7 @@ namespace Questar.OneRoster.Models
         /// <summary>
         /// Gets or sets the primary identifier.
         /// </summary>
-        public Guid SourcedId { get; set; }
+        public string SourcedId { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the object.

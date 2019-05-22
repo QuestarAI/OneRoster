@@ -1,6 +1,5 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
     using System.Threading.Tasks;
     using DataServices;
     using Microsoft.AspNetCore.Mvc;
@@ -10,18 +9,29 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/lineItems")]
     public class LineItemsController : BaseController<LineItem>
     {
-        public LineItemsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "LineItems",
-            Singular = "LineItem"
-        })
+        public LineItemsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 
-        [HttpPut("{id}")]
-        public virtual Task<ActionResult<dynamic>> Upsert(UpsertRequest<LineItem> request) => throw new NotImplementedException();
+        protected override IQuery<LineItem> Query() => Workspace.LineItems.AsQuery();
 
-        [HttpDelete("{id}")]
-        public virtual Task<ActionResult<dynamic>> Delete(DeleteRequest request) => throw new NotImplementedException();
+        [HttpPut("{SourcedId}")]
+        public virtual async Task<ActionResult> Upsert(UpsertParams<LineItem> @params)
+        {
+            await Workspace.LineItems.UpsertAsync(@params.Data);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{SourcedId}")]
+        public virtual async Task<ActionResult> Delete(DeleteParams @params)
+        {
+            var item = await Workspace.LineItems.AsQuery().WhereHasSourcedId(@params.SourcedId).SingleAsync();
+            if (item == null)
+                return NotFound();
+            await Workspace.LineItems.DeleteAsync(item);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
     }
 }

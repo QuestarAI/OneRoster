@@ -1,6 +1,5 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
     using System.Threading.Tasks;
     using DataServices;
     using Microsoft.AspNetCore.Mvc;
@@ -10,18 +9,29 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/categories")]
     public class CategoriesController : BaseController<Category>
     {
-        public CategoriesController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Categories",
-            Singular = "Category"
-        })
+        public CategoriesController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 
-        [HttpPut("{id}")]
-        public virtual Task<ActionResult<dynamic>> Upsert(UpsertRequest<Category> request) => throw new NotImplementedException();
+        protected override IQuery<Category> Query() => Workspace.Categories.AsQuery();
 
-        [HttpDelete("{id}")]
-        public virtual Task<ActionResult<dynamic>> Delete(DeleteRequest request) => throw new NotImplementedException();
+        [HttpPut("{SourcedId}")]
+        public virtual async Task<ActionResult> Upsert(UpsertParams<Category> @params)
+        {
+            await Workspace.Categories.UpsertAsync(@params.Data);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{SourcedId}")]
+        public virtual async Task<ActionResult> Delete(DeleteParams @params)
+        {
+            var category = await Workspace.Categories.AsQuery().WhereHasSourcedId(@params.SourcedId).SingleAsync();
+            if (category == null)
+                return NotFound();
+            await Workspace.Categories.DeleteAsync(category);
+            await Workspace.SaveAsync();
+            return Ok();
+        }
     }
 }

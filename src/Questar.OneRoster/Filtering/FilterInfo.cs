@@ -13,6 +13,7 @@ namespace Questar.OneRoster.Filtering
 
         private static MethodInfo GetEnumerableMethod(string name, int arity)
             => typeof(Enumerable)
+                .GetTypeInfo()
                 .GetMethods()
                 .Single(method => method.Name == name && method.GetParameters().Length == arity);
     }

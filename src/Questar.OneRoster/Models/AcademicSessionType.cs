@@ -4,12 +4,16 @@ namespace Questar.OneRoster.Models
 
     public enum AcademicSessionType
     {
-        [SerializationToken("gradingPeriod")] GradingPeriod,
+        [SerializationToken("gradingPeriod")]
+        GradingPeriod,
 
-        [SerializationToken("semester")] Semester,
+        [SerializationToken("semester")]
+        Semester,
 
-        [SerializationToken("schoolYear")] SchoolYear,
+        [SerializationToken("schoolYear")]
+        SchoolYear,
 
-        [SerializationToken("term")] Term
+        [SerializationToken("term")]
+        Term
     }
 }

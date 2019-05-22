@@ -9,6 +9,7 @@ namespace Questar.OneRoster.Sorting
     {
         internal static readonly MethodInfo Info =
             typeof(Sort)
+                .GetTypeInfo()
                 .GetMethods()
                 .Single(method => method.Name == nameof(SortBy) && method.GetGenericArguments().Length == 2 && method.GetParameters().Length == 3);
 
@@ -27,7 +28,7 @@ namespace Questar.OneRoster.Sorting
 
             foreach (var name in names)
             {
-                var property = type.GetProperty(name);
+                var property = type.GetTypeInfo().GetProperty(name);
                 if (property == null)
                     throw new InvalidOperationException($"Couldn't find property '{name}' on type '{type.Name}'.");
 

@@ -4,27 +4,40 @@ namespace Questar.OneRoster.Api.Helpers
     using System.Linq;
     using System.Text;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Options;
+
+    public class LinkHeaderFactoryOptions
+    {
+        public int Limit { get; } = 100;
+
+        public int Offset { get; } = 0;
+    }
 
     public class LinkHeaderFactory
     {
-        public LinkHeaderFactory(HttpContext httpContext) => HttpContext = httpContext;
+        public LinkHeaderFactory(IHttpContextAccessor httpContextAccessor, IOptions<LinkHeaderFactoryOptions> options)
+        {
+            HttpContextAccessor = httpContextAccessor;
+            Options = options;
+        }
 
-        public HttpContext HttpContext { get; }
+        public IHttpContextAccessor HttpContextAccessor { get; }
 
-        public int DefaultLimit { get; } = 100;
-
-        public int DefaultOffset { get; } = 0;
+        public IOptions<LinkHeaderFactoryOptions> Options { get; }
 
         public string Create(int offset, int limit, int count)
         {
+            var context = HttpContextAccessor.HttpContext;
+            var options = Options.Value;
+
             var builder = new StringBuilder();
-            var path = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{HttpContext.Request.Path}";
+            var path = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}";
 
             // Mutability of dictionary to be "abused" below for generating multiple query strings.
             // While the HTTP specs say query string keys should be case-sensitive, ASP.NET MVC is intentionally case-insensitive.
             // See https://github.com/aspnet/AspNetCore/issues/3450 for more.
-            var query = HttpContext.Request.Query.ToDictionary(entry => entry.Key, entry => entry.Value, StringComparer.OrdinalIgnoreCase);
-            if (limit == DefaultLimit)
+            var query = context.Request.Query.ToDictionary(entry => entry.Key, entry => entry.Value, StringComparer.OrdinalIgnoreCase);
+            if (limit == options.Limit)
                 query.Remove("limit");
             else
                 query["limit"] = limit.ToString();
@@ -43,7 +56,7 @@ namespace Questar.OneRoster.Api.Helpers
                 builder.AppendFormat(@"<{0}{1}>; rel=""last""", path, QueryString.Create(query));
             }
 
-            if (offset == DefaultOffset)
+            if (offset == options.Offset)
                 return builder.ToString();
 
             if (includeNextAndLast)
@@ -52,8 +65,8 @@ namespace Questar.OneRoster.Api.Helpers
             query.Remove("offset");
             builder.AppendFormat(@"<{0}{1}>; rel=""first"", ", path, QueryString.Create(query));
 
-            var prevOffset = Math.Max(DefaultOffset, offset - limit);
-            if (prevOffset != DefaultOffset)
+            var prevOffset = Math.Max(options.Offset, offset - limit);
+            if (prevOffset != options.Offset)
                 query["offset"] = prevOffset.ToString();
 
             builder.AppendFormat(@"<{0}{1}>; rel=""prev""", path, QueryString.Create(query));

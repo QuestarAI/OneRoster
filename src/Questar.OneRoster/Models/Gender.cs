@@ -4,8 +4,10 @@ namespace Questar.OneRoster.Models
 
     public enum Gender
     {
-        [SerializationToken("male")] Male,
+        [SerializationToken("male")]
+        Male,
 
-        [SerializationToken("female")] Female
+        [SerializationToken("female")]
+        Female
     }
 }

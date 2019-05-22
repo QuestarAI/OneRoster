@@ -1,25 +1,25 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using System.Threading.Tasks;
     using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/students")]
     public class StudentsController : BaseController<User>
     {
-        public StudentsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Users",
-            Singular = "User"
-        })
+        public StudentsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
+
+        protected override IQuery<User> Query() => Workspace.Students.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes this student is taking.
         /// </summary>
         [HttpGet("{userId}/classes")]
-        public object GetClassesForStudent(Guid userId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetClassesForStudent(string userId, SelectParams @params)
+            => Select(() => Workspace.Students.GetClassesForStudent(userId), @params);
     }
 }

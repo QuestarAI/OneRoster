@@ -16,10 +16,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Questar.OneRoster.DataServices.EntityFrameworkCore\Questar.OneRoster.DataServices.EntityFrameworkCore.csproj" />
+    <ProjectReference
+      Include="..\Questar.OneRoster.DataServices.EntityFrameworkCore\Questar.OneRoster.DataServices.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Questar.OneRoster\Questar.OneRoster.csproj" />
   </ItemGroup>
 

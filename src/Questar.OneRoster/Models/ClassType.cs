@@ -4,8 +4,10 @@ namespace Questar.OneRoster.Models
 
     public enum ClassType
     {
-        [SerializationToken("homeroom")] Homeroom,
+        [SerializationToken("homeroom")]
+        Homeroom,
 
-        [SerializationToken("scheduled")] Scheduled
+        [SerializationToken("scheduled")]
+        Scheduled
     }
 }

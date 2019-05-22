@@ -3,7 +3,7 @@ namespace Questar.OneRoster.DataServices
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Collections;
-    using Filtering;
+    using OneRoster.Filtering;
     using Sorting;
 
     public interface IQuery<T> : IQuery
@@ -12,7 +12,7 @@ namespace Questar.OneRoster.DataServices
 
         new IQuery<T> Where(Filter filter);
 
-        new IQuery<T> WhereHasKey(object key);
+        new IQuery<T> WhereHasSourcedId(string sourcedId);
 
         new T Single();
 

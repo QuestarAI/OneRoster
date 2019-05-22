@@ -1,32 +1,32 @@
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
+    using System.Threading.Tasks;
     using DataServices;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
     using OneRoster.Models;
 
     [Route("ims/oneroster/v1p1/terms")]
     public class TermsController : BaseController<AcademicSession>
     {
-        public TermsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Terms",
-            Singular = "Term"
-        })
+        public TermsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
 
+        protected override IQuery<AcademicSession> Query() => Workspace.Terms.AsQuery();
 
         /// <summary>
         /// Returns the collection of classes taught in this term.
         /// </summary>
         [HttpGet("{academicSessionId}/classes")]
-        public object GetClassesForTerm(Guid academicSessionId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetClassesForTerm(string academicSessionId, SelectParams @params)
+            => Select(() => Workspace.Terms.GetClassesForTerm(academicSessionId), @params);
 
         /// <summary>
         /// Returns the collection of grading periods which are part of this term.
         /// </summary>
         [HttpGet("{academicSessionId}/gradingPeriods")]
-        public object GetGradingPeriodsForTerm(Guid academicSessionId) => throw new NotImplementedException();
+        public Task<ActionResult<dynamic>> GetGradingPeriodsForTerm(string academicSessionId, SelectParams @params)
+            => Select(() => Workspace.Terms.GetGradingPeriodsForTerm(academicSessionId), @params);
     }
 }

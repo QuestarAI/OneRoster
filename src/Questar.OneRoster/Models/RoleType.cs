@@ -4,20 +4,28 @@ namespace Questar.OneRoster.Models
 
     public enum RoleType
     {
-        [SerializationToken("administrator")] Administrator,
+        [SerializationToken("administrator")]
+        Administrator,
 
-        [SerializationToken("aide")] Aide,
+        [SerializationToken("aide")]
+        Aide,
 
-        [SerializationToken("guardian")] Guardian,
+        [SerializationToken("guardian")]
+        Guardian,
 
-        [SerializationToken("parent")] Parent,
+        [SerializationToken("parent")]
+        Parent,
 
-        [SerializationToken("proctor")] Proctor,
+        [SerializationToken("proctor")]
+        Proctor,
 
-        [SerializationToken("relative")] Relative,
+        [SerializationToken("relative")]
+        Relative,
 
-        [SerializationToken("student")] Student,
+        [SerializationToken("student")]
+        Student,
 
-        [SerializationToken("teacher")] Teacher
+        [SerializationToken("teacher")]
+        Teacher
     }
 }

@@ -50,8 +50,10 @@ namespace Questar.OneRoster.Filtering
         {
             switch (filter.Logical)
             {
-                case LogicalOperatorString.And: return AndAlso;
-                case LogicalOperatorString.Or: return OrElse;
+                case LogicalOperatorString.And:
+                    return AndAlso;
+                case LogicalOperatorString.Or:
+                    return OrElse;
                 default: throw new NotSupportedException($"Logical operator '{filter.Logical}' not supported.");
             }
         }
@@ -60,12 +62,18 @@ namespace Questar.OneRoster.Filtering
         {
             switch (filter.Predicate)
             {
-                case PredicateOperatorString.Equal: return Equal;
-                case PredicateOperatorString.LessThan: return LessThan;
-                case PredicateOperatorString.LessThanOrEqual: return LessThanOrEqual;
-                case PredicateOperatorString.GreaterThan: return GreaterThan;
-                case PredicateOperatorString.GreaterThanOrEqual: return GreaterThanOrEqual;
-                case PredicateOperatorString.NotEqual: return NotEqual;
+                case PredicateOperatorString.Equal:
+                    return Equal;
+                case PredicateOperatorString.LessThan:
+                    return LessThan;
+                case PredicateOperatorString.LessThanOrEqual:
+                    return LessThanOrEqual;
+                case PredicateOperatorString.GreaterThan:
+                    return GreaterThan;
+                case PredicateOperatorString.GreaterThanOrEqual:
+                    return GreaterThanOrEqual;
+                case PredicateOperatorString.NotEqual:
+                    return NotEqual;
                 default: throw new NotSupportedException($"Logical operator '{filter.Predicate}' not supported.");
             }
         }

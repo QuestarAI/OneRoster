@@ -32,10 +32,14 @@ namespace Questar.OneRoster.Expressions
 
         protected virtual bool Compare(Expression a, Expression b)
         {
-            if (a == b) return true;
-            if (a == null || b == null) return false;
-            if (a.NodeType != b.NodeType) return false;
-            if (a.Type != b.Type) return false;
+            if (a == b)
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.NodeType != b.NodeType)
+                return false;
+            if (a.Type != b.Type)
+                return false;
             switch (a.NodeType)
             {
                 case ExpressionType.Negate:
@@ -119,37 +123,34 @@ namespace Questar.OneRoster.Expressions
                && Compare(a.Right, b.Right);
 
         protected virtual bool CompareTypeIs(TypeBinaryExpression a, TypeBinaryExpression b)
-            => a.TypeOperand == b.TypeOperand
-               && Compare(a.Expression, b.Expression);
+            => a.TypeOperand == b.TypeOperand && Compare(a.Expression, b.Expression);
 
         protected virtual bool CompareConditional(ConditionalExpression a, ConditionalExpression b)
-            => Compare(a.Test, b.Test)
-               && Compare(a.IfTrue, b.IfTrue)
-               && Compare(a.IfFalse, b.IfFalse);
+            => Compare(a.Test, b.Test) && Compare(a.IfTrue, b.IfTrue) && Compare(a.IfFalse, b.IfFalse);
 
         protected virtual bool CompareConstant(ConstantExpression a, ConstantExpression b)
             => FnCompare?.Invoke(a.Value, b.Value) ?? Equals(a.Value, b.Value);
 
         protected virtual bool CompareParameter(ParameterExpression a, ParameterExpression b)
         {
-            if (ParameterScope == null) return a == b;
-            if (ParameterScope.TryGetValue(a, out var mapped)) return mapped == b;
+            if (ParameterScope == null)
+                return a == b;
+            if (ParameterScope.TryGetValue(a, out var mapped))
+                return mapped == b;
             return a == b;
         }
 
         protected virtual bool CompareMemberAccess(MemberExpression a, MemberExpression b)
-            => a.Member == b.Member
-               && Compare(a.Expression, b.Expression);
+            => a.Member == b.Member && Compare(a.Expression, b.Expression);
 
         protected virtual bool CompareMethodCall(MethodCallExpression a, MethodCallExpression b)
-            => a.Method == b.Method
-               && Compare(a.Object, b.Object)
-               && CompareExpressionList(a.Arguments, b.Arguments);
+            => a.Method == b.Method && Compare(a.Object, b.Object) && CompareExpressionList(a.Arguments, b.Arguments);
 
         protected virtual bool CompareLambda(LambdaExpression a, LambdaExpression b)
         {
             var n = a.Parameters.Count;
-            if (b.Parameters.Count != n) return false;
+            if (b.Parameters.Count != n)
+                return false;
             for (var i = 0; i < n; i++)
                 if (a.Parameters[i].Type != b.Parameters[i].Type)
                     return false;
@@ -157,7 +158,8 @@ namespace Questar.OneRoster.Expressions
             ParameterScope = new ScopedDictionary<ParameterExpression, ParameterExpression>(ParameterScope);
             try
             {
-                for (var i = 0; i < n; i++) ParameterScope.Add(a.Parameters[i], b.Parameters[i]);
+                for (var i = 0; i < n; i++)
+                    ParameterScope.Add(a.Parameters[i], b.Parameters[i]);
                 return Compare(a.Body, b.Body);
             }
             finally
@@ -167,15 +169,16 @@ namespace Questar.OneRoster.Expressions
         }
 
         protected virtual bool CompareNew(NewExpression a, NewExpression b)
-            => a.Constructor == b.Constructor
-               && CompareExpressionList(a.Arguments, b.Arguments)
-               && CompareMemberList(a.Members, b.Members);
+            => a.Constructor == b.Constructor && CompareExpressionList(a.Arguments, b.Arguments) && CompareMemberList(a.Members, b.Members);
 
         protected virtual bool CompareExpressionList(ReadOnlyCollection<Expression> a, ReadOnlyCollection<Expression> b)
         {
-            if (a == b) return true;
-            if (a == null || b == null) return false;
-            if (a.Count != b.Count) return false;
+            if (a == b)
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.Count != b.Count)
+                return false;
             for (int i = 0, n = a.Count; i < n; i++)
                 if (!Compare(a[i], b[i]))
                     return false;
@@ -184,9 +187,12 @@ namespace Questar.OneRoster.Expressions
 
         protected virtual bool CompareMemberList(ReadOnlyCollection<MemberInfo> a, ReadOnlyCollection<MemberInfo> b)
         {
-            if (a == b) return true;
-            if (a == null || b == null) return false;
-            if (a.Count != b.Count) return false;
+            if (a == b)
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.Count != b.Count)
+                return false;
             for (int i = 0, n = a.Count; i < n; i++)
                 if (a[i] != b[i])
                     return false;
@@ -197,18 +203,19 @@ namespace Questar.OneRoster.Expressions
             => CompareExpressionList(a.Expressions, b.Expressions);
 
         protected virtual bool CompareInvocation(InvocationExpression a, InvocationExpression b)
-            => Compare(a.Expression, b.Expression)
-               && CompareExpressionList(a.Arguments, b.Arguments);
+            => Compare(a.Expression, b.Expression) && CompareExpressionList(a.Arguments, b.Arguments);
 
         protected virtual bool CompareMemberInit(MemberInitExpression a, MemberInitExpression b)
-            => Compare(a.NewExpression, b.NewExpression)
-               && CompareBindingList(a.Bindings, b.Bindings);
+            => Compare(a.NewExpression, b.NewExpression) && CompareBindingList(a.Bindings, b.Bindings);
 
         protected virtual bool CompareBindingList(ReadOnlyCollection<MemberBinding> a, ReadOnlyCollection<MemberBinding> b)
         {
-            if (a == b) return true;
-            if (a == null || b == null) return false;
-            if (a.Count != b.Count) return false;
+            if (a == b)
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.Count != b.Count)
+                return false;
             for (int i = 0, n = a.Count; i < n; i++)
                 if (!CompareBinding(a[i], b[i]))
                     return false;
@@ -217,10 +224,14 @@ namespace Questar.OneRoster.Expressions
 
         protected virtual bool CompareBinding(MemberBinding a, MemberBinding b)
         {
-            if (a == b) return true;
-            if (a == null || b == null) return false;
-            if (a.BindingType != b.BindingType) return false;
-            if (a.Member != b.Member) return false;
+            if (a == b)
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.BindingType != b.BindingType)
+                return false;
+            if (a.Member != b.Member)
+                return false;
             switch (a.BindingType)
             {
                 case MemberBindingType.Assignment:
@@ -235,26 +246,25 @@ namespace Questar.OneRoster.Expressions
         }
 
         protected virtual bool CompareMemberAssignment(MemberAssignment a, MemberAssignment b)
-            => a.Member == b.Member
-               && Compare(a.Expression, b.Expression);
+            => a.Member == b.Member && Compare(a.Expression, b.Expression);
 
         protected virtual bool CompareMemberListBinding(MemberListBinding a, MemberListBinding b)
-            => a.Member == b.Member
-               && CompareElementInitList(a.Initializers, b.Initializers);
+            => a.Member == b.Member && CompareElementInitList(a.Initializers, b.Initializers);
 
         protected virtual bool CompareMemberMemberBinding(MemberMemberBinding a, MemberMemberBinding b)
-            => a.Member == b.Member
-               && CompareBindingList(a.Bindings, b.Bindings);
+            => a.Member == b.Member && CompareBindingList(a.Bindings, b.Bindings);
 
         protected virtual bool CompareListInit(ListInitExpression a, ListInitExpression b)
-            => Compare(a.NewExpression, b.NewExpression)
-               && CompareElementInitList(a.Initializers, b.Initializers);
+            => Compare(a.NewExpression, b.NewExpression) && CompareElementInitList(a.Initializers, b.Initializers);
 
         protected virtual bool CompareElementInitList(ReadOnlyCollection<ElementInit> a, ReadOnlyCollection<ElementInit> b)
         {
-            if (a == b) return true;
-            if (a == null || b == null) return false;
-            if (a.Count != b.Count) return false;
+            if (a == b)
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.Count != b.Count)
+                return false;
             for (int i = 0, n = a.Count; i < n; i++)
                 if (!CompareElementInit(a[i], b[i]))
                     return false;
@@ -262,7 +272,6 @@ namespace Questar.OneRoster.Expressions
         }
 
         protected virtual bool CompareElementInit(ElementInit a, ElementInit b)
-            => a.AddMethod == b.AddMethod
-               && CompareExpressionList(a.Arguments, b.Arguments);
+            => a.AddMethod == b.AddMethod && CompareExpressionList(a.Arguments, b.Arguments);
     }
 }

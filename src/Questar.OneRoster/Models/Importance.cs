@@ -4,8 +4,10 @@ namespace Questar.OneRoster.Models
 
     public enum Importance
     {
-        [SerializationToken("primary")] Primary,
+        [SerializationToken("primary")]
+        Primary,
 
-        [SerializationToken("secondary")] Secondary
+        [SerializationToken("secondary")]
+        Secondary
     }
 }

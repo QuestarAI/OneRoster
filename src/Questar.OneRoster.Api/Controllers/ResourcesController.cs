@@ -7,12 +7,10 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/resources")]
     public class ResourcesController : BaseController<Resource>
     {
-        public ResourcesController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "Resources",
-            Singular = "Resource"
-        })
+        public ResourcesController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
+
+        protected override IQuery<Resource> Query() => Workspace.Resources.AsQuery();
     }
 }

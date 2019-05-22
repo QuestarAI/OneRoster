@@ -11,7 +11,7 @@ namespace Questar.OneRoster.Models
         /// <summary>
         /// Gets or sets the sourced identifier. This is the primary key for the object (as far as OneRoster is concerned).
         /// </summary>
-        public Guid SourcedId { get; set; }
+        public string SourcedId { get; set; }
 
         /// <summary>
         /// Gets or sets the status.

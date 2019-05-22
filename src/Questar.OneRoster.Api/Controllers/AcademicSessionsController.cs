@@ -7,12 +7,10 @@ namespace Questar.OneRoster.Api.Controllers
     [Route("ims/oneroster/v1p1/academicSessions")]
     public class AcademicSessionsController : BaseController<AcademicSession>
     {
-        public AcademicSessionsController(IWorkspace workspace) : base(workspace, new BaseControllerOptions
-        {
-            Plural = "AcademicSessions",
-            Singular = "AcademicSession"
-        })
+        public AcademicSessionsController(IOneRosterWorkspace workspace) : base(workspace)
         {
         }
+
+        protected override IQuery<AcademicSession> Query() => Workspace.AcademicSessions.AsQuery();
     }
 }

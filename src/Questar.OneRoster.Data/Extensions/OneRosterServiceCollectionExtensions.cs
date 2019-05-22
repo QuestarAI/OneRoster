@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Data.Extensions
 {
     using System;
+    using System.Reflection;
     using AutoMapper;
     using AutoMapper.EquivalencyExpression;
     using AutoMapper.Extensions.ExpressionMapping;
@@ -19,9 +20,9 @@ namespace Questar.OneRoster.Data.Extensions
             {
                 config.AddExpressionMapping();
                 config.AddCollectionMappers();
-            });
+            }, Assembly.GetExecutingAssembly());
             services.AddScoped<OneRosterDbContext>();
-            services.AddScoped<IWorkspace, OneRosterDbContextWorkspace>();
+            services.AddScoped<IOneRosterWorkspace, OneRosterWorkspace>();
         }
     }
 }

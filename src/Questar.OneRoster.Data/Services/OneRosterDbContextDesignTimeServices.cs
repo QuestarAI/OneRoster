@@ -8,7 +8,7 @@ namespace Questar.OneRoster.Data.Services
     {
         public void ConfigureDesignTimeServices(IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole>().AddDefaultTokenProviders();
+            services.AddIdentity<User, Role>().AddDefaultTokenProviders();
         }
     }
 }

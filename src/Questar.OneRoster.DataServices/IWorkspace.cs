@@ -1,11 +1,10 @@
 namespace Questar.OneRoster.DataServices
 {
+    using System;
     using System.Threading.Tasks;
 
-    public interface IWorkspace
+    public interface IWorkspace : IDisposable
     {
-        IRepository<T> GetRepository<T>();
-
         void Save();
 
         Task SaveAsync();

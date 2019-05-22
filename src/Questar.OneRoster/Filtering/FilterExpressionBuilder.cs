@@ -30,11 +30,12 @@ namespace Questar.OneRoster.Filtering
                 throw new InvalidOperationException($"Couldn't find type converter for type '{type.Name}'.");
             var values = value.Value.Split(',');
             var vector = Array.CreateInstance(type, values.Length);
-            for (var index = 0; index < values.Length; index++) vector.SetValue(converter.ConvertFromString(values[index]), index);
+            for (var index = 0; index < values.Length; index++)
+                vector.SetValue(converter.ConvertFromString(values[index]), index);
             return Expression.Constant(vector);
         }
 
-        public FilterExpression<T> ToExpression() =>
+        public FilterExpression<T> ToFilterExpression() =>
             (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), false, Parameter);
 
         public override void Visit(LogicalFilter filter)
@@ -79,7 +80,7 @@ namespace Questar.OneRoster.Filtering
             var type = Type;
             foreach (var name in property.GetProperties().Select(info => info.Name))
             {
-                var info = type.GetProperty(name);
+                var info = type.GetTypeInfo().GetProperty(name);
                 if (info == null)
                     throw new InvalidOperationException($"Couldn't determine path '{name}' from type '${type.Name}'.");
                 expression = Expression.Property(expression, info);
@@ -94,10 +95,10 @@ namespace Questar.OneRoster.Filtering
             var member = GetProperty(property);
             var collection = member.Type.Name == typeof(ICollection<>).Name
                 ? member.Type
-                : member.Type.GetInterface(typeof(ICollection<>).Name);
+                : member.Type.GetTypeInfo().GetInterface(typeof(ICollection<>).Name);
             if (collection == null)
                 throw new InvalidOperationException($"Property '{property}' does not implement '{typeof(ICollection<>)}'.");
-            var type = collection.GetGenericArguments().Single();
+            var type = collection.GetTypeInfo().GetGenericArguments().Single();
             var item = Expression.Parameter(type);
             var contains = Expression.Lambda(Expression.Call(null, FilterInfo.Contains.MakeGenericMethod(type), member, item), item);
             var call = Expression.Call(null, method.MakeGenericMethod(type), GetVectorValue(value, type), contains);
@@ -164,6 +165,7 @@ namespace Questar.OneRoster.Filtering
                         default:
                             throw new NotSupportedException($"Predicate operator not supported for scalar value: {filter.Predicate}.");
                     }
+
                 case FilterValueType.Vector:
                     switch (filter.Predicate)
                     {
@@ -172,6 +174,7 @@ namespace Questar.OneRoster.Filtering
                         default:
                             throw new NotSupportedException($"Predicate operator not supported for vector value: {filter.Predicate}.");
                     }
+
                 default:
                     throw new NotSupportedException($"Filter value type not supported '{filter.Value.Type}'.");
             }
