@@ -1,18 +1,18 @@
 namespace Questar.OneRoster.Models
 {
     using System;
-    using System.Runtime.Serialization;
+    using Serialization;
 
     public enum StatusType
     {
-        [EnumMember(Value = "active")]
+        [SerializationToken("active")]
         Active = 0,
 
-        [EnumMember(Value = "tobedeleted")]
+        [SerializationToken("tobedeleted")]
         ToBeDeleted = 1,
 
         [Obsolete("Inactive is deprecated. Use ToBeDeleted.")]
-        [EnumMember(Value = "inactive")]
+        [SerializationToken("inactive")]
         Inactive = ToBeDeleted
     }
 }

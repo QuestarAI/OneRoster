@@ -1,13 +1,13 @@
 namespace Questar.OneRoster.Models
 {
-    using System.Runtime.Serialization;
+    using Serialization;
 
     public enum Importance
     {
-        [EnumMember(Value = "primary")]
+        [SerializationToken("primary")]
         Primary,
 
-        [EnumMember(Value = "secondary")]
+        [SerializationToken("secondary")]
         Secondary
     }
 }

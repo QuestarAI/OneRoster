@@ -2,7 +2,7 @@
 
 namespace Questar.OneRoster.Models
 {
-    using System.Runtime.Serialization;
+    using Serialization;
 
     /// <summary>
     /// State code vocabulary provided by the Common Education Data Standards (CEDS),
@@ -12,181 +12,181 @@ namespace Questar.OneRoster.Models
     /// </summary>
     public enum StateCode
     {
-        [EnumMember(Value = "AK")]
+        [SerializationToken("AK")]
         Alaska,
 
-        [EnumMember(Value = "AL")]
+        [SerializationToken("AL")]
         Alabama,
 
-        [EnumMember(Value = "AR")]
+        [SerializationToken("AR")]
         Arkansas,
 
-        [EnumMember(Value = "AS")]
+        [SerializationToken("AS")]
         AmericanSamoa,
 
-        [EnumMember(Value = "AZ")]
+        [SerializationToken("AZ")]
         Arizona,
 
-        [EnumMember(Value = "CA")]
+        [SerializationToken("CA")]
         California,
 
-        [EnumMember(Value = "CO")]
+        [SerializationToken("CO")]
         Colorado,
 
-        [EnumMember(Value = "CT")]
+        [SerializationToken("CT")]
         Connecticut,
 
-        [EnumMember(Value = "DC")]
+        [SerializationToken("DC")]
         DistrictOfColumbia,
 
-        [EnumMember(Value = "DE")]
+        [SerializationToken("DE")]
         Delaware,
 
-        [EnumMember(Value = "FL")]
+        [SerializationToken("FL")]
         Florida,
 
-        [EnumMember(Value = "FM")]
+        [SerializationToken("FM")]
         FederatedStatesOfMicronesia,
 
-        [EnumMember(Value = "GA")]
+        [SerializationToken("GA")]
         Georgia,
 
-        [EnumMember(Value = "GU")]
+        [SerializationToken("GU")]
         Guam,
 
-        [EnumMember(Value = "HI")]
+        [SerializationToken("HI")]
         Hawaii,
 
-        [EnumMember(Value = "IA")]
+        [SerializationToken("IA")]
         Iowa,
 
-        [EnumMember(Value = "ID")]
+        [SerializationToken("ID")]
         Idaho,
 
-        [EnumMember(Value = "IL")]
+        [SerializationToken("IL")]
         Illinois,
 
-        [EnumMember(Value = "IN")]
+        [SerializationToken("IN")]
         Indiana,
 
-        [EnumMember(Value = "KS")]
+        [SerializationToken("KS")]
         Kansas,
 
-        [EnumMember(Value = "KY")]
+        [SerializationToken("KY")]
         Kentucky,
 
-        [EnumMember(Value = "LA")]
+        [SerializationToken("LA")]
         Louisiana,
 
-        [EnumMember(Value = "MA")]
+        [SerializationToken("MA")]
         Massachusetts,
 
-        [EnumMember(Value = "MD")]
+        [SerializationToken("MD")]
         Maryland,
 
-        [EnumMember(Value = "ME")]
+        [SerializationToken("ME")]
         Maine,
 
-        [EnumMember(Value = "MH")]
+        [SerializationToken("MH")]
         MarshallIslands,
 
-        [EnumMember(Value = "MI")]
+        [SerializationToken("MI")]
         Michigan,
 
-        [EnumMember(Value = "MN")]
+        [SerializationToken("MN")]
         Minnesota,
 
-        [EnumMember(Value = "MO")]
+        [SerializationToken("MO")]
         Missouri,
 
-        [EnumMember(Value = "MP")]
+        [SerializationToken("MP")]
         NorthernMarianas,
 
-        [EnumMember(Value = "MS")]
+        [SerializationToken("MS")]
         Mississippi,
 
-        [EnumMember(Value = "MT")]
+        [SerializationToken("MT")]
         Montana,
 
-        [EnumMember(Value = "NC")]
+        [SerializationToken("NC")]
         NorthCarolina,
 
-        [EnumMember(Value = "ND")]
+        [SerializationToken("ND")]
         NorthDakota,
 
-        [EnumMember(Value = "NE")]
+        [SerializationToken("NE")]
         Nebraska,
 
-        [EnumMember(Value = "NH")]
+        [SerializationToken("NH")]
         NewHampshire,
 
-        [EnumMember(Value = "NJ")]
+        [SerializationToken("NJ")]
         NewJersey,
 
-        [EnumMember(Value = "NM")]
+        [SerializationToken("NM")]
         NewMexico,
 
-        [EnumMember(Value = "NV")]
+        [SerializationToken("NV")]
         Nevada,
 
-        [EnumMember(Value = "NY")]
+        [SerializationToken("NY")]
         NewYork,
 
-        [EnumMember(Value = "OH")]
+        [SerializationToken("OH")]
         Ohio,
 
-        [EnumMember(Value = "OK")]
+        [SerializationToken("OK")]
         Oklahoma,
 
-        [EnumMember(Value = "OR")]
+        [SerializationToken("OR")]
         Oregon,
 
-        [EnumMember(Value = "PA")]
+        [SerializationToken("PA")]
         Pennsylvania,
 
-        [EnumMember(Value = "PR")]
+        [SerializationToken("PR")]
         PuertoRico,
 
-        [EnumMember(Value = "PW")]
+        [SerializationToken("PW")]
         Palau,
 
-        [EnumMember(Value = "RI")]
+        [SerializationToken("RI")]
         RhodeIsland,
 
-        [EnumMember(Value = "SC")]
+        [SerializationToken("SC")]
         SouthCarolina,
 
-        [EnumMember(Value = "SD")]
+        [SerializationToken("SD")]
         SouthDakota,
 
-        [EnumMember(Value = "TN")]
+        [SerializationToken("TN")]
         Tennessee,
 
-        [EnumMember(Value = "TX")]
+        [SerializationToken("TX")]
         Texas,
 
-        [EnumMember(Value = "UT")]
+        [SerializationToken("UT")]
         Utah,
 
-        [EnumMember(Value = "VA")]
+        [SerializationToken("VA")]
         Virginia,
 
-        [EnumMember(Value = "VI")]
+        [SerializationToken("VI")]
         VirginIslands,
 
-        [EnumMember(Value = "VT")]
+        [SerializationToken("VT")]
         Vermont,
 
-        [EnumMember(Value = "WA")]
+        [SerializationToken("WA")]
         Washington,
 
-        [EnumMember(Value = "WI")]
+        [SerializationToken("WI")]
         Wisconsin,
 
-        [EnumMember(Value = "WV")]
+        [SerializationToken("WV")]
         WestVirginia,
 
-        [EnumMember(Value = "WY")]
+        [SerializationToken("WY")]
         Wyoming
     }
 }

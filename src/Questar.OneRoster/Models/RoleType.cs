@@ -1,31 +1,31 @@
 namespace Questar.OneRoster.Models
 {
-    using System.Runtime.Serialization;
+    using Serialization;
 
     public enum RoleType
     {
-        [EnumMember(Value = "administrator")]
+        [SerializationToken("administrator")]
         Administrator,
 
-        [EnumMember(Value = "aide")]
+        [SerializationToken("aide")]
         Aide,
 
-        [EnumMember(Value = "guardian")]
+        [SerializationToken("guardian")]
         Guardian,
 
-        [EnumMember(Value = "parent")]
+        [SerializationToken("parent")]
         Parent,
 
-        [EnumMember(Value = "proctor")]
+        [SerializationToken("proctor")]
         Proctor,
 
-        [EnumMember(Value = "relative")]
+        [SerializationToken("relative")]
         Relative,
 
-        [EnumMember(Value = "student")]
+        [SerializationToken("student")]
         Student,
 
-        [EnumMember(Value = "teacher")]
+        [SerializationToken("teacher")]
         Teacher
     }
 }

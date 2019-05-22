@@ -1,13 +1,13 @@
 namespace Questar.OneRoster.Models
 {
-    using System.Runtime.Serialization;
+    using Serialization;
 
     public enum ClassType
     {
-        [EnumMember(Value = "homeroom")]
+        [SerializationToken("homeroom")]
         Homeroom,
 
-        [EnumMember(Value = "scheduled")]
+        [SerializationToken("scheduled")]
         Scheduled
     }
 }

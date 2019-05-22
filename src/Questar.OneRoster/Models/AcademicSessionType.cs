@@ -1,19 +1,19 @@
 namespace Questar.OneRoster.Models
 {
-    using System.Runtime.Serialization;
+    using Serialization;
 
     public enum AcademicSessionType
     {
-        [EnumMember(Value = "gradingPeriod")]
+        [SerializationToken("gradingPeriod")]
         GradingPeriod,
 
-        [EnumMember(Value = "semester")]
+        [SerializationToken("semester")]
         Semester,
 
-        [EnumMember(Value = "schoolYear")]
+        [SerializationToken("schoolYear")]
         SchoolYear,
 
-        [EnumMember(Value = "term")]
+        [SerializationToken("term")]
         Term
     }
 }

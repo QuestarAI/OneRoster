@@ -1,6 +1,6 @@
 namespace Questar.OneRoster.Models
 {
-    using System.Runtime.Serialization;
+    using Serialization;
 
     /// <summary>
     /// Grade code vocabulary provided by the Common Education Data Standards (CEDS),
@@ -10,106 +10,106 @@ namespace Questar.OneRoster.Models
     /// </summary>
     public enum Grade
     {
-        [EnumMember(Value = "IT")]
+        [SerializationToken("IT")]
         InfantSlashToddler = -4,
 
-        [EnumMember(Value = "PR")]
+        [SerializationToken("PR")]
         Preschool = -3,
 
-        [EnumMember(Value = "PK")]
+        [SerializationToken("PK")]
         Prekindergarten = -2,
 
-        [EnumMember(Value = "TK")]
+        [SerializationToken("TK")]
         TransitionalKindergarten = -1,
 
-        [EnumMember(Value = "KG")]
+        [SerializationToken("KG")]
         Kindergarten = 0,
 
-        [EnumMember(Value = "01")]
+        [SerializationToken("01")]
         FirstGrade = 1,
 
-        [EnumMember(Value = "02")]
+        [SerializationToken("02")]
         SecondGrade = 2,
 
-        [EnumMember(Value = "03")]
+        [SerializationToken("03")]
         ThirdGrade = 3,
 
-        [EnumMember(Value = "04")]
+        [SerializationToken("04")]
         FourthGrade = 4,
 
-        [EnumMember(Value = "05")]
+        [SerializationToken("05")]
         FifthGrade = 5,
 
-        [EnumMember(Value = "06")]
+        [SerializationToken("06")]
         SixthGrade = 6,
 
-        [EnumMember(Value = "07")]
+        [SerializationToken("07")]
         SeventhGrade = 7,
 
-        [EnumMember(Value = "08")]
+        [SerializationToken("08")]
         EighthGrade = 8,
 
-        [EnumMember(Value = "09")]
+        [SerializationToken("09")]
         NinthGrade = 9,
 
-        [EnumMember(Value = "10")]
+        [SerializationToken("10")]
         TenthGrade = 10,
 
-        [EnumMember(Value = "11")]
+        [SerializationToken("11")]
         EleventhGrade = 11,
 
-        [EnumMember(Value = "12")]
+        [SerializationToken("12")]
         TwelfthGrade = 12,
 
-        [EnumMember(Value = "13")]
+        [SerializationToken("13")]
         ThirteenthGrade = 13,
 
-        [EnumMember(Value = "01")]
+        [SerializationToken("01")]
         Grade1 = 1,
 
-        [EnumMember(Value = "02")]
+        [SerializationToken("02")]
         Grade2 = 2,
 
-        [EnumMember(Value = "03")]
+        [SerializationToken("03")]
         Grade3 = 3,
 
-        [EnumMember(Value = "04")]
+        [SerializationToken("04")]
         Grade4 = 4,
 
-        [EnumMember(Value = "05")]
+        [SerializationToken("05")]
         Grade5 = 5,
 
-        [EnumMember(Value = "06")]
+        [SerializationToken("06")]
         Grade6 = 6,
 
-        [EnumMember(Value = "07")]
+        [SerializationToken("07")]
         Grade7 = 7,
 
-        [EnumMember(Value = "08")]
+        [SerializationToken("08")]
         Grade8 = 8,
 
-        [EnumMember(Value = "09")]
+        [SerializationToken("09")]
         Grade9 = 9,
 
-        [EnumMember(Value = "10")]
+        [SerializationToken("10")]
         Grade10 = 10,
 
-        [EnumMember(Value = "11")]
+        [SerializationToken("11")]
         Grade11 = 11,
 
-        [EnumMember(Value = "12")]
+        [SerializationToken("12")]
         Grade12 = 12,
 
-        [EnumMember(Value = "13")]
+        [SerializationToken("13")]
         Grade13 = 13,
 
-        [EnumMember(Value = "PS")]
+        [SerializationToken("PS")]
         PostSecondary = 20,
 
-        [EnumMember(Value = "UG")]
+        [SerializationToken("UG")]
         Ungraded = 98,
 
-        [EnumMember(Value = "Other")]
+        [SerializationToken("Other")]
         Other = 99
     }
 }
