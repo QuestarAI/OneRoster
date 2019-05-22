@@ -1,7 +1,9 @@
 namespace Questar.OneRoster.Models
 {
     using System;
+    using Serialization;
 
+    [OneRosterPluralization("Demographics")]
     public class Demographics : Base
     {
         public DateTime? BirthDate { get; set; }

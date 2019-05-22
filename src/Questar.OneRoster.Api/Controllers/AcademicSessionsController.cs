@@ -11,6 +11,7 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<AcademicSession> Query() => Workspace.AcademicSessions.AsQuery();
+        protected override IQuery<AcademicSession> Query() =>
+            Workspace.AcademicSessions.AsQuery();
     }
 }

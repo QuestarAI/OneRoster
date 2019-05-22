@@ -5,7 +5,8 @@ namespace Questar.OneRoster.Data
 
     public class Result : IBaseObject
     {
-        public Result(LineItem item) => LineItem = item;
+        public Result(LineItem item) =>
+            LineItem = item;
 
         private Result()
         {

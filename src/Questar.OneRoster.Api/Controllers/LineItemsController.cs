@@ -13,7 +13,8 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<LineItem> Query() => Workspace.LineItems.AsQuery();
+        protected override IQuery<LineItem> Query() =>
+            Workspace.LineItems.AsQuery();
 
         [HttpPut("{SourcedId}")]
         public virtual async Task<ActionResult> Upsert(UpsertParams<LineItem> @params)

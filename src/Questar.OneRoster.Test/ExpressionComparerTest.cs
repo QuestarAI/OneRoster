@@ -2,8 +2,8 @@ namespace Questar.OneRoster.Test
 {
     using System;
     using System.Linq.Expressions;
-    using Expressions;
-    using Mock;
+    using Comparers;
+    using Mocks;
     using Xunit;
 
     public class ExpressionComparerTest

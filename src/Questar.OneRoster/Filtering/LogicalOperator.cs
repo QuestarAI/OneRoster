@@ -9,13 +9,13 @@ namespace Questar.OneRoster.Filtering
 
         public static readonly LogicalOperator Or = new LogicalOperator(LogicalOperatorString.Or);
 
-        private LogicalOperator(string symbol)
-            => Symbol = symbol;
+        private LogicalOperator(string symbol) =>
+            Symbol = symbol;
 
         public string Symbol { get; }
 
-        public static implicit operator string(LogicalOperator @operator)
-            => @operator.Symbol;
+        public static implicit operator string(LogicalOperator @operator) =>
+            @operator.Symbol;
 
         public static IEnumerable<LogicalOperator> Values
         {
@@ -26,13 +26,13 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        public static LogicalOperator Parse(string symbol)
-            => Values.Single(value => value.Symbol == symbol);
+        public static LogicalOperator Parse(string symbol) =>
+            Values.Single(value => value.Symbol == symbol);
 
-        public static bool TryParse(string symbol, out LogicalOperator @operator)
-            => (@operator = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(LogicalOperator);
+        public static bool TryParse(string symbol, out LogicalOperator @operator) =>
+            (@operator = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(LogicalOperator);
 
-        public override string ToString()
-            => Symbol;
+        public override string ToString() =>
+            Symbol;
     }
 }

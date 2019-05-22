@@ -11,6 +11,7 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<Enrollment> Query() => Workspace.Enrollments.AsQuery();
+        protected override IQuery<Enrollment> Query() =>
+            Workspace.Enrollments.AsQuery();
     }
 }

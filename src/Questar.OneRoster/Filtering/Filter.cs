@@ -63,6 +63,7 @@ namespace Questar.OneRoster.Filtering
             return builder.ToFilterString();
         }
 
-        public override string ToString() => ToFilterString();
+        public override string ToString() =>
+            ToFilterString();
     }
 }

@@ -33,7 +33,7 @@ namespace Questar.OneRoster.Filtering
                 yield return property;
         }
 
-        public override string ToString()
-            => string.Join(".", GetProperties().Select(property => property.Name));
+        public override string ToString() =>
+            string.Join(".", GetProperties().Select(property => property.Name));
     }
 }

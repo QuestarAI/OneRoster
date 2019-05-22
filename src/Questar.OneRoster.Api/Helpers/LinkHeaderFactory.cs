@@ -6,13 +6,6 @@ namespace Questar.OneRoster.Api.Helpers
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
 
-    public class LinkHeaderFactoryOptions
-    {
-        public int Limit { get; } = 100;
-
-        public int Offset { get; } = 0;
-    }
-
     public class LinkHeaderFactory
     {
         public LinkHeaderFactory(IHttpContextAccessor httpContextAccessor, IOptions<LinkHeaderFactoryOptions> options)

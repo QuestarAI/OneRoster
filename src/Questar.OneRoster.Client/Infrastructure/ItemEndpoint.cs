@@ -7,6 +7,7 @@ namespace Questar.OneRoster.Client.Infrastructure
     using Flurl.Http;
     using Models;
     using Newtonsoft.Json;
+    using Payloads;
     using Serialization;
 
     public class ItemEndpoint<T> : Endpoint<T>, IItemEndpoint<T>
@@ -50,12 +51,13 @@ namespace Questar.OneRoster.Client.Infrastructure
             var resolver = new OneRosterContractResolver(typeof(T));
             var settings = new JsonSerializerSettings { ContractResolver = resolver };
 
-            var result = JsonConvert.DeserializeObject<OneRosterSingle<TResult>>(content, settings);
-            var statuses = result.StatusInfoSet;
+            var payload = JsonConvert.DeserializeObject<Payload<TResult>>(content, settings);
+            var statuses = payload.Statuses;
             if (statuses.Any())
-                throw new OneRosterException(statuses);
+                throw new StatusInfoException(statuses);
 
-            var value = result.Result;
+            var value = payload.Value;
+
             return value;
         }
 

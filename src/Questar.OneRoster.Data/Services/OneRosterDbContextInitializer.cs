@@ -5,7 +5,8 @@ namespace Questar.OneRoster.Data.Services
 
     public class OneRosterDbContextInitializer
     {
-        public OneRosterDbContextInitializer(OneRosterDbContext context) => Context = context;
+        public OneRosterDbContextInitializer(OneRosterDbContext context) =>
+            Context = context;
 
         public OneRosterDbContext Context { get; }
 

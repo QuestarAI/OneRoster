@@ -8,7 +8,8 @@ namespace Questar.OneRoster.Data
         {
         }
 
-        public UserOrg(Org org) => Org = org;
+        public UserOrg(Org org) =>
+            Org = org;
 
         public virtual User User { get; private set; }
 

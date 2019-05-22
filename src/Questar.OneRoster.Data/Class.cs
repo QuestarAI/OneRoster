@@ -6,7 +6,8 @@ namespace Questar.OneRoster.Data
 
     public class Class : IBaseObject
     {
-        public Class(ClassType type) => Type = type;
+        public Class(ClassType type) =>
+            Type = type;
 
         private Class()
         {
@@ -25,11 +26,11 @@ namespace Questar.OneRoster.Data
         [MaxLength(256)]
         public virtual string Location { get; set; }
 
-        public virtual Course Course { get; set; } // TODO one-time only?
+        public virtual Course Course { get; set; }
 
         public virtual Guid CourseId { get; private set; }
 
-        public virtual Org School { get; set; } // TODO one-time only?
+        public virtual Org School { get; set; }
 
         public virtual Guid SchoolId { get; private set; }
 

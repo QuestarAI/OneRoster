@@ -7,7 +7,8 @@ namespace Questar.OneRoster.Data
 
     public class User : IdentityUser<Guid>, IBaseObject
     {
-        public User(UserType type) => Type = type;
+        public User(UserType type) =>
+            Type = type;
 
         private User()
         {

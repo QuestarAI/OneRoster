@@ -37,8 +37,6 @@ namespace Questar.OneRoster.App
                 .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()))
                 .AddOneRosterApi();
 
-            // TODO: Consolidate where this connection string comes from.
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1p1", new Info

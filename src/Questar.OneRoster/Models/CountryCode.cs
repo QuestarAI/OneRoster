@@ -2,7 +2,7 @@
 
 namespace Questar.OneRoster.Models
 {
-    using Serialization;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Country code vocabulary provided by the Common Education Data Standards (CEDS),
@@ -11,751 +11,751 @@ namespace Questar.OneRoster.Models
     /// </summary>
     public enum CountryCode
     {
-        [SerializationToken("AF")]
+        [EnumMember(Value = "AF")]
         Afghanistan,
 
-        [SerializationToken("AX")]
+        [EnumMember(Value = "AX")]
         AlandIslands,
 
-        [SerializationToken("AL")]
+        [EnumMember(Value = "AL")]
         Albania,
 
-        [SerializationToken("DZ")]
+        [EnumMember(Value = "DZ")]
         Algeria,
 
-        [SerializationToken("AS")]
+        [EnumMember(Value = "AS")]
         AmericanSamoa,
 
-        [SerializationToken("AD")]
+        [EnumMember(Value = "AD")]
         Andorra,
 
-        [SerializationToken("AO")]
+        [EnumMember(Value = "AO")]
         Angola,
 
-        [SerializationToken("AI")]
+        [EnumMember(Value = "AI")]
         Anguilla,
 
-        [SerializationToken("AQ")]
+        [EnumMember(Value = "AQ")]
         Antarctica,
 
-        [SerializationToken("AG")]
+        [EnumMember(Value = "AG")]
         AntiguaAndBarbuda,
 
-        [SerializationToken("AR")]
+        [EnumMember(Value = "AR")]
         Argentina,
 
-        [SerializationToken("AM")]
+        [EnumMember(Value = "AM")]
         Armenia,
 
-        [SerializationToken("AW")]
+        [EnumMember(Value = "AW")]
         Aruba,
 
-        [SerializationToken("AU")]
+        [EnumMember(Value = "AU")]
         Australia,
 
-        [SerializationToken("AT")]
+        [EnumMember(Value = "AT")]
         Austria,
 
-        [SerializationToken("AZ")]
+        [EnumMember(Value = "AZ")]
         Azerbaijan,
 
-        [SerializationToken("BS")]
+        [EnumMember(Value = "BS")]
         Bahamas,
 
-        [SerializationToken("BH")]
+        [EnumMember(Value = "BH")]
         Bahrain,
 
-        [SerializationToken("BD")]
+        [EnumMember(Value = "BD")]
         Bangladesh,
 
-        [SerializationToken("BB")]
+        [EnumMember(Value = "BB")]
         Barbados,
 
-        [SerializationToken("BY")]
+        [EnumMember(Value = "BY")]
         Belarus,
 
-        [SerializationToken("BE")]
+        [EnumMember(Value = "BE")]
         Belgium,
 
-        [SerializationToken("BZ")]
+        [EnumMember(Value = "BZ")]
         Belize,
 
-        [SerializationToken("BJ")]
+        [EnumMember(Value = "BJ")]
         Benin,
 
-        [SerializationToken("BM")]
+        [EnumMember(Value = "BM")]
         Bermuda,
 
-        [SerializationToken("BT")]
+        [EnumMember(Value = "BT")]
         Bhutan,
 
-        [SerializationToken("BO")]
+        [EnumMember(Value = "BO")]
         BoliviaPlurinationalStateOf,
 
-        [SerializationToken("BQ")]
+        [EnumMember(Value = "BQ")]
         BonaireSintEustatiusAndSaba,
 
-        [SerializationToken("BA")]
+        [EnumMember(Value = "BA")]
         BosniaAndHerzegovina,
 
-        [SerializationToken("BW")]
+        [EnumMember(Value = "BW")]
         Botswana,
 
-        [SerializationToken("BV")]
+        [EnumMember(Value = "BV")]
         BouvetIsland,
 
-        [SerializationToken("BR")]
+        [EnumMember(Value = "BR")]
         Brazil,
 
-        [SerializationToken("IO")]
+        [EnumMember(Value = "IO")]
         BritishIndianOceanTerritory,
 
-        [SerializationToken("BN")]
+        [EnumMember(Value = "BN")]
         BruneiDarussalam,
 
-        [SerializationToken("BG")]
+        [EnumMember(Value = "BG")]
         Bulgaria,
 
-        [SerializationToken("BF")]
+        [EnumMember(Value = "BF")]
         BurkinaFaso,
 
-        [SerializationToken("BI")]
+        [EnumMember(Value = "BI")]
         Burundi,
 
-        [SerializationToken("KH")]
+        [EnumMember(Value = "KH")]
         Cambodia,
 
-        [SerializationToken("CM")]
+        [EnumMember(Value = "CM")]
         Cameroon,
 
-        [SerializationToken("CA")]
+        [EnumMember(Value = "CA")]
         Canada,
 
-        [SerializationToken("CV")]
+        [EnumMember(Value = "CV")]
         CaboVerde,
 
-        [SerializationToken("KY")]
+        [EnumMember(Value = "KY")]
         CaymanIslands,
 
-        [SerializationToken("CF")]
+        [EnumMember(Value = "CF")]
         CentralAfricanRepublic,
 
-        [SerializationToken("TD")]
+        [EnumMember(Value = "TD")]
         Chad,
 
-        [SerializationToken("CL")]
+        [EnumMember(Value = "CL")]
         Chile,
 
-        [SerializationToken("CN")]
+        [EnumMember(Value = "CN")]
         China,
 
-        [SerializationToken("CX")]
+        [EnumMember(Value = "CX")]
         ChristmasIsland,
 
-        [SerializationToken("CC")]
+        [EnumMember(Value = "CC")]
         CocosKeelingIslands,
 
-        [SerializationToken("CO")]
+        [EnumMember(Value = "CO")]
         Colombia,
 
-        [SerializationToken("KM")]
+        [EnumMember(Value = "KM")]
         Comoros,
 
-        [SerializationToken("CG")]
+        [EnumMember(Value = "CG")]
         Congo,
 
-        [SerializationToken("CD")]
+        [EnumMember(Value = "CD")]
         CongoDemocraticRepublicOfThe,
 
-        [SerializationToken("CK")]
+        [EnumMember(Value = "CK")]
         CookIslands,
 
-        [SerializationToken("CR")]
+        [EnumMember(Value = "CR")]
         CostaRica,
 
-        [SerializationToken("CI")]
+        [EnumMember(Value = "CI")]
         CoteDivoire,
 
-        [SerializationToken("HR")]
+        [EnumMember(Value = "HR")]
         Croatia,
 
-        [SerializationToken("CU")]
+        [EnumMember(Value = "CU")]
         Cuba,
 
-        [SerializationToken("CW")]
+        [EnumMember(Value = "CW")]
         Curacao,
 
-        [SerializationToken("CY")]
+        [EnumMember(Value = "CY")]
         Cyprus,
 
-        [SerializationToken("CZ")]
+        [EnumMember(Value = "CZ")]
         CzechRepublic,
 
-        [SerializationToken("DK")]
+        [EnumMember(Value = "DK")]
         Denmark,
 
-        [SerializationToken("DJ")]
+        [EnumMember(Value = "DJ")]
         Djibouti,
 
-        [SerializationToken("DM")]
+        [EnumMember(Value = "DM")]
         Dominica,
 
-        [SerializationToken("DO")]
+        [EnumMember(Value = "DO")]
         DominicanRepublic,
 
-        [SerializationToken("EC")]
+        [EnumMember(Value = "EC")]
         Ecuador,
 
-        [SerializationToken("EG")]
+        [EnumMember(Value = "EG")]
         Egypt,
 
-        [SerializationToken("SV")]
+        [EnumMember(Value = "SV")]
         ElSalvador,
 
-        [SerializationToken("GQ")]
+        [EnumMember(Value = "GQ")]
         EquatorialGuinea,
 
-        [SerializationToken("ER")]
+        [EnumMember(Value = "ER")]
         Eritrea,
 
-        [SerializationToken("EE")]
+        [EnumMember(Value = "EE")]
         Estonia,
 
-        [SerializationToken("ET")]
+        [EnumMember(Value = "ET")]
         Ethiopia,
 
-        [SerializationToken("FK")]
+        [EnumMember(Value = "FK")]
         FalklandIslandsMalvinas,
 
-        [SerializationToken("FO")]
+        [EnumMember(Value = "FO")]
         FaroeIslands,
 
-        [SerializationToken("FJ")]
+        [EnumMember(Value = "FJ")]
         Fiji,
 
-        [SerializationToken("FI")]
+        [EnumMember(Value = "FI")]
         Finland,
 
-        [SerializationToken("FR")]
+        [EnumMember(Value = "FR")]
         France,
 
-        [SerializationToken("GF")]
+        [EnumMember(Value = "GF")]
         FrenchGuiana,
 
-        [SerializationToken("PF")]
+        [EnumMember(Value = "PF")]
         FrenchPolynesia,
 
-        [SerializationToken("TF")]
+        [EnumMember(Value = "TF")]
         FrenchSouthernTerritories,
 
-        [SerializationToken("GA")]
+        [EnumMember(Value = "GA")]
         Gabon,
 
-        [SerializationToken("GM")]
+        [EnumMember(Value = "GM")]
         Gambia,
 
-        [SerializationToken("GE")]
+        [EnumMember(Value = "GE")]
         Georgia,
 
-        [SerializationToken("DE")]
+        [EnumMember(Value = "DE")]
         Germany,
 
-        [SerializationToken("GH")]
+        [EnumMember(Value = "GH")]
         Ghana,
 
-        [SerializationToken("GI")]
+        [EnumMember(Value = "GI")]
         Gibraltar,
 
-        [SerializationToken("GR")]
+        [EnumMember(Value = "GR")]
         Greece,
 
-        [SerializationToken("GL")]
+        [EnumMember(Value = "GL")]
         Greenland,
 
-        [SerializationToken("GD")]
+        [EnumMember(Value = "GD")]
         Grenada,
 
-        [SerializationToken("GP")]
+        [EnumMember(Value = "GP")]
         Guadeloupe,
 
-        [SerializationToken("GU")]
+        [EnumMember(Value = "GU")]
         Guam,
 
-        [SerializationToken("GT")]
+        [EnumMember(Value = "GT")]
         Guatemala,
 
-        [SerializationToken("GG")]
+        [EnumMember(Value = "GG")]
         Guernsey,
 
-        [SerializationToken("GN")]
+        [EnumMember(Value = "GN")]
         Guinea,
 
-        [SerializationToken("GW")]
+        [EnumMember(Value = "GW")]
         GuineaBissau,
 
-        [SerializationToken("GY")]
+        [EnumMember(Value = "GY")]
         Guyana,
 
-        [SerializationToken("HT")]
+        [EnumMember(Value = "HT")]
         Haiti,
 
-        [SerializationToken("HM")]
+        [EnumMember(Value = "HM")]
         HeardIslandAndMcdonaldIslands,
 
-        [SerializationToken("VA")]
+        [EnumMember(Value = "VA")]
         HolySee,
 
-        [SerializationToken("HN")]
+        [EnumMember(Value = "HN")]
         Honduras,
 
-        [SerializationToken("HK")]
+        [EnumMember(Value = "HK")]
         HongKong,
 
-        [SerializationToken("HU")]
+        [EnumMember(Value = "HU")]
         Hungary,
 
-        [SerializationToken("IS")]
+        [EnumMember(Value = "IS")]
         Iceland,
 
-        [SerializationToken("IN")]
+        [EnumMember(Value = "IN")]
         India,
 
-        [SerializationToken("ID")]
+        [EnumMember(Value = "ID")]
         Indonesia,
 
-        [SerializationToken("IR")]
+        [EnumMember(Value = "IR")]
         IranIslamicRepublicOf,
 
-        [SerializationToken("IQ")]
+        [EnumMember(Value = "IQ")]
         Iraq,
 
-        [SerializationToken("IE")]
+        [EnumMember(Value = "IE")]
         Ireland,
 
-        [SerializationToken("IM")]
+        [EnumMember(Value = "IM")]
         IsleOfMan,
 
-        [SerializationToken("IL")]
+        [EnumMember(Value = "IL")]
         Israel,
 
-        [SerializationToken("IT")]
+        [EnumMember(Value = "IT")]
         Italy,
 
-        [SerializationToken("JM")]
+        [EnumMember(Value = "JM")]
         Jamaica,
 
-        [SerializationToken("JP")]
+        [EnumMember(Value = "JP")]
         Japan,
 
-        [SerializationToken("JE")]
+        [EnumMember(Value = "JE")]
         Jersey,
 
-        [SerializationToken("JO")]
+        [EnumMember(Value = "JO")]
         Jordan,
 
-        [SerializationToken("KZ")]
+        [EnumMember(Value = "KZ")]
         Kazakhstan,
 
-        [SerializationToken("KE")]
+        [EnumMember(Value = "KE")]
         Kenya,
 
-        [SerializationToken("KI")]
+        [EnumMember(Value = "KI")]
         Kiribati,
 
-        [SerializationToken("KP")]
+        [EnumMember(Value = "KP")]
         KoreaDemocraticPeoplesRepublicOf,
 
-        [SerializationToken("KR")]
+        [EnumMember(Value = "KR")]
         KoreaRepublicOf,
 
-        [SerializationToken("KW")]
+        [EnumMember(Value = "KW")]
         Kuwait,
 
-        [SerializationToken("KG")]
+        [EnumMember(Value = "KG")]
         Kyrgyzstan,
 
-        [SerializationToken("LA")]
+        [EnumMember(Value = "LA")]
         LaoPeoplesDemocraticRepublic,
 
-        [SerializationToken("LV")]
+        [EnumMember(Value = "LV")]
         Latvia,
 
-        [SerializationToken("LB")]
+        [EnumMember(Value = "LB")]
         Lebanon,
 
-        [SerializationToken("LS")]
+        [EnumMember(Value = "LS")]
         Lesotho,
 
-        [SerializationToken("LR")]
+        [EnumMember(Value = "LR")]
         Liberia,
 
-        [SerializationToken("LY")]
+        [EnumMember(Value = "LY")]
         Libya,
 
-        [SerializationToken("LI")]
+        [EnumMember(Value = "LI")]
         Liechtenstein,
 
-        [SerializationToken("LT")]
+        [EnumMember(Value = "LT")]
         Lithuania,
 
-        [SerializationToken("LU")]
+        [EnumMember(Value = "LU")]
         Luxembourg,
 
-        [SerializationToken("MO")]
+        [EnumMember(Value = "MO")]
         Macao,
 
-        [SerializationToken("MK")]
+        [EnumMember(Value = "MK")]
         MacedoniaTheFormerYugoslavRepublicOf,
 
-        [SerializationToken("MG")]
+        [EnumMember(Value = "MG")]
         Madagascar,
 
-        [SerializationToken("MW")]
+        [EnumMember(Value = "MW")]
         Malawi,
 
-        [SerializationToken("MY")]
+        [EnumMember(Value = "MY")]
         Malaysia,
 
-        [SerializationToken("MV")]
+        [EnumMember(Value = "MV")]
         Maldives,
 
-        [SerializationToken("ML")]
+        [EnumMember(Value = "ML")]
         Mali,
 
-        [SerializationToken("MT")]
+        [EnumMember(Value = "MT")]
         Malta,
 
-        [SerializationToken("MH")]
+        [EnumMember(Value = "MH")]
         MarshallIslands,
 
-        [SerializationToken("MQ")]
+        [EnumMember(Value = "MQ")]
         Martinique,
 
-        [SerializationToken("MR")]
+        [EnumMember(Value = "MR")]
         Mauritania,
 
-        [SerializationToken("MU")]
+        [EnumMember(Value = "MU")]
         Mauritius,
 
-        [SerializationToken("YT")]
+        [EnumMember(Value = "YT")]
         Mayotte,
 
-        [SerializationToken("MX")]
+        [EnumMember(Value = "MX")]
         Mexico,
 
-        [SerializationToken("FM")]
+        [EnumMember(Value = "FM")]
         MicronesiaFederatedStatesOf,
 
-        [SerializationToken("MD")]
+        [EnumMember(Value = "MD")]
         MoldovaRepublicOf,
 
-        [SerializationToken("MC")]
+        [EnumMember(Value = "MC")]
         Monaco,
 
-        [SerializationToken("MN")]
+        [EnumMember(Value = "MN")]
         Mongolia,
 
-        [SerializationToken("ME")]
+        [EnumMember(Value = "ME")]
         Montenegro,
 
-        [SerializationToken("MS")]
+        [EnumMember(Value = "MS")]
         Montserrat,
 
-        [SerializationToken("MA")]
+        [EnumMember(Value = "MA")]
         Morocco,
 
-        [SerializationToken("MZ")]
+        [EnumMember(Value = "MZ")]
         Mozambique,
 
-        [SerializationToken("MM")]
+        [EnumMember(Value = "MM")]
         Myanmar,
 
-        [SerializationToken("NA")]
+        [EnumMember(Value = "NA")]
         Namibia,
 
-        [SerializationToken("NR")]
+        [EnumMember(Value = "NR")]
         Nauru,
 
-        [SerializationToken("NP")]
+        [EnumMember(Value = "NP")]
         Nepal,
 
-        [SerializationToken("NL")]
+        [EnumMember(Value = "NL")]
         Netherlands,
 
-        [SerializationToken("NC")]
+        [EnumMember(Value = "NC")]
         NewCaledonia,
 
-        [SerializationToken("NZ")]
+        [EnumMember(Value = "NZ")]
         NewZealand,
 
-        [SerializationToken("NI")]
+        [EnumMember(Value = "NI")]
         Nicaragua,
 
-        [SerializationToken("NE")]
+        [EnumMember(Value = "NE")]
         Niger,
 
-        [SerializationToken("NG")]
+        [EnumMember(Value = "NG")]
         Nigeria,
 
-        [SerializationToken("NU")]
+        [EnumMember(Value = "NU")]
         Niue,
 
-        [SerializationToken("NF")]
+        [EnumMember(Value = "NF")]
         NorfolkIsland,
 
-        [SerializationToken("MP")]
+        [EnumMember(Value = "MP")]
         NorthernMarianaIslands,
 
-        [SerializationToken("NO")]
+        [EnumMember(Value = "NO")]
         Norway,
 
-        [SerializationToken("OM")]
+        [EnumMember(Value = "OM")]
         Oman,
 
-        [SerializationToken("PK")]
+        [EnumMember(Value = "PK")]
         Pakistan,
 
-        [SerializationToken("PW")]
+        [EnumMember(Value = "PW")]
         Palau,
 
-        [SerializationToken("PS")]
+        [EnumMember(Value = "PS")]
         PalestineStateOf,
 
-        [SerializationToken("PA")]
+        [EnumMember(Value = "PA")]
         Panama,
 
-        [SerializationToken("PG")]
+        [EnumMember(Value = "PG")]
         PapuaNewGuinea,
 
-        [SerializationToken("PY")]
+        [EnumMember(Value = "PY")]
         Paraguay,
 
-        [SerializationToken("PE")]
+        [EnumMember(Value = "PE")]
         Peru,
 
-        [SerializationToken("PH")]
+        [EnumMember(Value = "PH")]
         Philippines,
 
-        [SerializationToken("PN")]
+        [EnumMember(Value = "PN")]
         Pitcairn,
 
-        [SerializationToken("PL")]
+        [EnumMember(Value = "PL")]
         Poland,
 
-        [SerializationToken("PT")]
+        [EnumMember(Value = "PT")]
         Portugal,
 
-        [SerializationToken("PR")]
+        [EnumMember(Value = "PR")]
         PuertoRico,
 
-        [SerializationToken("QA")]
+        [EnumMember(Value = "QA")]
         Qatar,
 
-        [SerializationToken("RE")]
+        [EnumMember(Value = "RE")]
         Reunion,
 
-        [SerializationToken("RO")]
+        [EnumMember(Value = "RO")]
         Romania,
 
-        [SerializationToken("RU")]
+        [EnumMember(Value = "RU")]
         RussianFederation,
 
-        [SerializationToken("RW")]
+        [EnumMember(Value = "RW")]
         Rwanda,
 
-        [SerializationToken("BL")]
+        [EnumMember(Value = "BL")]
         SaintBarthelemy,
 
-        [SerializationToken("SH")]
+        [EnumMember(Value = "SH")]
         SaintHelenaAscensionAndTristanDaCunha,
 
-        [SerializationToken("KN")]
+        [EnumMember(Value = "KN")]
         SaintKittsAndNevis,
 
-        [SerializationToken("LC")]
+        [EnumMember(Value = "LC")]
         SaintLucia,
 
-        [SerializationToken("MF")]
+        [EnumMember(Value = "MF")]
         SaintMartinFrenchPart,
 
-        [SerializationToken("PM")]
+        [EnumMember(Value = "PM")]
         SaintPierreAndMiquelon,
 
-        [SerializationToken("VC")]
+        [EnumMember(Value = "VC")]
         SaintVincentAndTheGrenadines,
 
-        [SerializationToken("WS")]
+        [EnumMember(Value = "WS")]
         Samoa,
 
-        [SerializationToken("SM")]
+        [EnumMember(Value = "SM")]
         SanMarino,
 
-        [SerializationToken("ST")]
+        [EnumMember(Value = "ST")]
         SaoTomeAndPrincipe,
 
-        [SerializationToken("SA")]
+        [EnumMember(Value = "SA")]
         SaudiArabia,
 
-        [SerializationToken("SN")]
+        [EnumMember(Value = "SN")]
         Senegal,
 
-        [SerializationToken("RS")]
+        [EnumMember(Value = "RS")]
         Serbia,
 
-        [SerializationToken("SC")]
+        [EnumMember(Value = "SC")]
         Seychelles,
 
-        [SerializationToken("SL")]
+        [EnumMember(Value = "SL")]
         SierraLeone,
 
-        [SerializationToken("SG")]
+        [EnumMember(Value = "SG")]
         Singapore,
 
-        [SerializationToken("SX")]
+        [EnumMember(Value = "SX")]
         SintMaartenDutchPart,
 
-        [SerializationToken("SK")]
+        [EnumMember(Value = "SK")]
         Slovakia,
 
-        [SerializationToken("SI")]
+        [EnumMember(Value = "SI")]
         Slovenia,
 
-        [SerializationToken("SB")]
+        [EnumMember(Value = "SB")]
         SolomonIslands,
 
-        [SerializationToken("SO")]
+        [EnumMember(Value = "SO")]
         Somalia,
 
-        [SerializationToken("ZA")]
+        [EnumMember(Value = "ZA")]
         SouthAfrica,
 
-        [SerializationToken("GS")]
+        [EnumMember(Value = "GS")]
         SouthGeorgiaAndTheSouthSandwichIslands,
 
-        [SerializationToken("SS")]
+        [EnumMember(Value = "SS")]
         SouthSudan,
 
-        [SerializationToken("ES")]
+        [EnumMember(Value = "ES")]
         Spain,
 
-        [SerializationToken("LK")]
+        [EnumMember(Value = "LK")]
         SriLanka,
 
-        [SerializationToken("SD")]
+        [EnumMember(Value = "SD")]
         Sudan,
 
-        [SerializationToken("SR")]
+        [EnumMember(Value = "SR")]
         Suriname,
 
-        [SerializationToken("SJ")]
+        [EnumMember(Value = "SJ")]
         SvalbardAndJanMayen,
 
-        [SerializationToken("SZ")]
+        [EnumMember(Value = "SZ")]
         Swaziland,
 
-        [SerializationToken("SE")]
+        [EnumMember(Value = "SE")]
         Sweden,
 
-        [SerializationToken("CH")]
+        [EnumMember(Value = "CH")]
         Switzerland,
 
-        [SerializationToken("SY")]
+        [EnumMember(Value = "SY")]
         SyrianArabRepublic,
 
-        [SerializationToken("TW")]
+        [EnumMember(Value = "TW")]
         Taiwan,
 
-        [SerializationToken("TJ")]
+        [EnumMember(Value = "TJ")]
         Tajikistan,
 
-        [SerializationToken("TZ")]
+        [EnumMember(Value = "TZ")]
         TanzaniaUnitedRepublicOf,
 
-        [SerializationToken("TH")]
+        [EnumMember(Value = "TH")]
         Thailand,
 
-        [SerializationToken("TL")]
+        [EnumMember(Value = "TL")]
         TimorLeste,
 
-        [SerializationToken("TG")]
+        [EnumMember(Value = "TG")]
         Togo,
 
-        [SerializationToken("TK")]
+        [EnumMember(Value = "TK")]
         Tokelau,
 
-        [SerializationToken("TO")]
+        [EnumMember(Value = "TO")]
         Tonga,
 
-        [SerializationToken("TT")]
+        [EnumMember(Value = "TT")]
         TrinidadAndTobago,
 
-        [SerializationToken("TN")]
+        [EnumMember(Value = "TN")]
         Tunisia,
 
-        [SerializationToken("TR")]
+        [EnumMember(Value = "TR")]
         Turkey,
 
-        [SerializationToken("TM")]
+        [EnumMember(Value = "TM")]
         Turkmenistan,
 
-        [SerializationToken("TC")]
+        [EnumMember(Value = "TC")]
         TurksAndCaicosIslands,
 
-        [SerializationToken("TV")]
+        [EnumMember(Value = "TV")]
         Tuvalu,
 
-        [SerializationToken("UG")]
+        [EnumMember(Value = "UG")]
         Uganda,
 
-        [SerializationToken("UA")]
+        [EnumMember(Value = "UA")]
         Ukraine,
 
-        [SerializationToken("AE")]
+        [EnumMember(Value = "AE")]
         UnitedArabEmirates,
 
-        [SerializationToken("GB")]
+        [EnumMember(Value = "GB")]
         UnitedKingdomOfGreatBritainAndNorthernIreland,
 
-        [SerializationToken("US")]
+        [EnumMember(Value = "US")]
         UnitedStatesOfAmerica,
 
-        [SerializationToken("UM")]
+        [EnumMember(Value = "UM")]
         UnitedStatesMinorOutlyingIslands,
 
-        [SerializationToken("UY")]
+        [EnumMember(Value = "UY")]
         Uruguay,
 
-        [SerializationToken("UZ")]
+        [EnumMember(Value = "UZ")]
         Uzbekistan,
 
-        [SerializationToken("VU")]
+        [EnumMember(Value = "VU")]
         Vanuatu,
 
-        [SerializationToken("VE")]
+        [EnumMember(Value = "VE")]
         VenezuelaBolivarianRepublicOf,
 
-        [SerializationToken("VN")]
+        [EnumMember(Value = "VN")]
         Vietnam,
 
-        [SerializationToken("VG")]
+        [EnumMember(Value = "VG")]
         VirginIslandsBritish,
 
-        [SerializationToken("VI")]
+        [EnumMember(Value = "VI")]
         VirginIslandsUS,
 
-        [SerializationToken("WF")]
+        [EnumMember(Value = "WF")]
         WallisAndFutuna,
 
-        [SerializationToken("EH")]
+        [EnumMember(Value = "EH")]
         WesternSahara,
 
-        [SerializationToken("YE")]
+        [EnumMember(Value = "YE")]
         Yemen,
 
-        [SerializationToken("ZM")]
+        [EnumMember(Value = "ZM")]
         Zambia,
 
-        [SerializationToken("ZW")]
+        [EnumMember(Value = "ZW")]
         Zimbabwe
     }
 }

@@ -13,11 +13,11 @@ namespace Questar.OneRoster.Data
         [MaxLength(256)]
         public virtual string Code { get; set; }
 
-        public virtual AcademicSession SchoolYear { get; set; } // TODO one-time only?
+        public virtual AcademicSession SchoolYear { get; set; }
 
         public virtual Guid SchoolYearId { get; private set; }
 
-        public virtual Org Org { get; set; } // TODO one-time only?
+        public virtual Org Org { get; set; }
 
         public virtual Guid OrgId { get; private set; }
 

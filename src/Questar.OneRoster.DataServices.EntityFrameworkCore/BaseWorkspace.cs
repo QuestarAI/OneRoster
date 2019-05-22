@@ -6,18 +6,18 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
     public class BaseWorkspace<TContext> : Workspace
         where TContext : DbContext
     {
-        public BaseWorkspace(TContext context)
-            => Context = context;
+        public BaseWorkspace(TContext context) =>
+            Context = context;
 
         protected TContext Context { get; }
 
-        public override void Save()
-            => Context.SaveChanges();
+        public override void Save() =>
+            Context.SaveChanges();
 
-        public override Task SaveAsync()
-            => Context.SaveChangesAsync();
+        public override Task SaveAsync() =>
+            Context.SaveChangesAsync();
 
-        public override void Dispose()
-            => Context.Dispose();
+        public override void Dispose() =>
+            Context.Dispose();
     }
 }

@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Serialization
 {
     using System;
+    using System.Collections;
     using System.Linq;
     using System.Reflection;
     using Newtonsoft.Json;
@@ -11,7 +12,7 @@ namespace Questar.OneRoster.Serialization
         public OneRosterContractResolver(Type type)
         {
             Type = type;
-            NamingStrategy = new OneRosterNamingStrategy { ProcessDictionaryKeys = true, OverrideSpecifiedNames = true };
+            NamingStrategy = new CamelCaseNamingStrategy { ProcessDictionaryKeys = true, OverrideSpecifiedNames = true };
         }
 
         public Type Type { get; }
@@ -20,8 +21,13 @@ namespace Questar.OneRoster.Serialization
         {
             var property = base.CreateProperty(member, memberSerialization);
             var attribute = member.GetCustomAttribute<OneRosterContractAttribute>();
-            if (attribute != null)
-                property.PropertyName = ResolvePropertyName(attribute.Pluralize ? Pluralize(Type.Name) : Type.Name);
+            if (attribute == null)
+                return property;
+            var propertyName =
+                typeof(ICollection).GetTypeInfo().IsAssignableFrom(property.PropertyType)
+                    ? Type.GetTypeInfo().GetCustomAttribute<OneRosterPluralizationAttribute>()?.Name ?? Pluralize(Type.Name)
+                    : Type.Name;
+            property.PropertyName = ResolvePropertyName(propertyName);
             return property;
         }
 

@@ -17,16 +17,16 @@ namespace Questar.OneRoster.Data.Services
         {
         }
 
-        public IQuery<Class> GetClassesForTerm(string academicSessionId)
-            => Context.Classes
+        public IQuery<Class> GetClassesForTerm(string academicSessionId) =>
+            Context.Classes
                 .Where(@class => @class.Terms.Select(term => term.AcademicSessionId).Contains(Guid.Parse(academicSessionId)))
                 .UseAsDataSource(Mapper)
                 .For<Class>()
                 .ToBaseQuery();
 
 
-        public IQuery<Models.AcademicSession> GetGradingPeriodsForTerm(string academicSessionId)
-            => Context.AcademicSessions
+        public IQuery<Models.AcademicSession> GetGradingPeriodsForTerm(string academicSessionId) =>
+            Context.AcademicSessions
                 .Where(session => session.ParentId == Guid.Parse(academicSessionId))
                 .UseAsDataSource(Mapper)
                 .For<Models.AcademicSession>()

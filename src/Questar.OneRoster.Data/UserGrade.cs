@@ -8,7 +8,8 @@ namespace Questar.OneRoster.Data
         {
         }
 
-        public UserGrade(Grade grade) => Grade = grade;
+        public UserGrade(Grade grade) =>
+            Grade = grade;
 
         public virtual User User { get; private set; }
 

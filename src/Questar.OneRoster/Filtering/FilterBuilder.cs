@@ -10,34 +10,34 @@ namespace Questar.OneRoster.Filtering
     {
         private readonly Stack<Filter> _filters = new Stack<Filter>();
 
-        public FilterBuilder(Expression expression)
-            => Expression = expression;
+        public FilterBuilder(Expression expression) =>
+            Expression = expression;
 
         public Expression Expression { get; }
 
-        public FilterBuilder<T> AndAlso(Expression left, Expression right)
-            => Logical(left, LogicalOperator.And, right);
+        public FilterBuilder<T> AndAlso(Expression left, Expression right) =>
+            Logical(left, LogicalOperator.And, right);
 
-        public FilterBuilder<T> Any(Expression property, Expression value)
-            => Predicate(property, PredicateOperator.Contains, value);
+        public FilterBuilder<T> Any(Expression property, Expression value) =>
+            Predicate(property, PredicateOperator.Contains, value);
 
-        public FilterBuilder<T> All(Expression property, Expression value)
-            => Predicate(property, PredicateOperator.Equal, value);
+        public FilterBuilder<T> All(Expression property, Expression value) =>
+            Predicate(property, PredicateOperator.Equal, value);
 
-        public FilterBuilder<T> Equal(Expression property, Expression value)
-            => Predicate(property, PredicateOperator.Equal, value);
+        public FilterBuilder<T> Equal(Expression property, Expression value) =>
+            Predicate(property, PredicateOperator.Equal, value);
 
-        public FilterBuilder<T> GreaterThan(Expression property, Expression value)
-            => Predicate(property, PredicateOperator.GreaterThan, value);
+        public FilterBuilder<T> GreaterThan(Expression property, Expression value) =>
+            Predicate(property, PredicateOperator.GreaterThan, value);
 
-        public FilterBuilder<T> GreaterThanOrEqual(Expression property, Expression value)
-            => Predicate(property, PredicateOperator.GreaterThanOrEqual, value);
+        public FilterBuilder<T> GreaterThanOrEqual(Expression property, Expression value) =>
+            Predicate(property, PredicateOperator.GreaterThanOrEqual, value);
 
-        public FilterBuilder<T> LessThan(Expression property, Expression value)
-            => Predicate(property, PredicateOperator.LessThan, value);
+        public FilterBuilder<T> LessThan(Expression property, Expression value) =>
+            Predicate(property, PredicateOperator.LessThan, value);
 
-        public FilterBuilder<T> LessThanOrEqual(Expression property, Expression value)
-            => Predicate(property, PredicateOperator.LessThanOrEqual, value);
+        public FilterBuilder<T> LessThanOrEqual(Expression property, Expression value) =>
+            Predicate(property, PredicateOperator.LessThanOrEqual, value);
 
         public FilterBuilder<T> Logical(Expression left, LogicalOperator @operator, Expression right)
         {
@@ -49,11 +49,11 @@ namespace Questar.OneRoster.Filtering
             return this;
         }
 
-        public FilterBuilder<T> NotEqual(Expression property, Expression value)
-            => Predicate(property, PredicateOperator.NotEqual, value);
+        public FilterBuilder<T> NotEqual(Expression property, Expression value) =>
+            Predicate(property, PredicateOperator.NotEqual, value);
 
-        public FilterBuilder<T> OrElse(Expression left, Expression right)
-            => Logical(left, LogicalOperator.Or, right);
+        public FilterBuilder<T> OrElse(Expression left, Expression right) =>
+            Logical(left, LogicalOperator.Or, right);
 
         public FilterBuilder<T> Predicate(Expression left, PredicateOperator @operator, Expression right)
         {
@@ -65,7 +65,8 @@ namespace Questar.OneRoster.Filtering
             return this;
         }
 
-        public Filter ToFilter() => _filters.Single();
+        public Filter ToFilter() =>
+            _filters.Single();
 
         public override Expression Visit(Expression node)
         {
@@ -89,8 +90,8 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        private bool IsTerminal(Expression expression)
-            => Expression?.Equals(expression) == true;
+        private bool IsTerminal(Expression expression) =>
+            Expression?.Equals(expression) == true;
 
         protected override Expression VisitBinary(BinaryExpression node)
         {
@@ -112,8 +113,10 @@ namespace Questar.OneRoster.Filtering
                 : null;
             switch (info)
             {
-                case MethodInfo all when all == FilterInfo.All: return All;
-                case MethodInfo any when any == FilterInfo.Any: return Any;
+                case MethodInfo all when all == FilterInfo.All:
+                    return All;
+                case MethodInfo any when any == FilterInfo.Any:
+                    return Any;
                 default:
                     throw new NotSupportedException($"Method call expression not supported '{node}'.");
             }
@@ -123,14 +126,22 @@ namespace Questar.OneRoster.Filtering
         {
             switch (node.NodeType)
             {
-                case ExpressionType.AndAlso: return AndAlso;
-                case ExpressionType.Equal: return Equal;
-                case ExpressionType.GreaterThan: return GreaterThan;
-                case ExpressionType.GreaterThanOrEqual: return GreaterThanOrEqual;
-                case ExpressionType.LessThan: return LessThan;
-                case ExpressionType.LessThanOrEqual: return LessThanOrEqual;
-                case ExpressionType.NotEqual: return NotEqual;
-                case ExpressionType.OrElse: return OrElse;
+                case ExpressionType.AndAlso:
+                    return AndAlso;
+                case ExpressionType.Equal:
+                    return Equal;
+                case ExpressionType.GreaterThan:
+                    return GreaterThan;
+                case ExpressionType.GreaterThanOrEqual:
+                    return GreaterThanOrEqual;
+                case ExpressionType.LessThan:
+                    return LessThan;
+                case ExpressionType.LessThanOrEqual:
+                    return LessThanOrEqual;
+                case ExpressionType.NotEqual:
+                    return NotEqual;
+                case ExpressionType.OrElse:
+                    return OrElse;
                 default:
                     throw new NotSupportedException($"Binary expression not supported '{node}'.");
             }
