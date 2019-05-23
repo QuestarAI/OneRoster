@@ -30,7 +30,7 @@ namespace Questar.OneRoster.Api.Controllers
         protected abstract IQuery<T> Query();
 
         [NonAction]
-        protected async Task<ActionResult<dynamic>> Select<TSource>(Func<IQuery<TSource>> querier, SelectParams @params)
+        protected async Task<ActionResult<Payload<dynamic[]>>> Select<TSource>(Func<IQuery<TSource>> querier, SelectParams @params)
         {
             var properties =
                 new HashSet<string>(typeof(TSource)
@@ -81,7 +81,7 @@ namespace Questar.OneRoster.Api.Controllers
                 statuses.Add(StatusInfo.InvalidOffsetField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(JsonConvert.SerializeObject(payload, settings));
+                return BadRequest(JsonConvert.SerializeObject(payload, Formatting.Indented, settings));
 
             IQuery query = querier();
 
@@ -115,7 +115,7 @@ namespace Questar.OneRoster.Api.Controllers
         }
 
         [NonAction]
-        protected virtual async Task<ActionResult<dynamic>> Single<TSource>(Func<IQuery<TSource>> querier, SingleParams @params)
+        protected virtual async Task<ActionResult<Payload<dynamic>>> Single<TSource>(Func<IQuery<TSource>> querier, SingleParams @params)
         {
             var properties =
                 new HashSet<string>(typeof(TSource)
@@ -141,7 +141,7 @@ namespace Questar.OneRoster.Api.Controllers
                     statuses.Add(StatusInfo.InvalidBlankSelectionField());
 
             if (statuses.Any(status => status.Severity == Severity.Error))
-                return BadRequest(JsonConvert.SerializeObject(payload, settings));
+                return BadRequest(JsonConvert.SerializeObject(payload, Formatting.Indented, settings));
 
             IQuery query = querier().WhereHasSourcedId(@params.SourcedId);
 
@@ -160,11 +160,11 @@ namespace Questar.OneRoster.Api.Controllers
         }
 
         [HttpGet]
-        public virtual Task<ActionResult<dynamic>> Select(SelectParams @params) =>
+        public virtual Task<ActionResult<Payload<dynamic[]>>> Select(SelectParams @params) =>
             Select(Query, @params);
 
         [HttpGet("{SourcedId}")]
-        public virtual Task<ActionResult<dynamic>> Single(SingleParams @params) =>
+        public virtual Task<ActionResult<Payload<dynamic>>> Single(SingleParams @params) =>
             Single(Query, @params);
     }
 }

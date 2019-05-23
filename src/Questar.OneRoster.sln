@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.App", "Qu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster", "Questar.OneRoster\Questar.OneRoster.csproj", "{E04ECA1C-37F6-40BC-8A71-8838D19615D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Client", "Questar.OneRoster.Client\Questar.OneRoster.Client.csproj", "{E3E167FE-74B7-45BF-BA70-43DBD9E263F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.ApiClient", "Questar.OneRoster.ApiClient\Questar.OneRoster.ApiClient.csproj", "{E3E167FE-74B7-45BF-BA70-43DBD9E263F1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EC1CCE21-CB53-4BA5-8B70-2F06A8FAFEF2}"
 	ProjectSection(SolutionItems) = preProject
