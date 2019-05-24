@@ -83,15 +83,17 @@ namespace Questar.OneRoster.Data.Services
                 Terms = { new ClassAcademicSession(term) },
                 LineItems = { item }
             };
-            var administrator = new User(UserType.Administrator)
+            var teacher = new User(UserType.Teacher)
             {
                 Email = "bwhite@gmail.com",
                 UserName = "bwhite@gmail.com",
                 GivenName = "Betty",
                 MiddleName = "Marion",
                 FamilyName = "White",
+                Grades = { new UserGrade(grade) },
+                Enrollments = { new Enrollment(@class) },
                 Ids = { new UserIdentifier("Foo", "7dd5300e-30a1-4f0e-a849-23a9ddc9ff3b") },
-                Orgs = { new UserOrg(district) }
+                Orgs = { new UserOrg(school) }
             };
             var student = new User(UserType.Student)
             {
@@ -101,7 +103,6 @@ namespace Questar.OneRoster.Data.Services
                 MiddleName = "James",
                 FamilyName = "Murray",
                 Demographics = { BirthDate = DateTime.UtcNow.AddYears(-12), Sex = Gender.Male },
-                Agents = { new UserAgent(administrator) },
                 Grades = { new UserGrade(grade) },
                 Enrollments = { new Enrollment(@class) },
                 Results = { new Result(item) { Score = 100, ScoreDate = DateTime.UtcNow, ScoreStatus = ResultScoreStatus.FullyGraded } },
@@ -109,6 +110,7 @@ namespace Questar.OneRoster.Data.Services
             };
 
             Context.Users.Add(student);
+            Context.Users.Add(teacher);
 
             Context.SaveChanges();
         }
