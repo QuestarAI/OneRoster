@@ -3,6 +3,7 @@ namespace Questar.OneRoster.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Class : IBaseObject
     {
@@ -28,11 +29,13 @@ namespace Questar.OneRoster.Data
 
         public virtual Course Course { get; set; }
 
-        public virtual Guid CourseId { get; private set; }
+        [Required]
+        public virtual string CourseId { get; private set; }
 
         public virtual Org School { get; set; }
 
-        public virtual Guid SchoolId { get; private set; }
+        [Required]
+        public virtual string SchoolId { get; private set; }
 
         public virtual ICollection<ClassGrade> Grades { get; } = new HashSet<ClassGrade>();
 
@@ -50,7 +53,8 @@ namespace Questar.OneRoster.Data
 
         #region Base Object
 
-        public virtual Guid Id { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual string Id { get; private set; } = Guid.NewGuid().ToString().Substring(0, 10);
 
         public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
 

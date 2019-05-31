@@ -3,9 +3,10 @@ namespace Questar.OneRoster.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Microsoft.AspNetCore.Identity;
 
-    public class User : IdentityUser<Guid>, IBaseObject
+    public class User : IdentityUser<string>, IBaseObject
     {
         public User(UserType type) =>
             Type = type;
@@ -56,7 +57,8 @@ namespace Questar.OneRoster.Data
         // students only
         public virtual ICollection<Result> Results { get; } = new HashSet<Result>();
 
-        public new Guid Id => base.Id;
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public override string Id { get; set; } = Guid.NewGuid().ToString().Substring(0, 10);
 
         #region Base Object
 

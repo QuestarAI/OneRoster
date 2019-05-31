@@ -1,6 +1,8 @@
 namespace Questar.OneRoster.Data
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Enrollment : IBaseObject
     {
@@ -17,18 +19,21 @@ namespace Questar.OneRoster.Data
 
         public virtual User User { get; private set; }
 
-        public virtual Guid UserId { get; private set; }
+        [Required]
+        public virtual string UserId { get; private set; }
 
         public virtual Class Class { get; private set; }
 
-        public virtual Guid ClassId { get; private set; }
+        [Required]
+        public virtual string ClassId { get; private set; }
 
         // applicable only to teachers
         public virtual bool? Primary { get; set; }
 
         #region Base Object
 
-        public virtual Guid Id { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual string Id { get; private set; } = Guid.NewGuid().ToString().Substring(0, 10);
 
         public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
 

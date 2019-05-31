@@ -1,12 +1,13 @@
 namespace Questar.OneRoster.Data.Services
 {
     using System;
+    using System.Linq;
     using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-    public class OneRosterDbContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IDataProtectionKeyContext
+    public class OneRosterDbContext : IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IDataProtectionKeyContext
     {
         // ReSharper disable once SuggestBaseTypeForParameter
         public OneRosterDbContext(DbContextOptions<OneRosterDbContext> options)
@@ -37,14 +38,6 @@ namespace Questar.OneRoster.Data.Services
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            foreach (var type in builder.Model.GetEntityTypes())
-                type.Relational().TableName = type.DisplayName();
-
-            // if (typeof(IBaseObject).IsAssignableFrom(type.ClrType))
-            //      type.FindProperty(nameof(IBaseObject.Modified)).SetValueGeneratorFactory((property, entity) => new TemporaryDateTimeValueGenerator());
-
-            // class
 
             builder
                 .Entity<Class>()
@@ -197,6 +190,9 @@ namespace Questar.OneRoster.Data.Services
             builder
                 .Entity<UserOrg>()
                 .HasKey(entity => new { entity.UserId, entity.OrgId });
+
+            foreach (var type in builder.Model.GetEntityTypes().Where(type => !type.IsOwned()))
+                builder.Entity(type.ClrType).ToTable(type.ClrType.Name);
         }
     }
 }

@@ -3,6 +3,7 @@ namespace Questar.OneRoster.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Org : IBaseObject
     {
@@ -36,7 +37,8 @@ namespace Questar.OneRoster.Data
 
         #region Base Object
 
-        public virtual Guid Id { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual string Id { get; private set; } = Guid.NewGuid().ToString().Substring(0, 10);
 
         public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
 

@@ -3,7 +3,7 @@ namespace Questar.OneRoster.Data
     using System;
     using Microsoft.AspNetCore.Identity;
 
-    public class RoleClaim : IdentityRoleClaim<Guid>
+    public class RoleClaim : IdentityRoleClaim<string>
     {
     }
 }

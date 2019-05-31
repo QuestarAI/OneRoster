@@ -18,49 +18,49 @@ namespace Questar.OneRoster.Data.Services
 
         public IQuery<LineItem> GetLineItemsForClass(string classId) =>
             Context.LineItems
-                .Where(item => item.ClassId == Guid.Parse(classId))
+                .Where(item => item.ClassId == classId)
                 .UseAsDataSource(Mapper)
                 .For<LineItem>()
                 .ToBaseQuery();
 
         public IQuery<Result> GetResultsForLineItemForClass(string classId, string lineItemId) =>
             Context.Results
-                .Where(result => result.LineItem.ClassId == Guid.Parse(lineItemId) && result.LineItemId == Guid.Parse(lineItemId))
+                .Where(result => result.LineItem.ClassId == lineItemId && result.LineItemId == lineItemId)
                 .UseAsDataSource(Mapper)
                 .For<Result>()
                 .ToBaseQuery();
 
         public IQuery<Resource> GetResourcesForClass(string classId) =>
             Context.Resources
-                .Where(resource => resource.Classes.Any(@class => @class.ClassId == Guid.Parse(classId)))
+                .Where(resource => resource.Classes.Any(@class => @class.ClassId == classId))
                 .UseAsDataSource(Mapper)
                 .For<Resource>()
                 .ToBaseQuery();
 
         public IQuery<Result> GetResultsForClass(string classId) =>
             Context.Results
-                .Where(result => result.LineItem.ClassId == Guid.Parse(classId))
+                .Where(result => result.LineItem.ClassId == classId)
                 .UseAsDataSource(Mapper)
                 .For<Result>()
                 .ToBaseQuery();
 
         public IQuery<User> GetStudentsForClass(string classId) =>
             Context.Users
-                .Where(user => user.Type == UserType.Student && user.Enrollments.Any(enrollment => enrollment.ClassId == Guid.Parse(classId)))
+                .Where(user => user.Type == UserType.Student && user.Enrollments.Any(enrollment => enrollment.ClassId == classId))
                 .UseAsDataSource(Mapper)
                 .For<User>()
                 .ToBaseQuery();
 
         public IQuery<Result> GetResultsForStudentForClass(string classId, string studentId) =>
             Context.Results
-                .Where(result => result.LineItem.ClassId == Guid.Parse(classId) && result.StudentId == Guid.Parse(studentId))
+                .Where(result => result.LineItem.ClassId == classId && result.StudentId == studentId)
                 .UseAsDataSource(Mapper)
                 .For<Result>()
                 .ToBaseQuery();
 
         public IQuery<User> GetTeachersForClass(string classId) =>
             Context.Users
-                .Where(user => user.Type == UserType.Teacher && user.Enrollments.Any(enrollment => enrollment.ClassId == Guid.Parse(classId)))
+                .Where(user => user.Type == UserType.Teacher && user.Enrollments.Any(enrollment => enrollment.ClassId == classId))
                 .UseAsDataSource(Mapper)
                 .For<User>()
                 .ToBaseQuery();

@@ -4,6 +4,6 @@ namespace Questar.OneRoster.Data
 
     public interface IBaseObject : IMetadataContainer, IModifiable, IDeletable
     {
-        Guid Id { get; }
+        string Id { get; }
     }
 }

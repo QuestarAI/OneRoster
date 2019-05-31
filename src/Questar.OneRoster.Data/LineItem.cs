@@ -3,6 +3,7 @@ namespace Questar.OneRoster.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class LineItem : IBaseObject
     {
@@ -19,15 +20,18 @@ namespace Questar.OneRoster.Data
 
         public virtual Class Class { get; private set; }
 
-        public virtual Guid ClassId { get; private set; }
+        [Required]
+        public virtual string ClassId { get; private set; }
 
         public virtual Category Category { get; set; }
 
-        public virtual Guid CategoryId { get; private set; }
+        [Required]
+        public virtual string CategoryId { get; private set; }
 
         public virtual AcademicSession GradingPeriod { get; set; }
 
-        public virtual Guid GradingPeriodId { get; private set; }
+        [Required]
+        public virtual string GradingPeriodId { get; private set; }
 
         public virtual IReadOnlyCollection<Result> Results { get; } = new HashSet<Result>();
 
@@ -39,7 +43,8 @@ namespace Questar.OneRoster.Data
 
         #region Base Object
 
-        public virtual Guid Id { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual string Id { get; private set; } = Guid.NewGuid().ToString().Substring(0, 10);
 
         public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
 

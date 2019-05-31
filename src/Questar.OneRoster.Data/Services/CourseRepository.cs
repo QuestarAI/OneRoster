@@ -18,14 +18,14 @@ namespace Questar.OneRoster.Data.Services
 
         public IQuery<Class> GetClassesForCourse(string courseId) =>
             Context.Classes
-                .Where(@class => @class.CourseId == Guid.Parse(courseId))
+                .Where(@class => @class.CourseId == courseId)
                 .UseAsDataSource(Mapper)
                 .For<Class>()
                 .ToBaseQuery();
 
         public IQuery<Resource> GetResourcesForCourse(string courseId) =>
             Context.Resources
-                .Where(resource => resource.Courses.Any(course => course.CourseId == Guid.Parse(courseId)))
+                .Where(resource => resource.Courses.Any(course => course.CourseId == courseId))
                 .UseAsDataSource(Mapper)
                 .For<Resource>()
                 .ToBaseQuery();

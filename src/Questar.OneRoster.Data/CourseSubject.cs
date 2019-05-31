@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Data
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class CourseSubject
     {
@@ -13,7 +14,8 @@ namespace Questar.OneRoster.Data
 
         public virtual Course Course { get; private set; }
 
-        public virtual Guid CourseId { get; private set; }
+        [Required]
+        public virtual string CourseId { get; private set; }
 
         public virtual Subject Subject { get; private set; }
 

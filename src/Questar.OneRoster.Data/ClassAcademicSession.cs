@@ -1,6 +1,6 @@
 namespace Questar.OneRoster.Data
 {
-    using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class ClassAcademicSession
     {
@@ -13,10 +13,12 @@ namespace Questar.OneRoster.Data
 
         public virtual Class Class { get; private set; }
 
-        public virtual Guid ClassId { get; private set; }
+        [Required]
+        public virtual string ClassId { get; private set; }
 
         public virtual AcademicSession AcademicSession { get; private set; }
 
-        public virtual Guid AcademicSessionId { get; private set; }
+        [Required]
+        public virtual string AcademicSessionId { get; private set; }
     }
 }

@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Data
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class ClassResource
     {
@@ -13,10 +14,12 @@ namespace Questar.OneRoster.Data
 
         public virtual Class Class { get; private set; }
 
-        public virtual Guid ClassId { get; private set; }
+        [Required]
+        public virtual string ClassId { get; private set; }
 
         public virtual Resource Resource { get; private set; }
 
-        public virtual Guid ResourceId { get; private set; }
+        [Required]
+        public virtual string ResourceId { get; private set; }
     }
 }

@@ -3,8 +3,7 @@ namespace Questar.OneRoster.Data
     using System;
     using Microsoft.AspNetCore.Identity;
 
-    public class UserClaim : IdentityUserClaim<Guid>
+    public class UserClaim : IdentityUserClaim<string>
     {
-        public new int Id => base.Id;
     }
 }

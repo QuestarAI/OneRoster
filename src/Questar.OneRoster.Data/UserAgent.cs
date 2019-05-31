@@ -1,6 +1,7 @@
 namespace Questar.OneRoster.Data
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class UserAgent
     {
@@ -13,10 +14,12 @@ namespace Questar.OneRoster.Data
 
         public virtual User User { get; private set; }
 
-        public virtual Guid UserId { get; private set; }
+        [Required]
+        public virtual string UserId { get; private set; }
 
         public virtual User Agent { get; private set; }
 
-        public virtual Guid AgentId { get; private set; }
+        [Required]
+        public virtual string AgentId { get; private set; }
     }
 }

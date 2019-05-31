@@ -10,14 +10,14 @@ using Questar.OneRoster.Data.Services;
 namespace Questar.OneRoster.Data.Migrations
 {
     [DbContext(typeof(OneRosterDbContext))]
-    [Migration("20181207224154_Create")]
+    [Migration("20190531220030_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-preview2-35157")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -38,8 +38,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.AcademicSession", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime?>("EndDate")
                         .IsRequired();
@@ -48,7 +47,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<Guid?>("ParentId");
+                    b.Property<string>("ParentId");
 
                     b.Property<int?>("SchoolYear")
                         .IsRequired();
@@ -75,8 +74,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Category", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<Guid?>("MetadataCollectionId");
 
@@ -96,13 +94,13 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Class", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Code")
                         .HasMaxLength(32);
 
-                    b.Property<Guid>("CourseId");
+                    b.Property<string>("CourseId")
+                        .IsRequired();
 
                     b.Property<string>("Location")
                         .HasMaxLength(256);
@@ -111,7 +109,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<Guid>("SchoolId");
+                    b.Property<string>("SchoolId")
+                        .IsRequired();
 
                     b.Property<int>("Status");
 
@@ -134,9 +133,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassAcademicSession", b =>
                 {
-                    b.Property<Guid>("ClassId");
+                    b.Property<string>("ClassId");
 
-                    b.Property<Guid>("AcademicSessionId");
+                    b.Property<string>("AcademicSessionId");
 
                     b.HasKey("ClassId", "AcademicSessionId");
 
@@ -147,7 +146,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassGrade", b =>
                 {
-                    b.Property<Guid>("ClassId");
+                    b.Property<string>("ClassId");
 
                     b.Property<Guid>("GradeId");
 
@@ -160,7 +159,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassPeriod", b =>
                 {
-                    b.Property<Guid>("ClassId");
+                    b.Property<string>("ClassId");
 
                     b.Property<string>("Period");
 
@@ -171,9 +170,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassResource", b =>
                 {
-                    b.Property<Guid>("ClassId");
+                    b.Property<string>("ClassId");
 
-                    b.Property<Guid>("ResourceId");
+                    b.Property<string>("ResourceId");
 
                     b.HasKey("ClassId", "ResourceId");
 
@@ -184,7 +183,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassSubject", b =>
                 {
-                    b.Property<Guid>("ClassId");
+                    b.Property<string>("ClassId");
 
                     b.Property<Guid>("SubjectId");
 
@@ -197,8 +196,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Course", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Code")
                         .HasMaxLength(256);
@@ -207,9 +205,11 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<Guid>("OrgId");
+                    b.Property<string>("OrgId")
+                        .IsRequired();
 
-                    b.Property<Guid>("SchoolYearId");
+                    b.Property<string>("SchoolYearId")
+                        .IsRequired();
 
                     b.Property<int>("Status");
 
@@ -230,7 +230,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.CourseGrade", b =>
                 {
-                    b.Property<Guid>("CourseId");
+                    b.Property<string>("CourseId");
 
                     b.Property<Guid>("GradeId");
 
@@ -243,9 +243,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.CourseResource", b =>
                 {
-                    b.Property<Guid>("CourseId");
+                    b.Property<string>("CourseId");
 
-                    b.Property<Guid>("ResourceId");
+                    b.Property<string>("ResourceId");
 
                     b.HasKey("CourseId", "ResourceId");
 
@@ -256,7 +256,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.CourseSubject", b =>
                 {
-                    b.Property<Guid>("CourseId");
+                    b.Property<string>("CourseId");
 
                     b.Property<Guid>("SubjectId");
 
@@ -269,7 +269,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Demographics", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<string>("Id");
 
                     b.Property<bool?>("AmericanIndianOrAlaskaNative");
 
@@ -301,7 +301,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<Guid?>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<bool?>("White");
 
@@ -316,12 +316,12 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Enrollment", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime?>("BeginDate");
 
-                    b.Property<Guid>("ClassId");
+                    b.Property<string>("ClassId")
+                        .IsRequired();
 
                     b.Property<DateTime?>("EndDate");
 
@@ -333,7 +333,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -363,22 +364,24 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.LineItem", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime?>("AssignDate")
                         .IsRequired();
 
-                    b.Property<Guid>("CategoryId");
+                    b.Property<string>("CategoryId")
+                        .IsRequired();
 
-                    b.Property<Guid>("ClassId");
+                    b.Property<string>("ClassId")
+                        .IsRequired();
 
                     b.Property<string>("Description");
 
                     b.Property<DateTime?>("DueDate")
                         .IsRequired();
 
-                    b.Property<Guid>("GradingPeriodId");
+                    b.Property<string>("GradingPeriodId")
+                        .IsRequired();
 
                     b.Property<Guid?>("MetadataCollectionId");
 
@@ -435,8 +438,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Org", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Identifier")
                         .HasMaxLength(256);
@@ -451,6 +453,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<Guid?>("ParentId");
 
+                    b.Property<string>("ParentId1");
+
                     b.Property<int>("Status");
 
                     b.Property<int>("Type");
@@ -461,15 +465,14 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.HasIndex("MetadataCollectionId");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentId1");
 
                     b.ToTable("Org");
                 });
 
             modelBuilder.Entity("Questar.OneRoster.Data.Resource", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("ApplicationId")
                         .HasMaxLength(256);
@@ -505,19 +508,23 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<int>("Role");
 
+                    b.Property<string>("ResourceId1");
+
                     b.HasKey("ResourceId", "Role");
+
+                    b.HasIndex("ResourceId1");
 
                     b.ToTable("ResourceRole");
                 });
 
             modelBuilder.Entity("Questar.OneRoster.Data.Result", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Comment");
 
-                    b.Property<Guid>("LineItemId");
+                    b.Property<string>("LineItemId")
+                        .IsRequired();
 
                     b.Property<Guid?>("MetadataCollectionId");
 
@@ -533,7 +540,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<Guid>("StudentId");
+                    b.Property<string>("StudentId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -548,8 +556,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Role", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -580,7 +587,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<Guid>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -609,8 +617,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.User", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<int>("AccessFailedCount");
 
@@ -691,9 +698,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserAgent", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<Guid>("AgentId");
+                    b.Property<string>("AgentId");
 
                     b.HasKey("UserId", "AgentId");
 
@@ -712,7 +719,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -723,7 +731,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserGrade", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<Guid>("GradeId");
 
@@ -736,7 +744,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserIdentifier", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("Type")
                         .HasMaxLength(256);
@@ -757,7 +765,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -768,9 +777,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserOrg", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<Guid>("OrgId");
+                    b.Property<string>("OrgId");
 
                     b.HasKey("UserId", "OrgId");
 
@@ -781,9 +790,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserRole", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<Guid>("RoleId");
+                    b.Property<string>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -794,7 +803,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserToken", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -1029,7 +1038,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.HasOne("Questar.OneRoster.Data.Org", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId1");
                 });
 
             modelBuilder.Entity("Questar.OneRoster.Data.Resource", b =>
@@ -1043,8 +1052,7 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     b.HasOne("Questar.OneRoster.Data.Resource", "Resource")
                         .WithMany("Roles")
-                        .HasForeignKey("ResourceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ResourceId1");
                 });
 
             modelBuilder.Entity("Questar.OneRoster.Data.Result", b =>

@@ -3,6 +3,8 @@ namespace Questar.OneRoster.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public class AcademicSession : IBaseObject
     {
@@ -28,7 +30,7 @@ namespace Questar.OneRoster.Data
 
         public virtual AcademicSession Parent { get; set; }
 
-        public virtual Guid? ParentId { get; private set; }
+        public virtual string ParentId { get; private set; }
 
         public virtual ICollection<AcademicSession> Children { get; } = new HashSet<AcademicSession>();
 
@@ -43,7 +45,8 @@ namespace Questar.OneRoster.Data
 
         #region Base Object
 
-        public virtual Guid Id { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual string Id { get; private set; } = Guid.NewGuid().ToString().Substring(0, 10);
 
         public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
 
