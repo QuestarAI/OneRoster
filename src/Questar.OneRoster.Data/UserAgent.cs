@@ -1,25 +1,22 @@
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
     public class UserAgent
     {
-        private UserAgent()
+        internal UserAgent()
         {
         }
 
-        public UserAgent(User agent) =>
+        public UserAgent(User agent)
+        {
             Agent = agent;
+        }
 
-        public virtual User User { get; private set; }
+        public virtual User User { get; internal set; }
 
-        [Required]
-        public virtual string UserId { get; private set; }
+        public virtual int UserId { get; internal set; }
 
-        public virtual User Agent { get; private set; }
+        public virtual User Agent { get; internal set; }
 
-        [Required]
-        public virtual string AgentId { get; private set; }
+        public virtual int AgentId { get; internal set; }
     }
 }

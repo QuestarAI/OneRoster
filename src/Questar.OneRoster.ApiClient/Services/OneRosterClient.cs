@@ -1,9 +1,9 @@
+using System;
+using Flurl.Http;
+using JetBrains.Annotations;
+
 namespace Questar.OneRoster.ApiClient.Services
 {
-    using System;
-    using Flurl.Http;
-    using JetBrains.Annotations;
-
     public class OneRosterClient : IDisposable
     {
         public OneRosterClient([NotNull] IFlurlClient http)

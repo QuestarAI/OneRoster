@@ -1,21 +1,25 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     public struct LogicalOperator
     {
         public static readonly LogicalOperator And = new LogicalOperator(LogicalOperatorString.And);
 
         public static readonly LogicalOperator Or = new LogicalOperator(LogicalOperatorString.Or);
 
-        private LogicalOperator(string symbol) =>
+        private LogicalOperator(string symbol)
+        {
             Symbol = symbol;
+        }
 
         public string Symbol { get; }
 
-        public static implicit operator string(LogicalOperator @operator) =>
-            @operator.Symbol;
+        public static implicit operator string(LogicalOperator @operator)
+        {
+            return @operator.Symbol;
+        }
 
         public static IEnumerable<LogicalOperator> Values
         {
@@ -26,13 +30,19 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        public static LogicalOperator Parse(string symbol) =>
-            Values.Single(value => value.Symbol == symbol);
+        public static LogicalOperator Parse(string symbol)
+        {
+            return Values.Single(value => value.Symbol == symbol);
+        }
 
-        public static bool TryParse(string symbol, out LogicalOperator @operator) =>
-            (@operator = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(LogicalOperator);
+        public static bool TryParse(string symbol, out LogicalOperator @operator)
+        {
+            return (@operator = Values.SingleOrDefault(value => value.Symbol == symbol)) != default(LogicalOperator);
+        }
 
-        public override string ToString() =>
-            Symbol;
+        public override string ToString()
+        {
+            return Symbol;
+        }
     }
 }

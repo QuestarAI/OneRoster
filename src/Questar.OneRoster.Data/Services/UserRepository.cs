@@ -1,14 +1,11 @@
+using System.Linq;
+using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.DataServices.EntityFrameworkCore;
+
 namespace Questar.OneRoster.Data.Services
 {
-    using System;
-    using System.Linq;
-    using AutoMapper;
-    using AutoMapper.Extensions.ExpressionMapping;
-    using DataServices;
-    using DataServices.EntityFrameworkCore;
-    using Models;
-    using User = Data.User;
-
     public class UserRepository : BaseObjectRepository<Models.User, User>, IUserRepository
     {
         public UserRepository(OneRosterDbContext context, IMapper mapper)
@@ -16,11 +13,13 @@ namespace Questar.OneRoster.Data.Services
         {
         }
 
-        public IQuery<Class> GetClassesForUser(string userId) =>
-            Context.Classes
-                .Where(@class => @class.Enrollments.Any(enrollment => enrollment.UserId == userId))
+        public IQuery<Models.Class> GetClassesForUser(string userId)
+        {
+            return Context.Classes
+                .Where(@class => @class.Enrollments.Any(enrollment => enrollment.UserId == int.Parse(userId)))
                 .UseAsDataSource(Mapper)
-                .For<Class>()
+                .For<Models.Class>()
                 .ToBaseQuery();
+        }
     }
 }

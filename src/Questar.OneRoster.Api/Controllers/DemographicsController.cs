@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Api.Controllers
 {
-    using DataServices;
-    using Microsoft.AspNetCore.Mvc;
-    using OneRoster.Models;
-
     [Route("ims/oneroster/v1p1/demographics")]
     public class DemographicsController : BaseController<Demographics>
     {
@@ -11,7 +11,9 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<Demographics> Query() =>
-            Workspace.Demographics.AsQuery();
+        protected override IQuery<Demographics> Query()
+        {
+            return Workspace.Demographics.AsQuery();
+        }
     }
 }

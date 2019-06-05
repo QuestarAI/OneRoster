@@ -1,8 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
     public class UserIdentifier
     {
         public UserIdentifier(string type, string identifier)
@@ -11,21 +10,16 @@ namespace Questar.OneRoster.Data
             Identifier = identifier;
         }
 
-        private UserIdentifier()
+        internal UserIdentifier()
         {
         }
 
-        public virtual User User { get; private set; }
+        public virtual User User { get; internal set; }
 
-        [Required]
-        public virtual string UserId { get; private set; }
+        public virtual int UserId { get; internal set; }
 
-        [Required]
-        [MaxLength(256)]
-        public virtual string Type { get; private set; }
+        [Required] [MaxLength(256)] public virtual string Type { get; internal set; }
 
-        [Required]
-        [MaxLength(256)]
-        public virtual string Identifier { get; private set; }
+        [Required] [MaxLength(256)] public virtual string Identifier { get; internal set; }
     }
 }

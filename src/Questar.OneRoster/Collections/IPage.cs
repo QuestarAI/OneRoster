@@ -1,7 +1,7 @@
+using System.Collections;
+
 namespace Questar.OneRoster.Collections
 {
-    using System.Collections;
-
     public interface IPage
     {
         int Count { get; }

@@ -1,12 +1,12 @@
+using System;
+using System.Linq;
+using Questar.OneRoster.Sorting;
+using Questar.OneRoster.Test.Comparers;
+using Questar.OneRoster.Test.Mocks;
+using Xunit;
+
 namespace Questar.OneRoster.Test
 {
-    using System;
-    using System.Linq;
-    using Comparers;
-    using Mocks;
-    using Sorting;
-    using Xunit;
-
     public class SortTest
     {
         [Fact]

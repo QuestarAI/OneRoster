@@ -1,7 +1,7 @@
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.DataServices
 {
-    using Models;
-
     public interface IClassRepository : IRepository<Class>
     {
         IQuery<LineItem> GetLineItemsForClass(string classId);

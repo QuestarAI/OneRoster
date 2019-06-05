@@ -1,7 +1,7 @@
+using System;
+
 namespace Questar.OneRoster.Models
 {
-    using System;
-
     public class LineItem : Base
     {
         public string Title { get; set; }

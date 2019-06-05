@@ -1,8 +1,8 @@
+using AutoMapper;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Data.Profiles
 {
-    using AutoMapper;
-    using Models;
-
     public abstract class BaseProfile<TSource, TTarget> : Profile
         where TSource : IBaseObject
         where TTarget : Base

@@ -1,15 +1,15 @@
+using System;
+using System.Reflection;
+using AutoMapper;
+using AutoMapper.EquivalencyExpression;
+using AutoMapper.Extensions.ExpressionMapping;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Questar.OneRoster.Data.Services;
+using Questar.OneRoster.DataServices;
+
 namespace Questar.OneRoster.Data.Extensions
 {
-    using System;
-    using System.Reflection;
-    using AutoMapper;
-    using AutoMapper.EquivalencyExpression;
-    using AutoMapper.Extensions.ExpressionMapping;
-    using DataServices;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Services;
-
     public static class OneRosterServiceCollectionExtensions
     {
         public static void AddOneRoster(this IServiceCollection services, string connectionString)

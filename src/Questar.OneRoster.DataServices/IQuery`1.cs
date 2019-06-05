@@ -1,11 +1,11 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Questar.OneRoster.Collections;
+using Questar.OneRoster.Filtering;
+using Questar.OneRoster.Sorting;
+
 namespace Questar.OneRoster.DataServices
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Collections;
-    using OneRoster.Filtering;
-    using Sorting;
-
     public interface IQuery<T> : IQuery
     {
         new IQuery<T> Sort(string field, SortDirection? direction = SortDirection.Asc);

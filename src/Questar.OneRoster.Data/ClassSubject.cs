@@ -1,24 +1,22 @@
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
     public class ClassSubject
     {
-        public ClassSubject(Subject subject) =>
-            Subject = subject;
-
-        private ClassSubject()
+        internal ClassSubject()
         {
         }
 
-        public virtual Class Class { get; private set; }
+        public ClassSubject(Subject subject)
+        {
+            Subject = subject;
+        }
 
-        [Required]
-        public virtual string ClassId { get; private set; }
+        public virtual Class Class { get; internal set; }
 
-        public virtual Subject Subject { get; private set; }
+        public virtual int ClassId { get; internal set; }
 
-        public virtual Guid SubjectId { get; private set; }
+        public virtual Subject Subject { get; internal set; }
+
+        public virtual int SubjectId { get; internal set; }
     }
 }

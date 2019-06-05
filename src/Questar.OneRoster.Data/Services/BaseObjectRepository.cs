@@ -1,12 +1,12 @@
+using System.Linq;
+using AutoMapper;
+using AutoMapper.EntityFrameworkCore;
+using AutoMapper.Extensions.ExpressionMapping;
+using Questar.OneRoster.DataServices.EntityFrameworkCore;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Data.Services
 {
-    using System.Linq;
-    using AutoMapper;
-    using AutoMapper.EntityFrameworkCore;
-    using AutoMapper.Extensions.ExpressionMapping;
-    using DataServices.EntityFrameworkCore;
-    using Models;
-
     public class BaseObjectRepository<TModel, TSource> : BaseRepository<TModel, TSource>
         where TModel : Base
         where TSource : class, IBaseObject

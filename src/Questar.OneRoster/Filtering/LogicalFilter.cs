@@ -1,8 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     public sealed class LogicalFilter : Filter
     {
         public LogicalFilter(Filter left, LogicalOperator logical, Filter right)
@@ -18,10 +18,14 @@ namespace Questar.OneRoster.Filtering
 
         public Filter Right { get; }
 
-        public override IEnumerable<FilterProperty> GetProperties() =>
-            Left.GetProperties().Concat(Right.GetProperties());
+        public override IEnumerable<FilterProperty> GetProperties()
+        {
+            return Left.GetProperties().Concat(Right.GetProperties());
+        }
 
-        public override void Accept(FilterVisitor visitor) =>
+        public override void Accept(FilterVisitor visitor)
+        {
             visitor.Visit(this);
+        }
     }
 }

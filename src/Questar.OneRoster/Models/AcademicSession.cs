@@ -1,9 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Questar.OneRoster.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     public class AcademicSession : Base
     {
         public string Title { get; set; }

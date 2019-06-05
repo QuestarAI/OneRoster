@@ -1,25 +1,22 @@
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
     public class UserOrg
     {
-        private UserOrg()
+        internal UserOrg()
         {
         }
 
-        public UserOrg(Org org) =>
+        public UserOrg(Org org)
+        {
             Org = org;
+        }
 
-        public virtual User User { get; private set; }
+        public virtual User User { get; internal set; }
 
-        [Required]
-        public virtual string UserId { get; private set; }
+        public virtual int UserId { get; internal set; }
 
-        public virtual Org Org { get; private set; }
+        public virtual Org Org { get; internal set; }
 
-        [Required]
-        public virtual string OrgId { get; private set; }
+        public virtual int OrgId { get; internal set; }
     }
 }

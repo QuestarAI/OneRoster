@@ -1,11 +1,11 @@
+using System;
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Questar.OneRoster.Api.Helpers;
+
 namespace Questar.OneRoster.Api.Extensions
 {
-    using System;
-    using System.Reflection;
-    using Helpers;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-
     public static class OneRosterApiMvcBuilderExtensions
     {
         public static IMvcBuilder AddOneRosterApi(this IMvcBuilder builder)

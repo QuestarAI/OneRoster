@@ -1,7 +1,7 @@
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.DataServices
 {
-    using Models;
-
     public interface ISchoolRepository : IRepository<Org>
     {
         IQuery<Course> GetCoursesForSchool(string orgId);

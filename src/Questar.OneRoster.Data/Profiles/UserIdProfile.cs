@@ -1,8 +1,8 @@
+using AutoMapper;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Data.Profiles
 {
-    using AutoMapper;
-    using Models;
-
     public class UserIdProfile : Profile
     {
         public UserIdProfile()

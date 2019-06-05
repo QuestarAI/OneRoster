@@ -1,39 +1,51 @@
+using System.Linq;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
 namespace Questar.OneRoster.Data.Services
 {
-    using System;
-    using System.Linq;
-    using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
-    public class OneRosterDbContext : IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IDataProtectionKeyContext
+    public class OneRosterDbContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IDataProtectionKeyContext
     {
+        public OneRosterDbContext()
+        {
+        }
+
         // ReSharper disable once SuggestBaseTypeForParameter
         public OneRosterDbContext(DbContextOptions<OneRosterDbContext> options)
             : base(options)
         {
         }
 
-        public DbSet<AcademicSession> AcademicSessions { get; private set; }
+        public DbSet<AcademicSession> AcademicSessions { get; internal set; }
 
-        public DbSet<Category> Categories { get; private set; }
+        public DbSet<Category> Categories { get; internal set; }
 
-        public DbSet<Class> Classes { get; private set; }
+        public DbSet<Class> Classes { get; internal set; }
 
-        public DbSet<Course> Courses { get; private set; }
+        public DbSet<Course> Courses { get; internal set; }
 
-        public DbSet<Enrollment> Enrollments { get; private set; }
+        public DbSet<Enrollment> Enrollments { get; internal set; }
 
-        public DbSet<LineItem> LineItems { get; private set; }
+        public DbSet<LineItem> LineItems { get; internal set; }
 
-        public DbSet<Org> Orgs { get; private set; }
+        public DbSet<Org> Orgs { get; internal set; }
 
-        public DbSet<Resource> Resources { get; private set; }
+        public DbSet<Resource> Resources { get; internal set; }
 
-        public DbSet<Result> Results { get; private set; }
+        public DbSet<Result> Results { get; internal set; }
 
-        public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
+        public DbSet<Subject> Subjects { get; internal set; }
+
+        public DbSet<Grade> Grades { get; internal set; }
+
+        public DbSet<DataProtectionKey> DataProtectionKeys { get; internal set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            options.UseSqlServer(@"Data Source=.;Initial Catalog=OneRoster;Integrated Security=True");
+            //options.EnableSensitiveDataLogging();
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -50,7 +62,7 @@ namespace Questar.OneRoster.Data.Services
 
             builder
                 .Entity<ClassAcademicSession>()
-                .HasKey(entity => new { entity.ClassId, entity.AcademicSessionId });
+                .HasKey(entity => new {entity.ClassId, entity.AcademicSessionId});
 
             builder
                 .Entity<ClassAcademicSession>()
@@ -63,43 +75,43 @@ namespace Questar.OneRoster.Data.Services
 
             builder
                 .Entity<ClassGrade>()
-                .HasKey(entity => new { entity.ClassId, entity.GradeId });
+                .HasKey(entity => new {entity.ClassId, entity.GradeId});
 
             // class period
 
             builder
                 .Entity<ClassPeriod>()
-                .HasKey(entity => new { entity.ClassId, entity.Period });
+                .HasKey(entity => new {entity.ClassId, entity.Period});
 
             // class resource
 
             builder
                 .Entity<ClassResource>()
-                .HasKey(entity => new { entity.ClassId, entity.ResourceId });
+                .HasKey(entity => new {entity.ClassId, entity.ResourceId});
 
             // class subject
 
             builder
                 .Entity<ClassSubject>()
-                .HasKey(entity => new { entity.ClassId, entity.SubjectId });
+                .HasKey(entity => new {entity.ClassId, entity.SubjectId});
 
             // course grade
 
             builder
                 .Entity<CourseGrade>()
-                .HasKey(entity => new { entity.CourseId, entity.GradeId });
+                .HasKey(entity => new {entity.CourseId, entity.GradeId});
 
             // course resource
 
             builder
                 .Entity<CourseResource>()
-                .HasKey(entity => new { entity.CourseId, entity.ResourceId });
+                .HasKey(entity => new {entity.CourseId, entity.ResourceId});
 
             // course subject
 
             builder
                 .Entity<CourseSubject>()
-                .HasKey(entity => new { entity.CourseId, entity.SubjectId });
+                .HasKey(entity => new {entity.CourseId, entity.SubjectId});
 
             // demographics
 
@@ -128,7 +140,7 @@ namespace Questar.OneRoster.Data.Services
 
             builder
                 .Entity<Metadata>()
-                .HasKey(entity => new { entity.CollectionId, entity.Key });
+                .HasKey(entity => new {entity.CollectionId, entity.Key});
 
             // orgs
 
@@ -140,7 +152,7 @@ namespace Questar.OneRoster.Data.Services
 
             builder
                 .Entity<ResourceRole>()
-                .HasKey(entity => new { entity.ResourceId, entity.Role });
+                .HasKey(entity => new {entity.ResourceId, entity.Role});
 
             // subject
 
@@ -158,7 +170,7 @@ namespace Questar.OneRoster.Data.Services
 
             builder
                 .Entity<UserAgent>()
-                .HasKey(entity => new { entity.UserId, entity.AgentId });
+                .HasKey(entity => new {entity.UserId, entity.AgentId});
 
             builder
                 .Entity<UserAgent>()
@@ -177,19 +189,19 @@ namespace Questar.OneRoster.Data.Services
 
             builder
                 .Entity<UserGrade>()
-                .HasKey(entity => new { entity.UserId, entity.GradeId });
+                .HasKey(entity => new {entity.UserId, entity.GradeId});
 
             // user identifier
 
             builder
                 .Entity<UserIdentifier>()
-                .HasKey(entity => new { entity.UserId, entity.Type, entity.Identifier });
+                .HasKey(entity => new {entity.UserId, entity.Type, entity.Identifier});
 
             // user orgs
 
             builder
                 .Entity<UserOrg>()
-                .HasKey(entity => new { entity.UserId, entity.OrgId });
+                .HasKey(entity => new {entity.UserId, entity.OrgId});
 
             foreach (var type in builder.Model.GetEntityTypes().Where(type => !type.IsOwned()))
                 builder.Entity(type.ClrType).ToTable(type.ClrType.Name);

@@ -1,7 +1,7 @@
+using System;
+
 namespace Questar.OneRoster.Models
 {
-    using System;
-
     public class Enrollment : Base
     {
         public GuidRef User { get; set; }

@@ -1,13 +1,13 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
     public sealed class FilterValueBuilder : ExpressionVisitor
     {
         public FilterValueBuilder(PropertyInfo property, Expression expression)
@@ -44,8 +44,10 @@ namespace Questar.OneRoster.Filtering
             return getter();
         }
 
-        private bool IsTerminal(Expression expression) =>
-            Expression?.Equals(expression) == true;
+        private bool IsTerminal(Expression expression)
+        {
+            return Expression?.Equals(expression) == true;
+        }
 
         private string FormatScalar(object value)
         {
@@ -79,10 +81,12 @@ namespace Questar.OneRoster.Filtering
             throw new InvalidOperationException($"Value '{value}' does not implement '{typeof(IEnumerable).Name}'.");
         }
 
-        private FilterValue GetValue(object value) =>
-            value is ICollection
+        private FilterValue GetValue(object value)
+        {
+            return value is ICollection
                 ? new FilterValue(FilterValueType.Vector, FormatVector(value))
                 : new FilterValue(FilterValueType.Scalar, FormatScalar(value));
+        }
 
         protected override Expression VisitConstant(ConstantExpression node)
         {

@@ -1,11 +1,11 @@
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Questar.OneRoster.Api.Models;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System.Threading.Tasks;
-    using DataServices;
-    using Microsoft.AspNetCore.Mvc;
-    using Models;
-    using OneRoster.Models;
-
     [Route("ims/oneroster/v1p1/results")]
     public class ResultsController : BaseController<Result>
     {
@@ -13,8 +13,10 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<Result> Query() =>
-            Workspace.Results.AsQuery();
+        protected override IQuery<Result> Query()
+        {
+            return Workspace.Results.AsQuery();
+        }
 
         [HttpPut("{SourcedId}")]
         public virtual async Task<ActionResult> Upsert(UpsertParams<Result> @params)

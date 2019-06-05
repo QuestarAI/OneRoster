@@ -1,18 +1,18 @@
+using System;
+using System.Collections;
+using System.Linq;
+using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
 namespace Questar.OneRoster.Serialization
 {
-    using System;
-    using System.Collections;
-    using System.Linq;
-    using System.Reflection;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
-
     public class OneRosterContractResolver : DefaultContractResolver
     {
         public OneRosterContractResolver(Type type)
         {
             Type = type;
-            NamingStrategy = new CamelCaseNamingStrategy { ProcessDictionaryKeys = true, OverrideSpecifiedNames = true };
+            NamingStrategy = new CamelCaseNamingStrategy {ProcessDictionaryKeys = true, OverrideSpecifiedNames = true};
         }
 
         public Type Type { get; }
@@ -33,7 +33,7 @@ namespace Questar.OneRoster.Serialization
 
         protected string Pluralize(string name)
         {
-            if (name.EndsWith("y") && !new[] { "a", "e", "i", "o", "u" }.Any(vowel => name.EndsWith(vowel + "y")))
+            if (name.EndsWith("y") && !new[] {"a", "e", "i", "o", "u"}.Any(vowel => name.EndsWith(vowel + "y")))
                 return name.Substring(0, name.Length - 1) + "ies";
             if (name.EndsWith("s"))
                 return name + "es";

@@ -1,13 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Threading.Tasks;
+using Questar.OneRoster.Collections;
+using Questar.OneRoster.Filtering;
+using Questar.OneRoster.Sorting;
+
 namespace Questar.OneRoster.DataServices
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Threading.Tasks;
-    using Collections;
-    using OneRoster.Filtering;
-    using Sorting;
-
     public interface IQuery
     {
         IQuery<dynamic> Select(IEnumerable<string> fields);

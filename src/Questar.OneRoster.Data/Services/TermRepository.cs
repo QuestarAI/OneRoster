@@ -1,15 +1,11 @@
+using System.Linq;
+using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.DataServices.EntityFrameworkCore;
+
 namespace Questar.OneRoster.Data.Services
 {
-    using System;
-    using System.Linq;
-    using AutoMapper;
-    using AutoMapper.Extensions.ExpressionMapping;
-    using DataServices;
-    using DataServices.EntityFrameworkCore;
-    using Models;
-    using AcademicSession = Data.AcademicSession;
-    using AcademicSessionType = Data.AcademicSessionType;
-
     public class TermRepository : BaseObjectRepository<Models.AcademicSession, AcademicSession>, ITermRepository
     {
         public TermRepository(OneRosterDbContext context, IMapper mapper)
@@ -17,19 +13,23 @@ namespace Questar.OneRoster.Data.Services
         {
         }
 
-        public IQuery<Class> GetClassesForTerm(string academicSessionId) =>
-            Context.Classes
-                .Where(@class => @class.Terms.Any(term => term.AcademicSessionId == academicSessionId))
+        public IQuery<Models.Class> GetClassesForTerm(string academicSessionId)
+        {
+            return Context.Classes
+                .Where(@class => @class.Terms.Any(term => term.AcademicSessionId == int.Parse(academicSessionId)))
                 .UseAsDataSource(Mapper)
-                .For<Class>()
+                .For<Models.Class>()
                 .ToBaseQuery();
+        }
 
 
-        public IQuery<Models.AcademicSession> GetGradingPeriodsForTerm(string academicSessionId) =>
-            Context.AcademicSessions
-                .Where(session => session.ParentId ==academicSessionId)
+        public IQuery<Models.AcademicSession> GetGradingPeriodsForTerm(string academicSessionId)
+        {
+            return Context.AcademicSessions
+                .Where(session => session.ParentId == int.Parse(academicSessionId))
                 .UseAsDataSource(Mapper)
                 .For<Models.AcademicSession>()
                 .ToBaseQuery();
+        }
     }
 }

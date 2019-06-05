@@ -1,11 +1,11 @@
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper.EntityFrameworkCore;
+using AutoMapper.Extensions.ExpressionMapping.Impl;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 {
-    using System.Linq;
-    using System.Threading.Tasks;
-    using AutoMapper.EntityFrameworkCore;
-    using AutoMapper.Extensions.ExpressionMapping.Impl;
-    using Models;
-
     public class BaseRepository<TModel, TSource> : Repository<TModel>
         where TModel : Base
     {
@@ -31,10 +31,14 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
             return Task.CompletedTask;
         }
 
-        public override IQueryable<TModel> AsQueryable() =>
-            Source;
+        public override IQueryable<TModel> AsQueryable()
+        {
+            return Source;
+        }
 
-        public override IQuery<TModel> AsQuery() =>
-            new BaseQuery<TModel>(Source);
+        public override IQuery<TModel> AsQuery()
+        {
+            return new BaseQuery<TModel>(Source);
+        }
     }
 }

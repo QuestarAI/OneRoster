@@ -1,9 +1,9 @@
+using AutoMapper;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.DataServices.EntityFrameworkCore;
+
 namespace Questar.OneRoster.Data.Services
 {
-    using AutoMapper;
-    using DataServices;
-    using DataServices.EntityFrameworkCore;
-
     public class OneRosterWorkspace : BaseWorkspace<OneRosterDbContext>, IOneRosterWorkspace
     {
         public OneRosterWorkspace(OneRosterDbContext context, IMapper mapper) : base(context)

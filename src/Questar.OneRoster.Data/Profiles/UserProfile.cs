@@ -1,9 +1,8 @@
+using System.Linq;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Data.Profiles
 {
-    using System.Linq;
-    using Models;
-    using User = Data.User;
-
     public class UserProfile : BaseProfile<User, Models.User>
     {
         public UserProfile()

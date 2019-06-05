@@ -1,11 +1,11 @@
+using System;
+using System.Linq;
+using System.Text;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+
 namespace Questar.OneRoster.Api.Helpers
 {
-    using System;
-    using System.Linq;
-    using System.Text;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Options;
-
     public class LinkHeaderFactory
     {
         public LinkHeaderFactory(IHttpContextAccessor httpContextAccessor, IOptions<LinkHeaderFactoryOptions> options)

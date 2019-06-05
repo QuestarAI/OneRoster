@@ -1,8 +1,8 @@
+using System;
+using Questar.OneRoster.Serialization;
+
 namespace Questar.OneRoster.Models
 {
-    using System;
-    using Serialization;
-
     [OneRosterPluralization("Demographics")]
     public class Demographics : Base
     {

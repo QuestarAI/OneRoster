@@ -1,11 +1,11 @@
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Questar.OneRoster.Api.Models;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System.Threading.Tasks;
-    using DataServices;
-    using Microsoft.AspNetCore.Mvc;
-    using Models;
-    using OneRoster.Models;
-
     [Route("ims/oneroster/v1p1/categories")]
     public class CategoriesController : BaseController<Category>
     {
@@ -13,8 +13,10 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<Category> Query() =>
-            Workspace.Categories.AsQuery();
+        protected override IQuery<Category> Query()
+        {
+            return Workspace.Categories.AsQuery();
+        }
 
         [HttpPut("{SourcedId}")]
         public virtual async Task<ActionResult> Upsert(UpsertParams<Category> @params)

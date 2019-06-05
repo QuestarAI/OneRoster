@@ -1,28 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Questar.OneRoster.Api.Helpers;
+using Questar.OneRoster.Api.Models;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.Filtering;
+using Questar.OneRoster.Models;
+using Questar.OneRoster.Payloads;
+using Questar.OneRoster.Serialization;
+using Questar.OneRoster.Sorting;
+
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using System.Threading.Tasks;
-    using DataServices;
-    using Filtering;
-    using Helpers;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.DependencyInjection;
-    using Models;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using OneRoster.Models;
-    using Payloads;
-    using Serialization;
-    using Sorting;
-
     [Produces("application/json")]
     public abstract class BaseController<T> : ControllerBase where T : Base
     {
-        protected BaseController(IOneRosterWorkspace workspace) =>
+        protected BaseController(IOneRosterWorkspace workspace)
+        {
             Workspace = workspace;
+        }
 
         protected IOneRosterWorkspace Workspace { get; }
 
@@ -37,14 +39,14 @@ namespace Questar.OneRoster.Api.Controllers
                     .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                     .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
             var resolver = new OneRosterContractResolver(typeof(TSource));
-            var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
+            var settings = new JsonSerializerSettings {ContractResolver = resolver, Converters = {new StringEnumConverter()}};
 
             var statuses = new StatusInfoList();
-            var payload = new Payload<dynamic[]> { Statuses = statuses };
+            var payload = new Payload<dynamic[]> {Statuses = statuses};
 
             var fields =
                 @params.Fields?
-                    .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
                     .Select(field => field.Trim())
                     .ToList();
             if (fields != null)
@@ -122,14 +124,14 @@ namespace Questar.OneRoster.Api.Controllers
                     .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                     .Select(info => info.Name), StringComparer.OrdinalIgnoreCase);
             var resolver = new OneRosterContractResolver(typeof(TSource));
-            var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
+            var settings = new JsonSerializerSettings {ContractResolver = resolver, Converters = {new StringEnumConverter()}};
 
             var statuses = new StatusInfoList();
-            var payload = new Payload<dynamic> { Statuses = statuses };
+            var payload = new Payload<dynamic> {Statuses = statuses};
 
             var fields =
                 @params.Fields?
-                    .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
                     .Select(field => field.Trim())
                     .ToList();
             if (fields != null)
@@ -160,11 +162,15 @@ namespace Questar.OneRoster.Api.Controllers
         }
 
         [HttpGet]
-        public virtual Task<ActionResult<Payload<dynamic[]>>> Select(SelectParams @params) =>
-            Select(Query, @params);
+        public virtual Task<ActionResult<Payload<dynamic[]>>> Select(SelectParams @params)
+        {
+            return Select(Query, @params);
+        }
 
         [HttpGet("{SourcedId}")]
-        public virtual Task<ActionResult<Payload<dynamic>>> Single(SingleParams @params) =>
-            Single(Query, @params);
+        public virtual Task<ActionResult<Payload<dynamic>>> Single(SingleParams @params)
+        {
+            return Single(Query, @params);
+        }
     }
 }

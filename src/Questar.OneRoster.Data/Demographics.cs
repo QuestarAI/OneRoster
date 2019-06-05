@@ -1,15 +1,14 @@
+using System;
+
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.ComponentModel.DataAnnotations.Schema;
-
     public class Demographics : IBaseObject
     {
         internal Demographics()
         {
         }
 
-        public virtual User User { get; private set; }
+        public virtual User User { get; internal set; }
 
         public virtual DateTime? BirthDate { get; set; }
 
@@ -42,16 +41,15 @@ namespace Questar.OneRoster.Data
 
         #region Base Object
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public virtual string Id { get; private set; } = Guid.NewGuid().ToString().Substring(0, 10);
+        public virtual int Id { get; internal set; }
 
-        public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
+        public virtual MetadataCollection MetadataCollection { get; set; }
 
-        public virtual Guid? MetadataCollectionId { get; private set; }
+        public virtual int? MetadataCollectionId { get; internal set; }
 
-        public virtual Status Status { get; private set; }
+        public virtual Status Status { get; internal set; }
 
-        public virtual DateTime Modified { get; private set; }
+        public virtual DateTime Modified { get; internal set; }
 
         #endregion
     }

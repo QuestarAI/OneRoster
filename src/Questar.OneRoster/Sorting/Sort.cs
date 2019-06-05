@@ -1,10 +1,10 @@
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Questar.OneRoster.Sorting
 {
-    using System;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
     public static class Sort
     {
         internal static readonly MethodInfo Info =
@@ -38,7 +38,7 @@ namespace Questar.OneRoster.Sorting
 
             return (IOrderedQueryable<TSource>)
                 Info.MakeGenericMethod(typeof(TSource), body.Type)
-                    .Invoke(null, new object[] { source, Expression.Lambda(body, parameter), direction });
+                    .Invoke(null, new object[] {source, Expression.Lambda(body, parameter), direction});
         }
 
         public static IOrderedQueryable<TSource> SortBy<TSource, TProperty>(this IQueryable<TSource> source, Expression<Func<TSource, TProperty>> selector, SortDirection? direction = default)

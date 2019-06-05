@@ -1,41 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
     public class Class : IBaseObject
     {
-        public Class(ClassType type) =>
-            Type = type;
-
-        private Class()
+        internal Class()
         {
         }
 
-        [Required]
-        public virtual ClassType? Type { get; private set; }
+        public Class(ClassType type)
+        {
+            Type = type;
+        }
 
-        [Required]
-        [MaxLength(256)]
-        public virtual string Title { get; set; }
+        [Required] public virtual ClassType? Type { get; internal set; }
 
-        [MaxLength(32)]
-        public virtual string Code { get; set; }
+        [Required] [MaxLength(256)] public virtual string Title { get; set; }
 
-        [MaxLength(256)]
-        public virtual string Location { get; set; }
+        [MaxLength(32)] public virtual string Code { get; set; }
+
+        [MaxLength(256)] public virtual string Location { get; set; }
 
         public virtual Course Course { get; set; }
 
-        [Required]
-        public virtual string CourseId { get; private set; }
+        public virtual int CourseId { get; internal set; }
 
         public virtual Org School { get; set; }
 
-        [Required]
-        public virtual string SchoolId { get; private set; }
+        public virtual int SchoolId { get; internal set; }
 
         public virtual ICollection<ClassGrade> Grades { get; } = new HashSet<ClassGrade>();
 
@@ -53,16 +47,15 @@ namespace Questar.OneRoster.Data
 
         #region Base Object
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public virtual string Id { get; private set; } = Guid.NewGuid().ToString().Substring(0, 10);
+        public virtual int Id { get; internal set; }
 
-        public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
+        public virtual MetadataCollection MetadataCollection { get; set; }
 
-        public virtual Guid? MetadataCollectionId { get; private set; }
+        public virtual int? MetadataCollectionId { get; internal set; }
 
-        public virtual Status Status { get; private set; }
+        public virtual Status Status { get; internal set; }
 
-        public virtual DateTime Modified { get; private set; }
+        public virtual DateTime Modified { get; internal set; }
 
         #endregion
     }

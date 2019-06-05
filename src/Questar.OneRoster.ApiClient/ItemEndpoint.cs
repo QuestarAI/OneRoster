@@ -1,15 +1,15 @@
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Flurl.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Questar.OneRoster.Payloads;
+using Questar.OneRoster.Serialization;
+
 namespace Questar.OneRoster.ApiClient
 {
-    using System;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using Flurl.Http;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using Payloads;
-    using Serialization;
-
     public class ItemEndpoint<T> : Endpoint<T>, IItemEndpoint<T>
     {
         public ItemEndpoint(IFlurlClient http, string path)
@@ -17,11 +17,15 @@ namespace Questar.OneRoster.ApiClient
         {
         }
 
-        public IItemQuery<T, TResult> Fields<TResult>(Expression<Func<T, TResult>> selector) =>
-            Fields<T, TResult>(selector);
+        public IItemQuery<T, TResult> Fields<TResult>(Expression<Func<T, TResult>> selector)
+        {
+            return Fields<T, TResult>(selector);
+        }
 
-        public Task<T> SingleAsync() =>
-            SingleAsync<T>();
+        public Task<T> SingleAsync()
+        {
+            return SingleAsync<T>();
+        }
 
         protected IItemQuery<T, TContext> Append<TContext>(string key, string value)
         {
@@ -49,7 +53,7 @@ namespace Questar.OneRoster.ApiClient
                 throw new InvalidOperationException("Content is empty.");
 
             var resolver = new OneRosterContractResolver(typeof(T));
-            var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
+            var settings = new JsonSerializerSettings {ContractResolver = resolver, Converters = {new StringEnumConverter()}};
 
             var payload = JsonConvert.DeserializeObject<Payload<TResult>>(content, settings);
             var statuses = payload.Statuses;
@@ -65,14 +69,20 @@ namespace Questar.OneRoster.ApiClient
         {
             private readonly ItemEndpoint<T> _endpoint;
 
-            public ItemQueryAdapter(ItemEndpoint<T> endpoint) =>
+            public ItemQueryAdapter(ItemEndpoint<T> endpoint)
+            {
                 _endpoint = endpoint;
+            }
 
-            public IItemQuery<T, TResult> Fields<TResult>(Expression<Func<TContext, TResult>> selector) =>
-                _endpoint.Fields(selector);
+            public IItemQuery<T, TResult> Fields<TResult>(Expression<Func<TContext, TResult>> selector)
+            {
+                return _endpoint.Fields(selector);
+            }
 
-            public Task<TContext> SingleAsync() =>
-                _endpoint.SingleAsync<TContext>();
+            public Task<TContext> SingleAsync()
+            {
+                return _endpoint.SingleAsync<TContext>();
+            }
         }
     }
 }

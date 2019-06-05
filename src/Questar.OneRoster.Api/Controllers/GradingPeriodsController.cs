@@ -1,10 +1,10 @@
+using Microsoft.AspNetCore.Mvc;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.DataServices.Filtering;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Api.Controllers
 {
-    using DataServices;
-    using DataServices.Filtering;
-    using Microsoft.AspNetCore.Mvc;
-    using OneRoster.Models;
-
     [Route("ims/oneroster/v1p1/gradingPeriods")]
     public class GradingPeriodsController : BaseController<AcademicSession>
     {
@@ -12,7 +12,9 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<AcademicSession> Query() =>
-            Workspace.AcademicSessions.AsQuery().Where(session => session.Type == AcademicSessionType.GradingPeriod);
+        protected override IQuery<AcademicSession> Query()
+        {
+            return Workspace.AcademicSessions.AsQuery().Where(session => session.Type == AcademicSessionType.GradingPeriod);
+        }
     }
 }

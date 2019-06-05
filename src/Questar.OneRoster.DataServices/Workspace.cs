@@ -1,7 +1,7 @@
+using System.Threading.Tasks;
+
 namespace Questar.OneRoster.DataServices
 {
-    using System.Threading.Tasks;
-
     public abstract class Workspace : IWorkspace
     {
         public abstract void Save();

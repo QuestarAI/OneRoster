@@ -1,24 +1,22 @@
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
     public class CourseGrade
     {
-        public CourseGrade(Grade grade) =>
-            Grade = grade;
-
-        private CourseGrade()
+        internal CourseGrade()
         {
         }
 
-        public virtual Course Course { get; private set; }
+        public CourseGrade(Grade grade)
+        {
+            Grade = grade;
+        }
 
-        [Required]
-        public virtual string CourseId { get; private set; }
+        public virtual Course Course { get; internal set; }
 
-        public virtual Grade Grade { get; private set; }
+        public virtual int CourseId { get; internal set; }
 
-        public virtual Guid GradeId { get; private set; }
+        public virtual Grade Grade { get; internal set; }
+
+        public virtual int GradeId { get; internal set; }
     }
 }

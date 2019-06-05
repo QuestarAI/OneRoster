@@ -1,13 +1,15 @@
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
     public sealed class FilterPropertyBuilder : ExpressionVisitor
     {
-        public FilterPropertyBuilder(Expression expression) =>
+        public FilterPropertyBuilder(Expression expression)
+        {
             Expression = expression;
+        }
 
         public Expression Expression { get; }
 
@@ -29,8 +31,10 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        private bool IsTerminal(Expression expression) =>
-            Expression?.Equals(expression) == true;
+        private bool IsTerminal(Expression expression)
+        {
+            return Expression?.Equals(expression) == true;
+        }
 
         protected override Expression VisitMember(MemberExpression node)
         {

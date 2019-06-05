@@ -1,9 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Questar.OneRoster.Test.Mocks
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     internal class Entity
     {
         public string FooString { get; set; }
@@ -24,14 +24,17 @@ namespace Questar.OneRoster.Test.Mocks
 
         public Entity[] Children { get; set; }
 
-        internal static string[] GetSubjects() =>
-            Enumerable
+        internal static string[] GetSubjects()
+        {
+            return Enumerable
                 .Range(0, 6)
                 .Select(n => $"subject{n + 1}")
                 .ToArray();
+        }
 
-        internal static List<Entity> BuildEntities() =>
-            new List<Entity>
+        internal static List<Entity> BuildEntities()
+        {
+            return new List<Entity>
             {
                 new Entity
                 {
@@ -115,5 +118,6 @@ namespace Questar.OneRoster.Test.Mocks
                     Subjects = GetSubjects()
                 }
             };
+        }
     }
 }

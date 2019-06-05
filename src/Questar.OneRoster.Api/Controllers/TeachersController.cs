@@ -1,12 +1,12 @@
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Questar.OneRoster.Api.Models;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.Models;
+using Questar.OneRoster.Payloads;
+
 namespace Questar.OneRoster.Api.Controllers
 {
-    using System.Threading.Tasks;
-    using DataServices;
-    using Microsoft.AspNetCore.Mvc;
-    using Models;
-    using OneRoster.Models;
-    using Payloads;
-
     [Route("ims/oneroster/v1p1/teachers")]
     public class TeachersController : BaseController<User>
     {
@@ -14,14 +14,18 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<User> Query() =>
-            Workspace.Teachers.AsQuery();
+        protected override IQuery<User> Query()
+        {
+            return Workspace.Teachers.AsQuery();
+        }
 
         /// <summary>
-        /// Returns the collection of classes this teacher is teaching.
+        ///     Returns the collection of classes this teacher is teaching.
         /// </summary>
         [HttpGet("{userId}/classes")]
-        public Task<ActionResult<Payload<dynamic[]>>> GetClassesForTeacher(string userId, SelectParams @params) =>
-            Select(() => Workspace.Teachers.GetClassesForTeacher(userId), @params);
+        public Task<ActionResult<Payload<dynamic[]>>> GetClassesForTeacher(string userId, SelectParams @params)
+        {
+            return Select(() => Workspace.Teachers.GetClassesForTeacher(userId), @params);
+        }
     }
 }

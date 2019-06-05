@@ -1,8 +1,8 @@
+using Flurl.Http;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.ApiClient.Services
 {
-    using Flurl.Http;
-    using Models;
-
     public class SchoolClassEndpoint : ItemEndpoint<Class>
     {
         public SchoolClassEndpoint(IFlurlClient http, string path) : base(http, path)

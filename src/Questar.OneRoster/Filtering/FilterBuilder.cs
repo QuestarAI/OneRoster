@@ -1,43 +1,61 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
     public sealed class FilterBuilder<T> : ExpressionVisitor
     {
         private readonly Stack<Filter> _filters = new Stack<Filter>();
 
-        public FilterBuilder(Expression expression) =>
+        public FilterBuilder(Expression expression)
+        {
             Expression = expression;
+        }
 
         public Expression Expression { get; }
 
-        public FilterBuilder<T> AndAlso(Expression left, Expression right) =>
-            Logical(left, LogicalOperator.And, right);
+        public FilterBuilder<T> AndAlso(Expression left, Expression right)
+        {
+            return Logical(left, LogicalOperator.And, right);
+        }
 
-        public FilterBuilder<T> Any(Expression property, Expression value) =>
-            Predicate(property, PredicateOperator.Contains, value);
+        public FilterBuilder<T> Any(Expression property, Expression value)
+        {
+            return Predicate(property, PredicateOperator.Contains, value);
+        }
 
-        public FilterBuilder<T> All(Expression property, Expression value) =>
-            Predicate(property, PredicateOperator.Equal, value);
+        public FilterBuilder<T> All(Expression property, Expression value)
+        {
+            return Predicate(property, PredicateOperator.Equal, value);
+        }
 
-        public FilterBuilder<T> Equal(Expression property, Expression value) =>
-            Predicate(property, PredicateOperator.Equal, value);
+        public FilterBuilder<T> Equal(Expression property, Expression value)
+        {
+            return Predicate(property, PredicateOperator.Equal, value);
+        }
 
-        public FilterBuilder<T> GreaterThan(Expression property, Expression value) =>
-            Predicate(property, PredicateOperator.GreaterThan, value);
+        public FilterBuilder<T> GreaterThan(Expression property, Expression value)
+        {
+            return Predicate(property, PredicateOperator.GreaterThan, value);
+        }
 
-        public FilterBuilder<T> GreaterThanOrEqual(Expression property, Expression value) =>
-            Predicate(property, PredicateOperator.GreaterThanOrEqual, value);
+        public FilterBuilder<T> GreaterThanOrEqual(Expression property, Expression value)
+        {
+            return Predicate(property, PredicateOperator.GreaterThanOrEqual, value);
+        }
 
-        public FilterBuilder<T> LessThan(Expression property, Expression value) =>
-            Predicate(property, PredicateOperator.LessThan, value);
+        public FilterBuilder<T> LessThan(Expression property, Expression value)
+        {
+            return Predicate(property, PredicateOperator.LessThan, value);
+        }
 
-        public FilterBuilder<T> LessThanOrEqual(Expression property, Expression value) =>
-            Predicate(property, PredicateOperator.LessThanOrEqual, value);
+        public FilterBuilder<T> LessThanOrEqual(Expression property, Expression value)
+        {
+            return Predicate(property, PredicateOperator.LessThanOrEqual, value);
+        }
 
         public FilterBuilder<T> Logical(Expression left, LogicalOperator @operator, Expression right)
         {
@@ -49,11 +67,15 @@ namespace Questar.OneRoster.Filtering
             return this;
         }
 
-        public FilterBuilder<T> NotEqual(Expression property, Expression value) =>
-            Predicate(property, PredicateOperator.NotEqual, value);
+        public FilterBuilder<T> NotEqual(Expression property, Expression value)
+        {
+            return Predicate(property, PredicateOperator.NotEqual, value);
+        }
 
-        public FilterBuilder<T> OrElse(Expression left, Expression right) =>
-            Logical(left, LogicalOperator.Or, right);
+        public FilterBuilder<T> OrElse(Expression left, Expression right)
+        {
+            return Logical(left, LogicalOperator.Or, right);
+        }
 
         public FilterBuilder<T> Predicate(Expression left, PredicateOperator @operator, Expression right)
         {
@@ -65,8 +87,10 @@ namespace Questar.OneRoster.Filtering
             return this;
         }
 
-        public Filter ToFilter() =>
-            _filters.Single();
+        public Filter ToFilter()
+        {
+            return _filters.Single();
+        }
 
         public override Expression Visit(Expression node)
         {
@@ -90,8 +114,10 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        private bool IsTerminal(Expression expression) =>
-            Expression?.Equals(expression) == true;
+        private bool IsTerminal(Expression expression)
+        {
+            return Expression?.Equals(expression) == true;
+        }
 
         protected override Expression VisitBinary(BinaryExpression node)
         {

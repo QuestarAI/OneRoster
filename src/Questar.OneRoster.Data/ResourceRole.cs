@@ -1,20 +1,20 @@
 namespace Questar.OneRoster.Data
 {
-    using System;
-
     public class ResourceRole
     {
-        private ResourceRole()
+        internal ResourceRole()
         {
         }
 
-        public ResourceRole(UserType role) =>
+        public ResourceRole(UserType role)
+        {
             Role = role;
+        }
 
-        public virtual Resource Resource { get; private set; }
+        public virtual Resource Resource { get; internal set; }
 
-        public virtual Guid ResourceId { get; private set; }
+        public virtual int ResourceId { get; internal set; }
 
-        public virtual UserType Role { get; private set; }
+        public virtual UserType Role { get; internal set; }
     }
 }

@@ -1,7 +1,7 @@
+using System.Collections.Generic;
+
 namespace Questar.OneRoster.Models
 {
-    using System.Collections.Generic;
-
     public class Course : Base
     {
         public string Title { get; set; }

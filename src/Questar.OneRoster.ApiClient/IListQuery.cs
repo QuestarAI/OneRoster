@@ -1,11 +1,11 @@
+using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Questar.OneRoster.Collections;
+using Questar.OneRoster.Sorting;
+
 namespace Questar.OneRoster.ApiClient
 {
-    using System;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using Collections;
-    using Sorting;
-
     public interface IListQuery<TSource, TContext>
     {
         IListQuery<TSource, TResult> Fields<TResult>(Expression<Func<TContext, TResult>> selector);

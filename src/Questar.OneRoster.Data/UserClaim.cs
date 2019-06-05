@@ -1,9 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using Microsoft.AspNetCore.Identity;
-
-    public class UserClaim : IdentityUserClaim<string>
+    public class UserClaim : IdentityUserClaim<int>
     {
     }
 }

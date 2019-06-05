@@ -1,11 +1,11 @@
+using System;
+using System.Linq.Expressions;
+using Questar.OneRoster.Test.Comparers;
+using Questar.OneRoster.Test.Mocks;
+using Xunit;
+
 namespace Questar.OneRoster.Test
 {
-    using System;
-    using System.Linq.Expressions;
-    using Comparers;
-    using Mocks;
-    using Xunit;
-
     public class ExpressionComparerTest
     {
         [Fact]

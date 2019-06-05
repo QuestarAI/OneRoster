@@ -1,7 +1,7 @@
+using System.Linq;
+
 namespace Questar.OneRoster.Data.Profiles
 {
-    using System.Linq;
-
     public class CourseProfile : BaseProfile<Course, Models.Course>
     {
         public CourseProfile()

@@ -1,7 +1,7 @@
+using System;
+
 namespace Questar.OneRoster.Models
 {
-    using System;
-
     public class Result : Base
     {
         public GuidRef LineItem { get; set; }

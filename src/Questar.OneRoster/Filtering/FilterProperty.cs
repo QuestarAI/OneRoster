@@ -1,8 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     public sealed class FilterProperty
     {
         public FilterProperty(string name, FilterProperty caller = null)
@@ -33,7 +33,9 @@ namespace Questar.OneRoster.Filtering
                 yield return property;
         }
 
-        public override string ToString() =>
-            string.Join(".", GetProperties().Select(property => property.Name));
+        public override string ToString()
+        {
+            return string.Join(".", GetProperties().Select(property => property.Name));
+        }
     }
 }

@@ -1,7 +1,7 @@
 namespace Questar.OneRoster.Models
 {
     /// <summary>
-    /// The type of object a Guid represents.
+    ///     The type of object a Guid represents.
     /// </summary>
     public enum GuidType
     {

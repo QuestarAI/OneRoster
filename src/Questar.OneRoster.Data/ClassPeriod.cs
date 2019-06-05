@@ -1,23 +1,22 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
     public class ClassPeriod
     {
-        public ClassPeriod(string period) =>
-            Period = period;
-
-        private ClassPeriod()
+        internal ClassPeriod()
         {
         }
 
-        public virtual Class Class { get; private set; }
+        public ClassPeriod(string period)
+        {
+            Period = period;
+        }
 
-        [Required]
-        public virtual string ClassId { get; private set; }
+        public virtual Class Class { get; internal set; }
 
-        [Required]
-        public virtual string Period { get; private set; }
+        public virtual int ClassId { get; internal set; }
+
+        [Required] public virtual string Period { get; internal set; }
     }
 }

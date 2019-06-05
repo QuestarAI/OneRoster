@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
+using Questar.OneRoster.DataServices;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Api.Controllers
 {
-    using DataServices;
-    using Microsoft.AspNetCore.Mvc;
-    using OneRoster.Models;
-
     [Route("ims/oneroster/v1p1/academicSessions")]
     public class AcademicSessionsController : BaseController<AcademicSession>
     {
@@ -11,7 +11,9 @@ namespace Questar.OneRoster.Api.Controllers
         {
         }
 
-        protected override IQuery<AcademicSession> Query() =>
-            Workspace.AcademicSessions.AsQuery();
+        protected override IQuery<AcademicSession> Query()
+        {
+            return Workspace.AcademicSessions.AsQuery();
+        }
     }
 }

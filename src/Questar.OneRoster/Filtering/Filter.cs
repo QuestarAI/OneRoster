@@ -1,9 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-
     public abstract class Filter
     {
         private static readonly Regex And = new Regex(@"(?<Left>.+)\s+AND\s+(?<Right>.+)", RegexOptions.Compiled);
@@ -63,7 +63,9 @@ namespace Questar.OneRoster.Filtering
             return builder.ToFilterString();
         }
 
-        public override string ToString() =>
-            ToFilterString();
+        public override string ToString()
+        {
+            return ToFilterString();
+        }
     }
 }

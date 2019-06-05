@@ -1,8 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Questar.OneRoster.Api.Models
 {
-    using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Mvc;
-
     public abstract class Params
     {
         [FromQuery]

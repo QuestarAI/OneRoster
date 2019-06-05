@@ -1,24 +1,20 @@
+using System.Runtime.Serialization;
+
 namespace Questar.OneRoster.Payloads
 {
-    using System.Runtime.Serialization;
-
     /// <summary>
-    /// Minor code used in <see cref="StatusInfo" />.
-    /// Note the inconsistent space vs. underscore used in the spec.
+    ///     Minor code used in <see cref="StatusInfo" />.
+    ///     Note the inconsistent space vs. underscore used in the spec.
     /// </summary>
     public enum CodeMinor
     {
-        [EnumMember(Value = "full success")]
-        FullSuccess,
+        [EnumMember(Value = "full success")] FullSuccess,
 
-        [EnumMember(Value = "unknown object")]
-        UnknownObject,
+        [EnumMember(Value = "unknown object")] UnknownObject,
 
-        [EnumMember(Value = "invalid data")]
-        InvalidData,
+        [EnumMember(Value = "invalid data")] InvalidData,
 
-        [EnumMember(Value = "unauthorized")]
-        Unauthorized,
+        [EnumMember(Value = "unauthorized")] Unauthorized,
 
         [EnumMember(Value = "invalid_sort_field")]
         InvalidSortField,
@@ -42,11 +38,9 @@ namespace Questar.OneRoster.Payloads
         InvalidOffsetField,
 
         /// The specification mentions this, but doesn't explicitly define it.
-        [EnumMember(Value = "forbidden")]
-        Forbidden,
+        [EnumMember(Value = "forbidden")] Forbidden,
 
         /// The specification mentions this, but doesn't explicitly define it.
-        [EnumMember(Value = "server_busy")]
-        ServerBusy
+        [EnumMember(Value = "server_busy")] ServerBusy
     }
 }

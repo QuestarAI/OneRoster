@@ -1,24 +1,22 @@
 namespace Questar.OneRoster.Data
 {
-    using System.ComponentModel.DataAnnotations;
-
     public class ClassAcademicSession
     {
-        public ClassAcademicSession(AcademicSession academicSession) =>
-            AcademicSession = academicSession;
-
-        private ClassAcademicSession()
+        internal ClassAcademicSession()
         {
         }
 
-        public virtual Class Class { get; private set; }
+        public ClassAcademicSession(AcademicSession academicSession)
+        {
+            AcademicSession = academicSession;
+        }
 
-        [Required]
-        public virtual string ClassId { get; private set; }
+        public virtual Class Class { get; internal set; }
 
-        public virtual AcademicSession AcademicSession { get; private set; }
+        public virtual int ClassId { get; internal set; }
 
-        [Required]
-        public virtual string AcademicSessionId { get; private set; }
+        public virtual AcademicSession AcademicSession { get; internal set; }
+
+        public virtual int AcademicSessionId { get; internal set; }
     }
 }

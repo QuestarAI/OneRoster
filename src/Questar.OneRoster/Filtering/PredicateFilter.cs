@@ -1,7 +1,7 @@
+using System.Collections.Generic;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System.Collections.Generic;
-
     public sealed class PredicateFilter : Filter
     {
         public PredicateFilter(FilterProperty property, PredicateOperator predicate, FilterValue value)
@@ -22,10 +22,14 @@ namespace Questar.OneRoster.Filtering
             yield return Property;
         }
 
-        public override void Accept(FilterVisitor visitor) =>
+        public override void Accept(FilterVisitor visitor)
+        {
             visitor.Visit(this);
+        }
 
-        public override string ToString() =>
-            $"{Property}{Predicate}{Value}";
+        public override string ToString()
+        {
+            return $"{Property}{Predicate}{Value}";
+        }
     }
 }

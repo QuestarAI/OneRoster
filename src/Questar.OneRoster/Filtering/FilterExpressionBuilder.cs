@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
     public sealed class FilterExpressionBuilder<T> : FilterVisitor
     {
         private readonly Stack<Expression> _expressions = new Stack<Expression>();
@@ -35,44 +35,70 @@ namespace Questar.OneRoster.Filtering
             return Expression.Constant(vector);
         }
 
-        public FilterExpression<T> ToFilterExpression() =>
-            (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), false, Parameter);
+        public FilterExpression<T> ToFilterExpression()
+        {
+            return (Expression<Func<T, bool>>) Expression.Lambda(_expressions.Single(), false, Parameter);
+        }
 
-        public override void Visit(LogicalFilter filter) =>
+        public override void Visit(LogicalFilter filter)
+        {
             LogicalBuilder(filter)(filter.Left, filter.Right);
+        }
 
-        public override void Visit(PredicateFilter filter) =>
+        public override void Visit(PredicateFilter filter)
+        {
             PredicateBuilder(filter)(filter.Property, filter.Value);
+        }
 
-        public FilterExpressionBuilder<T> AndAlso(Filter left, Filter right) =>
-            Logical(Expression.AndAlso, left, right);
+        public FilterExpressionBuilder<T> AndAlso(Filter left, Filter right)
+        {
+            return Logical(Expression.AndAlso, left, right);
+        }
 
-        public FilterExpressionBuilder<T> All(FilterProperty property, FilterValue value) =>
-            Contains(FilterInfo.All, property, value);
+        public FilterExpressionBuilder<T> All(FilterProperty property, FilterValue value)
+        {
+            return Contains(FilterInfo.All, property, value);
+        }
 
-        public FilterExpressionBuilder<T> Any(FilterProperty property, FilterValue value) =>
-            Contains(FilterInfo.Any, property, value);
+        public FilterExpressionBuilder<T> Any(FilterProperty property, FilterValue value)
+        {
+            return Contains(FilterInfo.Any, property, value);
+        }
 
-        public FilterExpressionBuilder<T> Equal(FilterProperty property, FilterValue value) =>
-            Predicate(Expression.Equal, property, value, () => Expression.Constant(false));
+        public FilterExpressionBuilder<T> Equal(FilterProperty property, FilterValue value)
+        {
+            return Predicate(Expression.Equal, property, value, () => Expression.Constant(false));
+        }
 
-        public FilterExpressionBuilder<T> GreaterThan(FilterProperty property, FilterValue value) =>
-            Predicate(Expression.GreaterThan, property, value);
+        public FilterExpressionBuilder<T> GreaterThan(FilterProperty property, FilterValue value)
+        {
+            return Predicate(Expression.GreaterThan, property, value);
+        }
 
-        public FilterExpressionBuilder<T> GreaterThanOrEqual(FilterProperty property, FilterValue value) =>
-            Predicate(Expression.GreaterThanOrEqual, property, value);
+        public FilterExpressionBuilder<T> GreaterThanOrEqual(FilterProperty property, FilterValue value)
+        {
+            return Predicate(Expression.GreaterThanOrEqual, property, value);
+        }
 
-        public FilterExpressionBuilder<T> LessThan(FilterProperty property, FilterValue value) =>
-            Predicate(Expression.LessThan, property, value);
+        public FilterExpressionBuilder<T> LessThan(FilterProperty property, FilterValue value)
+        {
+            return Predicate(Expression.LessThan, property, value);
+        }
 
-        public FilterExpressionBuilder<T> LessThanOrEqual(FilterProperty property, FilterValue value) =>
-            Predicate(Expression.LessThanOrEqual, property, value);
+        public FilterExpressionBuilder<T> LessThanOrEqual(FilterProperty property, FilterValue value)
+        {
+            return Predicate(Expression.LessThanOrEqual, property, value);
+        }
 
-        public FilterExpressionBuilder<T> NotEqual(FilterProperty property, FilterValue value) =>
-            Predicate(Expression.NotEqual, property, value, () => Expression.Constant(true));
+        public FilterExpressionBuilder<T> NotEqual(FilterProperty property, FilterValue value)
+        {
+            return Predicate(Expression.NotEqual, property, value, () => Expression.Constant(true));
+        }
 
-        public FilterExpressionBuilder<T> OrElse(Filter left, Filter right) =>
-            Logical(Expression.OrElse, left, right);
+        public FilterExpressionBuilder<T> OrElse(Filter left, Filter right)
+        {
+            return Logical(Expression.OrElse, left, right);
+        }
 
         private MemberExpression GetProperty(FilterProperty property)
         {
@@ -129,8 +155,10 @@ namespace Questar.OneRoster.Filtering
             }
         }
 
-        private FilterExpressionBuilder<T> Predicate(Func<Expression, Expression, Expression> factory, FilterProperty property, FilterValue value, Func<Expression> fallback = null) =>
-            Predicate(factory, GetProperty(property), value, fallback);
+        private FilterExpressionBuilder<T> Predicate(Func<Expression, Expression, Expression> factory, FilterProperty property, FilterValue value, Func<Expression> fallback = null)
+        {
+            return Predicate(factory, GetProperty(property), value, fallback);
+        }
 
         private FilterExpressionBuilder<T> Predicate(Func<Expression, Expression, Expression> factory, Expression property, FilterValue value, Func<Expression> fallback)
         {

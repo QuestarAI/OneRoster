@@ -1,19 +1,8 @@
+using AutoMapper;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Data.Profiles
 {
-    using AutoMapper;
-    using Models;
-    using AcademicSession = Data.AcademicSession;
-    using Category = Data.Category;
-    using Class = Data.Class;
-    using Course = Data.Course;
-    using Demographics = Data.Demographics;
-    using Enrollment = Data.Enrollment;
-    using LineItem = Data.LineItem;
-    using Org = Data.Org;
-    using Resource = Data.Resource;
-    using Result = Data.Result;
-    using User = Data.User;
-
     public class GuidRefProfile : Profile
     {
         public GuidRefProfile()

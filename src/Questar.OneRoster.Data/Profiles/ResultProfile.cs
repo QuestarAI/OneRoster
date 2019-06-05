@@ -1,9 +1,8 @@
+using System;
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Data.Profiles
 {
-    using System;
-    using Models;
-    using Result = Data.Result;
-
     public class ResultProfile : BaseProfile<Result, Models.Result>
     {
         public ResultProfile()

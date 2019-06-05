@@ -1,12 +1,9 @@
+using System.Linq;
+using AutoMapper;
+using Questar.OneRoster.DataServices;
+
 namespace Questar.OneRoster.Data.Services
 {
-    using System.Linq;
-    using AutoMapper;
-    using DataServices;
-    using Models;
-    using AcademicSession = Data.AcademicSession;
-    using AcademicSessionType = Data.AcademicSessionType;
-
     public class GradingPeriodRepository : BaseObjectRepository<Models.AcademicSession, AcademicSession>, IGradingPeriodRepository
     {
         public GradingPeriodRepository(OneRosterDbContext context, IMapper mapper)

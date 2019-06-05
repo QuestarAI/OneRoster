@@ -1,25 +1,22 @@
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
     public class CourseResource
     {
-        public CourseResource(Resource resource) =>
+        public CourseResource(Resource resource)
+        {
             Resource = resource;
+        }
 
-        private CourseResource()
+        internal CourseResource()
         {
         }
 
-        public virtual Course Course { get; private set; }
+        public virtual Course Course { get; internal set; }
 
-        [Required]
-        public virtual string CourseId { get; private set; }
+        public virtual int CourseId { get; internal set; }
 
-        public virtual Resource Resource { get; private set; }
+        public virtual Resource Resource { get; internal set; }
 
-        [Required]
-        public virtual string ResourceId { get; private set; }
+        public virtual int ResourceId { get; internal set; }
     }
 }

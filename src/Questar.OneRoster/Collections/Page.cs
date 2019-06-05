@@ -1,10 +1,10 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Questar.OneRoster.Collections
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-
     public class Page<T> : IPage<T>
     {
         public Page(int count, IEnumerable<T> items)

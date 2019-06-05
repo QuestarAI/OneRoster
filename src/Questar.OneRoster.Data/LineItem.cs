@@ -1,58 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
     public class LineItem : IBaseObject
     {
-        [Required]
-        public virtual string Title { get; set; }
+        [Required] public virtual string Title { get; set; }
 
         public virtual string Description { get; set; }
 
-        [Required]
-        public virtual DateTime? AssignDate { get; set; }
+        [Required] public virtual DateTime? AssignDate { get; set; }
 
-        [Required]
-        public virtual DateTime? DueDate { get; set; }
+        [Required] public virtual DateTime? DueDate { get; set; }
 
-        public virtual Class Class { get; private set; }
+        public virtual Class Class { get; internal set; }
 
-        [Required]
-        public virtual string ClassId { get; private set; }
+        public virtual int ClassId { get; internal set; }
 
         public virtual Category Category { get; set; }
 
-        [Required]
-        public virtual string CategoryId { get; private set; }
+        public virtual int CategoryId { get; internal set; }
 
         public virtual AcademicSession GradingPeriod { get; set; }
 
-        [Required]
-        public virtual string GradingPeriodId { get; private set; }
+        public virtual int GradingPeriodId { get; internal set; }
 
         public virtual IReadOnlyCollection<Result> Results { get; } = new HashSet<Result>();
 
-        [Required]
-        public virtual float? ResultValueMin { get; set; }
+        [Required] public virtual float? ResultValueMin { get; set; }
 
-        [Required]
-        public virtual float? ResultValueMax { get; set; }
+        [Required] public virtual float? ResultValueMax { get; set; }
 
         #region Base Object
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public virtual string Id { get; private set; } = Guid.NewGuid().ToString().Substring(0, 10);
+        public virtual int Id { get; internal set; }
 
-        public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
+        public virtual MetadataCollection MetadataCollection { get; set; }
 
-        public virtual Guid? MetadataCollectionId { get; private set; }
+        public virtual int? MetadataCollectionId { get; internal set; }
 
-        public virtual Status Status { get; private set; }
+        public virtual Status Status { get; internal set; }
 
-        public virtual DateTime Modified { get; private set; }
+        public virtual DateTime Modified { get; internal set; }
 
         #endregion
     }

@@ -1,9 +1,9 @@
+using System.Collections.Generic;
+
 namespace Questar.OneRoster.Payloads
 {
-    using System.Collections.Generic;
-
     /// <summary>
-    /// Represents a list of informational status about an API request/response.
+    ///     Represents a list of informational status about an API request/response.
     /// </summary>
     public class StatusInfoList : List<StatusInfo>
     {

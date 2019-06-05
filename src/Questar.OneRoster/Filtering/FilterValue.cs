@@ -1,8 +1,8 @@
+using System;
+using System.Text.RegularExpressions;
+
 namespace Questar.OneRoster.Filtering
 {
-    using System;
-    using System.Text.RegularExpressions;
-
     public sealed class FilterValue
     {
         private static readonly Regex Scalar = new Regex(@"'(?<Scalar>[^']*)'", RegexOptions.Compiled);

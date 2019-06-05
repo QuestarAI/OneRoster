@@ -1,7 +1,7 @@
+using System;
+
 namespace Questar.OneRoster.Data.Profiles
 {
-    using System;
-
     public class LineItemProfile : BaseProfile<LineItem, Models.LineItem>
     {
         public LineItemProfile()

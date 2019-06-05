@@ -1,9 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
+using Flurl.Http;
+
 namespace Questar.OneRoster.ApiClient
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Flurl.Http;
-
     public abstract class Endpoint<T>
     {
         protected readonly IDictionary<string, string> Query = new Dictionary<string, string>();

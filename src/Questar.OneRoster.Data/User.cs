@@ -1,22 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+
 namespace Questar.OneRoster.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using Microsoft.AspNetCore.Identity;
-
-    public class User : IdentityUser<string>, IBaseObject
+    public class User : IdentityUser<int>, IBaseObject
     {
-        public User(UserType type) =>
+        public User(UserType type)
+        {
             Type = type;
+        }
 
-        private User()
+        internal User()
         {
         }
 
-        [Required]
-        public virtual UserType? Type { get; private set; }
+        [Required] public virtual UserType? Type { get; internal set; }
 
         public virtual bool Enabled { get; set; }
 
@@ -25,9 +25,7 @@ namespace Questar.OneRoster.Data
         [PersonalData]
         public virtual string GivenName { get; set; }
 
-        [MaxLength(64)]
-        [PersonalData]
-        public virtual string MiddleName { get; set; }
+        [MaxLength(64)] [PersonalData] public virtual string MiddleName { get; set; }
 
         [Required]
         [PersonalData]
@@ -36,13 +34,11 @@ namespace Questar.OneRoster.Data
 
         public virtual string Identifier { get; set; }
 
-        [DataType(DataType.PhoneNumber)]
-        public virtual string Sms { get; set; }
+        [DataType(DataType.PhoneNumber)] public virtual string Sms { get; set; }
 
-        [DataType(DataType.PhoneNumber)]
-        public virtual string Phone { get; set; }
+        [DataType(DataType.PhoneNumber)] public virtual string Phone { get; set; }
 
-        public virtual Demographics Demographics { get; internal set; } = new Demographics();
+        public virtual Demographics Demographics { get; set; }
 
         public virtual ICollection<UserAgent> Agents { get; } = new HashSet<UserAgent>();
 
@@ -57,18 +53,15 @@ namespace Questar.OneRoster.Data
         // students only
         public virtual ICollection<Result> Results { get; } = new HashSet<Result>();
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public override string Id { get; set; } = Guid.NewGuid().ToString().Substring(0, 10);
-
         #region Base Object
 
-        public virtual MetadataCollection MetadataCollection { get; private set; } = new MetadataCollection();
+        public virtual MetadataCollection MetadataCollection { get; set; }
 
-        public virtual Guid? MetadataCollectionId { get; private set; }
+        public virtual int? MetadataCollectionId { get; internal set; }
 
-        public virtual Status Status { get; private set; }
+        public virtual Status Status { get; internal set; }
 
-        public virtual DateTime Modified { get; private set; }
+        public virtual DateTime Modified { get; internal set; }
 
         #endregion
     }

@@ -1,8 +1,7 @@
+using Questar.OneRoster.Models;
+
 namespace Questar.OneRoster.Data.Profiles
 {
-    using Models;
-    using Enrollment = Data.Enrollment;
-
     public class EnrollmentProfile : BaseProfile<Enrollment, Models.Enrollment>
     {
         public EnrollmentProfile()
