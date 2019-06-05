@@ -6,7 +6,7 @@ namespace Questar.OneRoster.Data
     {
         public virtual MetadataCollection Collection { get; internal set; }
 
-        public virtual int CollectionId { get; internal set; }
+        public virtual string CollectionId { get; internal set; }
 
         [Required] [MaxLength(64)] public virtual string Key { get; set; }
 

@@ -16,7 +16,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.Class> GetClassesForUser(string userId)
         {
             return Context.Classes
-                .Where(@class => @class.Enrollments.Any(enrollment => enrollment.UserId == int.Parse(userId)))
+                .Where(@class => @class.Enrollments.Any(enrollment => enrollment.UserId == userId))
                 .UseAsDataSource(Mapper)
                 .For<Models.Class>()
                 .ToBaseQuery();

@@ -16,7 +16,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.Class> GetClassesForCourse(string courseId)
         {
             return Context.Classes
-                .Where(@class => @class.CourseId == int.Parse(courseId))
+                .Where(@class => @class.CourseId == courseId)
                 .UseAsDataSource(Mapper)
                 .For<Models.Class>()
                 .ToBaseQuery();
@@ -25,7 +25,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.Resource> GetResourcesForCourse(string courseId)
         {
             return Context.Resources
-                .Where(resource => resource.Courses.Any(course => course.CourseId == int.Parse(courseId)))
+                .Where(resource => resource.Courses.Any(course => course.CourseId == courseId))
                 .UseAsDataSource(Mapper)
                 .For<Models.Resource>()
                 .ToBaseQuery();

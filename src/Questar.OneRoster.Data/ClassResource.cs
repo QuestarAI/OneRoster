@@ -13,10 +13,10 @@ namespace Questar.OneRoster.Data
 
         public virtual Class Class { get; internal set; }
 
-        public virtual int ClassId { get; internal set; }
+        public virtual string ClassId { get; internal set; }
 
         public virtual Resource Resource { get; internal set; }
 
-        public virtual int ResourceId { get; internal set; }
+        public virtual string ResourceId { get; internal set; }
     }
 }

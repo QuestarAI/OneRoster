@@ -16,7 +16,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.Class> GetClassesForTerm(string academicSessionId)
         {
             return Context.Classes
-                .Where(@class => @class.Terms.Any(term => term.AcademicSessionId == int.Parse(academicSessionId)))
+                .Where(@class => @class.Terms.Any(term => term.AcademicSessionId == academicSessionId))
                 .UseAsDataSource(Mapper)
                 .For<Models.Class>()
                 .ToBaseQuery();
@@ -26,7 +26,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.AcademicSession> GetGradingPeriodsForTerm(string academicSessionId)
         {
             return Context.AcademicSessions
-                .Where(session => session.ParentId == int.Parse(academicSessionId))
+                .Where(session => session.ParentId == academicSessionId)
                 .UseAsDataSource(Mapper)
                 .For<Models.AcademicSession>()
                 .ToBaseQuery();

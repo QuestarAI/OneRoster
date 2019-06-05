@@ -13,10 +13,10 @@ namespace Questar.OneRoster.Data
 
         public virtual User User { get; internal set; }
 
-        public virtual int UserId { get; internal set; }
+        public virtual string UserId { get; internal set; }
 
         public virtual User Agent { get; internal set; }
 
-        public virtual int AgentId { get; internal set; }
+        public virtual string AgentId { get; internal set; }
     }
 }

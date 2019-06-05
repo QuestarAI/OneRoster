@@ -16,7 +16,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.Course> GetCoursesForSchool(string orgId)
         {
             return Context.Courses
-                .Where(course => course.OrgId == int.Parse(orgId))
+                .Where(course => course.OrgId == orgId)
                 .UseAsDataSource(Mapper)
                 .For<Models.Course>()
                 .ToBaseQuery();
@@ -25,7 +25,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.Class> GetClassesForSchool(string orgId)
         {
             return Context.Classes
-                .Where(@class => @class.SchoolId == int.Parse(orgId))
+                .Where(@class => @class.SchoolId == orgId)
                 .UseAsDataSource(Mapper)
                 .For<Models.Class>()
                 .ToBaseQuery();
@@ -34,7 +34,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.Enrollment> GetEnrollmentsForClassInSchool(string orgId, string classId)
         {
             return Context.Enrollments
-                .Where(enrollment => enrollment.Class.SchoolId == int.Parse(orgId) && enrollment.ClassId == int.Parse(classId))
+                .Where(enrollment => enrollment.Class.SchoolId == orgId && enrollment.ClassId == classId)
                 .UseAsDataSource(Mapper)
                 .For<Models.Enrollment>()
                 .ToBaseQuery();
@@ -43,7 +43,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.User> GetStudentsForClassInSchool(string orgId, string classId)
         {
             return Context.Users
-                .Where(user => user.Type == UserType.Student && user.Enrollments.Any(enrollment => enrollment.Class.SchoolId == int.Parse(orgId) && enrollment.ClassId == int.Parse(classId)))
+                .Where(user => user.Type == UserType.Student && user.Enrollments.Any(enrollment => enrollment.Class.SchoolId == orgId && enrollment.ClassId == classId))
                 .UseAsDataSource(Mapper)
                 .For<Models.User>()
                 .ToBaseQuery();
@@ -52,7 +52,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.User> GetTeachersForClassInSchool(string orgId, string classId)
         {
             return Context.Users
-                .Where(user => user.Type == UserType.Teacher && user.Enrollments.Any(enrollment => enrollment.Class.SchoolId == int.Parse(orgId) && enrollment.ClassId == int.Parse(classId)))
+                .Where(user => user.Type == UserType.Teacher && user.Enrollments.Any(enrollment => enrollment.Class.SchoolId == orgId && enrollment.ClassId == classId))
                 .UseAsDataSource(Mapper)
                 .For<Models.User>()
                 .ToBaseQuery();
@@ -61,7 +61,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.Enrollment> GetEnrollmentsForSchool(string orgId)
         {
             return Context.Enrollments
-                .Where(enrollment => enrollment.Class.SchoolId == int.Parse(orgId))
+                .Where(enrollment => enrollment.Class.SchoolId == orgId)
                 .UseAsDataSource(Mapper)
                 .For<Models.Enrollment>()
                 .ToBaseQuery();
@@ -70,7 +70,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.User> GetStudentsForSchool(string orgId)
         {
             return Context.Users
-                .Where(user => user.Type == UserType.Student && user.Orgs.Any(org => org.OrgId == int.Parse(orgId)))
+                .Where(user => user.Type == UserType.Student && user.Orgs.Any(org => org.OrgId == orgId))
                 .UseAsDataSource(Mapper)
                 .For<Models.User>()
                 .ToBaseQuery();
@@ -79,7 +79,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.User> GetTeachersForSchool(string orgId)
         {
             return Context.Users
-                .Where(user => user.Type == UserType.Teacher && user.Orgs.Any(org => org.OrgId == int.Parse(orgId)))
+                .Where(user => user.Type == UserType.Teacher && user.Orgs.Any(org => org.OrgId == orgId))
                 .UseAsDataSource(Mapper)
                 .For<Models.User>()
                 .ToBaseQuery();
@@ -88,7 +88,7 @@ namespace Questar.OneRoster.Data.Services
         public IQuery<Models.AcademicSession> GetTermsForSchool(string orgId)
         {
             return Context.AcademicSessions
-                .Where(session => session.Type == AcademicSessionType.Term && session.Classes.Any(org => org.Class.SchoolId == int.Parse(orgId)))
+                .Where(session => session.Type == AcademicSessionType.Term && session.Classes.Any(org => org.Class.SchoolId == orgId))
                 .UseAsDataSource(Mapper)
                 .For<Models.AcademicSession>()
                 .ToBaseQuery();

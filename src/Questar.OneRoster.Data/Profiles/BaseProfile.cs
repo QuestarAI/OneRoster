@@ -1,4 +1,6 @@
+using System;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Questar.OneRoster.Models;
 
 namespace Questar.OneRoster.Data.Profiles

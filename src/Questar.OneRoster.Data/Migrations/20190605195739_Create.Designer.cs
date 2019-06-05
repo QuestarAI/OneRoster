@@ -10,7 +10,7 @@ using Questar.OneRoster.Data.Services;
 namespace Questar.OneRoster.Data.Migrations
 {
     [DbContext(typeof(OneRosterDbContext))]
-    [Migration("20190604184713_Create")]
+    [Migration("20190605195739_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,18 +38,17 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.AcademicSession", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<DateTime?>("EndDate")
                         .IsRequired();
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int?>("ParentId");
+                    b.Property<string>("ParentId");
 
                     b.Property<int?>("SchoolYear")
                         .IsRequired();
@@ -76,11 +75,10 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Category", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
@@ -98,23 +96,22 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Class", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Code")
                         .HasMaxLength(32);
 
-                    b.Property<int>("CourseId");
+                    b.Property<string>("CourseId");
 
                     b.Property<string>("Location")
                         .HasMaxLength(256);
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int>("SchoolId");
+                    b.Property<string>("SchoolId");
 
                     b.Property<int>("Status");
 
@@ -137,9 +134,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassAcademicSession", b =>
                 {
-                    b.Property<int>("ClassId");
+                    b.Property<string>("ClassId");
 
-                    b.Property<int>("AcademicSessionId");
+                    b.Property<string>("AcademicSessionId");
 
                     b.HasKey("ClassId", "AcademicSessionId");
 
@@ -150,9 +147,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassGrade", b =>
                 {
-                    b.Property<int>("ClassId");
+                    b.Property<string>("ClassId");
 
-                    b.Property<int>("GradeId");
+                    b.Property<string>("GradeId");
 
                     b.HasKey("ClassId", "GradeId");
 
@@ -163,7 +160,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassPeriod", b =>
                 {
-                    b.Property<int>("ClassId");
+                    b.Property<string>("ClassId");
 
                     b.Property<string>("Period");
 
@@ -174,9 +171,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassResource", b =>
                 {
-                    b.Property<int>("ClassId");
+                    b.Property<string>("ClassId");
 
-                    b.Property<int>("ResourceId");
+                    b.Property<string>("ResourceId");
 
                     b.HasKey("ClassId", "ResourceId");
 
@@ -187,9 +184,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ClassSubject", b =>
                 {
-                    b.Property<int>("ClassId");
+                    b.Property<string>("ClassId");
 
-                    b.Property<int>("SubjectId");
+                    b.Property<string>("SubjectId");
 
                     b.HasKey("ClassId", "SubjectId");
 
@@ -200,20 +197,19 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Course", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Code")
                         .HasMaxLength(256);
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int>("OrgId");
+                    b.Property<string>("OrgId");
 
-                    b.Property<int>("SchoolYearId");
+                    b.Property<string>("SchoolYearId");
 
                     b.Property<int>("Status");
 
@@ -234,9 +230,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.CourseGrade", b =>
                 {
-                    b.Property<int>("CourseId");
+                    b.Property<string>("CourseId");
 
-                    b.Property<int>("GradeId");
+                    b.Property<string>("GradeId");
 
                     b.HasKey("CourseId", "GradeId");
 
@@ -247,9 +243,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.CourseResource", b =>
                 {
-                    b.Property<int>("CourseId");
+                    b.Property<string>("CourseId");
 
-                    b.Property<int>("ResourceId");
+                    b.Property<string>("ResourceId");
 
                     b.HasKey("CourseId", "ResourceId");
 
@@ -260,9 +256,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.CourseSubject", b =>
                 {
-                    b.Property<int>("CourseId");
+                    b.Property<string>("CourseId");
 
-                    b.Property<int>("SubjectId");
+                    b.Property<string>("SubjectId");
 
                     b.HasKey("CourseId", "SubjectId");
 
@@ -273,7 +269,8 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Demographics", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<bool?>("AmericanIndianOrAlaskaNative");
 
@@ -291,7 +288,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<bool?>("HispanicOrLatinoEthnicity");
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
@@ -305,7 +302,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<int?>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<bool?>("White");
 
@@ -320,17 +317,16 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Enrollment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<DateTime?>("BeginDate");
 
-                    b.Property<int>("ClassId");
+                    b.Property<string>("ClassId");
 
                     b.Property<DateTime?>("EndDate");
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
@@ -338,7 +334,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
@@ -353,9 +349,8 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Grade", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Code")
                         .IsRequired();
@@ -369,25 +364,24 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.LineItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<DateTime?>("AssignDate")
                         .IsRequired();
 
-                    b.Property<int>("CategoryId");
+                    b.Property<string>("CategoryId");
 
-                    b.Property<int>("ClassId");
+                    b.Property<string>("ClassId");
 
                     b.Property<string>("Description");
 
                     b.Property<DateTime?>("DueDate")
                         .IsRequired();
 
-                    b.Property<int>("GradingPeriodId");
+                    b.Property<string>("GradingPeriodId");
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
@@ -417,7 +411,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Metadata", b =>
                 {
-                    b.Property<int>("CollectionId");
+                    b.Property<string>("CollectionId");
 
                     b.Property<string>("Key")
                         .HasMaxLength(64);
@@ -432,9 +426,8 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.MetadataCollection", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.HasKey("Id");
 
@@ -443,14 +436,13 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Org", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Identifier")
                         .HasMaxLength(256);
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
@@ -458,7 +450,7 @@ namespace Questar.OneRoster.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(256);
 
-                    b.Property<int?>("ParentId");
+                    b.Property<string>("ParentId");
 
                     b.Property<int>("Status");
 
@@ -477,16 +469,15 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Resource", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<string>("ApplicationId")
                         .HasMaxLength(256);
 
                     b.Property<int>("Importance");
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
@@ -511,7 +502,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.ResourceRole", b =>
                 {
-                    b.Property<int>("ResourceId");
+                    b.Property<string>("ResourceId");
 
                     b.Property<int>("Role");
 
@@ -522,15 +513,14 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Result", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Comment");
 
-                    b.Property<int>("LineItemId");
+                    b.Property<string>("LineItemId");
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<DateTime>("Modified");
 
@@ -544,7 +534,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<int>("StudentId");
+                    b.Property<string>("StudentId");
 
                     b.HasKey("Id");
 
@@ -559,9 +549,8 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Role", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -592,7 +581,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -603,9 +593,8 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.Subject", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Code")
                         .IsRequired();
@@ -622,9 +611,8 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(10);
 
                     b.Property<int>("AccessFailedCount");
 
@@ -652,7 +640,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<int?>("MetadataCollectionId");
+                    b.Property<string>("MetadataCollectionId");
 
                     b.Property<string>("MiddleName")
                         .HasMaxLength(64);
@@ -705,9 +693,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserAgent", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<int>("AgentId");
+                    b.Property<string>("AgentId");
 
                     b.HasKey("UserId", "AgentId");
 
@@ -726,7 +714,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -737,9 +726,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserGrade", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<int>("GradeId");
+                    b.Property<string>("GradeId");
 
                     b.HasKey("UserId", "GradeId");
 
@@ -750,7 +739,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserIdentifier", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("Type")
                         .HasMaxLength(256);
@@ -771,7 +760,8 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -782,9 +772,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserOrg", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<int>("OrgId");
+                    b.Property<string>("OrgId");
 
                     b.HasKey("UserId", "OrgId");
 
@@ -795,9 +785,9 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserRole", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -808,7 +798,7 @@ namespace Questar.OneRoster.Data.Migrations
 
             modelBuilder.Entity("Questar.OneRoster.Data.UserToken", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -843,8 +833,7 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     b.HasOne("Questar.OneRoster.Data.Course", "Course")
                         .WithMany("Classes")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CourseId");
 
                     b.HasOne("Questar.OneRoster.Data.MetadataCollection", "MetadataCollection")
                         .WithMany()
@@ -924,13 +913,11 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.HasOne("Questar.OneRoster.Data.Org", "Org")
                         .WithMany("Courses")
-                        .HasForeignKey("OrgId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OrgId");
 
                     b.HasOne("Questar.OneRoster.Data.AcademicSession", "SchoolYear")
                         .WithMany("Courses")
-                        .HasForeignKey("SchoolYearId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SchoolYearId");
                 });
 
             modelBuilder.Entity("Questar.OneRoster.Data.CourseGrade", b =>
@@ -992,8 +979,7 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     b.HasOne("Questar.OneRoster.Data.Class", "Class")
                         .WithMany("Enrollments")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ClassId");
 
                     b.HasOne("Questar.OneRoster.Data.MetadataCollection", "MetadataCollection")
                         .WithMany()
@@ -1001,21 +987,18 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.HasOne("Questar.OneRoster.Data.User", "User")
                         .WithMany("Enrollments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Questar.OneRoster.Data.LineItem", b =>
                 {
                     b.HasOne("Questar.OneRoster.Data.Category", "Category")
                         .WithMany("LineItems")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("Questar.OneRoster.Data.Class", "Class")
                         .WithMany("LineItems")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ClassId");
 
                     b.HasOne("Questar.OneRoster.Data.AcademicSession", "GradingPeriod")
                         .WithMany("LineItems")
@@ -1065,8 +1048,7 @@ namespace Questar.OneRoster.Data.Migrations
                 {
                     b.HasOne("Questar.OneRoster.Data.LineItem", "LineItem")
                         .WithMany("Results")
-                        .HasForeignKey("LineItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("LineItemId");
 
                     b.HasOne("Questar.OneRoster.Data.MetadataCollection", "MetadataCollection")
                         .WithMany()
@@ -1074,8 +1056,7 @@ namespace Questar.OneRoster.Data.Migrations
 
                     b.HasOne("Questar.OneRoster.Data.User", "Student")
                         .WithMany("Results")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("Questar.OneRoster.Data.RoleClaim", b =>

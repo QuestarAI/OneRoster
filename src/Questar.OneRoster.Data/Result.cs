@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Questar.OneRoster.Data
 {
@@ -18,11 +19,11 @@ namespace Questar.OneRoster.Data
 
         public virtual LineItem LineItem { get; internal set; }
 
-        public virtual int LineItemId { get; internal set; }
+        public virtual string LineItemId { get; internal set; }
 
         public virtual User Student { get; internal set; }
 
-        public virtual int StudentId { get; internal set; }
+        public virtual string StudentId { get; internal set; }
 
         [Required] public virtual float? Score { get; set; }
 
@@ -32,11 +33,11 @@ namespace Questar.OneRoster.Data
 
         #region Base Object
 
-        public virtual int Id { get; internal set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] [MaxLength(10)] public virtual string Id { get; internal set; }
 
         public virtual MetadataCollection MetadataCollection { get; set; }
 
-        public virtual int? MetadataCollectionId { get; internal set; }
+        public virtual string MetadataCollectionId { get; internal set; }
 
         public virtual Status Status { get; internal set; }
 

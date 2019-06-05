@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Questar.OneRoster.Data
 {
     public class Grade
     {
-        public virtual int Id { get; internal set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] [MaxLength(10)] public virtual string Id { get; internal set; }
 
         [Required] public virtual string Code { get; set; }
 

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Questar.OneRoster.Data
 {
-    public class UserToken : IdentityUserToken<int>
+    public class UserToken : IdentityUserToken<string>
     {
     }
 }

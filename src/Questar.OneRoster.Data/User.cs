@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Questar.OneRoster.Data
 {
-    public class User : IdentityUser<int>, IBaseObject
+    public class User : IdentityUser<string>, IBaseObject
     {
         public User(UserType type)
         {
@@ -57,7 +57,7 @@ namespace Questar.OneRoster.Data
 
         public virtual MetadataCollection MetadataCollection { get; set; }
 
-        public virtual int? MetadataCollectionId { get; internal set; }
+        public virtual string MetadataCollectionId { get; internal set; }
 
         public virtual Status Status { get; internal set; }
 

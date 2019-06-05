@@ -16,7 +16,7 @@ namespace Questar.OneRoster.Data
 
         public virtual User User { get; internal set; }
 
-        public virtual int UserId { get; internal set; }
+        public virtual string UserId { get; internal set; }
 
         [Required] [MaxLength(256)] public virtual string Type { get; internal set; }
 

@@ -15,7 +15,7 @@ namespace Questar.OneRoster.Data
 
         public virtual Class Class { get; internal set; }
 
-        public virtual int ClassId { get; internal set; }
+        public virtual string ClassId { get; internal set; }
 
         [Required] public virtual string Period { get; internal set; }
     }

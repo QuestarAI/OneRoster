@@ -15,9 +15,9 @@ namespace Questar.OneRoster.Data.Services
             var data = new Dictionary<Type, IList>();
             var identifiers = new Dictionary<Type, int>();
 
-            int GetId<T>()
+            string GetId<T>()
             {
-                return identifiers.TryGetValue(typeof(T), out var id) ? identifiers[typeof(T)] = ++id : identifiers[typeof(T)] = 1;
+                return (identifiers.TryGetValue(typeof(T), out var id) ? identifiers[typeof(T)] = ++id : identifiers[typeof(T)] = 1).ToString();
             }
 
             void Add<T>(T item)

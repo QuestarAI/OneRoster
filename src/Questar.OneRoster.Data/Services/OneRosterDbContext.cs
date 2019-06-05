@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Questar.OneRoster.Data.Services
 {
-    public class OneRosterDbContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IDataProtectionKeyContext
+    public class OneRosterDbContext : IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IDataProtectionKeyContext
     {
         public OneRosterDbContext()
         {
@@ -161,6 +161,10 @@ namespace Questar.OneRoster.Data.Services
                 .HasIndex(entity => entity.Code);
 
             // user
+
+            builder
+                .Entity<User>()
+                .Property(user => user.Id).HasMaxLength(10).ValueGeneratedNever();
 
             builder
                 .Entity<User>()

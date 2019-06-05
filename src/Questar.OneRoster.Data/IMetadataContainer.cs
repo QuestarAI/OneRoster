@@ -4,6 +4,6 @@ namespace Questar.OneRoster.Data
     {
         MetadataCollection MetadataCollection { get; }
 
-        int? MetadataCollectionId { get; }
+        string MetadataCollectionId { get; }
     }
 }

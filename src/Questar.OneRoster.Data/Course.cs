@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Questar.OneRoster.Data
 {
@@ -12,11 +13,11 @@ namespace Questar.OneRoster.Data
 
         public virtual AcademicSession SchoolYear { get; set; }
 
-        public virtual int SchoolYearId { get; internal set; }
+        public virtual string SchoolYearId { get; internal set; }
 
         public virtual Org Org { get; set; }
 
-        public virtual int OrgId { get; internal set; }
+        public virtual string OrgId { get; internal set; }
 
         public virtual ICollection<CourseGrade> Grades { get; } = new HashSet<CourseGrade>();
 
@@ -28,11 +29,11 @@ namespace Questar.OneRoster.Data
 
         #region Base Object
 
-        public virtual int Id { get; internal set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] [MaxLength(10)] public virtual string Id { get; internal set; }
 
         public virtual MetadataCollection MetadataCollection { get; set; }
 
-        public virtual int? MetadataCollectionId { get; internal set; }
+        public virtual string MetadataCollectionId { get; internal set; }
 
         public virtual Status Status { get; internal set; }
 

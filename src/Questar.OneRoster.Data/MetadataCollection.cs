@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Questar.OneRoster.Data
 {
@@ -8,7 +10,7 @@ namespace Questar.OneRoster.Data
         {
         }
 
-        public virtual int Id { get; internal set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] [MaxLength(10)] public virtual string Id { get; internal set; }
 
         public virtual ICollection<Metadata> Metadata { get; } = new HashSet<Metadata>();
     }
