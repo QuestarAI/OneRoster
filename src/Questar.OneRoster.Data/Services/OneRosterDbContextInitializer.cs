@@ -84,12 +84,6 @@ namespace Questar.OneRoster.Data.Services
                 new Subject
                 {
                     Id = GetId<Subject>(),
-                    Name = "Secondary Math",
-                    Code = "SECMATH"
-                },
-                new Subject
-                {
-                    Id = GetId<Subject>(),
                     Name = "ELA",
                     Code = "ELA"
                 },
@@ -104,6 +98,12 @@ namespace Questar.OneRoster.Data.Services
                     Id = GetId<Subject>(),
                     Name = "Science",
                     Code = "SCI"
+                },
+                new Subject
+                {
+                    Id = GetId<Subject>(),
+                    Name = "Demo",
+                    Code = "DEMO"
                 }
             };
 
