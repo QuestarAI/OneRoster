@@ -8,6 +8,7 @@ namespace Questar.OneRoster.ApiClient
     using Filtering;
     using Flurl.Http;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
     using Payloads;
     using Serialization;
     using Sorting;
@@ -89,7 +90,7 @@ namespace Questar.OneRoster.ApiClient
                 throw new InvalidOperationException("Content is empty.");
 
             var resolver = new OneRosterContractResolver(typeof(T));
-            var settings = new JsonSerializerSettings { ContractResolver = resolver };
+            var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
 
             var payload = JsonConvert.DeserializeObject<Payload<TResult[]>>(content, settings);
             var statuses = payload.Statuses;

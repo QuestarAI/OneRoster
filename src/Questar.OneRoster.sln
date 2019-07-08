@@ -27,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.DataServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.DataServices.EntityFrameworkCore", "Questar.OneRoster.DataServices.EntityFrameworkCore\Questar.OneRoster.DataServices.EntityFrameworkCore.csproj", "{A79E1022-03D0-45BB-B01B-370FF815A539}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questar.OneRoster.Client.Test", "Questar.OneRoster.Client.Test\Questar.OneRoster.Client.Test.csproj", "{B568508D-A4C4-4756-9D17-48643ACEF2DA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A0F720C3-CEAC-49D5-937D-0787A8DC00FD}"
 EndProject
 Global
@@ -69,10 +67,6 @@ Global
 		{A79E1022-03D0-45BB-B01B-370FF815A539}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A79E1022-03D0-45BB-B01B-370FF815A539}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A79E1022-03D0-45BB-B01B-370FF815A539}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B568508D-A4C4-4756-9D17-48643ACEF2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B568508D-A4C4-4756-9D17-48643ACEF2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B568508D-A4C4-4756-9D17-48643ACEF2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B568508D-A4C4-4756-9D17-48643ACEF2DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,7 +75,6 @@ Global
 		{8E07FAD9-4E9E-4E00-910B-01E846ED75F7} = {A0F720C3-CEAC-49D5-937D-0787A8DC00FD}
 		{7CDDE29F-6671-4E9B-AF0B-6FCD4C00CABA} = {F3419DBB-B068-48B3-90D1-79C43356A349}
 		{10B775E0-19E7-449C-A058-61EDD664EBF5} = {A0F720C3-CEAC-49D5-937D-0787A8DC00FD}
-		{B568508D-A4C4-4756-9D17-48643ACEF2DA} = {F3419DBB-B068-48B3-90D1-79C43356A349}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6E752842-00C1-4618-8DDA-1A3908523399}

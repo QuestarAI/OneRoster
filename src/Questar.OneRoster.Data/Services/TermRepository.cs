@@ -19,7 +19,7 @@ namespace Questar.OneRoster.Data.Services
 
         public IQuery<Class> GetClassesForTerm(string academicSessionId) =>
             Context.Classes
-                .Where(@class => @class.Terms.Select(term => term.AcademicSessionId).Contains(Guid.Parse(academicSessionId)))
+                .Where(@class => @class.Terms.Any(term => term.AcademicSessionId == Guid.Parse(academicSessionId)))
                 .UseAsDataSource(Mapper)
                 .For<Class>()
                 .ToBaseQuery();
