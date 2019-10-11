@@ -13,7 +13,20 @@ using Questar.OneRoster.Sorting;
 
 namespace Questar.OneRoster.ApiClient
 {
-    public class ListEndpoint<T> : Endpoint<T>, IListEndpoint<T>
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Collections;
+    using Filtering;
+    using Flurl.Http;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using Payloads;
+    using Serialization;
+    using Sorting;
+
+    public class ListEndpoint<T> : Endpoint, IListEndpoint<T>
     {
         public ListEndpoint(IFlurlClient http, string path)
             : base(http, path)
@@ -57,7 +70,7 @@ namespace Questar.OneRoster.ApiClient
 
         protected IListQuery<T, TContext> Append<TContext>(string key, string value)
         {
-            Query[key] = value;
+            Params[key] = value;
             return this as IListQuery<T, TContext> ?? new ListQueryAdapter<TContext>(this);
         }
 
@@ -106,14 +119,12 @@ namespace Questar.OneRoster.ApiClient
         public async Task<Page<TResult>> ToPageAsync<TResult>()
         {
             var response = await Http.Request(ToUri()).GetAsync();
-
             var content = await (response.Content?.ReadAsStringAsync() ?? Task.FromResult<string>(null));
             if (content == null)
                 throw new InvalidOperationException("Content is empty.");
 
             var resolver = new OneRosterContractResolver(typeof(T));
-            var settings = new JsonSerializerSettings {ContractResolver = resolver, Converters = {new StringEnumConverter()}};
-
+            var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
             var payload = JsonConvert.DeserializeObject<Payload<TResult[]>>(content, settings);
             var statuses = payload.Statuses;
             if (statuses.Any())

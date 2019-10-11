@@ -10,7 +10,17 @@ using Questar.OneRoster.Serialization;
 
 namespace Questar.OneRoster.ApiClient
 {
-    public class ItemEndpoint<T> : Endpoint<T>, IItemEndpoint<T>
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Flurl.Http;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using Payloads;
+    using Serialization;
+
+    public class ItemEndpoint<T> : Endpoint, IItemEndpoint<T>
     {
         public ItemEndpoint(IFlurlClient http, string path)
             : base(http, path)
@@ -29,7 +39,7 @@ namespace Questar.OneRoster.ApiClient
 
         protected IItemQuery<T, TContext> Append<TContext>(string key, string value)
         {
-            Query[key] = value;
+            Params[key] = value;
             return this as IItemQuery<T, TContext> ?? new ItemQueryAdapter<TContext>(this);
         }
 
@@ -47,22 +57,18 @@ namespace Questar.OneRoster.ApiClient
         protected async Task<TResult> SingleAsync<TResult>()
         {
             var response = await Http.Request(ToUri()).GetAsync();
-
             var content = await (response.Content?.ReadAsStringAsync() ?? Task.FromResult<string>(null));
             if (content == null)
                 throw new InvalidOperationException("Content is empty.");
 
             var resolver = new OneRosterContractResolver(typeof(T));
-            var settings = new JsonSerializerSettings {ContractResolver = resolver, Converters = {new StringEnumConverter()}};
-
+            var settings = new JsonSerializerSettings { ContractResolver = resolver, Converters = { new StringEnumConverter() } };
             var payload = JsonConvert.DeserializeObject<Payload<TResult>>(content, settings);
             var statuses = payload.Statuses;
             if (statuses.Any())
                 throw new StatusInfoException(statuses);
 
-            var value = payload.Value;
-
-            return value;
+            return payload.Value;
         }
 
         private class ItemQueryAdapter<TContext> : IItemQuery<T, TContext>

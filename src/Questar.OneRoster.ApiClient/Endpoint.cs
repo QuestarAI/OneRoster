@@ -4,9 +4,13 @@ using Flurl.Http;
 
 namespace Questar.OneRoster.ApiClient
 {
-    public abstract class Endpoint<T>
+    using System.Collections.Generic;
+    using System.Linq;
+    using Flurl.Http;
+
+    public abstract class Endpoint
     {
-        protected readonly IDictionary<string, string> Query = new Dictionary<string, string>();
+        protected readonly IDictionary<string, string> Params = new Dictionary<string, string>();
 
         protected Endpoint(IFlurlClient http, string path)
         {
@@ -18,9 +22,7 @@ namespace Questar.OneRoster.ApiClient
 
         public string Path { get; set; }
 
-        public string ToUri()
-        {
-            return $"{Path}?{string.Join("&", Query.Select(entry => $"{entry.Key}={entry.Value}"))}";
-        }
+        public string ToUri() =>
+            $"{Path}?{string.Join("&", Params.Select(entry => $"{entry.Key}={entry.Value}"))}";
     }
 }

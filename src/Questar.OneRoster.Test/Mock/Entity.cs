@@ -26,17 +26,14 @@ namespace Questar.OneRoster.Test.Mock
 
         public Entity[] Children { get; set; }
 
-        internal static string[] GetSubjects()
-        {
-            return Enumerable
+        internal static string[] GetSubjects() =>
+            Enumerable
                 .Range(0, 6)
                 .Select(n => $"subject{n + 1}")
                 .ToArray();
-        }
 
-        internal static List<Entity> BuildEntities()
-        {
-            return new List<Entity>
+        internal static List<Entity> BuildEntities() =>
+            new List<Entity>
             {
                 new Entity
                 {
@@ -120,6 +117,5 @@ namespace Questar.OneRoster.Test.Mock
                     Subjects = GetSubjects()
                 }
             };
-        }
     }
 }
