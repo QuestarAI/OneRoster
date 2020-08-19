@@ -48,21 +48,19 @@ namespace Questar.OneRoster.DataServices.EntityFrameworkCore
 
         public virtual Task<List<T>> ToListAsync()
         {
-            return Source.ToAsyncEnumerable().ToList();
+            return Task.FromResult(ToList());
         }
 
-        public Page<T> ToPage(int offset, int limit)
+        public virtual Page<T> ToPage(int offset, int limit)
         {
             var count = Source.Count();
             var items = Source.Skip(offset).Take(limit).ToList();
             return new Page<T>(count, items);
         }
 
-        public async Task<Page<T>> ToPageAsync(int offset, int limit)
+        public virtual Task<Page<T>> ToPageAsync(int offset, int limit)
         {
-            var count = Source.Count();
-            var items = Source.Skip(offset).Take(limit).ToAsyncEnumerable().ToList();
-            return new Page<T>(count, await items);
+            return Task.FromResult(ToPage(offset, limit));
         }
 
         #region IQuery<T>

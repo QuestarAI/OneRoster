@@ -1,12 +1,14 @@
+using System;
+using System.ComponentModel;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Questar.OneRoster.Api.Extensions;
 using Questar.OneRoster.Data.Extensions;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Questar.OneRoster.App
 {
@@ -33,19 +35,28 @@ namespace Questar.OneRoster.App
             services.AddOneRoster(Configuration.GetConnectionString("OneRoster"));
 
             services
-                .AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()))
+                .AddMvc(options => options.EnableEndpointRouting = false)
+                .AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()))
                 .AddOneRosterApi();
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1p1", new Info
+                c.SwaggerDoc("v1p1", new OpenApiInfo
                 {
                     Title = "OneRoster® IMS Final Release Version 1.1",
                     Description = @"<a href=""https://www.imsglobal.org/oneroster-v11-final-specification"">Developer Documentation</a>",
                     Version = "v1p1",
-                    Contact = new Contact {Name = "Questar Assessment Inc.", Email = "oneroster@questarai.com", Url = "https://www.questarai.com"},
-                    License = new License {Name = "IMS Global Learning Consortium, Inc. Specification Document License", Url = "https://www.imsglobal.org/speclicense.html"}
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Questar Assessment Inc.",
+                        Email = "oneroster@questarai.com",
+                        Url = new Uri("https://www.questarai.com")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "IMS Global Learning Consortium, Inc. Specification Document License",
+                        Url = new Uri("https://www.imsglobal.org/speclicense.html")
+                    }
                 });
             });
         }

@@ -23,37 +23,78 @@ namespace Questar.OneRoster.Payloads
 
         public static StatusInfo InvalidSortField(string property)
         {
-            return new StatusInfo {CodeMajor = CodeMajor.Success, CodeMinor = CodeMinor.InvalidSortField, Severity = Severity.Warning, Description = property};
+            return new StatusInfo
+            {
+                CodeMajor = CodeMajor.Success,
+                CodeMinor = CodeMinor.InvalidSortField,
+                Severity = Severity.Warning,
+                Description = property
+            };
         }
 
         public static StatusInfo InvalidSelectionField(string property)
         {
-            return new StatusInfo {CodeMajor = CodeMajor.Success, CodeMinor = CodeMinor.InvalidSelectionField, Severity = Severity.Warning, Description = property};
+            return new StatusInfo
+            {
+                CodeMajor = CodeMajor.Success,
+                CodeMinor = CodeMinor.InvalidSelectionField,
+                Severity = Severity.Warning,
+                Description = property
+            };
         }
 
         public static StatusInfo InvalidData(string property)
         {
-            return new StatusInfo {CodeMajor = CodeMajor.Success, CodeMinor = CodeMinor.InvalidData, Severity = Severity.Error, Description = property};
+            return new StatusInfo
+            {
+                CodeMajor = CodeMajor.Success,
+                CodeMinor = CodeMinor.InvalidData,
+                Severity = Severity.Error,
+                Description = property
+            };
         }
 
         public static StatusInfo InvalidFilterField(string property)
         {
-            return new StatusInfo {CodeMajor = CodeMajor.Success, CodeMinor = CodeMinor.InvalidFilterField, Severity = Severity.Error, Description = property};
+            return new StatusInfo
+            {
+                CodeMajor = CodeMajor.Success,
+                CodeMinor = CodeMinor.InvalidFilterField,
+                Severity = Severity.Error,
+                Description = property
+            };
         }
 
         public static StatusInfo InvalidLimitField()
         {
-            return new StatusInfo {CodeMajor = CodeMajor.Failure, CodeMinor = CodeMinor.InvalidLimitField, Severity = Severity.Warning, Description = "Limit query parameter must be greater than 0."};
+            return new StatusInfo
+            {
+                CodeMajor = CodeMajor.Failure,
+                CodeMinor = CodeMinor.InvalidLimitField,
+                Severity = Severity.Warning,
+                Description = "Limit query parameter must be greater than 0."
+            };
         }
 
         public static StatusInfo InvalidOffsetField()
         {
-            return new StatusInfo {CodeMajor = CodeMajor.Failure, CodeMinor = CodeMinor.InvalidOffsetField, Severity = Severity.Warning, Description = "Offset query parameter must be greater than or equal to 0."};
+            return new StatusInfo
+            {
+                CodeMajor = CodeMajor.Failure,
+                CodeMinor = CodeMinor.InvalidOffsetField,
+                Severity = Severity.Warning,
+                Description = "Offset query parameter must be greater than or equal to 0."
+            };
         }
 
         public static StatusInfo InvalidBlankSelectionField()
         {
-            return new StatusInfo {CodeMajor = CodeMajor.Failure, CodeMinor = CodeMinor.InvalidBlankSelectionField, Severity = Severity.Error};
+            return new StatusInfo
+            {
+                CodeMajor = CodeMajor.Failure,
+                CodeMinor = CodeMinor.InvalidBlankSelectionField,
+                Severity = Severity.Error
+            };
         }
     }
 }
